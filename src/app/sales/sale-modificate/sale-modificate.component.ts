@@ -311,4 +311,7 @@ export class SaleModificateComponent implements OnInit {
     this.sale.photo_reclame = this.upload_photo;
     //  console.log(this.upload_photo);
   }
+  onRemoved (file: FileHolder) {
+
+  }
 }
