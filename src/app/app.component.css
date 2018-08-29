@@ -1,0 +1,41 @@
+.message {
+  width: 350px;
+  height: 50px;
+  min-height: 100px;
+  background-color: white;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 100px);
+  top: 0;
+  border-radius: 5px;
+  z-index: 2001;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+}
+
+.messageText {
+  width: 100%;
+  font-size: 16px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.bg-success {
+  box-shadow: 0 0 7px #676767;
+  background-color: white !important;
+}
+
+.bg-danger {
+  box-shadow: 0 0 7px #676767;
+  background-color: white !important;
+}
+.hide {
+  position: absolute;
+  display: none;
+}
+.show {
+  position: absolute;
+  display: inline;
+}

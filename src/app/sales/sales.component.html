@@ -1,0 +1,16 @@
+<div class="sticky-top">
+  <div class="row no-gutters">
+    <div class="col-12 general-menu">
+      <app-general-menu></app-general-menu>
+    </div>
+  </div>
+</div>
+<div class="row no-gutters">
+  <div class="left-sidebar d-none d-md-block">
+    <app-general-left-menu></app-general-left-menu>
+  </div>
+    <div style="width: calc(100% - 150px);">
+      <router-outlet></router-outlet>
+    </div>
+</div>
+

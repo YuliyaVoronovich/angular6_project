@@ -1,0 +1,20 @@
+.dropdown:hover > .dropdown-menu {
+  display: block;
+  margin: 0;
+}
+.navbar {
+  padding: 0.1rem 1rem;
+  height: 100%;
+}
+.navbar-nav .nav-item {
+  padding-left: 1.5rem;
+}
+.navbar-nav .nav-item a {
+  color: #524d4d;
+  font-weight: 600;
+  font-size: 18px;
+}
+.navbar-nav .nav-item a:hover {
+  background: #b2cbdc;
+  color: #f1eae9;
+}

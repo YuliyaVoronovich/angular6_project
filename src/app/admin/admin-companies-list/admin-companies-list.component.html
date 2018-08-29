@@ -1,0 +1,27 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr style="background:#cccccc">
+      <th>Название</th>
+      <th>ФИО директора</th>
+      <th>Телефон директора</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let company of companies">
+      <td class="align-left"><a routerLink="company/{{company.id}}">{{company.title}}</a></td>
+      <td>{{company.fio_director}}</td>
+      <td>{{company.phone_director}}</td>
+      <td>
+        <button class="btn btn-sm btn-danger {{company.disable ? 'd-none' : '' }}" (click)="block(company)">Заблокировать</button>
+        <button class="btn btn-sm btn-primary {{!company.disable ? 'd-none' : '' }}">Разблокировать</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div>
+  <button class="btn btn-primary" (click)="add()">Добавить</button>
+</div>
+

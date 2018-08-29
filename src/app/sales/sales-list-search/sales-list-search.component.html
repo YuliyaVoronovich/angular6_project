@@ -1,0 +1,112 @@
+<div class="col-10 container bg-light" style="max-width: 100%;">
+  <div class="row no-gutters" style="padding: 20px 0 0" [ngClass]="{'show' : !hide, 'hide' : hide}">
+    <div class="col-9">
+      <div class="row">
+        <div class="col-3">
+          <div class="form-group">
+            <ng-select [options]="cities"
+                       [(ngModel)]="''+ search.city"
+                       [ngModelOptions]="{standalone: true}"
+                       [allowClear]="true"
+                       [multiple]="true"
+                       placeholder="Город">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <ng-select [options]="streets"
+                       [(ngModel)]="''+ search.street"
+                       [ngModelOptions]="{standalone: true}"
+                       [allowClear]="true"
+                       [multiple]="true"
+                       placeholder="Улица">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-2">
+          Комнаты
+          <!--<input class="form-check-input" type="checkbox" name="search.room[]"
+                 [checked]="search.room[0]"
+                 (change)="search.room[0] = !search.room[0]">-
+          <input class="form-check-input" type="checkbox" name="search.room[]"
+                 [checked]="search.room[1]"
+                 (change)="search.room[1] = !search.room[1]">-
+          <input class="form-check-input" type="checkbox" name="search.room[]"
+                 [checked]="search.room[2]"
+                 (change)="search.room[2] = !search.room[1]">-->
+        </div>
+        <div class="col-2">
+          <input type="text" class="form-control" id="price" name="price" [(ngModel)]="search.price" placeholder="Цена">
+        </div>
+      </div>
+    </div>
+    <div class="col-3 text-right" style="color: #428bca">
+      <a class="btn" (click)="hide=!hide">
+        <i class="fas fa-search-plus"></i>
+        <!--<mat-icon style="vertical-align: middle; font-size: 20px">search</mat-icon>-->
+        Расширенный поиск</a>
+      <button style="margin-left: 10px" class="btn btn-sm btn-primary" (click)="searchSale()">Поиск</button>
+    </div>
+  </div>
+</div>
+<div class="row no-gutters" style="margin-top: 10px" [ngClass]="{'show' : hide, 'hide' : !hide}">
+
+  <div class="col-4">
+    <div class="form-group">
+      <div class="col-7">
+        <ng-select [options]="regions"
+                   [(ngModel)]="''+ search.region"
+                   [ngModelOptions]="{standalone: true}"
+                   [allowClear]="true"
+                   [multiple]="true"
+                   placeholder="Область">
+        </ng-select>
+        <i class="fas fa-times"></i>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-7">
+        <ng-select [options]="cities"
+                   [(ngModel)]="''+ search.city"
+                   [ngModelOptions]="{standalone: true}"
+                   [allowClear]="true"
+                   [multiple]="true"
+                   placeholder="Город">
+        </ng-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-7">
+        <ng-select [options]="streets"
+                   [(ngModel)]="''+ search.street"
+                   [ngModelOptions]="{standalone: true}"
+                   [allowClear]="true"
+                   [multiple]="true"
+                   placeholder="Улица">
+        </ng-select>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-4">
+    Инф по квартире
+  </div>
+  <div class="col-4">
+    иная инф
+  </div>
+
+</div>
+<div class="row no-gutters" [ngClass]="{'show' : hide, 'hide' : !hide}">
+
+  <div class="col-12 text-right" style="color: #428bca">
+    <a class="btn" (click)="hide=!hide">
+      <i class="fas fa-search-minus"></i>
+      <!--<mat-icon style="vertical-align: middle; font-size: 20px">search</mat-icon>-->
+      Скрыть поиск</a>
+  </div>
+
+</div>
+
+

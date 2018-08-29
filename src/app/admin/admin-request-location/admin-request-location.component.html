@@ -1,0 +1,11 @@
+<div class="row justify-content-center">
+  <div class="col-10">
+    <div *ngFor="let request of requests" class="alert alert-info">
+      <div class="">
+        <span class="fa fa-check-circle-o choose"></span>
+        {{request.text}}
+      </div>
+      <span class="fa fa-remove remove"></span>
+    </div>
+  </div>
+</div>

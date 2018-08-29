@@ -1,0 +1,9 @@
+ng-select /deep/  {
+  width: calc(100% - 32px);
+}
+.show {
+  display: flex;
+}
+.hide {
+  display: none;
+}

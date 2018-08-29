@@ -1,0 +1,7 @@
+<h2 mat-dialog-title>Удалить квартиру</h2>
+<mat-dialog-content>Вы уверены?</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.sale" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>
+

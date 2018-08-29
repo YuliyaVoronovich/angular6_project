@@ -1,0 +1,26 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped" style="width: 400px">
+    <thead>
+    <tr style="background:#cccccc">
+      <th>Название</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let module of modules">
+      <td *ngIf="module.id == editRowId">
+        <input #myInput type="text" [(ngModel)]="module.title" (blur)="change(module)">
+      </td>
+      <td *ngIf="module.id !== editRowId" (dblclick)="toggle(module.id)">
+        {{module.title}}
+      </td>
+      <td>
+        <button class="btn btn-danger btn-sm" (click)="delete(module)">Удалить</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div>
+  <button class="btn btn-primary" (click)="add()">Добавить</button>
+</div>

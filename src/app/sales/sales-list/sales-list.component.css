@@ -1,0 +1,43 @@
+/*::ng-deep body {
+  background: white!important;
+}*/
+table tr th {
+  background: rgba(165, 205, 232, 0.49);
+  border-color: #e3f5ff;
+  text-align: center;
+  padding: 0.6em;
+  color: #524d4d;
+ /* top:40px;*/
+}
+table tr td {
+  line-height: 1;
+  border-color: #e3f5ff;
+  text-align: center;
+  padding: 0.5em;
+}
+table > tbody tr:hover {
+  background: rgba(175, 212, 238, 0.18);
+}
+.check {
+  display: inline-block;
+  vertical-align: top;
+  width: 18px;
+  height: 18px;
+  line-height: 16px;
+  font-size: 13px;
+  padding: 0;color: #333;
+  background-color: #ffffff;
+  border: 1px solid #c1d3de;
+  cursor: pointer;
+}
+.action {
+  cursor:pointer;
+  border-bottom:1px solid #7ebaee;
+  padding-top: 4px;
+}
+.action:last-child {
+  border: none;
+}
+.action:hover {
+  background: #6fbeee;
+}

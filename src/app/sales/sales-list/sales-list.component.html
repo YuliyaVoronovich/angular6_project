@@ -1,0 +1,107 @@
+<app-sales-list-search (changed)="getSalesSearch($event)"></app-sales-list-search>
+
+<div class="table-responsive" style="margin-bottom: 50px">
+  <table class="table table-bordered table-hover">
+    <thead class="sticky-top">
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>Нас. пункт</th>
+      <th>Район</th>
+      <th>Мкрн</th>
+      <th>Адрес</th>
+      <th>Комнат</th>
+      <th>Площадь</th>
+      <th>Этаж</th>
+      <th>Цена,$</th>
+      <th>$/m</th>
+      <th>Агентство</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container
+      *ngFor="let sale of sales | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countSales }; let i = index">
+      <tr>
+        <td class="text-center">
+          <a routerLink="sale/{{sale.id}}" target="_self">
+            <i class="fas fa-pencil-alt" style="color: #524d4d"></i>
+          </a>
+        </td>
+        <td class="text-center">
+         <mat-icon style="cursor: pointer; color:#524d4d; font-size: 18px" (click)="hideme[i] = !hideme[i]">more_horiz</mat-icon>
+          <!--  <span class="fas fa-info-circle" style="background:white; cursor: pointer;color:#127bc5;" (click)="hideme[i] = !hideme[i]"></span>-->
+        </td>
+        <td class="text-center">
+          <label class="form-check-label check">
+            <input type="checkbox" id="{{sale.id}}" style="position: absolute;clip: rect(0,0,0,0);margin: 4px 0;" (change)="hideme2[i] = !hideme2[i]">
+            <i class="fas fa-check" style="background:white; color:#524d4d;" [hidden]="!hideme2[i]"></i>
+          </label>
+          <!--<span class="far fa-square" style="color:#1c9bf7;"></span>-->
+
+        </td>
+        <!-- <td>
+           <app-sale-list-adress [location]="sale.location"></app-sale-list-adress>
+         </td>-->
+        <td>{{sale.location.city.title}}</td>
+        <td>{{sale.location.district.title}}</td>
+        <td>{{sale.location.microdistrict.title}}</td>
+        <td>
+          <app-sale-list-adress [location]="sale.location"></app-sale-list-adress>
+        </td>
+        <td>{{sale.room}}/{{sale.room_separate}}</td>
+        <td>{{sale.area}}/{{sale.area_leave}}/{{sale.area_kitchen}}</td>
+        <td>{{sale.storey}}/{{sale.storeys}}</td>
+        <td>{{sale.price}}</td>
+        <td>{{sale.price_sqr}}</td>
+        <td>{{sale.user.company.title}}</td>
+        <!--<td>{{sale.user.user_information.surname}} {{sale.user.user_information.name}}</td>-->
+        <td>
+          <i class="fas fa-chevron-circle-right" style="color: #524d4d; font-size: 20px; cursor: pointer" (click)="hideme3[i] = !hideme3[i]"></i>
+          <div style="background:white; position: absolute;right: 80px; border: 1px solid #8ed0ff;  box-shadow: 0 5px 10px #b1afaf; font-size: 14px; padding: 3px;"
+               [hidden]="!hideme3[i]">
+            <div class="action">ОТПРАВИТЬ КЛИЕНТУ</div>
+            <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
+            <div class="action">ОТПРАВИТЬ В РЕКЛАМУ</div>
+            <div class="action">КАЛЬКУЛЯТОР</div>
+          </div>
+        </td>
+      </tr>
+      <tr [hidden]="!hideme[i]">
+        <td colspan="14">
+          <div class="row no-gutters text-left">
+            <div class="col-9">
+              Фото
+            </div>
+            <div class="col-3">
+              {{sale.cont_phone1}}, {{sale.cont_phone2}}<br>
+              {{sale.text}}
+              <br>
+              <button class="btn btn-sm btn-primary">Подробнее</button>
+              <a class="btn" style="margin-top: 20px"><mat-icon style="font-size: 16px; color: #428bca">place Смотреть на карте</mat-icon></a>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+
+
+<!--<div>
+  <button class="btn btn-primary" (click)="add()">Добавить</button>
+</div>-->
+<!--- Search -->
+<div class="container bg-light" style="bottom: 0; max-width: calc(100% - 150px); position: fixed; bottom: 0; padding-top: 15px;">
+  <div class="row">
+    <!--Пагинация -->
+    <div class="col-9">
+      <pagination-controls (pageChange)="getSalesByPage($event)" maxSize="7" previousLabel="" nextLabel="" directionLinks="true" autohide="true"></pagination-controls>
+    </div>
+    <div class="col-3 text-right">
+      Всего объектов в МЛС: {{countSales}}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+.color-btn{
+  background-color: #f7dfe2;
+  border-color: #f7dfe2;
+}
+.color-btn:hover {
+  background-color: #f7dfe2;
+  border-color: #f7dfe2;
+}
+.color-btn.focus, .color-btn:focus {
+  box-shadow: 0 0 0 0.2rem rgba(247, 223, 226, 0.5);
+}
+.color-btn-blue{
+  background-color: #8ed0ff;
+  border-color: #8ed0ff;
+}
+.color-btn-blue:hover {
+  background-color: #8ed0ff;
+  border-color: #8ed0ff;
+}
+.color-btn-blue.focus, .color-btn-blue:focus {
+  box-shadow: 0 0 0 0.2rem rgba(128, 193, 247, 0.5);
+}

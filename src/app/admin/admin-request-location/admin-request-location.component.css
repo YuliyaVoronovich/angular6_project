@@ -1,0 +1,13 @@
+.remove {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: rgba(209, 79, 82, 0.81);
+  cursor: pointer;
+}
+.choose {
+  position: absolute;
+  left: 0;
+  color: rgba(46, 155, 11, 0.96);
+  cursor: pointer;
+}

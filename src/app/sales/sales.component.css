@@ -1,0 +1,17 @@
+.general-menu {
+  background: #c1d3de;
+  /* background: #e7e9ef;*/
+   height: 52px;
+   box-shadow: 0 5px 10px #b1afaf;
+ }
+
+ .left-sidebar {
+   background: #f1eae9;
+   position: sticky;
+   top: 52px;
+   /*border-top: 1px solid;*/
+  height: calc(100vh - 52px);
+  overflow-y: auto;
+  z-index: 1000;
+  width: 150px;
+}

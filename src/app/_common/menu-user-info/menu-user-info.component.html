@@ -1,0 +1,22 @@
+<div class="user-info">
+  <span class="fa fa-user"></span>
+  {{ user_information.name}} {{ user_information.surname}}
+  <kbd class="bg-primary" style="cursor: pointer" (click)="hide = !hide">
+    <span class="access">{{ user.access}}</span>
+  </kbd>
+  <div class="chooseAccess" [ngClass]="{'show' : hide, 'hide' : !hide}">
+    <div class="level" (click)="setAccess(1)">личный</div>
+    <div class="level" (click)="setAccess(2)">группа</div>
+    <div class="level" (click)="setAccess(3)">агентство</div>
+    <div class="level" (click)="setAccess(4)">MLS</div>
+  </div>
+
+  <div class="pull-right">
+    <a style="color: #000" class="" href="#">Выйти</a>
+  </div>
+</div>
+
+
+
+
+

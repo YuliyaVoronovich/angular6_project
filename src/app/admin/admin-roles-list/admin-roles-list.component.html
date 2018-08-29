@@ -1,0 +1,30 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr style="background:#cccccc">
+      <th>Компания</th>
+      <th>Роль</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let role of roles">
+      <td>{{role.company.title}}</td>
+      <td class="align-left"><a routerLink="role/{{role.id}}">{{role.title}}</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container-fluid" style="bottom: 0;position: fixed; width: 100%">
+  <div class="row" style=" background: #ccc; padding: 5px">
+    <div class="form-group row">
+      <div class="col-12">
+        <select class="form-control" [(ngModel)]="search.company" (change)="getRolesSearch()">
+          <option value="" [disabled]="true">Компания</option>
+          <option value="0"></option>
+          <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

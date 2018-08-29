@@ -1,0 +1,31 @@
+.user-info {
+  display: block;
+  padding: .5rem 1rem;
+}
+.chooseAccess {
+  z-index: 2100;
+  display: none;
+  text-align: center;
+  width: 130px;
+  font-size: 16px;
+  color: #000;
+  position: absolute;
+  background-color: #fff;
+  margin-left: 50px;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: 1px 1px 3px;
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+.level {
+  cursor:pointer;
+  border-bottom:1px solid;
+}
+.level:hover {
+  background: #f3bc5b;
+}
+

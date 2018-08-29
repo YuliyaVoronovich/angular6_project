@@ -1,0 +1,18 @@
+.left-menu {
+  border-right: 1px #f1eae9;
+  margin-top: 10px;
+}
+/*.dropdown:hover > .dropdown-menu {
+  display: block;
+  margin: 0;
+}*/
+.dropdown-menu {
+  position: relative;
+  top:0!important;
+  border: none;
+  min-width: 8rem;
+  background: #f1eae9;;
+}
+.dropdown-item {
+ /* padding: 0.3rem 0.1rem;*/
+}
