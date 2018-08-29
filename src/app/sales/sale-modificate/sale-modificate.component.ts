@@ -167,7 +167,6 @@ export class SaleModificateComponent implements OnInit {
       this.sources = data.sources;
     });
     this.locationService.getAllLocations().subscribe(data => {
-      this.regions = data.regions;
       this.metro = data.metro;
     });
 
@@ -179,6 +178,7 @@ export class SaleModificateComponent implements OnInit {
       this.getUsers();
 
     });
+
   }
 
   save() {

@@ -41,6 +41,7 @@
                 <label class="col-5 col-form-label text-left">Область<span>*</span></label>
                 <div class="col-7">
                   <ng-select [options]="regions"
+                             [allowClear]="true"
                              [(ngModel)]="''+ sale.location.city.district_country.region.id"
                              [ngModelOptions]="{standalone: true}"
                              (selected)="city($event)">
