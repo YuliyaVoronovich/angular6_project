@@ -29,6 +29,7 @@ export class SalesListSearchComponent implements OnInit {
     'region' : '',
     'city': '',
     'street': '',
+    'district': '',
     'room': [],
     'price': ''
   };
