@@ -11,7 +11,6 @@ import {SelectModule} from 'ng-select';
 import {ImageUploadModule} from 'angular2-image-upload';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import { NgxGalleryModule } from 'ngx-gallery';
 
 import {LoginGuard} from './_guard/login.guard';
 import {Globals} from './_common/globals';
@@ -71,6 +70,7 @@ import {ClientService} from './_services/client.service';
 
 import {MaterialModule} from './material.module';
 import { SaleListPhotoComponent } from './sales/sale-list-photo/sale-list-photo.component';
+import {NgxGalleryModule} from 'ngx-gallery';
 
 
 const adminCompaniesRoutes: Routes = [
