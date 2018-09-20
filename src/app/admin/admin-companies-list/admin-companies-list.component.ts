@@ -178,6 +178,7 @@ export class DialogCompanyUnblockComponent  implements OnInit {
 
   public modules: Module[] = [];
   public timer: any;
+  public company;
 
   constructor(public dialogRef: MatDialogRef<DialogCompanyUnblockComponent>,
               private companyService: CompanyService,

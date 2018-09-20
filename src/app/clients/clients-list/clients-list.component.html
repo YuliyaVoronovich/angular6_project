@@ -17,7 +17,7 @@
     </thead>
     <tbody>
     <ng-container
-      *ngFor="let client of clients | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countSales }; let i = index">
+      *ngFor="let client of clients | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countClients }; let i = index">
       <tr>
         <td class="text-center">
           <a routerLink="client/{{client.id}}" target="_self">
@@ -45,7 +45,7 @@
   <div class="row">
     <!--Пагинация -->
     <div class="col-12 text-center">
-      <pagination-controls (pageChange)="getClientsByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+      <pagination-controls maxSize="7" previousLabel="" nextLabel=""
                            directionLinks="true" autohide="true"></pagination-controls>
     </div>
     <!-- <div class="col-3 text-right">
