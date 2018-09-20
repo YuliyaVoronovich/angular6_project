@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr style="background:#cccccc">
+      <th>*</th>
+      <th>К.</th>
+      <th>Цена(USD)</th>
+      <th>Цена м<sup>2</sup></th>
+      <th>Доля</th>
+      <th>Район</th>
+      <th>Адрес</th>
+      <th>Эт.</th>
+      <th>Материал стен</th>
+      <th>Пл.</th>
+      <th>Дата составления договора</th>
+      <th>Год постройки</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let agreement of agreements">
+      <th>*{{agreement.id}}</th>
+      <th>{{agreement.address}}</th>
+      <th>Цена(USD)</th>
+      <th>Цена м<sup>2</sup></th>
+      <th>Доля</th>
+      <th>Район</th>
+      <th>Адрес</th>
+      <th>Эт.</th>
+      <th>Материал стен</th>
+      <th>Пл.</th>
+      <th>Дата составления договора</th>
+      <th>Год постройки</th>
+    </tr>
+    </tbody>
+  </table>
+</div>

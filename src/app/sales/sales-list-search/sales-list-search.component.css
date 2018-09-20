@@ -1,5 +1,141 @@
-ng-select /deep/  {
-  width: calc(100% - 32px);
+input {
+  display: inline-block;
+  padding: 0.300rem 0.5rem;
+  font-size: 14px;
+}
+.input-mini {
+  width: 26%;
+}
+.input-micro {
+  width: 18%;
+}
+
+.check {
+  display: inline-block;
+  vertical-align: middle;
+  width: 30px;
+  height: 32px;
+  font-size: 16px;
+  padding: 0;
+  color: #333;
+  background-color: #ececec;
+  border-right: 1px solid #dfdfdf;
+  border-top: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+  text-align: center;
+}
+.check:hover {
+  background-color: #3c70904a;
+}
+.check:first-child{
+  border-left: 1px solid #dfdfdf;
+  border-radius: 3px 0 0 3px ;
+}
+.check:last-child{
+  border-radius: 0 3px 3px 0;
+}
+/*.check .checkbox {
+  position: absolute;
+  clip: rect(0,0,0,0);
+  margin: 4px 0;
+}*/
+.labels {
+  border-top: 1px solid #e2e2e2;
+  padding: 5px;
+}
+.labels label {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  color: #333;
+  background-color: #ececec;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+.labels label:hover {
+  background-color: #3c70904a;
+}
+.labels label span {
+  padding: 3px;
+}
+
+.search {
+  background: #f6f5f5;
+  border: 1px solid #d2d4d6;
+  border-radius: 3px;
+}
+
+.search ng-select /deep/  {
+  width: calc(100% - 130px);
+  background: #ffffff;
+/*  height: 29px;*/
+}
+.search ng-select /deep/ .below {
+  border-top: none;
+  border-bottom: none;
+}
+
+.search select {
+  width: calc(100% - 90px);
+  height: 30px;
+  background: #ffffff;
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  vertical-align: middle;
+  border-left: 1px solid #e2dddd;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  /*color:#aaaaaa;*/
+}
+
+.search.ng-select-without-icon ng-select /deep/  {
+  width: calc(100% - 90px);
+}
+
+.search .label {
+  width: 90px;
+  min-width: 60px;
+  margin: 0;
+  padding-left: 5px;
+}
+.search .label-middle {
+  width: calc((100% - 0px)/2);
+  min-width: 120px;
+}
+.search .label-middle:first-child {
+  border-right: 1px solid #d2d4d6;
+}
+
+.search input {
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-left: 1px solid #ddd;
+  width: calc((100% - 90px)/2);
+}
+
+.search-middle .label {
+  width: 140px;
+  min-width: 100px;
+}
+
+.search-middle input {
+  width: calc((100% - 140px)/2);
+}
+.search-full .label {
+  width: 100%;
+}
+
+.except-icon {
+  width: 40px;
+  height: 30px;
+  display: inline-block;
+}
+.except-icon i {
+  vertical-align: middle;
 }
 .show {
   display: flex;
@@ -7,3 +143,112 @@ ng-select /deep/  {
 .hide {
   display: none;
 }
+.show-block {
+  display: block;
+}
+.show-background {
+  background: white;
+}
+.hide-background {
+  background: #f6f5f5;
+}
+.cursor {
+  cursor: pointer;
+}
+.select-room {
+  background: #fbd85a;
+}
+.select-label {
+  background: #fbd85a!important;
+}
+
+/* Собственная разметка*/
+@media (max-width : 1378px) {
+  .my-col-md-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .my-col-md-7 {
+    -ms-flex: 0 0 63%;
+    flex: 0 0 63%;
+    max-width: 63%;
+  }
+  .my-col-md-5 {
+    -ms-flex: 0 0 37%;
+    flex: 0 0 37%;
+    max-width: 37%;
+  }
+}
+
+@media (max-width : 980px) {
+  .my-col-sm-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .my-col-sm-7 {
+    -ms-flex: 0 0 55%;
+    flex: 0 0 55%;
+    max-width: 55%;
+  }
+  .my-col-sm-5 {
+    -ms-flex: 0 0 45%;
+    flex: 0 0 45%;
+    max-width: 45%;
+  }
+  .my-col-sm-8 {
+    -ms-flex: 0 0 60%;
+    flex: 0 0 60%;
+    max-width: 60%;
+  }
+  .my-col-sm-4 {
+    -ms-flex: 0 0 40%;
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+  .my-col-sm-none {
+    display: none;
+  }
+  .padding {
+    padding: 0;
+  }
+  .padding-right {
+    padding-right: 0;
+  }
+  .padding-left {
+    padding-left: 0;
+  }
+  .input-mini {
+    width: 46%;
+    font-size: 12px;
+  }
+  .check {
+    font-size: 14px;
+    height: 30px;
+  }
+  a {
+    font-size: .875rem;
+  }
+}
+@media (max-width : 614px) {
+  .my-col-xs-none {
+    display: none;
+  }
+  .my-col-xs-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .my-col-xs-5 {
+    -ms-flex: 0 0 40%;
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+  .padding {
+    padding: 0 15px;
+  }
+}
+/* Собственная разметка*/
+
+

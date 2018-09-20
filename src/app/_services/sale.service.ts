@@ -50,5 +50,10 @@ export class SaleService {
     const id = typeof sale === 'number' ? sale : sale.id;
     return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(sale));
   }
+  newLocationRequest(sale: Sale) {
+    return this.http.post(this.globals.url + this.uri + '/new_location_request', JSON.stringify(sale))
+      .map((response: Response) => response.json()
+    );
+  }
 
 }

@@ -1,0 +1,15 @@
+<div *ngIf="modules" class="row">
+  <div class="col-md-6 col-sm-6">
+    <h4>Модули</h4>
+    <div *ngFor="let module of modules" class="form-check">
+      <input class="form-check-input" type="checkbox" id="{{ module.id}}" name="company.modules[]">
+      <label class="form-check-label">
+        {{ module.title}}
+      </label>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <button (click)="unblock(company)">Разблокировать</button>
+  <button (click)="closeDialog()">Отмена</button>
+</div>

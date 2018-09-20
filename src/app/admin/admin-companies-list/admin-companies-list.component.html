@@ -14,8 +14,8 @@
       <td>{{company.fio_director}}</td>
       <td>{{company.phone_director}}</td>
       <td>
-        <button class="btn btn-sm btn-danger {{company.disable ? 'd-none' : '' }}" (click)="block(company)">Заблокировать</button>
-        <button class="btn btn-sm btn-primary {{!company.disable ? 'd-none' : '' }}">Разблокировать</button>
+        <button class="btn btn-sm btn-danger {{company.disable ? 'd-none' : '' }}" (click)="openDialogBlock(company)">Заблокировать</button>
+        <button class="btn btn-sm btn-primary {{!company.disable ? 'd-none' : '' }}" (click)="openDialogUnblock(company)">Разблокировать</button>
       </td>
     </tr>
     </tbody>

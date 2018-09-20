@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {LocationService} from '../../_services/location.service';
+import {SearchSaleModel} from '../../_models/searchSale.model';
 
 export interface DialogData {
   sale: Sale;
@@ -30,17 +31,18 @@ export class SalesListComponent implements OnInit, OnDestroy {
   public hideme2 = [];
   public hideme3 = [];
 
-  public search = {
-    'price': '',
-    'room': '',
-    'sortRoom' : 'desc'
-  };
-
   public page = 0;
   public timer: any;
   public countSales; // если не придет информация с API
   public limit; // если не придет информация с API
   public subscription: Subscription;
+  public search = new SearchSaleModel({'values' : [], 'except' : 0}, {'values' : [], 'except' : 0}, {'values' : [], 'except' : 0},
+    {'values' : [], 'except' : 0}, {'values' : [], 'except' : 0}, {'values' : [], 'except' : 0}, '', '', null,
+    null, null, null, '', '', '', '', '', '', '',
+    '', '', '', '', '', '', '', '', '', '',
+    '', '', '', '',  '', '', [], [], [], false, false, false,
+    false, false, false, false);
+
 
   constructor(public dialog: MatDialog,
               private route: Router,
@@ -89,9 +91,17 @@ export class SalesListComponent implements OnInit, OnDestroy {
     }*/
 
   getSalesSearch(event) {
-    console.log(event);
     this.sales = [];
-    this.search = event;
+
+    for (const [key, value] of Object.entries(event)) {
+      if (typeof(value) === 'object' ) {
+        this.search[key] = JSON.stringify(event[key]);
+      } else {
+        this.search[key] = event[key];
+      }
+
+    }
+    console.log(this.search);
     this.getSales();
   }
 
@@ -118,11 +128,11 @@ export class SalesListComponent implements OnInit, OnDestroy {
         //
         // адрес объекта
         data[i].location = this.locationService.setLocation(data[i].location);
-        data[i].location.city = this.locationService.setCity(data[i].location);
-        data[i].location.district = this.locationService.setDistrict(data[i].location);
-        data[i].location.microdistrict = this.locationService.setMicroDistrict(data[i].location);
-        data[i].location.street = this.locationService.setStreet(data[i].location);
-        data[i].location.metro = this.locationService.setMetro(data[i].location);
+        data[i].location.city = this.locationService.setCity(data[i].location.city);
+        data[i].location.district = this.locationService.setDistrict(data[i].location.district);
+        data[i].location.microdistrict = this.locationService.setMicroDistrict(data[i].location.microdistrict);
+        data[i].location.street = this.locationService.setStreet(data[i].location.street);
+        data[i].location.metro = this.locationService.setMetro(data[i].location.metro);
         // цена за метр
         if (data[i].area !== 0) {
           data[i].price_sqr = Math.floor(data[i].price / data[i].area);

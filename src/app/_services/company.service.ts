@@ -31,7 +31,7 @@ export class CompanyService {
   setCompany(company: Company) {
     if (!company) {
       return company = new Company(null, '', '', '', '', '', null, null, '',
-        '', '', null, null, null, [], null, false);
+        '', '', null, null, null, [], null, false, null);
     }
     return company;
   }
@@ -46,8 +46,13 @@ export class CompanyService {
 
   block(company: Company | number): Observable<Response> {
     const id = typeof company === 'number' ? company : company.id;
-    return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(company));
+    return this.http.post(this.globals.url + '/block/' + this.uri + '/' + id, JSON.stringify(company));
   }
+  unblock(company: Company | number): Observable<Response> {
+    const id = typeof company === 'number' ? company : company.id;
+    return this.http.post(this.globals.url + '/unblock/' + id, JSON.stringify(company));
+  }
+
 
 
   private handleError(error: Response) {

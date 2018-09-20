@@ -10,9 +10,9 @@
 
         </h3>
         <div class="form-group row">
-          <label for="login" class="col-5 col-form-label text-left">Логин</label>
+          <label class="col-5 col-form-label text-left">Логин</label>
           <div class="col-7">
-            <input type="text" class="form-control" id="login" name="login" [(ngModel)]="user.login">
+            <input type="text" class="form-control" [(ngModel)]="user.login">
           </div>
         </div>
         <div class="form-group row">
@@ -73,7 +73,8 @@
         <div class="form-group row">
           <label class="col-5 col-form-label text-left">Компания</label>
           <div class="col-7">
-            <select (ngModelChange)="infoForCompany($event)"  class="form-control" [(ngModel)]="user.company_id">
+            <select (ngModelChange)="infoForCompany($event)" class="form-control" [(ngModel)]="user.company_id">
+              <option value="0"></option>
               <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
             </select>
           </div>
@@ -82,6 +83,7 @@
           <label class="col-5 col-form-label text-left">Менеджер</label>
           <div class="col-7">
             <select class="form-control" [(ngModel)]="user.manager_id">
+              <option value="0"></option>
               <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}} {{one.user_information.name}}</option>
             </select>
           </div>
@@ -107,6 +109,7 @@
           <div class="col-7">
             <select class="form-control" [(ngModel)]="user.role_id"
                     [ngModelOptions]="{standalone: true}">
+              <option value="0"></option>
               <option *ngFor="let one of roles" [value]="one.id">{{one.title}}</option>
             </select>
           </div>

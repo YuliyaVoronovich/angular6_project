@@ -1,4 +1,4 @@
-  <div class="container">
+<div class="container">
   <h3 style="margin-bottom: 40px">
     <div *ngIf="company.id;then edit else create"></div>
 
@@ -6,149 +6,143 @@
     <ng-template #edit> Редактирование компании</ng-template>
 
   </h3>
-  <form class="form-horizontal" role="form" id="addapartform" method="post" enctype="multipart/form-data">
-    <div class="row">
-      <div class="col-6 col-6">
-        <h4>Основная информация</h4>
-        <div class="form-group row">
-          <label for="title" class="col-5 col-form-label text-left">Название<span
-            style="color: red">*</span></label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="title" name="title" [(ngModel)]="company.title">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="name_organization" class="col-5 col-form-label text-left">Название организации</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="name_organization" name="name_organization"
-                   [(ngModel)]="company.name_organization">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="fio_director" class="col-5 col-form-label text-left">ФИО директора</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="fio_director" name="fio_director" [(ngModel)]="company.fio_director">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="phone_director" class="col-5 col-form-label text-left">Телефон директора</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="phone_director" name="phone_director" [(ngModel)]="company.phone_director">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="license" class="col-5 col-form-label text-left">Лицензия</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="license" name="license" [(ngModel)]="company.license">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="license_issued" class="col-5 col-form-label text-left">Выдана</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="license_issued" name="license_issued"
-                   [(ngModel)]="company.license_issued">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="license_from" class="col-5 col-form-label text-left">От</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="license_from" name="license_from" (click)="g.toggle()"
-                   [(ngModel)]="company.license_from" ngbDatepicker
-                   #g="ngbDatepicker">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="license_to" class="col-5 col-form-label text-left">До</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="license_to" name="license_to" (click)="d.toggle()"
-                   [(ngModel)]="company.license_to" ngbDatepicker
-                   #d="ngbDatepicker">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="prefix" class="col-5 col-form-label text-left">Префикс</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="prefix" name="prefix" [(ngModel)]="company.prefix">
-          </div>
+  <div class="row">
+    <div class="col-6 col-6">
+      <h4>Основная информация</h4>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Название<span
+          style="color: red">*</span></label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.title">
         </div>
       </div>
-      <div class="col-6 col-6">
-        <h4>Дополнительная информация</h4>
-        <div class="form-group row">
-          <label for="id_domovita" class="col-5 col-form-label text-left">ID домовиты</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="id_domovita" name="id_domovita" [(ngModel)]="company_information.id_domovita">
-          </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Название организации</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.name_organization">
         </div>
-        <div class="form-group row">
-          <label for="login_onliner" class="col-5 col-form-label text-left">Логин онлайнер</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="login_onliner" name="login_onliner" [(ngModel)]="company_information.login_onliner">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">ФИО директора</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.fio_director">
         </div>
-        <div class="form-group row">
-          <label for="pass_onliner" class="col-5 col-form-label text-left">Пароль онлайнер</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="pass_onliner" name="pass_onliner" [(ngModel)]="company_information.pass_onliner">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Телефон директора</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.phone_director">
         </div>
-        <div class="form-group row">
-          <label for="login_realt" class="col-5 col-form-label text-left">Логин реалт</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="login_realt" name="login_realt" [(ngModel)]="company_information.login_realt">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Лицензия</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.license">
         </div>
-        <div class="form-group row">
-          <label for="pass_realt" class="col-5 col-form-label text-left">Пароль реалт</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="pass_realt" name="pass_realt" [(ngModel)]="company_information.pass_realt">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Выдана</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.license_issued">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">От</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.license_from"
+                 ngbDatepicker (click)="license_from.toggle()" #license_from="ngbDatepicker">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">До</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.license_to"
+                 ngbDatepicker (click)="license_to.toggle()" #license_to="ngbDatepicker">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Префикс</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.prefix">
         </div>
       </div>
     </div>
-
-    <div *ngIf="modules" class="row">
-      <div class="col-6 col-6">
-        <h4>Модули</h4>
-        <div *ngFor="let u of modules" class="form-check">
-          <input class="form-check-input" type="checkbox" id="{{ u.id}}" name="company.modules[]"
-                 [checked]="company.modules[u.id]"
-                 (change)="company.modules[u.id] = !company.modules[u.id]">
-          <label class="form-check-label">
-            {{ u.title}}
-          </label>
+    <div class="col-6 col-6">
+      <h4>Дополнительная информация</h4>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">ID домовиты</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.company_information.id_domovita">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Логин онлайнер</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.company_information.login_onliner">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Пароль онлайнер</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.company_information.pass_onliner">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Логин реалт</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.company_information.login_realt">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Пароль реалт</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.company_information.pass_realt">
         </div>
       </div>
     </div>
+  </div>
 
-    <div [ngStyle]="{'display' : !company.id ? 'block' : 'none' }" class="row">
-      <div class="col-12 col-12">
-        <h4>Сотрудник</h4>
-        <div class="form-group row">
-          <label for="name" class="col-5 col-form-label text-left">Имя сотрудника</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="company.user.user_information.name">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="login" class="col-5 col-form-label text-left">Логин сотрудника</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="login" name="login" [(ngModel)]="company.user.login">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="password" class="col-5 col-form-label text-left">Пароль сотрудника</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="password" name="password" [(ngModel)]="company.user.password_first">
-          </div>
-        </div>
+  <div *ngIf="modules" class="row">
+    <div class="col-6 col-6">
+      <h4>Модули</h4>
+      <div *ngFor="let u of modules" class="form-check">
+        <input class="form-check-input" type="checkbox" id="{{ u.id}}" name="company.modules[]"
+               [checked]="company.modules[u.id]"
+               (change)="company.modules[u.id] = !company.modules[u.id]">
+        <label class="form-check-label">
+          {{ u.title}}
+        </label>
       </div>
     </div>
+  </div>
 
+  <div [ngStyle]="{'display' : !company.id ? 'block' : 'none' }" class="row">
     <div class="col-12 col-12">
-      <button (click)="save()" class="btn btn-lg btn-info">
-        Сохранить
-      </button>
+      <h4>Сотрудник</h4>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Имя сотрудника</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.user.user_information.name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Логин сотрудника</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.user.login">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Пароль сотрудника</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="company.user.password_first">
+        </div>
+      </div>
     </div>
-  </form>
+  </div>
+
+  <div class="col-12 col-12">
+    <button (click)="save()" class="btn btn-lg btn-info">
+      Сохранить
+    </button>
+  </div>
 </div>

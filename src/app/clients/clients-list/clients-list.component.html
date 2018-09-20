@@ -1,0 +1,55 @@
+<div class="table-responsive" style="margin-bottom: 20px">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Клиент</th>
+      <th>Телефон</th>
+      <th>Цена</th>
+      <th>Комнат</th>
+      <th>Местоположение</th>
+      <th>Примечание</th>
+      <th>Агент</th>
+      <th><span class="nobr"><i class="fas fa-sort icon-color"></i>Дата доб.</span></th>
+      <th><span class="nobr"><i class="fas fa-sort icon-color"></i>Дата обн.</span></th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container
+      *ngFor="let client of clients | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countSales }; let i = index">
+      <tr>
+        <td class="text-center">
+          <a routerLink="client/{{client.id}}" target="_self">
+            <i class="fas fa-pencil-alt icon-color"></i>
+          </a>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="container bg-light" style="margin: 0; max-width: calc(100% - 150px); padding-top: 15px;">
+  <div class="row">
+    <!--Пагинация -->
+    <div class="col-12 text-center">
+      <pagination-controls (pageChange)="getClientsByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+                           directionLinks="true" autohide="true"></pagination-controls>
+    </div>
+    <!-- <div class="col-3 text-right">
+       Всего объектов в МЛС: {{countSales}}
+     </div>-->
+  </div>
+</div>

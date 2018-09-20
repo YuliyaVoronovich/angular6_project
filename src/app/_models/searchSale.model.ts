@@ -1,0 +1,53 @@
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+
+export class SearchSaleModel {
+
+  constructor(
+    public region: any,
+    public district_rb: any,
+    public city: any,
+    public district: any,
+    public microdistrict: any,
+    public street: any,
+    public house_from: string,
+    public house_to: string,
+    public created_from: NgbDateStruct,
+    public created_to: NgbDateStruct,
+    public updated_from: NgbDateStruct,
+    public updated_to: NgbDateStruct,
+    public rooms: any,
+    public price_from: string,
+    public price_to: string,
+    public area_from: string,
+    public area_to: string,
+    public area_leave_from: string,
+    public area_leave_to: string,
+    public area_kitchen_from: string,
+    public area_kitchen_to: string,
+    public storey_from: string,
+    public storey_to: string,
+    public storeys_from: string,
+    public storeys_to: string,
+    public first_storey: any,
+    public last_storey: any,
+    public furniture: string,
+    public company: string,
+    public year_from: string,
+    public year_to: string,
+    public year_repair_from: string,
+    public year_repair_to: string,
+    public roof_from: string,
+    public roof_to: string,
+    public walls: any,
+    public sales: any,
+    public repairs: any,
+    public separate_wc: boolean,
+    public balcony: boolean,
+    public terrace: boolean,
+    public price_low: boolean,
+    public partner: boolean,
+    public layout: boolean,
+    public room_separate: boolean
+  ) {
+  }
+}

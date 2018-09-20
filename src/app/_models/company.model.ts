@@ -1,6 +1,7 @@
 import {CompanyInformation} from './companyInformation.model';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {User} from './user.model';
+import {CompanyHistoryBlock} from './companyHistoryBlock.model';
 
 export class Company {
 
@@ -21,7 +22,8 @@ export class Company {
     public company_information: CompanyInformation,
     public modules: any[] = [],
     public user: User,
-    public disable: boolean
+    public disable: boolean,
+    public company_history_blocks: CompanyHistoryBlock
   ) {
   }
 }

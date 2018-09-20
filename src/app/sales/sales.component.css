@@ -1,12 +1,16 @@
+.display {
+  width: calc(100% - 150px);
+}
 .general-menu {
-  background: #c1d3de;
+  background: #3c7090;
   /* background: #e7e9ef;*/
    height: 52px;
    box-shadow: 0 5px 10px #b1afaf;
+  color: #fef6f6;
  }
 
  .left-sidebar {
-   background: #f1eae9;
+   background: #3c70904a;
    position: sticky;
    top: 52px;
    /*border-top: 1px solid;*/
@@ -14,4 +18,9 @@
   overflow-y: auto;
   z-index: 1000;
   width: 150px;
+}
+@media (max-width : 768px) {
+  .display {
+   width: 100%;
+  }
 }

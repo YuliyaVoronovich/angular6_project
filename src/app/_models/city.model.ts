@@ -1,4 +1,4 @@
-import {DistrictCountry} from './district_country.model';
+import {DistrictCountry} from './districtCountry.model';
 
 export class City {
 

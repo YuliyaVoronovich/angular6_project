@@ -29,7 +29,7 @@ export class AdminCompanyModificateComponent implements OnInit {
   public timer: any;
   public company_information: CompanyInformation = new CompanyInformation(0, null, '', '', '', '', '');
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
-    '', '', null, null, null, [], null, false);
+    '', '', null, null, null, [], null, false, null);
   public user: User = new User(0, '', '', null, null, null, '', 0, null, null,
     null, null, '', null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
@@ -52,8 +52,8 @@ export class AdminCompanyModificateComponent implements OnInit {
           this.route.data.subscribe(({data}) => {
 
             this.company = data.company;
-            if (this.company.company_information != null) {
-              this.company_information = data.company.company_information;
+            if (this.company.company_information === null) {
+              this.company.company_information = this.company_information;
             }
             // даты из формата 0000-00-00 в формат объект
             this.company.license_from = new NgbDateFRParserFormatter().parse(data.company.license_from);
@@ -62,7 +62,8 @@ export class AdminCompanyModificateComponent implements OnInit {
             this.modules = data.modules;
           });
         } else {
-           this.create();
+          this.company.company_information = this.company_information;
+          this.create();
         }
       });
     this.company.user = this.user;

@@ -1,11 +1,16 @@
-<div class="row justify-content-center">
-  <div class="col-10">
+<div class="row justify-content-center" style="width: 100%">
+  <div class="col-12">
     <div *ngFor="let request of requests" class="alert alert-info">
       <div class="">
-        <span class="fa fa-check-circle-o choose"></span>
-        {{request.text}}
+        <span class="fa fa-check-circle-o choose"(click)="choose(request.id)"></span>
+        <span class="font-weight-bold">{{request.text}}</span><br/>
+        Область: {{request.info.region}}<br/>
+        Город: {{request.info.city}}<br/>
+        Улица: {{request.info.street}}<br/>
+        Дом: {{request.info.house}}<br/>
+        Корпус: {{request.info.housing}}
       </div>
-      <span class="fa fa-remove remove"></span>
+      <span class="fa fa-remove remove" (click)="delete(request)"></span>
     </div>
   </div>
 </div>

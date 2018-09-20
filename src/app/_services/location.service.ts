@@ -9,7 +9,7 @@ import {City} from '../_models/city.model';
 import {District} from '../_models/district.model';
 import {Region} from '../_models/region.model';
 import {Metro} from '../_models/metro.model';
-import {DistrictCountry} from '../_models/district_country.model';
+import {DistrictCountry} from '../_models/districtCountry.model';
 import {Street} from '../_models/street.model';
 import {Microdistrict} from '../_models/microdistrict.model';
 import {Globals} from '../_common/globals';
@@ -57,60 +57,70 @@ export class LocationService {
       .map((response: Response) => response.json().cities);
     // .catch(this.handleError);
   }
+  getDistricts(city = 0) {
+    return this.http.get(this.globals.url + this.uri + '/districts', {search: {'city': city}})
+      .map((response: Response) => response.json().districts);
+    // .catch(this.handleError);
+  }
+  getMicroDistricts(district = 0) {
+    return this.http.get(this.globals.url + this.uri + '/microdistricts', {search: {'district': district}})
+      .map((response: Response) => response.json().microdistricts);
+    // .catch(this.handleError);
+  }
 
-  getStreets(city) {
-    return this.http.get(this.globals.url + this.uri + '/streets', {search: {'city': city}})
+  getStreets(city, microdistrict) {
+    return this.http.get(this.globals.url + this.uri + '/streets', {search: {'city': city, 'microdistrict': microdistrict}})
       .map((response: Response) => response.json().streets);
     // .catch(this.handleError);
   }
 
-  setCity(location: Location): City {
-    if (!location.city) {
-      return location.city = new City(0, null, '');
+  setCity(city: City): City {
+    if (!city) {
+      return city = new City(0, null, '');
     }
-    return location.city;
+    return city;
   }
 
-  setDistrict(location: Location): District {
-    if (!location.district) {
-      return location.district = new District(0, null, '', '');
+  setDistrict(district: District): District {
+    if (!district) {
+      return district = new District(0, null, '', '');
     }
-    return location.district;
+    return district;
   }
 
-  setMicroDistrict(location: Location): Microdistrict {
-    if (!location.microdistrict) {
-      return location.microdistrict = new Microdistrict(0, null, '', '');
+  setMicroDistrict(microdistrict: Microdistrict): Microdistrict {
+    if (!microdistrict) {
+      return microdistrict = new Microdistrict(0, null, '', '');
     }
-    return location.microdistrict;
+    return microdistrict;
   }
 
-  setStreet(location: Location): Street {
-    if (!location.street) {
-      return location.street = new Street(0, '', null);
+  setStreet(street: Street): Street {
+    if (!street) {
+      return street = new Street(0, '', null);
     }
-    return location.street;
+    return street;
   }
 
-  setMetro(location: Location): Metro {
-    if (!location.metro) {
-      return location.metro = new Metro(0, 0, '');
+  setMetro(metro: Metro): Metro {
+    if (!metro) {
+      return metro = new Metro(0, 0, '');
     }
-    return location.metro;
+    return metro;
   }
 
-  setDistrictCountry(location: Location): DistrictCountry {
-    if (!location.city.district_country) {
-      return location.city.district_country = new DistrictCountry(0, null, '');
+  setDistrictCountry(district_country: DistrictCountry): DistrictCountry {
+    if (!district_country) {
+      return district_country = new DistrictCountry(0, null, '');
     }
-    return location.city.district_country;
+    return district_country;
   }
 
-  setRegion(location: Location): Region {
-    if (!location.city.district_country.region) {
-      return location.city.district_country.region = new Region(0, null);
+  setRegion(region: Region): Region {
+    if (!region) {
+      return region = new Region(0, null);
     }
-    return location.city.district_country.region;
+    return region;
   }
 
   setLocation(location: Location): Location {

@@ -3,7 +3,7 @@ import {User} from './user.model';
 import {SaleAdditionInformation} from './saleAdditionInformation.model';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {Count} from './count.model';
-import {Photo} from "./photo.model";
+import {Photo} from './photo.model';
 
 export class Sale {
 
@@ -42,6 +42,7 @@ export class Sale {
     public level: number,
     public elite: boolean,
     public new_building: boolean,
+    public free_layout: boolean,
     public storey: number,
     public storeys: number,
     public repair: number,

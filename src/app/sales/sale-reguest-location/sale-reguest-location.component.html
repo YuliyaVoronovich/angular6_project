@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="text-danger">
+    Проверьте правильность введенных данных или отправьте заявку на добавление информации
+  </div>
+  <div class="form-group row no-gutters">
+    <label class="col-3 col-form-label text-left">Область</label>
+    <ng-select [options]="regions"
+               [allowClear]="true"
+               [(ngModel)]="''+ sale.location.city.district_country.region.id">
+    </ng-select>
+  </div>
+  <div class="form-group row no-gutters">
+    <label class="col-3 col-form-label text-left">Нас. пункт</label>
+    <ng-select [options]="cities"
+               [allowClear]="true"
+               [(ngModel)]="''+ sale.location.city.id">
+    </ng-select>
+  </div>
+  <div class="form-group row no-gutters">
+    <label class="col-3 col-form-label text-left">Улица</label>
+    <input [(ngModel)]="sale.location.street.title">
+  </div>
+  <div class="form-group row no-gutters">
+    <label class="col-3 col-form-label text-left">Номер дома</label>
+    <input [(ngModel)]="sale.location.house">
+  </div>
+  <div class="form-group row no-gutters">
+    <label class="col-3 col-form-label text-left">Корпус</label>
+    <input [(ngModel)]="sale.location.housing">
+  </div>
+  <div class="form-group row no-gutters">
+    <textarea cols="35" rows="4" #textRequest></textarea>
+  </div>
+  <div>
+    <button class="btn btn-sm btn-primary" (click)="sendRequest()">Отправить</button>
+  </div>
+</div>

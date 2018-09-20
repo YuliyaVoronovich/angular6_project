@@ -1,5 +1,15 @@
-<div class="user-info">
-  <span class="fa fa-user"></span>
+<div class="user-info" (click)="hide_info=!hide_info">
+  <div ngbDropdown>
+    <a class="btn" id="dropdownBasic1" ngbDropdownToggle>
+      <span class="fa fa-user"> </span>
+        <span>{{ user_information.name}} {{ user_information.surname}}</span>
+    </a>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <a class="dropdown-item">Настройки</a>
+      <a class="dropdown-item" (click)="logout()">Выйти</a>
+    </div>
+  </div>
+  <!--<span class="fa fa-user"></span>
   {{ user_information.name}} {{ user_information.surname}}
   <kbd class="bg-primary" style="cursor: pointer" (click)="hide = !hide">
     <span class="access">{{ user.access}}</span>
@@ -11,9 +21,9 @@
     <div class="level" (click)="setAccess(4)">MLS</div>
   </div>
 
-  <div class="pull-right">
-    <a style="color: #000" class="" routerLink="/logout">Выйти</a>
-  </div>
+  <div class="menu-user" [ngClass]="{'show' : hide_info, 'hide' : !hide_info}">
+    <a class="btn" (click)="logout()">Выйти</a>
+  </div>-->
 </div>
 
 

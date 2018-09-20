@@ -17,6 +17,8 @@ export class MenuUserInfoComponent implements OnInit {
     0, 0, 0, null, null, null, null, null);
   public user_information: UserInformation = new UserInformation(null, '', '', '', '', '', '', null, null);
   public hide = false;
+  public hide_info = false;
+
   public timer: any;
 
   constructor(private router: Router,
@@ -27,6 +29,12 @@ export class MenuUserInfoComponent implements OnInit {
 
   ngOnInit() {
     this.getUserInfo();
+  }
+
+  logout(): boolean {
+    this.loginService.logout();
+    this.router.navigate(['/']);
+    return false;
   }
 
 

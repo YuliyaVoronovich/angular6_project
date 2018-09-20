@@ -174,7 +174,7 @@ ng-select /deep/ .message {
   display: block;
   background: #f1eae9;
   z-index: 100;
-  width: 300px;
+  width: 400px;
   position: absolute;
   padding: 10px;
   left: 95%;

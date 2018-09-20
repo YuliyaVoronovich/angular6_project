@@ -1,22 +1,32 @@
 /*::ng-deep body {
   background: white!important;
 }*/
+table {
+  font-size: 14px;
+}
+table body {
+  background: #f9f7f7;
+}
 table tr th {
-  background: rgba(165, 205, 232, 0.49);
-  border-color: #e3f5ff;
+  background: #eaeaea;
+  border-color: #f5f5f5;
   text-align: center;
-  padding: 0.6em;
+  padding: 0.4em;
   color: #524d4d;
  /* top:40px;*/
 }
 table tr td {
   line-height: 1;
-  border-color: #e3f5ff;
+  border-color: #f5f5f5;
   text-align: center;
-  padding: 0.5em;
+  padding: 0.3em;
+  vertical-align: middle;
 }
 table > tbody tr:hover {
   background: rgba(175, 212, 238, 0.18);
+}
+table th .nobr {
+  white-space: nowrap;
 }
 .check {
   display: inline-block;
@@ -30,6 +40,22 @@ table > tbody tr:hover {
   border: 1px solid #c1d3de;
   cursor: pointer;
 }
+.check .checkbox {
+  position: absolute;
+  clip: rect(0,0,0,0);
+  margin: 4px 0;
+}
+
+.action-window{
+  background:white;
+  position: absolute;
+  right: 80px;
+  border: 1px solid #8ed0ff;
+  box-shadow: 0 5px 10px #b1afaf;
+  font-size: 14px;
+  padding: 3px;
+  z-index: 1000;
+}
 .action {
   cursor:pointer;
   border-bottom:1px solid #7ebaee;
@@ -40,4 +66,21 @@ table > tbody tr:hover {
 }
 .action:hover {
   background: #6fbeee;
+}
+.icon-color {
+  color: #428bca
+}
+.icon-cursor {
+  cursor: pointer;
+}
+
+mat-icon.size-16 {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+}
+mat-icon.size-18 {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
 }

@@ -1,117 +1,489 @@
-<div class="col-10 container bg-light" style="max-width: 100%;">
-  <div class="row no-gutters" style="padding: 20px 0 0" [ngClass]="{'show' : !hide, 'hide' : hide}">
-    <div class="col-9">
+<div class="container bg-light" style="max-width: 100%;">
+  <div class="row" style="padding: 20px 0 0" [ngClass]="{'show' : !hide, 'hide' : hide}">
+    <div class="col-lg-4 my-col-md-12 my-col-xs-none">
       <div class="row">
-        <div class="col-3">
+        <div class="col-6 my-col-sm-12">
           <div class="form-group">
             <ng-select [options]="cities"
-                       [(ngModel)]="''+ search.city"
-                       [ngModelOptions]="{standalone: true}"
-                       [allowClear]="true"
+                       [(ngModel)]="search.city.values"
                        [multiple]="true"
                        placeholder="Город">
             </ng-select>
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-6 my-col-sm-12">
           <div class="form-group">
             <ng-select [options]="streets"
-                       [(ngModel)]="''+ search.street"
-                       [ngModelOptions]="{standalone: true}"
-                       [allowClear]="true"
+                       [(ngModel)]="search.street.values"
                        [multiple]="true"
                        placeholder="Улица">
             </ng-select>
           </div>
         </div>
-        <div class="col-2">
-          Комнаты
-          <!--<input class="form-check-input" type="checkbox" name="search.room[]"
-                 [checked]="search.room[0]"
-                 (change)="search.room[0] = !search.room[0]">-
-          <input class="form-check-input" type="checkbox" name="search.room[]"
-                 [checked]="search.room[1]"
-                 (change)="search.room[1] = !search.room[1]">-
-          <input class="form-check-input" type="checkbox" name="search.room[]"
-                 [checked]="search.room[2]"
-                 (change)="search.room[2] = !search.room[1]">-->
-        </div>
-        <div class="col-2">
-          <input type="text" class="form-control" id="price" name="price" [(ngModel)]="search.price" placeholder="Цена">
-        </div>
       </div>
     </div>
-    <div class="col-3 text-right" style="color: #428bca">
+
+    <div class="col-lg-5 my-col-md-7 my-col-sm-8 my-col-xs-12">
+      <div class="row">
+        <div class="col-md-5 my-col-sm-7  padding-right">
+          <ng-container *ngFor="let room of rooms; let i = index">
+            <label class="form-check-label check cursor" (click)="roomsTrigger(i); arrayRooms[i] = !arrayRooms[i]"
+                   [ngClass]="{'select-room' : arrayRooms[i]}">
+              <span>{{room.label}}</span>
+            </label>
+          </ng-container>
+        </div>
+
+        <div class="col-md-7 my-col-sm-5 padding">
+          <span class="my-col-sm-none">
+            <input type="text" class="form-control input-micro" [(ngModel)]="search.area_from" placeholder="S от">-
+          <input type="text" class="form-control input-micro" [(ngModel)]="search.area_to" placeholder="S до"
+                 style="margin-right: 6px">
+          </span>
+          <span>
+            <input type="text" class="form-control input-mini" [(ngModel)]="search.price_from" placeholder="Цена от">-
+          <input type="text" class="form-control input-mini" [(ngModel)]="search.price_to" placeholder="Цена до">
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-3 my-col-md-5 my-col-sm-4 my-col-xs-12  text-right padding-left" style="color: #428bca">
       <a class="btn" (click)="hide=!hide">
         <i class="fas fa-search-plus"></i>
-        <!--<mat-icon style="vertical-align: middle; font-size: 20px">search</mat-icon>-->
-        Расширенный поиск</a>
-      <button style="margin-left: 10px" class="btn btn-sm btn-primary" (click)="searchSale()">Поиск</button>
-    </div>
-  </div>
-</div>
-<div class="row no-gutters" style="margin-top: 10px" [ngClass]="{'show' : hide, 'hide' : !hide}">
-
-  <div class="col-4">
-    <div class="form-group">
-      <div class="col-7">
-        <ng-select [options]="regions"
-                   [(ngModel)]="''+ search.region"
-                   [ngModelOptions]="{standalone: true}"
-                   [allowClear]="true"
-                   [multiple]="true"
-                   placeholder="Область">
-        </ng-select>
-        <i class="fas fa-times"></i>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-7">
-        <ng-select [options]="cities"
-                   [(ngModel)]="''+ search.city"
-                   [ngModelOptions]="{standalone: true}"
-                   [allowClear]="true"
-                   [multiple]="true"
-                   placeholder="Город">
-        </ng-select>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-7">
-        <ng-select [options]="streets"
-                   [(ngModel)]="''+ search.street"
-                   [ngModelOptions]="{standalone: true}"
-                   [allowClear]="true"
-                   [multiple]="true"
-                   placeholder="Улица">
-        </ng-select>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-7">
-        <input type="text" class="form-control" id="district" name="district"
-               [(ngModel)]="search.district" placeholder="Район">
-      </div>
-    </div>
-  </div>
-  <div class="col-4">
-    Инф по квартире
-  </div>
-  <div class="col-4">
-    иная инф
-  </div>
-
-</div>
-<div class="row no-gutters" [ngClass]="{'show' : hide, 'hide' : !hide}">
-
-  <div class="col-12 text-right" style="color: #428bca">
-    <a class="btn" (click)="hide=!hide">
-      <i class="fas fa-search-minus"></i>
+        <span>Расширенный поиск</span>
+      </a>
       <!--<mat-icon style="vertical-align: middle; font-size: 20px">search</mat-icon>-->
-      Скрыть поиск</a>
+
+      <button class="btn btn-sm btn-primary" (click)="searchSale()">Поиск</button>
+    </div>
   </div>
 
-</div>
+  <div class="row" style="margin-top: 10px" [ngClass]="{'show' : hide, 'hide' : !hide}">
 
+    <div class="col-lg-4 col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Область</label>
+              <ng-select [options]="regions"
+                         [(ngModel)]="search.region.values"
+                         [multiple]="true"
+                         (selected)="selectDistrictsRb($event)"
+                         (deselected)="deselectDistrictsRb($event)">
+              </ng-select>
+              <div class="except-icon text-center cursor" (click)="search.region.except=!search.region.except"
+                   [ngClass]="{'select-label' : search.region.except}">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Район</label>
+              <ng-select [options]="districts_rb"
+                         [(ngModel)]="search.district_rb.values"
+                         [multiple]="true"
+                         (selected)="selectCities($event)"
+                         (deselected)="deselectCities($event)">
+              </ng-select>
+              <div class="except-icon text-center cursor" (click)="search.district_rb.except=!search.district_rb.except"
+                   [ngClass]="{'select-label' : search.district_rb.except}">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Нас. пункт</label>
+              <ng-select [options]="cities"
+                         [(ngModel)]="search.city.values"
+                         [multiple]="true"
+                         (selected)="selectDistrict($event)"
+                         (deselected)="deselectDistrict($event)">
+              </ng-select>
+              <div class="except-icon text-center cursor" (click)="search.city.except=!search.city.except"
+                   [ngClass]="{'select-label' : search.city.except}">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Р-н гор.</label>
+              <ng-select [options]="districts"
+                         [(ngModel)]="search.district.values"
+                         [multiple]="true"
+                         (selected)="selectMicroDistrict($event)"
+                         (deselected)="deselectMicroDistrict($event)">
+              </ng-select>
+              <div class="except-icon text-center cursor" (click)="search.district.except=!search.district.except"
+                   [ngClass]="{'select-label' : search.district.except}">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Мкрн.</label>
+              <ng-select [options]="microdistricts"
+                         [(ngModel)]="search.microdistrict.values"
+                         [multiple]="true"
+                         (selected)="selectStreet($event)"
+                         (deselected)="deselectStreet($event)">
+              </ng-select>
+              <div class="except-icon text-center cursor"
+                   (click)="search.microdistrict.except=!search.microdistrict.except"
+                   [ngClass]="{'select-label' : search.microdistrict.except}">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Улица</label>
+              <ng-select [options]="streets"
+                         [(ngModel)]="search.street.values"
+                         [multiple]="true">
+              </ng-select>
+              <div class="except-icon text-center cursor" (click)="search.street.except=!search.street.except"
+                   [ngClass]="{'select-label' : search.street.except}">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">№ дома</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.house_from">
+              <input type="text" placeholder="до" [(ngModel)]="search.house_to">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Дата пост.</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.created_from"
+                     ngbDatepicker (click)="created_from.toggle()" #created_from="ngbDatepicker">
+              <input type="text" placeholder="до" [(ngModel)]="search.created_to"
+                     ngbDatepicker (click)="created_to.toggle()" #created_to="ngbDatepicker">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Дата ред.</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.updated_from"
+                     ngbDatepicker (click)="updated_from.toggle()" #updated_from="ngbDatepicker">
+              <input type="text" placeholder="до" [(ngModel)]="search.updated_to"
+                     ngbDatepicker (click)="updated_to.toggle()" #updated_to="ngbDatepicker">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="row">
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Комнаты</label>
+              <ng-container *ngFor="let room of rooms; let i = index">
+                <label class="form-check-label check cursor" (click)="roomsTrigger(i); arrayRooms[i] = !arrayRooms[i]"
+                       [ngClass]="{'select-room' : arrayRooms[i]}">
+                  <span>{{room.label}}</span>
+                </label>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Цена</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.price_from">
+              <input type="text" placeholder="до" [(ngModel)]="search.price_to">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-4 col-xs-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">S общая</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.area_from">
+              <input type="text" placeholder="до" [(ngModel)]="search.area_to">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-4 col-xs-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">S жилая</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.area_leave_from">
+              <input type="text" placeholder="до" [(ngModel)]="search.area_leave_to">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-4 col-xs-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">S кухни</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.area_kitchen_from">
+              <input type="text" placeholder="до" [(ngModel)]="search.area_kitchen_to">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Этажность</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.storeys_from">
+              <input type="text" placeholder="до" [(ngModel)]="search.storeys_to">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Этаж</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.storey_from">
+              <input type="text" placeholder="до" [(ngModel)]="search.storey_to">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="labels" style="border: none">
+              <label class="btn btn-default">
+                <span (click)="search.first_storey.values = !search.first_storey.values"
+                      [ngClass]="{'select-label' : search.first_storey.values}">Первый</span>
+                <div class="except-icon text-center" (click)="search.first_storey.except=!search.first_storey.except"
+                     [ngClass]="{'select-label' : search.first_storey.except}">
+                  <i class="fas fa-times"></i>
+                </div>
+              </label>
+              <label class="btn btn-default">
+                <span (click)="search.last_storey.values = !search.last_storey.values"
+                      [ngClass]="{'select-label' : search.last_storey.values}">Последний</span>
+                <div class="except-icon text-center" (click)="search.last_storey.except=!search.last_storey.except"
+                     [ngClass]="{'select-label' : search.last_storey.except}">
+                  <i class="fas fa-times"></i>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search ng-select-without-icon">
+              <label class="label text-left">Мебель</label>
+              <select [(ngModel)]="search.furniture">
+                <option *ngFor="let one of furniture" [value]="one.id">{{one.title}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search ng-select-without-icon">
+              <label class="label text-left">Агентство</label>
+              <select [(ngModel)]="search.company">
+                <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12">
+
+      <div class="row">
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search search-middle">
+              <label class="label text-left">Год постройки</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.year_from">
+              <input type="text" placeholder="до" [(ngModel)]="search.year_to">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search search-middle">
+              <label class="label text-left">Год кап.ремонта</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.year_repair_from">
+              <input type="text" placeholder="до" [(ngModel)]="search.year_repair_to">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search search-middle">
+              <label class="label text-left">Высота потолка</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.roof_from">
+              <input type="text" placeholder="до" [(ngModel)]="search.roof_to">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search search-full" [ngClass]="{'show-background' : hide_wall, 'hide-background' : !hide_wall}">
+              <label class="label text-center cursor" (click)="hide_wall=!hide_wall">Материал стен</label>
+              <div class="labels" [ngClass]="{'show-block' : hide_wall, 'hide' : !hide_wall}">
+                <ng-container *ngFor="let wall of walls">
+                  <label class="btn btn-default"
+                         (click)="wallsTrigger(wall.id); arrayWalls[wall.id] = !arrayWalls[wall.id]"
+                         [ngClass]="{'select-label' : arrayWalls[wall.id]}">
+                    <span>{{wall.title}}</span>
+                  </label>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search search-full"
+                 [ngClass]="{'show-background' : hide_sales, 'hide-background' : !hide_sales}">
+              <label class="label text-center cursor" (click)="hide_sales=!hide_sales">Условия сделки</label>
+              <div class="labels" [ngClass]="{'show-block' : hide_sales, 'hide' : !hide_sales}">
+                <ng-container *ngFor="let sale of sales">
+                  <label class="btn btn-default"
+                         (click)="salesTrigger(sale.id); arraySales[sale.id] = !arraySales[sale.id]"
+                         [ngClass]="{'select-label' : arraySales[sale.id]}">
+                    <span>{{sale.title}}</span>
+                  </label>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search search-full"
+                 [ngClass]="{'show-background' : hide_repair, 'hide-background' : !hide_repair}">
+              <label class="label text-center cursor" (click)="hide_repair=!hide_repair">Ремонт</label>
+              <div class="labels" [ngClass]="{'show-block' : hide_repair, 'hide' : !hide_repair}">
+                <ng-container *ngFor="let repair of repairs">
+                  <label class="btn btn-default"
+                         (click)="repairsTrigger(repair.id); arrayRepairs[repair.id] = !arrayRepairs[repair.id]"
+                         [ngClass]="{'select-label' : arrayRepairs[repair.id]}">
+                    <span>{{repair.title}}</span>
+                  </label>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search search-full"
+                 [ngClass]="{'show-background' : hide_other, 'hide-background' : !hide_other}">
+              <label class="label text-center cursor" (click)="hide_other=!hide_other">Другое</label>
+              <div class="labels" [ngClass]="{'show-block' : hide_other, 'hide' : !hide_other}">
+                <label class="btn btn-default" (click)="search.separate_wc = !search.separate_wc"
+                       [ngClass]="{'select-label' : search.separate_wc}">
+                  <span>Раздельный сан.узел</span>
+                </label>
+                <label class="btn btn-default" (click)="search.balcony = !search.balcony"
+                       [ngClass]="{'select-label' : search.balcony}">
+                  <span>Балкон/лоджия</span>
+                </label>
+                <label class="btn btn-default" (click)="search.terrace = !search.terrace"
+                       [ngClass]="{'select-label' : search.terrace}">
+                  <span>Терраса</span>
+                </label>
+                <label class="btn btn-default" (click)="search.price_low = !search.price_low"
+                       [ngClass]="{'select-label' : search.price_low}">
+                  <span>Цена снижена за 7 дней</span>
+                </label>
+                <label class="btn btn-default" (click)="search.partner = !search.partner"
+                       [ngClass]="{'select-label' : search.partner}">
+                  <span>Партнерские продажи</span>
+                </label>
+                <label class="btn btn-default" (click)="search.layout = !search.layout"
+                       [ngClass]="{'select-label' : search.layout}">
+                  <span>Свободная планировка</span>
+                </label>
+                <label class="btn btn-default" (click)="search.room_separate = !search.room_separate"
+                       [ngClass]="{'select-label' : search.room_separate}">
+                  <span>Раздельные комнаты</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="color: #428bca" [ngClass]="{'show' : hide, 'hide' : !hide}">
+    <div class="col-4">
+      <a style="text-decoration: underline" class="btn" (click)="clear()">Очистить поиск</a>
+    </div>
+    <div class="col-4 text-center">
+      <button style="margin-left: 10px" class="btn btn-md btn-primary" (click)="searchSale()">Поиск</button>
+    </div>
+
+
+    <div class="col-4 text-right">
+      <a style="cursor: pointer; text-decoration: underline" (click)="hide=!hide">
+        <i class="fas fa-search-minus"></i>
+        <!--<mat-icon style="vertical-align: middle; font-size: 20px">search</mat-icon>-->
+        Скрыть поиск</a>
+      <a style="cursor: pointer; margin-left: 15px; text-decoration: underline">Сохранить поиск</a>
+    </div>
+
+  </div>
+</div>
 

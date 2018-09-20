@@ -142,8 +142,8 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3" *ngIf="regions.length > 0 && districts_rb.length > 0 && cities.length > 0">
-            <app-admin-request-location [location]="[regions, districts_rb, cities]"></app-admin-request-location>
+          <div class="col-lg-3" *ngIf="regions.length > 0 && districts_rb.length > 0 && cities.length > 0" style="height: 600px; overflow-x: auto">
+            <app-admin-request-location [location]="[regions, cities, streets]" (changed)="getRequest($event)"></app-admin-request-location>
           </div>
         </div>
         <div class="row no-gutters">

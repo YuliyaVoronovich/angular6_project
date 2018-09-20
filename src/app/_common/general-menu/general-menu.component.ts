@@ -16,10 +16,6 @@ export class GeneralMenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  logout(): boolean {
-    this.loginService.logout();
-    this.route.navigate(['/']);
-    return false;
-  }
+
 
 }

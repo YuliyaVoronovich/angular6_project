@@ -78,8 +78,9 @@ export class UserService {
   setUserCompany(user: User) {
     if (!user.company) {
       return user.company = new Company(null, '', '', '', '', '', null, null, '',
-        '', '', null, null, null, [], null, null);
+        '', '', null, null, null, [], null, null, null);
     }
     return user.company;
   }
+
 }

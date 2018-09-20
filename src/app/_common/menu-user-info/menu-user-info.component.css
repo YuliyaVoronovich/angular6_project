@@ -1,6 +1,6 @@
 .user-info {
   display: block;
-  padding: .5rem 1rem;
+  padding: .5rem 0;
 }
 .chooseAccess {
   z-index: 2100;
@@ -12,7 +12,20 @@
   position: absolute;
   background-color: #fff;
   margin-left: 50px;
-  border-radius: 3px 3px 3px 3px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px;
+}
+.menu-user {
+  z-index: 2100;
+  display: none;
+  text-align: left;
+  max-width: 130px;
+  font-size: 14px;
+  color: #000;
+  position: absolute;
+  right: 10px;
+  background-color: #fff;
+ /* border-radius: 3px;*/
   box-shadow: 1px 1px 3px;
 }
 .show {

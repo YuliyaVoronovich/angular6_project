@@ -18,11 +18,11 @@ export class SaleListAdressComponent implements OnInit {
 
   ngOnInit() {
     this.location = this.locationService.setLocation(this.location);
-    this.location.city = this.locationService.setCity(this.location);
-    this.location.district = this.locationService.setDistrict(this.location);
-    this.location.microdistrict = this.locationService.setMicroDistrict(this.location);
-    this.location.street = this.locationService.setStreet(this.location);
-    this.location.metro = this.locationService.setMetro(this.location);
+    this.location.city = this.locationService.setCity(this.location.city);
+    this.location.district = this.locationService.setDistrict(this.location.district);
+    this.location.microdistrict = this.locationService.setMicroDistrict(this.location.microdistrict);
+    this.location.street = this.locationService.setStreet(this.location.street);
+    this.location.metro = this.locationService.setMetro(this.location.metro);
 
     /*if (this.location.city.title && this.location.city.title !== 'Минск') {
       this.address = this.location.city.title + ', ';

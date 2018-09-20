@@ -1,4 +1,4 @@
-import {PermissionCategory} from './permission_category.model';
+import {PermissionCategory} from './permissionCategory.model';
 
 export class Permission {
 

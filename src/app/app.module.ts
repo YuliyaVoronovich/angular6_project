@@ -11,11 +11,16 @@ import {SelectModule} from 'ng-select';
 import {ImageUploadModule} from 'angular2-image-upload';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import {LoginGuard} from './_guard/login.guard';
+import {Globals} from './_common/globals';
 
 import { AppComponent } from './app.component';
-import {AdminCompaniesListComponent} from './admin/admin-companies-list/admin-companies-list.component';
+import {
+  AdminCompaniesListComponent, DialogCompanyBlockComponent,
+  DialogCompanyUnblockComponent
+} from './admin/admin-companies-list/admin-companies-list.component';
 import {CompanyResolve} from './_services/companyResolve.service';
 import {AdminCompanyModificateComponent} from './admin/admin-company-modificate/admin-company-modificate.component';
 import {AdminModulesListComponent} from './admin/admin-modules-list/admin-modules-list.component';
@@ -41,6 +46,12 @@ import {SaleListAdressComponent} from './sales/sale-list-adress/sale-list-adress
 import {GeneralLeftMenuComponent} from './_common/general-left-menu/general-left-menu.component';
 import {MenuUserInfoComponent} from './_common/menu-user-info/menu-user-info.component';
 import {Error403Component} from './errors/error-403/error-403.component';
+import { ClientsListComponent } from './clients/clients-list/clients-list.component';
+import { ClientModificateComponent } from './clients/client-modificate/client-modificate.component';
+import { AdminRequestLocationComponent } from './admin/admin-request-location/admin-request-location.component';
+import { SalesListSearchComponent } from './sales/sales-list-search/sales-list-search.component';
+import {AgreementsCsListComponent} from './agreements-cs-list/agreements-cs-list.component';
+import { SaleReguestLocationComponent } from './sales/sale-reguest-location/sale-reguest-location.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -54,12 +65,13 @@ import {PermissionService} from './_services/permission.service';
 import {RoleService} from './_services/role.service';
 import {SharedService} from './_services/shared.service';
 import {ImageService} from './_services/image.service';
+import {AgreementService} from './_services/agreement.service';
+import {RequestService} from './_services/request.service';
+import {ClientService} from './_services/client.service';
 
 import {MaterialModule} from './material.module';
-import {RequestService} from './_services/request.service';
-import { AdminRequestLocationComponent } from './admin/admin-request-location/admin-request-location.component';
-import {Globals} from './_common/globals';
-import { SalesListSearchComponent } from './sales/sales-list-search/sales-list-search.component';
+import { SaleListPhotoComponent } from './sales/sale-list-photo/sale-list-photo.component';
+
 
 const adminCompaniesRoutes: Routes = [
   {path: '', component: AdminCompaniesListComponent},
@@ -90,7 +102,15 @@ const salesRoutes: Routes = [
   {path: 'sale', component: SaleModificateComponent, canActivate: [LoginGuard]},
   {path: 'sale/:id', component: SaleModificateComponent, resolve: {data: SaleResolve}}
 ];
+const clientsRoutes: Routes = [
+  {path: '', component: ClientsListComponent},
+  {path: 'client', component: ClientModificateComponent, canActivate: [LoginGuard]},
+  {path: 'client/:id', component: ClientModificateComponent, resolve: {data: SaleResolve}}
+];
 
+const agreements: Routes = [
+  {path: '', component: AgreementsCsListComponent}
+]
 /*определение основных маршрутов*/
 const routes: Routes = [
 
@@ -100,6 +120,8 @@ const routes: Routes = [
   {path: 'admin/roles', component: AdminComponent, children: adminRolesRoutes},
   {path: 'admin/locations', component: AdminComponent, children: adminLocationsRoutes},
   {path: 'sales', component: SalesComponent, children: salesRoutes},
+  {path: 'clients', component: SalesComponent, children: clientsRoutes},
+  {path: 'argeements/cs', component: SalesComponent, children: agreements},
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LoginComponent},
@@ -132,8 +154,15 @@ const routes: Routes = [
     MenuUserInfoComponent,
     Error403Component,
     AdminRequestLocationComponent,
-    SalesListSearchComponent ,
-    DialogDeleteSaleComponent
+    SalesListSearchComponent,
+    AgreementsCsListComponent,
+    ClientsListComponent,
+    ClientModificateComponent,
+    SaleListPhotoComponent,
+    SaleReguestLocationComponent,
+    DialogDeleteSaleComponent,
+    DialogCompanyUnblockComponent,
+    DialogCompanyBlockComponent
   ],
   imports: [
     MaterialModule,
@@ -145,6 +174,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     NoopAnimationsModule,
+    NgxGalleryModule,
     RouterModule.forRoot(routes),
     ImageUploadModule.forRoot(),
     NgbModule.forRoot(),
@@ -168,9 +198,11 @@ const routes: Routes = [
     SharedService,
     ImageService,
     RequestService,
+    AgreementService,
+    ClientService,
     Globals
   ],
-  entryComponents: [DialogDeleteSaleComponent],
+  entryComponents: [DialogDeleteSaleComponent, DialogCompanyBlockComponent, DialogCompanyUnblockComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,7 +4,7 @@ import {Microdistrict} from './microdistrict.model';
 import {Street} from './street.model';
 import {Metro} from './metro.model';
 import {Region} from './region.model';
-import {DistrictCountry} from './district_country.model';
+import {DistrictCountry} from './districtCountry.model';
 
 export class Location {
 

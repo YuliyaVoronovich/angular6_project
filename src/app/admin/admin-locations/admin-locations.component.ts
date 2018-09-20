@@ -10,7 +10,7 @@ import {IOption} from 'ng-select';
 import {Label} from '../../_models/label.model';
 import {LabelService} from '../../_services/label.service';
 import {Region} from '../../_models/region.model';
-import {DistrictCountry} from '../../_models/district_country.model';
+import {DistrictCountry} from '../../_models/districtCountry.model';
 import {City} from '../../_models/city.model';
 import {Street} from '../../_models/street.model';
 import {District} from '../../_models/district.model';
@@ -68,6 +68,7 @@ export class AdminLocationsComponent implements OnInit {
   public microdistricts = [];
 
   public search = {};
+  public idSale = 0;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -258,10 +259,10 @@ export class AdminLocationsComponent implements OnInit {
     });
   }
 
-  getStreets(city = 0) {
+  getStreets(city = 0, microdistrict = 0) {
     this.streetsSelect = [];
 
-    this.locationService.getStreets(city).subscribe((options) => {
+    this.locationService.getStreets(city, microdistrict).subscribe((options) => {
       for (let i = 0; i < options.length; i++) {
         this.streetsSelect.push(options[i]);
       }
@@ -369,6 +370,12 @@ export class AdminLocationsComponent implements OnInit {
     this.location.street =  this.locationForm.controls['street'].value;
     console.log(this.location);
 
+    if (this.idSale) {
+      console.log(this.idSale);
+      // обновить sale location_id
+    }
+
+
     if (this.location.id !== 0) {
       this.locationService.update(this.location).subscribe(
         data => {
@@ -406,6 +413,16 @@ export class AdminLocationsComponent implements OnInit {
         }
       );
     }
+  }
+  getRequest(event) {
+    console.log(event);
+    this.idSale = event.info.sale;
+
+    this.locationForm.controls['region'].patchValue({id: +event.info.region});
+    this.locationForm.controls['city'].patchValue({id: +event.info.city});
+    this.locationForm.controls['street'].patchValue({id: +event.info.street});
+    this.locationForm.controls['house'].patchValue(event.info.house);
+    this.locationForm.controls['housing'].patchValue(event.info.housing);
   }
 
 }

@@ -21,6 +21,8 @@ import {UserInformation} from '../../_models/userInformation.model';
 import {Subscription} from 'rxjs/index';
 import {Photo} from '../../_models/photo.model';
 import {FileHolder} from 'angular2-image-upload';
+import {ImageService} from "../../_services/image.service";
+import {HttpResponse} from "@angular/common/http";
 
 
 @Component({
@@ -55,14 +57,14 @@ export class SaleModificateComponent implements OnInit {
   public types: Label[] = [];
   public repairs: Label[] = [];
   public floors: Label[] = [];
-  public furnitures: Label[] = [];
+  public furniture: Label[] = [];
   public sales: Label[] = [];
   public sources: Label[] = [];
   public metro: Metro[] = [];
 
-  public sale: Sale = new Sale(0, null, '', '', '', 0,  0, false,
+  public sale: Sale = new Sale(0, null, '', '', '', 0, 0, false,
     '', false, false, false, '', null, null, '', '', '', null,
-    0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, false, false, 0,
+    0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, false, false, false, 0,
     0, 1, '', 1, 1, '', 1, false, '', '', false, 0, 1, null,
     null, null, null, false, null, null, null);
 
@@ -88,7 +90,10 @@ export class SaleModificateComponent implements OnInit {
 
   public timer: any;
 
-  public displayReq = false;
+  public displayRequest = false;
+  public textRequest = '';
+  public idRequest = 0;
+
   public noResultsTerm = '';
 
   constructor(private router: Router,
@@ -98,6 +103,7 @@ export class SaleModificateComponent implements OnInit {
               private labelsService: LabelService,
               private locationService: LocationService,
               private userService: UserService,
+              private imageService: ImageService,
               private sharedService: SharedService) {
     /*
         this.subscription = sharedService.changeEmitted$3.subscribe(data => {
@@ -130,8 +136,13 @@ export class SaleModificateComponent implements OnInit {
             if (this.sale.user === null) {
               this.sale.user = this.user;
             }
-            if (this.sale.sale_addition_information !== null) {
-              this.sale_addition_information = data.sale.sale_addition_information;
+            if (this.sale.sale_addition_information === null) {
+              this.sale.sale_addition_information = this.sale_addition_information;
+            }
+
+            for (let i = 0; i < this.sale.photo_reclame.length; i++) {
+              this.upload_photo.push(this.sale.photo_reclame[i].path);
+              //  console.log(this.upload_photo);
             }
 
             this.sale.dogovor_from = new NgbDateFRParserFormatter().parse(data.sale.dogovor_from);
@@ -144,13 +155,13 @@ export class SaleModificateComponent implements OnInit {
       });
 
     this.sale.location = this.locationService.setLocation(this.sale.location);
-    this.sale.location.city = this.locationService.setCity(this.sale.location);
-    this.sale.location.city.district_country = this.locationService.setDistrictCountry(this.sale.location);
-    this.sale.location.city.district_country.region = this.locationService.setRegion(this.sale.location);
-    this.sale.location.district = this.locationService.setDistrict(this.sale.location);
-    this.sale.location.microdistrict = this.locationService.setMicroDistrict(this.sale.location);
-    this.sale.location.street = this.locationService.setStreet(this.sale.location);
-    this.sale.location.metro = this.locationService.setMetro(this.sale.location);
+    this.sale.location.city = this.locationService.setCity(this.sale.location.city);
+    this.sale.location.city.district_country = this.locationService.setDistrictCountry(this.sale.location.city.district_country);
+    this.sale.location.city.district_country.region = this.locationService.setRegion(this.sale.location.city.district_country.region);
+    this.sale.location.district = this.locationService.setDistrict(this.sale.location.district);
+    this.sale.location.microdistrict = this.locationService.setMicroDistrict(this.sale.location.microdistrict);
+    this.sale.location.street = this.locationService.setStreet(this.sale.location.street);
+    this.sale.location.metro = this.locationService.setMetro(this.sale.location.metro);
 
 
     this.labelsService.getAllLabels().subscribe(data => {
@@ -162,7 +173,7 @@ export class SaleModificateComponent implements OnInit {
       this.types = data.types;
       this.repairs = data.repairs;
       this.floors = data.floors;
-      this.furnitures = data.furnitures;
+      this.furniture = data.furniture;
       this.sales = data.sales;
       this.sources = data.sources;
     });
@@ -182,12 +193,13 @@ export class SaleModificateComponent implements OnInit {
   }
 
   save() {
-    console.log(this.sale);
-
     this.dogovor_from = new NgbDateFRParserFormatter().format_to_base(this.sale.dogovor_from);
     this.dogovor_to = new NgbDateFRParserFormatter().format_to_base(this.sale.dogovor_to);
     this.sale.dogovor_from = this.dogovor_from;
     this.sale.dogovor_to = this.dogovor_to;
+
+    this.sale.photo_reclame = this.upload_photo;
+    console.log(this.sale);
 
     if (this.sale.id !== 0) {
       this.saleService.update(this.sale).subscribe(
@@ -208,9 +220,14 @@ export class SaleModificateComponent implements OnInit {
         }
       );
     } else {
+
       this.saleService.create(this.sale).subscribe(
         data => {
           if (data.status === 201) {
+
+            // обновление заявки (добавление id объекта)
+            console.log(this.idRequest);
+
             this.message('Объект успешно создан', false);
             this.router.navigate(['sales']);
           } else {
@@ -247,9 +264,12 @@ export class SaleModificateComponent implements OnInit {
     });
   }
 
-  getStreets(city = 0) {
-    this.locationService.getStreets(city).subscribe((options) => {
+  getStreets(city = 0, microdistrict = 0) {
+    this.locationService.getStreets(city, microdistrict).subscribe((options) => {
       this.streets = [];
+      /*if (options.length === 0) {
+        this.displayReq = true;
+      }*/
       for (let i = 0; i < options.length; i++) {
         this.streets.push({label: options[i].title, value: '' + options[i].id});
       }
@@ -264,14 +284,49 @@ export class SaleModificateComponent implements OnInit {
     this.getStreets(+`${option.value}`);
   }
 
+  getInfoLocation() {
+
+    if (this.sale.location.street.id && this.sale.location.house) {
+
+      this.search['street'] = this.sale.location.street.id;
+      this.search['house'] = this.sale.location.house;
+      this.search['housing'] = this.sale.location.housing;
+
+      this.locationService.getLocation(this.search).subscribe((data) => {
+        console.log(data);
+        if (data) {
+          this.sale.location.district = this.locationService.setDistrict(data.district);
+          this.sale.location.microdistrict = this.locationService.setMicroDistrict(data.microdistrict);
+          this.sale.location.type_house = data.type_house;
+          this.sale.location.year = data.year;
+          this.sale.location.year_repair = data.year_repair;
+        } else {
+          this.sale.location.wall = 0;
+          this.sale.location.type_house = 0;
+          this.sale.location.year = 0;
+          this.sale.location.year_repair = 0;
+        }
+      });
+
+    }
+  }
+
+  /*proveCountStreet () {
+    if (this.streets.length === 0) {
+        this.displayReq = !this.displayReq;
+      }
+  }*/
+
   onFilterInputChanged(searchTerm) {
+    this.sale.location.street.title = searchTerm;
+
     this.noResultsTerm = '';
 
     setTimeout(() => {
       if (this.noResultsTerm === '') {
-        this.displayReq = false;
+        this.displayRequest = false;
       } else {
-        this.displayReq = true;
+        this.displayRequest = true;
       }
     }, 150);
 
@@ -283,12 +338,25 @@ export class SaleModificateComponent implements OnInit {
     }, 100);
   }
 
-  sendRequest(textRequest) {
-    console.log(textRequest);
-    console.log(this.sale);
+  sendRequest() {
 
+    const request = this.sale;
+    request['textRequest'] = this.textRequest;
+
+    return this.saleService.newLocationRequest(this.sale).subscribe(data => {
+
+      console.log(data);
+        this.idRequest = data.headers.id;
+
+      if (data) {
+          this.message('Заявка отправлена', false);
+          this.displayRequest = false;
+
+        } else {
+          this.message('Не удалось отправить заявку!', true);
+        }
+      });
   }
-
 
   getUsers() {
 
@@ -311,7 +379,23 @@ export class SaleModificateComponent implements OnInit {
     this.sale.photo_reclame = this.upload_photo;
     //  console.log(this.upload_photo);
   }
-  onRemoved (file: FileHolder) {
 
+  onRemoved(file: FileHolder) {
+    const index: number = this.upload_photo.indexOf(file.src);
+
+    // удаление фотографии на сервере
+    this.imageService.delete(file.src).subscribe(
+      data => {
+        if (data.status === 200) {
+          if (index !== -1) {
+            this.upload_photo.splice(index, 1);
+          }
+        }
+      },
+      error => {
+      }
+    );
+    //  console.log(this.upload_photo);
+    this.sale.photo_reclame = this.upload_photo;
   }
 }

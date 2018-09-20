@@ -8,6 +8,7 @@ import {Globals} from '../_common/globals';
 export class RequestService {
 
   public uri = '/admin/requests';
+  public section_location = 1;
 
   constructor(private http: Http,
               private globals: Globals) {
@@ -18,8 +19,18 @@ export class RequestService {
       .map((response: Response) => response.json().requests
       );
   }
-  sendRequest() {
-    return this.http.post(this.globals.url + this.uri, JSON.stringify(1));
+  getRequest(id) {
+    return this.http.get(this.globals.url + this.uri + '/request/' + id)
+      .map((response: Response) => response.json());
+  }
+
+  /*sendRequest() {
+    return this.http.post(this.globals.url + this.uri, JSON.stringify(this.section_location));
+  }*/
+
+  deleteRequest(request: Request | number) {
+    const id = typeof request === 'number' ? request : request.id;
+    return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(request));
   }
 
 }
