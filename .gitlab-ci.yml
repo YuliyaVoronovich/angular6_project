@@ -2,4 +2,4 @@ deploy:
     script: ssh 'nginx@178.172.201.122' -p1100 "cd /home/web/www/alfa.belan.by/ && git pull"
 
 build:
-    script: ssh 'nginx@178.172.201.122' -p1100 "cd /home/web/www/alfa.belan.by/ && npm install && ng build --output-path /home/web/www/alfa.belan.by/dist"
+    script: ssh 'nginx@178.172.201.122' -p1100 "cd /home/web/www/alfa.belan.by/ && npm install && ng build --aot --output-path /home/web/www/alfa.belan.by/dist"
