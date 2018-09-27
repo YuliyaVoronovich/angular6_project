@@ -60,6 +60,7 @@ export class MenuUserInfoComponent implements OnInit {
           this.sharedService.emitChange2();
           this.message('Доступ обновлен', false);
           this.hide = false;
+          this.hide_info = false;
         } else {
           this.message('Ошибка!', true);
         }

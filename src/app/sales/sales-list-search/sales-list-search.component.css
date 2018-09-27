@@ -59,6 +59,9 @@ input {
 .labels label span {
   padding: 3px;
 }
+.search-top {
+  padding: 20px 0 0;
+}
 
 .search {
   background: #f6f5f5;
@@ -247,6 +250,14 @@ input {
   }
   .padding {
     padding: 0 15px;
+  }
+}
+@media (max-width : 372px) {
+  .my-col-xxs-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    text-align: center!important;
   }
 }
 /* Собственная разметка*/

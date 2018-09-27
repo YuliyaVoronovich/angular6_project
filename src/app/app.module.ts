@@ -36,7 +36,6 @@ import {
 import {SaleModificateComponent} from './sales/sale-modificate/sale-modificate.component';
 import {SaleResolve} from './_services/saleResolve.service';
 import {AdminComponent} from './admin/admin.component';
-import {SalesComponent} from './sales/sales.component';
 import {LoginComponent} from './login/login.component';
 import {Error404Component} from './errors/error-404/error-404.component';
 import {GeneralMenuComponent} from './_common/general-menu/general-menu.component';
@@ -71,6 +70,8 @@ import {ClientService} from './_services/client.service';
 import {MaterialModule} from './material.module';
 import { SaleListPhotoComponent } from './sales/sale-list-photo/sale-list-photo.component';
 import {NgxGalleryModule} from 'ngx-gallery';
+import { ClientListSearchComponent } from './clients/client-list-search/client-list-search.component';
+import { GeneralTemplateComponent } from './_common/general-template/general-template.component';
 
 
 const adminCompaniesRoutes: Routes = [
@@ -119,9 +120,9 @@ const routes: Routes = [
   {path: 'admin/users', component: AdminComponent, children: adminUsersRoutes},
   {path: 'admin/roles', component: AdminComponent, children: adminRolesRoutes},
   {path: 'admin/locations', component: AdminComponent, children: adminLocationsRoutes},
-  {path: 'sales', component: SalesComponent, children: salesRoutes},
-  {path: 'clients', component: SalesComponent, children: clientsRoutes},
-  {path: 'argeements/cs', component: SalesComponent, children: agreements},
+  {path: 'sales', component: GeneralTemplateComponent, children: salesRoutes},
+  {path: 'clients', component: GeneralTemplateComponent, children: clientsRoutes},
+  {path: 'argeements/cs', component: GeneralTemplateComponent, children: agreements},
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LoginComponent},
@@ -133,7 +134,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    SalesComponent,
     GeneralMenuComponent,
     LoginComponent,
     AdminComponent,
@@ -160,6 +160,8 @@ const routes: Routes = [
     ClientModificateComponent,
     SaleListPhotoComponent,
     SaleReguestLocationComponent,
+    ClientListSearchComponent,
+    GeneralTemplateComponent,
     DialogDeleteSaleComponent,
     DialogCompanyUnblockComponent,
     DialogCompanyBlockComponent

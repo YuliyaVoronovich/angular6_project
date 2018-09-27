@@ -18,11 +18,12 @@ import {SharedService} from '../../_services/shared.service';
 import {UserService} from '../../_services/user.service';
 import {User} from '../../_models/user.model';
 import {UserInformation} from '../../_models/userInformation.model';
-import {Subscription} from 'rxjs/index';
+
 import {Photo} from '../../_models/photo.model';
 import {FileHolder} from 'angular2-image-upload';
-import {ImageService} from "../../_services/image.service";
-import {HttpResponse} from "@angular/common/http";
+import {ImageService} from '../../_services/image.service';
+import {RequestService} from '../../_services/request.service';
+
 
 
 @Component({
@@ -62,7 +63,7 @@ export class SaleModificateComponent implements OnInit {
   public sources: Label[] = [];
   public metro: Metro[] = [];
 
-  public sale: Sale = new Sale(0, null, '', '', '', 0, 0, false,
+  public sale: Sale = new Sale(0, null,  null, '', '', '', 0, 0, false,
     '', false, false, false, '', null, null, '', '', '', null,
     0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, false, false, false, 0,
     0, 1, '', 1, 1, '', 1, false, '', '', false, 0, 1, null,
@@ -78,8 +79,8 @@ export class SaleModificateComponent implements OnInit {
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
   public users: User[] = [];
 
-  public dogovor_from;
-  public dogovor_to;
+  public contract_from;
+  public contract_to;
 
   public images: Photo [] = [];
   public upload_photo = [];
@@ -104,6 +105,7 @@ export class SaleModificateComponent implements OnInit {
               private locationService: LocationService,
               private userService: UserService,
               private imageService: ImageService,
+              private requestService: RequestService,
               private sharedService: SharedService) {
     /*
         this.subscription = sharedService.changeEmitted$3.subscribe(data => {
@@ -145,8 +147,8 @@ export class SaleModificateComponent implements OnInit {
               //  console.log(this.upload_photo);
             }
 
-            this.sale.dogovor_from = new NgbDateFRParserFormatter().parse(data.sale.dogovor_from);
-            this.sale.dogovor_to = new NgbDateFRParserFormatter().parse(data.sale.dogovor_to);
+            this.sale.contract_from = new NgbDateFRParserFormatter().parse(data.sale.contract_from);
+            this.sale.contract_to = new NgbDateFRParserFormatter().parse(data.sale.contract_to);
           });
         } else {
           this.sale.sale_addition_information = this.sale_addition_information;
@@ -193,10 +195,10 @@ export class SaleModificateComponent implements OnInit {
   }
 
   save() {
-    this.dogovor_from = new NgbDateFRParserFormatter().format_to_base(this.sale.dogovor_from);
-    this.dogovor_to = new NgbDateFRParserFormatter().format_to_base(this.sale.dogovor_to);
-    this.sale.dogovor_from = this.dogovor_from;
-    this.sale.dogovor_to = this.dogovor_to;
+    this.contract_from = new NgbDateFRParserFormatter().format_to_base(this.sale.contract_from);
+    this.contract_to = new NgbDateFRParserFormatter().format_to_base(this.sale.contract_to);
+    this.sale.contract_from = this.contract_from;
+    this.sale.contract_to = this.contract_to;
 
     this.sale.photo_reclame = this.upload_photo;
     console.log(this.sale);
@@ -221,13 +223,13 @@ export class SaleModificateComponent implements OnInit {
       );
     } else {
 
-      this.saleService.create(this.sale).subscribe(
+      // вынести в отдельный метод
+      const request = this.sale;
+      request['idRequest'] = this.idRequest;
+
+      this.saleService.create(request).subscribe(
         data => {
           if (data.status === 201) {
-
-            // обновление заявки (добавление id объекта)
-            console.log(this.idRequest);
-
             this.message('Объект успешно создан', false);
             this.router.navigate(['sales']);
           } else {
@@ -343,10 +345,10 @@ export class SaleModificateComponent implements OnInit {
     const request = this.sale;
     request['textRequest'] = this.textRequest;
 
-    return this.saleService.newLocationRequest(this.sale).subscribe(data => {
+    return this.saleService.newLocationRequest(request).subscribe(data => {
 
       console.log(data);
-        this.idRequest = data.headers.id;
+      this.idRequest = data.request; // id добавляемой заявки
 
       if (data) {
           this.message('Заявка отправлена', false);

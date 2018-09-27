@@ -1,30 +1,49 @@
-<div class="user-info" (click)="hide_info=!hide_info">
-  <div ngbDropdown>
-    <a class="btn" id="dropdownBasic1" ngbDropdownToggle>
-      <span class="fa fa-user"> </span>
-        <span>{{ user_information.name}} {{ user_information.surname}}</span>
-    </a>
-    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-      <a class="dropdown-item">Настройки</a>
-      <a class="dropdown-item" (click)="logout()">Выйти</a>
-    </div>
-  </div>
-  <!--<span class="fa fa-user"></span>
-  {{ user_information.name}} {{ user_information.surname}}
-  <kbd class="bg-primary" style="cursor: pointer" (click)="hide = !hide">
-    <span class="access">{{ user.access}}</span>
-  </kbd>
-  <div class="chooseAccess" [ngClass]="{'show' : hide, 'hide' : !hide}">
-    <div class="level" (click)="setAccess(1)">личный</div>
-    <div class="level" (click)="setAccess(2)">группа</div>
-    <div class="level" (click)="setAccess(3)">агентство</div>
-    <div class="level" (click)="setAccess(4)">MLS</div>
-  </div>
+<div class="user-info text-right cursor" style="position: relative">
+  <span class="fa fa-user"> </span>
+  <span (click)="hide_info=!hide_info">{{ user_information.name}} {{ user_information.surname}}
+    <i class="fas fa-sort-down icon-top" [hidden]="hide_info"></i>
+    <i class="fas fa-sort-up icon-bottom" [hidden]="!hide_info"></i>
+  </span>
 
   <div class="menu-user" [ngClass]="{'show' : hide_info, 'hide' : !hide_info}">
-    <a class="btn" (click)="logout()">Выйти</a>
-  </div>-->
+    <a class="dropdown-item">Настройки</a>
+    <a class="dropdown-item" (click)="hide = !hide"
+    ><span class="access">Уровень: {{ user.access}}</span></a>
+    <div class="chooseAccess" [ngClass]="{'show' : hide, 'hide' : !hide}">
+      <div class="level" (click)="setAccess(1)">личный</div>
+      <div class="level" (click)="setAccess(2)">группа</div>
+      <div class="level" (click)="setAccess(3)">агентство</div>
+      <div class="level" (click)="setAccess(4)">MLS</div>
+    </div>
+    <a class="dropdown-item" (click)="logout()">Выйти</a>
+  </div>
 </div>
+
+<!--<div ngbDropdown>
+  <a class="btn user-menu" id="dropdownBasic1" ngbDropdownToggle style="padding: 0.375rem 0">
+    <span class="fa fa-user"> </span>
+    <span>{{ user_information.name}} {{ user_information.surname}}</span>
+  </a>
+  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+    <a class="dropdown-item">Настройки</a>
+    <a class="dropdown-item" (click)="logout()">Выйти</a>
+  </div>
+</div>-->
+<!--<span class="fa fa-user"></span>
+{{ user_information.name}} {{ user_information.surname}}
+<kbd class="bg-primary" style="cursor: pointer" (click)="hide = !hide">
+  <span class="access">{{ user.access}}</span>
+</kbd>
+<div class="chooseAccess" [ngClass]="{'show' : hide, 'hide' : !hide}">
+  <div class="level" (click)="setAccess(1)">личный</div>
+  <div class="level" (click)="setAccess(2)">группа</div>
+  <div class="level" (click)="setAccess(3)">агентство</div>
+  <div class="level" (click)="setAccess(4)">MLS</div>
+</div>
+
+<div class="menu-user" [ngClass]="{'show' : hide_info, 'hide' : !hide_info}">
+  <a class="btn" (click)="logout()">Выйти</a>
+</div>-->
 
 
 

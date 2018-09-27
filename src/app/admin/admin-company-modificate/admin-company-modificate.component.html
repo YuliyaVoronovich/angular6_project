@@ -13,7 +13,8 @@
         <label class="col-5 col-form-label text-left">Название<span
           style="color: red">*</span></label>
         <div class="col-7">
-          <input type="text" class="form-control" [(ngModel)]="company.title">
+          <input type="text" class="form-control" [(ngModel)]="company.title" (change)="validationTitle()">
+          <small *ngIf="validation1 === false" class="form-text text-danger">{{message1}}</small>
         </div>
       </div>
       <div class="form-group row">
@@ -120,21 +121,27 @@
     <div class="col-12 col-12">
       <h4>Сотрудник</h4>
       <div class="form-group row">
-        <label class="col-5 col-form-label text-left">Имя сотрудника</label>
+        <label class="col-5 col-form-label text-left">Имя сотрудника<span
+          style="color: red">*</span></label>
         <div class="col-7">
-          <input type="text" class="form-control" [(ngModel)]="company.user.user_information.name">
+          <input type="text" class="form-control" [(ngModel)]="company.user.user_information.name" (change)="validationNameUser()">
+          <small *ngIf="validation2 === false" class="form-text text-danger">{{message2}}</small>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-5 col-form-label text-left">Логин сотрудника</label>
+        <label class="col-5 col-form-label text-left">Логин сотрудника<span
+          style="color: red">*</span></label>
         <div class="col-7">
-          <input type="text" class="form-control" [(ngModel)]="company.user.login">
+          <input type="text" class="form-control" [(ngModel)]="company.user.login" (change)="validationLoginUser()">
+          <small *ngIf="validation3 === false" class="form-text text-danger">{{message3}}</small>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-5 col-form-label text-left">Пароль сотрудника</label>
+        <label class="col-5 col-form-label text-left">Пароль сотрудника<span
+          style="color: red">*</span></label>
         <div class="col-7">
-          <input type="text" class="form-control" [(ngModel)]="company.user.password_first">
+          <input type="text" class="form-control" [(ngModel)]="company.user.password_first" (change)="validationPasswordUser()">
+          <small *ngIf="validation4 === false" class="form-text text-danger">{{message4}}</small>
         </div>
       </div>
     </div>

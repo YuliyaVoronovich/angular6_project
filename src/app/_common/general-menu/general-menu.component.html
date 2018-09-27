@@ -1,15 +1,17 @@
 <div class="row no-gutters">
-  <div class="col-lg-1 col-md-2 col-sm-3 col-8">
+  <div class="col-lg-2 col-md-2 col-sm-3 col-7">
     <a href="" style="outline:none;">
       <img style="margin: 4px 10px;" class="img img-fluid" src="assets/images/belan-logo_mini2.png"/>
     </a>
   </div>
 
-  <div class="col-lg-9 col-md-8 col-sm-8 d-none d-md-block">
+  <div class="col-lg-8 col-md-7 d-none d-md-block">
     <!--Меняющийся навбар -->
     <nav class="navbar navbar-expand-lg">
 
       <ul class="navbar-nav">
+        <!-- Меню для SALES-->
+        <ng-container *ngIf="path==='sales'">
         <li class="nav-item">
           <a class="nav-link" routerLink="/sales/sale">Добавить</a>
         </li>
@@ -25,12 +27,29 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Карта</a>
         </li>
+        </ng-container>
+        <!-- Конец меню для SALES-->
+
+        <!-- Меню для CLIENTS-->
+        <ng-container *ngIf="path==='clients'">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/clients/client">Добавить</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Архив</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Звонки</a>
+          </li>
+        </ng-container>
+        <!-- Конец меню для CLIENTS-->
+
       </ul>
     </nav>
   </div>
 
   <!-- Информация о пользователе -->
-  <div class="col-lg-2 col-md-2 col-sm-9 col-3 text-right">
+  <div class="col-lg-2 col-md-3 col-sm-9 col-5 user">
     <app-menu-user-info></app-menu-user-info>
   </div>
 </div>

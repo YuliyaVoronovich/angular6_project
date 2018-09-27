@@ -14,11 +14,41 @@
       <th>Комнат</th>
       <th>Площадь</th>
       <th>Этаж</th>
-      <th><span class="nobr"><i class="fas fa-sort icon-color"></i>Цена,$</span></th>
+      <th>
+        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field ==='price' && (sort.value==='ASC' || sort.value==='DESC')" (click)="changeSort('price', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Цена,$
+        </div>
+        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='ASC')" (click)="changeSort('price', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Цена,$
+        </div>
+        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='DESC')" (click)="changeSort('price', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Цена,$
+        </div>
+      </th>
       <th>$/m</th>
       <th>Агентство</th>
-      <th><span class="nobr"><i class="fas fa-sort icon-color"></i>Дата доб.</span></th>
-      <th><span class="nobr"><i class="fas fa-sort icon-color"></i>Дата обн.</span></th>
+      <th>
+        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')" (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='ASC')" (click)="changeSort('created_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='DESC')" (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата доб.
+        </div>
+      </th>
+      <th>
+        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field ==='updated_at' && (sort.value==='ASC' || sort.value==='DESC')" (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='ASC')" (click)="changeSort('updated_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='DESC')" (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата обн.
+        </div>
+      </th>
       <th>Действия</th>
     </tr>
     </thead>
@@ -58,7 +88,7 @@
         <td>{{sale.storey}}/{{sale.storeys}}</td>
         <td>{{sale.price}}</td>
         <td>{{sale.price_sqr}}</td>
-        <td>{{sale.user.company.title}}</td>
+        <td>{{sale.company.title}}</td>
         <!--<td>{{sale.user.user_information.surname}} {{sale.user.user_information.name}}</td>-->
         <td>
           {{sale.created_at | date: 'dd.MM.yyyy'}}
@@ -107,15 +137,14 @@
 </div>
 
 
-<div class="container bg-light" style="margin: 0; max-width: calc(100% - 150px); padding-top: 15px;">
-  <div class="row">
-    <!--Пагинация -->
-    <div class="col-12 text-center">
-      <pagination-controls (pageChange)="getSalesByPage($event)" maxSize="7" previousLabel="" nextLabel=""
-                           directionLinks="true" autohide="true"></pagination-controls>
-    </div>
-    <!-- <div class="col-3 text-right">
-       Всего объектов в МЛС: {{countSales}}
-     </div>-->
+<div class="row no-gutters">
+  <!--Пагинация -->
+  <div class="col-12 text-center">
+    <pagination-controls (pageChange)="getSalesByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+                         directionLinks="true" autohide="true"></pagination-controls>
   </div>
+  <!-- <div class="col-3 text-right">
+     Всего объектов в МЛС: {{countSales}}
+   </div>-->
 </div>
+

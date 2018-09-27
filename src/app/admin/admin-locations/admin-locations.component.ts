@@ -19,7 +19,9 @@ import {Request} from '../../_models/request.model';
 
 import {Observable} from 'rxjs/Observable';
 import {map, startWith} from 'rxjs/operators';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SaleService} from '../../_services/sale.service';
+import {Sale} from '../../_models/sale.model';
 
 
 @Component({
@@ -57,6 +59,14 @@ export class AdminLocationsComponent implements OnInit {
   public district: District = new District(0, null, null, '');
   public microdistrict: Microdistrict = new Microdistrict(0, null, null, '');
 
+  public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
+    '', false, false, false, '', null, null, '', '', '', null,
+    0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, false, false, false, 0,
+    0, 1, '', 1, 1, '', 1, false, '', '', false, 0, 1, null,
+    null, null, null, false, null, null, null);
+
+  public request: Request = new Request(0, '', '' , 1);
+
   public walls: Label[] = [];
   public types: Label[] = [];
 
@@ -69,6 +79,8 @@ export class AdminLocationsComponent implements OnInit {
 
   public search = {};
   public idSale = 0;
+  public idRequest;
+  public deleteRequest = false;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -77,6 +89,7 @@ export class AdminLocationsComponent implements OnInit {
               private locationService: LocationService,
               private labelsService: LabelService,
               private requestService: RequestService,
+              private saleService: SaleService,
               private sharedService: SharedService) {
   }
 
@@ -122,6 +135,7 @@ export class AdminLocationsComponent implements OnInit {
       year_repair: 0
     });
   }
+
   message(mes: string, error: boolean) {
     let arr: any[] = ['show', mes, error];
     this.sharedService.emitChange(arr);
@@ -290,6 +304,7 @@ export class AdminLocationsComponent implements OnInit {
       }
     }
   }
+
   clear() {
     if (this.locationForm.controls['city'].value === '') {
       this.locationForm.controls['district_rb'].patchValue({id: 0});
@@ -364,17 +379,11 @@ export class AdminLocationsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.location.region =  this.locationForm.controls['region'].value;
-    this.location.district_country =  this.locationForm.controls['district_country'].value;
-    this.location.city =  this.locationForm.controls['city'].value;
-    this.location.street =  this.locationForm.controls['street'].value;
+    this.location.region = this.locationForm.controls['region'].value;
+    this.location.district_country = this.locationForm.controls['district_country'].value;
+    this.location.city = this.locationForm.controls['city'].value;
+    this.location.street = this.locationForm.controls['street'].value;
     console.log(this.location);
-
-    if (this.idSale) {
-      console.log(this.idSale);
-      // обновить sale location_id
-    }
-
 
     if (this.location.id !== 0) {
       this.locationService.update(this.location).subscribe(
@@ -383,7 +392,7 @@ export class AdminLocationsComponent implements OnInit {
             this.message('Адрес был успешно обновлен', false);
             this.router.navigate(['admin/locations']);
           } else {
-            this.message('Ошибка обновления компании!', true);
+            this.message('Ошибка обновления адреса!', true);
           }
         },
         error => {
@@ -397,8 +406,21 @@ export class AdminLocationsComponent implements OnInit {
     } else {
       this.locationService.create(this.location).subscribe(
         data => {
-          if (data.status === 201) {
+
+          if (data) {
             this.message('Адрес был успешно добавлен', false);
+
+            // обновить sale location_id
+            if (this.idSale) {
+              this.sale['id'] = this.idSale;
+              this.sale['location_id'] = data;
+              this.saleService.update(this.sale).subscribe(
+                data1 => {
+                  // удалить заявку
+                  this.deleteRequest = true;
+                });
+            }
+
             this.router.navigate(['admin/locations']);
           } else {
             this.message('Ошибка добавления адреса!', true);
@@ -408,15 +430,17 @@ export class AdminLocationsComponent implements OnInit {
           if (error.status === 401) {
             this.router.navigate(['']);
           } else {
-            this.message('Ошибка добавления компании!', true);
+            this.message('Ошибка добавления адреса!', true);
           }
         }
       );
     }
   }
+
   getRequest(event) {
     console.log(event);
     this.idSale = event.info.sale;
+    this.request = event;
 
     this.locationForm.controls['region'].patchValue({id: +event.info.region});
     this.locationForm.controls['city'].patchValue({id: +event.info.city});

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../../_services/login.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-general-menu',
@@ -9,13 +9,17 @@ import {Router} from '@angular/router';
 })
 export class GeneralMenuComponent implements OnInit {
 
-  constructor(private route: Router,
+  public path = 'sales';
+
+  constructor(private router: Router,
+              private route: ActivatedRoute,
               private loginService: LoginService) {
   }
 
   ngOnInit() {
+    this.route.url.subscribe(
+      url => {
+        this.path = url[0]['path'];
+      });
   }
-
-
-
 }

@@ -1,9 +1,10 @@
 import {Location} from './location.model';
 import {User} from './user.model';
 import {SaleAdditionInformation} from './saleAdditionInformation.model';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-import {Count} from './count.model';
 import {Photo} from './photo.model';
+import {Company} from './company.model';
+
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 export class Sale {
 
@@ -12,6 +13,7 @@ export class Sale {
 
     public id: number,
     public user: User,
+    public company: Company,
     public cont_phone1: string,
     public cont_phone2: string,
     public fio: string,
@@ -22,9 +24,9 @@ export class Sale {
     public credit: boolean,
     public execution: boolean,
     public quickly: boolean,
-    public dogovor: string,
-    public dogovor_from: NgbDateStruct,
-    public dogovor_to: NgbDateStruct,
+    public contract: string,
+    public contract_from: NgbDateStruct,
+    public contract_to: NgbDateStruct,
     public request: string,
     public commission: string,
     public commission_prefix: string,

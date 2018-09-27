@@ -27,6 +27,9 @@ export class RequestService {
   /*sendRequest() {
     return this.http.post(this.globals.url + this.uri, JSON.stringify(this.section_location));
   }*/
+  update(request: Request): Observable<Response> {
+    return this.http.put(this.globals.url + this.uri + '/' + request.id, JSON.stringify(request));
+  }
 
   deleteRequest(request: Request | number) {
     const id = typeof request === 'number' ? request : request.id;

@@ -746,21 +746,21 @@
             <div class="form-group row">
               <label class="col-4 col-form-label text-left">Договор</label>
               <div class="col-sm-7 col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.dogovor">
+                <input type="text" class="form-control" [(ngModel)]="sale.contract">
               </div>
             </div>
 
             <div class="form-group row">
               <label class="col-4 col-form-labell text-left">От</label>
               <div class="col-sm-7 col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.dogovor_from"
+                <input type="text" class="form-control" [(ngModel)]="sale.contract_from"
                        (click)="dogovor_from.toggle()" ngbDatepicker #dogovor_from="ngbDatepicker">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-4 col-form-label text-left">До</label>
               <div class="col-sm-7 col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.dogovor_to"
+                <input type="text" class="form-control" [(ngModel)]="sale.contract_to"
                        (click)="dogovor_to.toggle()" ngbDatepicker #dogovor_to="ngbDatepicker">
               </div>
             </div>

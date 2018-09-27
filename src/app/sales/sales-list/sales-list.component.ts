@@ -1,16 +1,22 @@
 import {Component, Inject, Input, OnDestroy, OnInit, Renderer} from '@angular/core';
 import {Sale} from '../../_models/sale.model';
 import {User} from '../../_models/user.model';
+import {Company} from '../../_models/company.model';
 import {SaleService} from '../../_services/sale.service';
 import {LoginService} from '../../_services/login.service';
-import {Router} from '@angular/router';
+import {SearchSaleModel} from '../../_models/searchSale.model';
+
+import {CompanyService} from '../../_services/company.service';
 import {UserService} from '../../_services/user.service';
 import {SharedService} from '../../_services/shared.service';
-import { Subscription } from 'rxjs';
 
+import { Subscription } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {LocationService} from '../../_services/location.service';
-import {SearchSaleModel} from '../../_models/searchSale.model';
+
+
+import {Router} from '@angular/router';
+
 
 export interface DialogData {
   sale: Sale;
@@ -26,6 +32,8 @@ export class SalesListComponent implements OnInit, OnDestroy {
   public sales: Sale[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
     null, null, null, null, '', null, null);
+  public company: Company = new Company(null, '', '', '', '', '', null, null, '',
+    '', '', null, null, null, [], null, false, null);
 
   public hideme = [];
   public hideme2 = [];
@@ -43,6 +51,11 @@ export class SalesListComponent implements OnInit, OnDestroy {
     '', '', '', '',  '', '', [], [], [], false, false, false,
     false, false, false, false);
 
+  public sort = {
+    'field' : 'created_at',
+    'value' : 'DESC'
+  };
+
 
   constructor(public dialog: MatDialog,
               private route: Router,
@@ -50,6 +63,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
               private locationService: LocationService,
               private loginService: LoginService,
               private userService: UserService,
+              private companyService: CompanyService,
               private render: Renderer,
               private sharedService: SharedService) {
     /* this.render.listenGlobal('window', 'scroll', (evt) => {
@@ -105,6 +119,15 @@ export class SalesListComponent implements OnInit, OnDestroy {
     this.getSales();
   }
 
+  changeSort(field, value) {
+    this.sort.field = field;
+    this.sort.value = value;
+
+    this.sales = [];
+
+    this.getSales();
+  }
+
   getSalesByPage(page) {
     this.sales = [];
     this.page = page;
@@ -113,6 +136,8 @@ export class SalesListComponent implements OnInit, OnDestroy {
   }
 
   getSales() {
+    this.search['sort'] = JSON.stringify(this.sort);
+
     return this.saleService.getSales(this.search).subscribe(data => {
 
       this.saleService.countSales(this.search).subscribe(data1 => {
@@ -121,10 +146,10 @@ export class SalesListComponent implements OnInit, OnDestroy {
       });
 
       for (let i = 0; i < data.length; i++) {
-        // информация о сотруднике
+        // информация о сотруднике компании
         data[i].user = this.userService.setUser(data[i].user);
         data[i].user.user_information = this.userService.setUserInformation(data[i].user);
-        data[i].user.company = this.userService.setUserCompany(data[i].user);
+        data[i].company = this.companyService.setCompany(data[i].company);
         //
         // адрес объекта
         data[i].location = this.locationService.setLocation(data[i].location);

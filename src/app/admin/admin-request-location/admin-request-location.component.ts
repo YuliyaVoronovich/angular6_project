@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange} from '@angular/core';
 import {RequestService} from '../../_services/request.service';
 import {Request} from '../../_models/request.model';
 import {SharedService} from '../../_services/shared.service';
@@ -10,9 +10,12 @@ import {LoginService} from '../../_services/login.service';
   templateUrl: './admin-request-location.component.html',
   styleUrls: ['./admin-request-location.component.css']
 })
-export class AdminRequestLocationComponent implements OnInit {
+export class AdminRequestLocationComponent implements OnInit, OnChanges {
 
   @Input() location: any;
+  @Input() param: string;
+  @Input() request;
+
   @Output() changed = new EventEmitter();
 
   public requests: Request [] = [];
@@ -41,6 +44,17 @@ export class AdminRequestLocationComponent implements OnInit {
     this.streets = this.location[2];
 
     this.getRequests();
+  }
+
+
+  ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+
+    console.log (this.param);
+    if (this.param) {
+      if (changes['param'].previousValue !== changes['param'].currentValue) {
+        this.delete(this.request);
+      }
+    }
   }
 
   message(mes: string, error: boolean) {
@@ -108,7 +122,7 @@ export class AdminRequestLocationComponent implements OnInit {
     this.requestService.deleteRequest(request).subscribe(
       data => {
         if (data.status === 200) {
-          this.message('Заявка удалена', false);
+        //  this.message('Заявка удалена', false);
           this.requests = this.requests.filter(r => r !== request);
           //  this.getSales();
         }

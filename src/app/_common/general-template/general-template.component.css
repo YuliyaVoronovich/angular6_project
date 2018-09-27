@@ -4,16 +4,16 @@
 .general-menu {
   background: #3c7090;
   /* background: #e7e9ef;*/
-   height: 52px;
-   box-shadow: 0 5px 10px #b1afaf;
+  height: 52px;
+  box-shadow: 0 5px 10px #b1afaf;
   color: #fef6f6;
- }
+}
 
- .left-sidebar {
-   background: #3c70904a;
-   position: sticky;
-   top: 52px;
-   /*border-top: 1px solid;*/
+.left-sidebar {
+  background: #3c70904a;
+  position: sticky;
+  top: 52px;
+  /*border-top: 1px solid;*/
   height: calc(100vh - 52px);
   overflow-y: auto;
   z-index: 1000;
@@ -21,6 +21,6 @@
 }
 @media (max-width : 768px) {
   .display {
-   width: 100%;
+    width: 100%;
   }
 }

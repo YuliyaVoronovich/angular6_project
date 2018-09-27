@@ -130,8 +130,10 @@ export class LocationService {
     return location;
   }
 
-  create(location: Location): Observable<Response> {
-    return this.http.post(this.globals.url + this.uri, JSON.stringify(location));
+  create(location: Location) {
+    return this.http.post(this.globals.url + this.uri, JSON.stringify(location))
+      .map((response: Response) => response.json().location
+    );
   }
 
   update(location: Location): Observable<Response> {

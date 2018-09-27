@@ -1,0 +1,99 @@
+<div class="container bg-light" style="max-width: 100%;">
+  <div class="row search-top">
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-2 padding-noright">
+          <div class="form-group">
+            <ng-select [options]="regions"
+                        placeholder="Область">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-2 padding-noright">
+          <div class="form-group">
+            <ng-select [options]="districts_rb"
+                        placeholder="Район РБ">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-3 padding-noright">
+          <div class="form-group">
+            <ng-select [options]="cities"
+                       [multiple]="true"
+                       placeholder="Нас. пункт">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-3 padding-noright">
+          <div class="form-group">
+            <ng-select [options]="districts"
+                       [multiple]="true"
+                       placeholder="Район">
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-2 padding-noright text-right">
+          <div class="form-group">
+            <div class="check">
+              <label class="btn btn-default">
+                <span>Партнерские продажи</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-12 text-center">
+      <div class="row">
+        <div class="col-2 padding-noright">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Комнат</label>
+              <input type="text" placeholder="">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-2 padding-noright">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Стоимость</label>
+              <input type="text" placeholder="">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-3 padding-noright">
+          <div class="form-group">
+            <div class="search search-mini">
+              <label class="label text-left">Дата пост.</label>
+              <input type="text" placeholder="от"
+                     ngbDatepicker (click)="created_from.toggle()" #created_from="ngbDatepicker">
+              <input type="text" placeholder="до"
+                     ngbDatepicker (click)="created_to.toggle()" #created_to="ngbDatepicker">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-3 padding-noright">
+          <div class="form-group">
+            <div class="search search-mini">
+              <label class="label text-left">Дата обн.</label>
+              <input type="text" placeholder="от"
+                     ngbDatepicker (click)="updated_from.toggle()" #updated_from="ngbDatepicker">
+              <input type="text" placeholder="до"
+                     ngbDatepicker (click)="updated_to.toggle()" #updated_to="ngbDatepicker">
+            </div>
+          </div>
+        </div>
+        <div class="col-2 padding-noright text-right">
+          <button style="margin-left: 10px" class="btn btn-md btn-primary">Поиск</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

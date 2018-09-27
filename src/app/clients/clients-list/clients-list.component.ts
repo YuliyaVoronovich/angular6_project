@@ -5,6 +5,8 @@ import {LoginService} from '../../_services/login.service';
 import {LocationService} from '../../_services/location.service';
 import {UserService} from '../../_services/user.service';
 import {Router} from '@angular/router';
+import {SharedService} from '../../_services/shared.service';
+import {CompanyService} from '../../_services/company.service';
 
 @Component({
   selector: 'app-clients-list',
@@ -20,16 +22,29 @@ export class ClientsListComponent implements OnInit {
   public countClients; // если не придет информация с API
   public limit; // если не придет информация с API
 
+  public hideme = [];
+
   constructor(private clientService: ClientService,
               private route: Router,
               private locationService: LocationService,
               private loginService: LoginService,
-              private userService: UserService) {
+              private userService: UserService,
+              private companyService: CompanyService,
+              private sharedService: SharedService) {
 
   }
 
   ngOnInit() {
     this.getClients();
+  }
+
+  message(mes: string, error: boolean) {
+    let arr: any[] = ['show', mes, error];
+    this.sharedService.emitChange(arr);
+    arr = ['hide', '', false];
+    this.timer = setTimeout(() => {
+      this.sharedService.emitChange(arr);
+    }, 3000);
   }
 
   getClients() {
@@ -40,6 +55,10 @@ export class ClientsListComponent implements OnInit {
         this.countClients = data1.count;
       });
       for (let i = 0; i < data.length; i++) {
+        data[i].user = this.userService.setUser(data[i].user);
+        data[i].user.user_information = this.userService.setUserInformation(data[i].user);
+        data[i].company = this.companyService.setCompany(data[i].company);
+
         this.clients.push(data[i]);
       }
 
@@ -52,6 +71,13 @@ export class ClientsListComponent implements OnInit {
         this.route.navigate(['403']);
       }
     });
+  }
+
+  getClientsByPage(page) {
+    this.clients = [];
+    this.page = page;
+    this.search['page'] = this.page - 1;
+    this.getClients();
   }
 
 }

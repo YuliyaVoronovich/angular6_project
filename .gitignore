@@ -39,3 +39,4 @@ testem.log
 Thumbs.db
 
 .gitlab-ci.yml
+src/app/_common/global.ts

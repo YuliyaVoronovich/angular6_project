@@ -42,6 +42,16 @@ export class AdminCompanyModificateComponent implements OnInit {
               private companySevice: CompanyService) {
   }
 
+  // валидация
+  public validation1: any = true; // flag of variable (valid input data or not)
+  public message1: any;         // message text of invalid input data
+  public validation2: any = true; // flag of variable (valid input data or not)
+  public message2: any;         // message text of invalid input data
+  public validation3: any = true; // flag of variable (valid input data or not)
+  public message3: any;         // message text of invalid input data
+  public validation4: any = true; // flag of variable (valid input data or not)
+  public message4: any;         // message text of invalid input data
+
 
   ngOnInit() {
 
@@ -92,51 +102,118 @@ export class AdminCompanyModificateComponent implements OnInit {
         }
       });
   }
-
   save() {
-    console.log(this.company);
-    // даты из формата объект в формат 0000-00-00
-    this.license_from = new NgbDateFRParserFormatter().format_to_base(this.company.license_from);
-    this.license_to = new NgbDateFRParserFormatter().format_to_base(this.company.license_to);
-    this.company.license_from = this.license_from;
-    this.company.license_to = this.license_to;
+      console.log(this.company);
+      // даты из формата объект в формат 0000-00-00
+      this.license_from = new NgbDateFRParserFormatter().format_to_base(this.company.license_from);
+      this.license_to = new NgbDateFRParserFormatter().format_to_base(this.company.license_to);
+      this.company.license_from = this.license_from;
+      this.company.license_to = this.license_to;
 
-    if (this.company.id !== null) {
-      this.companySevice.update(this.company).subscribe(
-        data => {
-          if (data.status === 200) {
-            this.message('Компания была успешно обновлена', false);
-            this.router.navigate(['admin/companies']);
-          } else {
-            this.message('Ошибка обновления компании!', true);
-          }
-        },
-        error => {
-          if (error.status === 401) {
-            this.router.navigate(['']);
-          } else {
-            this.message('Ошибка обновления компании!', true);
-          }
+      if (this.company.id !== null) {
+        if (this.validationTitle() === true) {
+          this.companySevice.update(this.company).subscribe(
+            data => {
+              if (data.status === 200) {
+                this.message('Компания была успешно обновлена', false);
+                this.router.navigate(['admin/companies']);
+              } else {
+                this.message('Ошибка обновления компании!', true);
+              }
+            },
+            error => {
+              if (error.status === 401) {
+                this.router.navigate(['']);
+              } else {
+                this.message('Ошибка обновления компании!', true);
+              }
+            }
+          );
         }
-      );
+      } else {
+        if (this.validation() === true) {
+          this.companySevice.create(this.company).subscribe(
+            data => {
+              if (data.status === 201) {
+                this.message('Компания была успешно добавлена', false);
+                this.router.navigate(['admin/companies']);
+              } else {
+                this.message('Ошибка добавления компании!', true);
+              }
+            },
+            error => {
+              if (error.status === 401) {
+                this.router.navigate(['']);
+              } else {
+                this.message('Ошибка добавления компании!', true);
+              }
+            }
+          );
+        }
+      }
+  }
+
+  /* Валидация */
+  validationTitle(): boolean {
+    if (this.company.title.length > 0) {
+      this.validation1 = true;
+      this.message1 = '';
+
+      return true;
     } else {
-      this.companySevice.create(this.company).subscribe(
-        data => {
-          if (data.status === 201) {
-            this.message('Компания была успешно добавлена', false);
-            this.router.navigate(['admin/companies']);
-          } else {
-            this.message('Ошибка добавления компании!', true);
-          }
-        },
-        error => {
-          if (error.status === 401) {
-            this.router.navigate(['']);
-          } else {
-            this.message('Ошибка добавления компании!', true);
-          }
-        }
-      );
+      this.validation1 = false;
+      this.message1 = 'Обязательное поле';
+
+      return false;
     }
   }
+  validationNameUser(): boolean {
+    if (this.company.user.user_information.name.length > 0) {
+      this.validation2 = true;
+      this.message2 = '';
+
+      return true;
+    } else {
+      this.validation2 = false;
+      this.message2 = 'Обязательное поле';
+
+      return false;
+    }
+  }
+  validationLoginUser(): boolean {
+    if (this.company.user.login.length > 0) {
+      this.validation3 = true;
+      this.message3 = '';
+
+      return true;
+    } else {
+      this.validation3 = false;
+      this.message3 = 'Обязательное поле';
+
+      return false;
+    }
+  }
+  validationPasswordUser(): boolean {
+    if (this.company.user.password_first.length > 0) {
+      this.validation4 = true;
+      this.message4 = '';
+
+      return true;
+    } else {
+      this.validation4 = false;
+      this.message4 = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validation(): boolean {
+
+    if (this.validationTitle() === true && this.validationNameUser() === true && this.validationLoginUser() === true
+      && this.validationPasswordUser() === true) {
+      return true;
+    }
+    return false;
+  }
+  /*  Конец валидации */
 }
