@@ -1,7 +1,7 @@
 <div class="container bg-light" style="max-width: 100%;">
   <div class="row search-top" [ngClass]="{'show' : !hide, 'hide' : hide}">
 
-    <div class="col-lg-4 my-col-md-12 my-col-xs-none">
+    <div class="col-lg-4 my-col-md-12 my-col-sm-12 ">
       <div class="row">
         <div class="col-6 my-col-sm-12">
           <div class="form-group">
@@ -24,9 +24,9 @@
       </div>
     </div>
 
-    <div class="col-lg-5 my-col-md-7 my-col-sm-8 my-col-xs-12">
+    <div class="col-lg-5 my-col-md-7 my-col-sm-12">
 
-        <span class="labels-lg">
+        <span class="labels-lg ">
             <ng-container *ngFor="let type of types">
                 <label class="cursor"
                        (click)="typesTrigger(type.id); arrayTypes[type.id] = !arrayTypes[type.id]"
@@ -35,15 +35,13 @@
                 </label>
               </ng-container>
         </span>
-
-      <span class="text-right">
+        <span class="text-right">
           <input type="text" class="form-control input-mini" [(ngModel)]="search.price_from" placeholder="Цена от">-
           <input type="text" class="form-control input-mini" [(ngModel)]="search.price_to" placeholder="Цена до">
         </span>
     </div>
 
-
-    <div class="col-lg-3 my-col-md-5 my-col-sm-4 my-col-xs-12 my-col-xxs-12  text-right padding-left"
+    <div class="col-lg-3 my-col-md-5 my-col-sm-12 my-sol-xs-12 text-right padding-left"
          style="color: #428bca">
       <a class="btn" (click)="hide=!hide">
         <i class="fas fa-search-plus"></i>

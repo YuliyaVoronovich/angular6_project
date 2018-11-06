@@ -189,3 +189,35 @@ input {
 .select-label {
   background: #fbd85a!important;
 }
+/* Собственная разметка*/
+@media (max-width : 1474px) {
+  .my-col-md-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .my-col-md-7 {
+    -ms-flex: 0 0 63%;
+    flex: 0 0 63%;
+    max-width: 63%;
+  }
+  .my-col-md-5 {
+    -ms-flex: 0 0 37%;
+    flex: 0 0 37%;
+    max-width: 37%;
+  }
+}
+@media (max-width : 1034px) {
+  .my-col-sm-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+@media (max-width : 562px) {
+  .my-col-xs-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
