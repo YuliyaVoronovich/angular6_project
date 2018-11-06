@@ -13,6 +13,7 @@ import {DistrictCountry} from '../_models/districtCountry.model';
 import {Street} from '../_models/street.model';
 import {Microdistrict} from '../_models/microdistrict.model';
 import {Globals} from '../_common/globals';
+import {Direction} from '../_models/direction.model';
 
 @Injectable()
 export class LocationService {
@@ -62,15 +63,20 @@ export class LocationService {
       .map((response: Response) => response.json().districts);
     // .catch(this.handleError);
   }
-  getMicroDistricts(district = 0) {
-    return this.http.get(this.globals.url + this.uri + '/microdistricts', {search: {'district': district}})
+  getMicroDistricts(city = 0, district = 0) {
+    return this.http.get(this.globals.url + this.uri + '/microdistricts', {search: {'city': city, 'district': district}})
       .map((response: Response) => response.json().microdistricts);
     // .catch(this.handleError);
   }
 
-  getStreets(city, microdistrict) {
-    return this.http.get(this.globals.url + this.uri + '/streets', {search: {'city': city, 'microdistrict': microdistrict}})
+  getStreets(city, district, microdistrict) {
+    return this.http.get(this.globals.url + this.uri + '/streets', {search: {'city': city, 'district': district, 'microdistrict': microdistrict}})
       .map((response: Response) => response.json().streets);
+    // .catch(this.handleError);
+  }
+  getDirections() {
+    return this.http.get(this.globals.url + this.uri + '/directions')
+      .map((response: Response) => response.json().directions);
     // .catch(this.handleError);
   }
 
@@ -83,7 +89,7 @@ export class LocationService {
 
   setDistrict(district: District): District {
     if (!district) {
-      return district = new District(0, null, '', '');
+      return district = new District(0, null, '', '',  '');
     }
     return district;
   }
@@ -122,10 +128,16 @@ export class LocationService {
     }
     return region;
   }
+  setDirection(direction: Direction): Direction {
+    if (!direction) {
+      return direction = new Direction(0, '', '');
+    }
+    return direction;
+  }
 
   setLocation(location: Location): Location {
     if (!location) {
-      return location = new Location(0, null, null, null, null, null, null, '', '', null, '', 0, 0, 0, 0, '');
+      return location = new Location(0, null, null, null, null, null, null, '', '', null, '', 0, 0, 0, 0,  null, '');
     }
     return location;
   }

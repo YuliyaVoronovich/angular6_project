@@ -1,26 +1,48 @@
-<div class="table-responsive">
-  <table class="table table-bordered table-striped" style="width: 400px">
-    <thead>
-    <tr style="background:#cccccc">
-      <th>Название</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let module of modules">
-      <td *ngIf="module.id == editRowId">
-        <input #myInput type="text" [(ngModel)]="module.title" (blur)="change(module)">
-      </td>
-      <td *ngIf="module.id !== editRowId" (dblclick)="toggle(module.id)">
-        {{module.title}}
-      </td>
-      <td>
-        <button class="btn btn-danger btn-sm" (click)="delete(module)">Удалить</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<div style="margin-left: 20px">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped" style="width: 400px">
+      <thead>
+      <tr style="background:#cccccc">
+        <th>Название</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let module of modules">
+        <td *ngIf="module.id == editRowId">
+          <input #myInput type="text" [(ngModel)]="module.title" (blur)="change(module)">
+        </td>
+        <td *ngIf="module.id !== editRowId" (dblclick)="toggle(module.id)">
+          {{module.title}}
+        </td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="delete(module)">Удалить</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row" [ngClass]="{'show' : hide, 'hide' : !hide}">
+    <div class="col-2">
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Название</label>
+        <div class="col-10">
+          <input type="text" class="form-control" [(ngModel)]="module.title">
+        </div>
+        <div class="col-1">
+          <button style="margin-right: 10px" class="btn btn-sm btn-primary" (click)="save(module)">ОК</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row" [hidden]="hide">
+    <button class="btn btn-primary" (click)="hide=!hide">Добавить</button>
+  </div>
+  <div class="row" [hidden]="!hide">
+    <button class="btn btn-primary" (click)="hide=!hide">Скрыть</button>
+  </div>
 </div>
-<div>
-  <button class="btn btn-primary" (click)="add()">Добавить</button>
-</div>
+

@@ -15,37 +15,55 @@
       <th>Площадь</th>
       <th>Этаж</th>
       <th>
-        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field ==='price' && (sort.value==='ASC' || sort.value==='DESC')" (click)="changeSort('price', 'DESC')">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='price' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('price', 'DESC')">
           <i class="fas fa-sort icon-color"></i>Цена,$
         </div>
-        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='ASC')" (click)="changeSort('price', 'ASC')">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='ASC')"
+             (click)="changeSort('price', 'ASC')">
           <i class="fas fa-sort-down icon-color"></i>Цена,$
         </div>
-        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='DESC')" (click)="changeSort('price', 'DESC')">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='DESC')"
+             (click)="changeSort('price', 'DESC')">
           <i class="fas fa-sort-up icon-color"></i>Цена,$
         </div>
       </th>
       <th>$/m</th>
       <th>Агентство</th>
       <th>
-        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')" (click)="changeSort('created_at', 'DESC')">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
           <i class="fas fa-sort icon-color"></i>Дата доб.
         </div>
-        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='ASC')" (click)="changeSort('created_at', 'ASC')">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='ASC')"
+             (click)="changeSort('created_at', 'ASC')">
           <i class="fas fa-sort-down icon-color"></i>Дата доб.
         </div>
-        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='DESC')" (click)="changeSort('created_at', 'DESC')">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
           <i class="fas fa-sort-up icon-color"></i>Дата доб.
         </div>
       </th>
       <th>
-        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field ==='updated_at' && (sort.value==='ASC' || sort.value==='DESC')" (click)="changeSort('updated_at', 'DESC')">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='updated_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
           <i class="fas fa-sort icon-color"></i>Дата обн.
         </div>
-        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='ASC')" (click)="changeSort('updated_at', 'ASC')">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='ASC')"
+             (click)="changeSort('updated_at', 'ASC')">
           <i class="fas fa-sort-down icon-color"></i>Дата обн.
         </div>
-        <div class="nobr cursor" style="width: 100%" [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='DESC')" (click)="changeSort('updated_at', 'DESC')">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
           <i class="fas fa-sort-up icon-color"></i>Дата обн.
         </div>
       </th>
@@ -74,14 +92,17 @@
             <i class="fas fa-check icon-color" [hidden]="!hideme2[i]"></i>
           </label>
         </td>
-        <!-- <td>
-           <app-sale-list-adress [location]="sale.location"></app-sale-list-adress>
-         </td>-->
         <td>{{sale.location.city.title}}</td>
         <td>{{sale.location.district.title}}</td>
         <td>{{sale.location.microdistrict.title}}</td>
         <td>
-          <app-sale-list-adress [location]="sale.location"></app-sale-list-adress>
+          <ng-container *ngIf="sale.location.street.title.length >0 ">
+            {{sale.location.street.title}},
+          </ng-container>
+           {{sale.location.house}}
+          <ng-container *ngIf="sale.location.housing !== '0' && sale.location.housing !== ''">
+            / {{sale.location.housing}}
+          </ng-container>
         </td>
         <td>{{sale.room}}/{{sale.room_separate}}</td>
         <td>{{sale.area}}/{{sale.area_leave}}/{{sale.area_kitchen}}</td>

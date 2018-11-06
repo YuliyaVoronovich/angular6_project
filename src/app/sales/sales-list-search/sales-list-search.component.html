@@ -56,7 +56,7 @@
       </a>
       <!--<mat-icon style="vertical-align: middle; font-size: 20px">search</mat-icon>-->
 
-      <button class="btn btn-sm btn-primary" (click)="searchSale()">Поиск</button>
+      <button class="btn btn-sm btn-primary" (click)="searchSales()">Поиск</button>
     </div>
   </div>
 
@@ -176,7 +176,6 @@
           </div>
         </div>
 
-
         <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
           <div class="form-group">
             <div class="search">
@@ -210,6 +209,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -392,9 +392,9 @@
         <div class="col-12">
           <div class="form-group">
             <div class="search search-full"
-                 [ngClass]="{'show-background' : hide_sales, 'hide-background' : !hide_sales}">
-              <label class="label text-center cursor" (click)="hide_sales=!hide_sales">Условия сделки</label>
-              <div class="labels" [ngClass]="{'show-block' : hide_sales, 'hide' : !hide_sales}">
+                 [ngClass]="{'show-background' : hide_sale, 'hide-background' : !hide_sale}">
+              <label class="label text-center cursor" (click)="hide_sale=!hide_sale">Условия сделки</label>
+              <div class="labels" [ngClass]="{'show-block' : hide_sale, 'hide' : !hide_sale}">
                 <ng-container *ngFor="let sale of sales">
                   <label class="btn btn-default"
                          (click)="salesTrigger(sale.id); arraySales[sale.id] = !arraySales[sale.id]"
@@ -468,20 +468,20 @@
   </div>
 
   <div class="row" style="color: #428bca" [ngClass]="{'show' : hide, 'hide' : !hide}">
-    <div class="col-4">
-      <a style="text-decoration: underline" class="btn" (click)="clear()">Очистить поиск</a>
+    <div class="col-3">
+      <a style="text-decoration: underline" class="btn" (click)="clear()">Очистить <span class="my-col-xs-none">поиск</span></a>
     </div>
-    <div class="col-4 text-center">
-      <button style="margin-left: 10px" class="btn btn-md btn-primary" (click)="searchSale()">Поиск</button>
-    </div>
+   <!-- <div class="col-4 text-center">
+      <button style="margin-left: 10px" class="btn btn-md btn-primary" (click)="searchSales()">Поиск</button>
+    </div>-->
 
-
-    <div class="col-4 text-right">
+    <div class="col-9 text-right padding">
+      <button style="margin-right: 10px" class="btn btn-sm btn-primary" (click)="searchSales()">Поиск</button>
       <a style="cursor: pointer; text-decoration: underline" (click)="hide=!hide">
         <i class="fas fa-search-minus"></i>
         <!--<mat-icon style="vertical-align: middle; font-size: 20px">search</mat-icon>-->
-        Скрыть поиск</a>
-      <a style="cursor: pointer; margin-left: 15px; text-decoration: underline">Сохранить поиск</a>
+        Скрыть <span class="my-col-xs-none">поиск</span></a>
+      <a style="cursor: pointer; margin-left: 15px; text-decoration: underline">Сохранить <span class="my-col-xs-none">поиск</span></a>
     </div>
 
   </div>

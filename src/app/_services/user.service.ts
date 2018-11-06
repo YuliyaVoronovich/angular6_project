@@ -6,7 +6,6 @@ import {User} from '../_models/user.model';
 import 'rxjs/add/operator/map';
 import {UserInformation} from '../_models/userInformation.model';
 import {Globals} from '../_common/globals';
-import {Company} from "../_models/company.model";
 
 @Injectable()
 export class UserService {
@@ -63,7 +62,7 @@ export class UserService {
   setUser(user: User) {
     if (!user) {
       return user = new User(null, '', '', null, null, null, '',
-        0, null, null, null, null, '', null, null);
+        0, null, null, null, null, '', null, null, null);
     }
     return user;
   }
@@ -73,14 +72,6 @@ export class UserService {
       return user.user_information = new UserInformation(null, '', '', '', '', '', '', null, []);
     }
     return user.user_information;
-  }
-
-  setUserCompany(user: User) {
-    if (!user.company) {
-      return user.company = new Company(null, '', '', '', '', '', null, null, '',
-        '', '', null, null, null, [], null, null, null);
-    }
-    return user.company;
   }
 
 }

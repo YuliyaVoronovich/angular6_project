@@ -1,99 +1,254 @@
 <div class="container bg-light" style="max-width: 100%;">
-  <div class="row search-top">
+
+  <div class="row search-top" [ngClass]="{'show' : !hide, 'hide' : hide}">
     <div class="col-lg-12">
       <div class="row">
-        <div class="col-2 padding-noright">
+        <div class="col-lg-2 my-col-md-none padding">
           <div class="form-group">
             <ng-select [options]="regions"
-                        placeholder="Область">
+                       [(ngModel)]="''+search.region"
+                       [allowClear]="true"
+                       placeholder="Область"
+                       (selected)="selectDistrictsRb($event);">
             </ng-select>
           </div>
         </div>
-        <div class="col-2 padding-noright">
+        <div class="col-lg-2 my-col-md-none padding">
           <div class="form-group">
             <ng-select [options]="districts_rb"
-                        placeholder="Район РБ">
+                       [(ngModel)]="''+search.district_rb"
+                       [allowClear]="true"
+                       placeholder="Район РБ"
+                       (selected)="selectCities($event);">
             </ng-select>
           </div>
         </div>
-        <div class="col-3 padding-noright">
+        <div class="col-lg-3 my-col-md-3 my-col-sm-12 padding">
           <div class="form-group">
             <ng-select [options]="cities"
                        [multiple]="true"
-                       placeholder="Нас. пункт">
+                       [(ngModel)]="search.city.values"
+                       placeholder="Нас. пункт"
+                       (selected)="selectDistrict($event)"
+                       (deselected)="deselectDistrict($event)">
             </ng-select>
           </div>
         </div>
-        <div class="col-3 padding-noright">
+        <div class="col-lg-3 my-col-md-3 my-col-sm-12 padding">
           <div class="form-group">
             <ng-select [options]="districts"
                        [multiple]="true"
+                       [(ngModel)]="search.city.districts"
                        placeholder="Район">
             </ng-select>
           </div>
         </div>
-
-        <div class="col-2 padding-noright text-right">
+        <!--Скрывается при маленьком экране-->
+        <div class="col-lg-2 my-col-md-3 my-col-sm-4 my-col-sm-none padding text-right">
           <div class="form-group">
             <div class="check">
-              <label class="btn btn-default">
+              <label class="btn btn-default" (click)="search.partner = !search.partner"
+                     [ngClass]="{'select-label' : search.partner}">
                 <span>Партнерские продажи</span>
               </label>
             </div>
           </div>
         </div>
+        <!--Скрывается при маленьком экране-->
 
       </div>
     </div>
 
     <div class="col-lg-12 text-center">
       <div class="row">
-        <div class="col-2 padding-noright">
+
+        <!--Отображается при маленьком экране-->
+        <div class="my-col-sm-2 my-col-mdd-none col-12 padding text-left">
+          <div class="form-group">
+            <div class="check">
+              <label class="btn btn-default" (click)="search.partner = !search.partner"
+                     [ngClass]="{'select-label' : search.partner}">
+                <span>Партнеры</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!--Отображается при маленьком экране-->
+
+        <div class="col-lg-2 my-col-md-3 my-col-sm-5 col-6 padding">
           <div class="form-group">
             <div class="search">
               <label class="label text-left">Комнат</label>
-              <input type="text" placeholder="">
+              <input type="text" placeholder="" [(ngModel)]="search.room">
             </div>
           </div>
         </div>
 
-        <div class="col-2 padding-noright">
+        <div class="col-lg-2 my-col-md-3 my-col-sm-5 col-6 padding">
           <div class="form-group">
             <div class="search">
               <label class="label text-left">Стоимость</label>
-              <input type="text" placeholder="">
+              <input type="text" placeholder="" [(ngModel)]="search.price">
             </div>
           </div>
         </div>
 
-        <div class="col-3 padding-noright">
+        <div class="col-lg-3 my-col-md-none padding">
           <div class="form-group">
             <div class="search search-mini">
               <label class="label text-left">Дата пост.</label>
-              <input type="text" placeholder="от"
-                     ngbDatepicker (click)="created_from.toggle()" #created_from="ngbDatepicker">
-              <input type="text" placeholder="до"
-                     ngbDatepicker (click)="created_to.toggle()" #created_to="ngbDatepicker">
+              <input type="text" placeholder="от" [(ngModel)]="search.created_from"
+                     ngbDatepicker (click)="created_from1.toggle()" #created_from1="ngbDatepicker">
+              <input type="text" placeholder="до" [(ngModel)]="search.created_to"
+                     ngbDatepicker (click)="created_to1.toggle()" #created_to1="ngbDatepicker">
             </div>
           </div>
         </div>
 
-        <div class="col-3 padding-noright">
+        <div class="col-lg-3 my-col-md-none padding">
           <div class="form-group">
             <div class="search search-mini">
               <label class="label text-left">Дата обн.</label>
-              <input type="text" placeholder="от"
-                     ngbDatepicker (click)="updated_from.toggle()" #updated_from="ngbDatepicker">
-              <input type="text" placeholder="до"
-                     ngbDatepicker (click)="updated_to.toggle()" #updated_to="ngbDatepicker">
+              <input type="text" placeholder="от" [(ngModel)]="search.updated_from"
+                     ngbDatepicker (click)="updated_from1.toggle()" #updated_from1="ngbDatepicker">
+              <input type="text" placeholder="до" [(ngModel)]="search.updated_to"
+                     ngbDatepicker (click)="updated_to1.toggle()" #updated_to1="ngbDatepicker">
             </div>
           </div>
         </div>
-        <div class="col-2 padding-noright text-right">
-          <button style="margin-left: 10px" class="btn btn-md btn-primary">Поиск</button>
+        <div class="col-lg-2 my-col-md-3 my-col-sm-12 col-12 padding text-right">
+          <a class="btn my-col-lg-none" (click)="hide=!hide" style="color: #428bca">
+            <i class="fas fa-search-plus"></i>
+            <span>Расширенный поиск</span>
+          </a>
+          <button style="margin-left: 10px" class="btn btn-md btn-primary" (click)="searchClients()">Поиск</button>
         </div>
 
       </div>
     </div>
+  </div>
+
+  <div class="row search-top" [ngClass]="{'show' : hide, 'hide' : !hide}">
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-md-6 col-12">
+          <div class="form-group">
+            <ng-select [options]="regions"
+                       [(ngModel)]="''+search.region"
+                       [allowClear]="true"
+                       placeholder="Область"
+                       (selected)="selectDistrictsRb($event);">
+            </ng-select>
+          </div>
+
+          <div class="form-group">
+            <ng-select [options]="districts_rb"
+                       [(ngModel)]="''+search.district_rb"
+                       [allowClear]="true"
+                       placeholder="Район РБ"
+                       (selected)="selectCities($event);">
+            </ng-select>
+          </div>
+
+        </div>
+        <div class="col-md-6 col-12">
+          <div class="form-group">
+            <ng-select [options]="cities"
+                       [multiple]="true"
+                       [(ngModel)]="search.city.values"
+                       placeholder="Нас. пункт"
+                       (selected)="selectDistrict($event)"
+                       (deselected)="deselectDistrict($event)">
+            </ng-select>
+          </div>
+
+          <div class="form-group">
+            <ng-select [options]="districts"
+                       [multiple]="true"
+                       [(ngModel)]="search.city.districts"
+                       placeholder="Район">
+            </ng-select>
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <div class="check">
+              <label class="btn btn-default" (click)="search.partner = !search.partner"
+                     [ngClass]="{'select-label' : search.partner}">
+                <span>Партнеры</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Комнат</label>
+              <input type="text" placeholder="" [(ngModel)]="search.room">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Стоимость</label>
+              <input type="text" placeholder="" [(ngModel)]="search.price">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search search-mini">
+              <label class="label text-left">Дата пост.</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.created_from"
+                     ngbDatepicker (click)="created_from2.toggle()" #created_from2="ngbDatepicker">
+              <input type="text" placeholder="до" [(ngModel)]="search.created_to"
+                     ngbDatepicker (click)="created_to2.toggle()" #created_to2="ngbDatepicker">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="search search-mini">
+              <label class="label text-left">Дата обн.</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.updated_from"
+                     ngbDatepicker (click)="updated_from2.toggle()" #updated_from2="ngbDatepicker">
+              <input type="text" placeholder="до" [(ngModel)]="search.updated_to"
+                     ngbDatepicker (click)="updated_to2.toggle()" #updated_to2="ngbDatepicker">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row" style="color: #428bca" [ngClass]="{'show' : hide, 'hide' : !hide}">
+    <div class="col-sm-3 col-3">
+      <a style="text-decoration: underline" class="btn" (click)="clear()">Очистить <span class="my-col-xs-none">поиск</span></a>
+    </div>
+<!--    <div class="col-sm-2 text-center">
+      <button style="margin-left: 10px" class="btn btn-md btn-primary" (click)="searchClients()">Поиск</button>
+    </div>-->
+
+    <div class="col-sm-9 col-9 text-right padding">
+      <button style="margin-right: 10px" class="btn btn-sm btn-primary" (click)="searchClients()">Поиск</button>
+      <a style="cursor: pointer; text-decoration: underline" (click)="hide=!hide">
+        <i class="fas fa-search-minus"></i>
+        <!--<mat-icon style="vertical-align: middle; font-size: 20px">search</mat-icon>-->
+        Скрыть <span class="my-col-xs-none">поиск</span></a>
+      <a style="cursor: pointer; margin-left: 15px; text-decoration: underline">Сохранить <span class="my-col-xs-none">поиск</span></a>
+    </div>
+
   </div>
 </div>

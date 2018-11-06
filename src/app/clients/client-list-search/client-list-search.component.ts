@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {IOption} from 'ng-select';
 import {LocationService} from '../../_services/location.service';
 import {LabelService} from '../../_services/label.service';
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
+import {SearchClientModel} from '../../_models/searchClient.model';
 
 @Component({
   selector: 'app-client-list-search',
@@ -12,6 +13,8 @@ import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
   providers: [{provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}]
 })
 export class ClientListSearchComponent implements OnInit {
+
+  @Output() changed = new EventEmitter();
 
   public regions: Array<IOption> = [
     {label: '', value: ''}
@@ -29,6 +32,15 @@ export class ClientListSearchComponent implements OnInit {
     {label: '', value: ''}
   ];
 
+  public search = new SearchClientModel('', '', {'values': []},
+    {'values': []}, '', '', null, null, null,
+    null, false);
+
+  public citiesSelected = [];
+  public citiesSearch = '';
+
+  public hide = false;
+
   constructor(private locationService: LocationService,
               private labelsService: LabelService) { }
 
@@ -38,6 +50,18 @@ export class ClientListSearchComponent implements OnInit {
     this.getCities();
     this.getDistricts();
   }
+
+  searchClients() {
+    this.changed.emit(this.search);
+  }
+
+  clear() {
+  this.search = new SearchClientModel(0, 0, {'values': []},
+      {'values': []}, '', '', null, null, null,
+      null, false);
+
+  }
+
   getRegions() {
     this.locationService.getRegions().subscribe((options) => {
       this.regions = [];
@@ -78,6 +102,29 @@ export class ClientListSearchComponent implements OnInit {
         this.districts.push({label: options[i].title, value: '' + options[i].id});
       }
     });
+  }
+
+  selectDistrictsRb(option: IOption) {
+    this.getDistrictsRb(`${option.value}`);
+  }
+
+  selectCities(option: IOption) {
+    this.getCities(0, `${option.value}`);
+  }
+
+  selectDistrict(option: IOption) {
+    this.citiesSelected.push(`${option.value}`);
+    this.citiesSearch = JSON.stringify(this.citiesSelected);
+    this.getDistricts(this.citiesSearch);
+  }
+
+  deselectDistrict(option: IOption) {
+    const index: number = this.citiesSelected.indexOf(`${option.value}`);
+    if (index !== -1) {
+      this.citiesSelected.splice(index, 1);
+    }
+    this.citiesSearch = JSON.stringify(this.citiesSelected);
+    this.getDistricts(this.citiesSearch);
   }
 
 }

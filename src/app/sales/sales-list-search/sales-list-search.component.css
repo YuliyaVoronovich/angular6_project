@@ -248,9 +248,9 @@ input {
     flex: 0 0 40%;
     max-width: 40%;
   }
-  .padding {
+/*  .padding {
     padding: 0 15px;
-  }
+  }*/
 }
 @media (max-width : 372px) {
   .my-col-xxs-12 {

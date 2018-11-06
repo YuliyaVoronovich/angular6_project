@@ -6,6 +6,7 @@ export class District {
     public id: number,
     public city: City,
     public title: string,
+    public small_title: string,
     public coordinates: string,
   ) {}
 }

@@ -24,6 +24,16 @@ import {FileHolder} from 'angular2-image-upload';
 import {ImageService} from '../../_services/image.service';
 import {RequestService} from '../../_services/request.service';
 
+// карта
+import OlMap from 'ol/Map';
+import OlXYZ from 'ol/source/XYZ';
+import OlTileLayer from 'ol/layer/Tile';
+import OlView from 'ol/View';
+import {Style, Icon} from 'ol/Style';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+
+import {fromLonLat} from 'ol/proj';
 
 
 @Component({
@@ -37,6 +47,12 @@ import {RequestService} from '../../_services/request.service';
 
 
 export class SaleModificateComponent implements OnInit {
+
+  map: OlMap;
+  source: OlXYZ;
+  layer: OlTileLayer;
+  view: OlView;
+  marker: Feature;
 
   public regions: Array<IOption> = [
     {label: '', value: ''}
@@ -63,19 +79,19 @@ export class SaleModificateComponent implements OnInit {
   public sources: Label[] = [];
   public metro: Metro[] = [];
 
-  public sale: Sale = new Sale(0, null,  null, '', '', '', 0, 0, false,
+  public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
     '', false, false, false, '', null, null, '', '', '', null,
-    0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, false, false, false, 0,
-    0, 1, '', 1, 1, '', 1, false, '', '', false, 0, 1, null,
+    '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
+    0, 0, '', 0, 0, '', 0, false, '', '', false, 0, 0, null,
     null, null, null, false, null, null, null);
 
-  public sale_addition_information = new SaleAdditionInformation(0, false
+  public sale_addition_information: SaleAdditionInformation = new SaleAdditionInformation(0, false
     , false, false, false, false, false, false, false, false, false, false
     , false, false, false, false, false, false, false, false, false, false
     , false, false, false, false, false, false, false);
 
   public user: User = new User(0, '', '', null, null, null, '',
-    0, 0, 0, null, null, null, null, null);
+    0, 0, 0, null, null, null, null, null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
   public users: User[] = [];
 
@@ -93,7 +109,9 @@ export class SaleModificateComponent implements OnInit {
 
   public displayRequest = false;
   public textRequest = '';
-  public idRequest = 0;
+  public idSaleRequest = 0;
+  public streetRequest = '';
+  public request = {};
 
   public noResultsTerm = '';
 
@@ -137,6 +155,8 @@ export class SaleModificateComponent implements OnInit {
             this.sale = data.sale;
             if (this.sale.user === null) {
               this.sale.user = this.user;
+              this.sale.user.user_information = this.user_information;
+              this.sale.user.manager_information = this.user_information;
             }
             if (this.sale.sale_addition_information === null) {
               this.sale.sale_addition_information = this.sale_addition_information;
@@ -153,6 +173,8 @@ export class SaleModificateComponent implements OnInit {
         } else {
           this.sale.sale_addition_information = this.sale_addition_information;
           this.sale.user = this.user;
+          this.sale.user.user_information = this.user_information;
+          this.sale.user.manager_information = this.user_information;
         }
       });
 
@@ -166,7 +188,7 @@ export class SaleModificateComponent implements OnInit {
     this.sale.location.metro = this.locationService.setMetro(this.sale.location.metro);
 
 
-    this.labelsService.getAllLabels().subscribe(data => {
+    this.labelsService.getAllLabelsSales().subscribe(data => {
       this.wc = data.wc;
       this.walls = data.walls;
       this.balconies = data.balconies;
@@ -191,7 +213,32 @@ export class SaleModificateComponent implements OnInit {
       this.getUsers();
 
     });
+    /* Подгрузка карты*/
 
+    this.marker = new Feature({
+      geometry: new Point([27.56164, 53.902254])
+    });
+
+    this.source = new OlXYZ({
+      url: 'http://tile.osm.org/{z}/{x}/{y}.png',
+      features: this.marker
+    });
+
+    this.layer = new OlTileLayer({
+      source: this.source
+    });
+
+    this.view = new OlView({
+      center: fromLonLat([27.56164, 53.902257]),
+      zoom: 14
+    });
+
+    this.map = new OlMap({
+      target: 'map',
+      layers: [this.layer],
+      view: this.view
+    });
+    /* Подгрузка карты*/
   }
 
   save() {
@@ -200,15 +247,22 @@ export class SaleModificateComponent implements OnInit {
     this.sale.contract_from = this.contract_from;
     this.sale.contract_to = this.contract_to;
 
+    this.sale.location.street.id  = (this.sale.location.street.id !== undefined) ? this.sale.location.street.id  : 0;
+
     this.sale.photo_reclame = this.upload_photo;
-    console.log(this.sale);
+     console.log(this.sale);
 
     if (this.sale.id !== 0) {
       this.saleService.update(this.sale).subscribe(
         data => {
-          if (data.status === 200) {
+          if (data) {
             this.message('Объект успешно обновлен', false);
             this.router.navigate(['sales']);
+            // создание заявки если была введена неизвестная улица или автоматическая заявка
+            // (новый дом на улице или в городе нет улицы - создана новая локация)
+            if (this.sale.location.street.id === 0 || data.new_location === true) {
+              this.sendRequest();
+            }
           } else {
             this.message('Не удалось обновить объект!', true);
           }
@@ -223,15 +277,19 @@ export class SaleModificateComponent implements OnInit {
       );
     } else {
 
-      // вынести в отдельный метод
-      const request = this.sale;
-      request['idRequest'] = this.idRequest;
-
-      this.saleService.create(request).subscribe(
+      this.saleService.create(this.sale).subscribe(
         data => {
-          if (data.status === 201) {
+          if (data) {
             this.message('Объект успешно создан', false);
             this.router.navigate(['sales']);
+
+            this.idSaleRequest = data.sale.id; // id созданного sale
+            // создание заявки если была введена неизвестная улица или автоматическая заявка
+            // (новый дом на улице или в городе нет улицы - создана новая локация)
+            if (this.sale.location.street.id === 0 || data.new_location === true) {
+              this.sendRequest();
+            }
+
           } else {
             this.message('Не удалось создать объект!', true);
           }
@@ -266,8 +324,8 @@ export class SaleModificateComponent implements OnInit {
     });
   }
 
-  getStreets(city = 0, microdistrict = 0) {
-    this.locationService.getStreets(city, microdistrict).subscribe((options) => {
+  getStreets(city = 0, district = 0, microdistrict = 0) {
+    this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
       this.streets = [];
       /*if (options.length === 0) {
         this.displayReq = true;
@@ -290,19 +348,24 @@ export class SaleModificateComponent implements OnInit {
 
     if (this.sale.location.street.id && this.sale.location.house) {
 
+      this.search['city'] = this.sale.location.city.id;
       this.search['street'] = this.sale.location.street.id;
-      this.search['house'] = this.sale.location.house;
-      this.search['housing'] = this.sale.location.housing;
+      this.search['house'] = (this.sale.location.house) ? this.sale.location.house : 0;
+      this.search['housing'] = (this.sale.location.housing) ? this.sale.location.housing : 0;
 
       this.locationService.getLocation(this.search).subscribe((data) => {
-        console.log(data);
+        //  console.log(data);
         if (data) {
           this.sale.location.district = this.locationService.setDistrict(data.district);
           this.sale.location.microdistrict = this.locationService.setMicroDistrict(data.microdistrict);
+          this.sale.location.metro = this.locationService.setMetro(data.metro);
           this.sale.location.type_house = data.type_house;
           this.sale.location.year = data.year;
           this.sale.location.year_repair = data.year_repair;
         } else {
+          this.sale.location.district = this.locationService.setDistrict(null);
+          this.sale.location.microdistrict = this.locationService.setMicroDistrict(null);
+          this.sale.location.metro = this.locationService.setMetro(null);
           this.sale.location.wall = 0;
           this.sale.location.type_house = 0;
           this.sale.location.year = 0;
@@ -310,6 +373,13 @@ export class SaleModificateComponent implements OnInit {
         }
       });
 
+    } else {
+      this.sale.location.district = this.locationService.setDistrict(null);
+      this.sale.location.microdistrict = this.locationService.setMicroDistrict(null);
+      this.sale.location.wall = 0;
+      this.sale.location.type_house = 0;
+      this.sale.location.year = 0;
+      this.sale.location.year_repair = 0;
     }
   }
 
@@ -342,22 +412,22 @@ export class SaleModificateComponent implements OnInit {
 
   sendRequest() {
 
-    const request = this.sale;
-    request['textRequest'] = this.textRequest;
+    this.request['sale'] = (this.sale.id !== 0) ? this.sale.id : this.idSaleRequest;
+    this.request['location'] = this.sale.location;
+    this.request['streetRequest'] = this.streetRequest;
+    this.request['textRequest'] = this.textRequest;
 
-    return this.saleService.newLocationRequest(request).subscribe(data => {
+    this.saleService.newLocationRequest(this.request).subscribe(data => {
+    //  this.idRequest = data.request; // id добавляемой заявки
 
-      console.log(data);
-      this.idRequest = data.request; // id добавляемой заявки
+      if (data.status === 200) {
+        this.message('Заявка по адресу отправлена на модерацию', false);
+        this.displayRequest = false;
 
-      if (data) {
-          this.message('Заявка отправлена', false);
-          this.displayRequest = false;
-
-        } else {
-          this.message('Не удалось отправить заявку!', true);
-        }
-      });
+      } else {
+        this.message('Не удалось отправить заявку!', true);
+      }
+    });
   }
 
   getUsers() {
@@ -372,6 +442,10 @@ export class SaleModificateComponent implements OnInit {
         this.users.push(data[i]);
       }
     });
+  }
+
+  getManager(user) {
+    this.sale.user.manager_information = this.users.find(u => u.id === +user).manager_information;
   }
 
 

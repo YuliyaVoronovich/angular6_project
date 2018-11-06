@@ -1,0 +1,191 @@
+input {
+  display: inline-block;
+  padding: 0.300rem 0.5rem;
+  font-size: 14px;
+}
+.input-mini {
+  width: 18%;
+}
+.input-micro {
+  width: 18%;
+}
+
+.check {
+  display: inline-block;
+  vertical-align: middle;
+  width: 30px;
+  height: 32px;
+  font-size: 16px;
+  padding: 0;
+  color: #333;
+  background-color: #ececec;
+  border-right: 1px solid #dfdfdf;
+  border-top: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+  text-align: center;
+}
+.check:hover {
+  background-color: #3c70904a;
+}
+.check:first-child{
+  border-left: 1px solid #dfdfdf;
+  border-radius: 3px 0 0 3px ;
+}
+.check:last-child{
+  border-radius: 0 3px 3px 0;
+}
+/*.check .checkbox {
+  position: absolute;
+  clip: rect(0,0,0,0);
+  margin: 4px 0;
+}*/
+.labels {
+  border-top: 1px solid #e2e2e2;
+  padding: 5px;
+}
+
+.labels label {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  color: #333;
+  background-color: #ececec;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+
+.labels-lg label {
+  padding: 0.230rem;
+  display: inline-block;
+  color: #333;
+  background-color: #ececec;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+
+.labels label:hover {
+  background-color: #3c70904a;
+}
+.labels label span {
+  padding: 3px;
+}
+.search-top {
+  padding: 20px 0 0;
+}
+
+.search {
+  background: #f6f5f5;
+  border: 1px solid #d2d4d6;
+  border-radius: 3px;
+}
+
+.search ng-select /deep/  {
+  width: calc(100% - 150px);
+  background: #ffffff;
+  /*  height: 29px;*/
+}
+.search ng-select /deep/ .below {
+  border-top: none;
+  border-bottom: none;
+}
+
+.search select {
+  width: calc(100% - 110px);
+  height: 30px;
+  background: #ffffff;
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  vertical-align: middle;
+  border-left: 1px solid #e2dddd;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  /*color:#aaaaaa;*/
+}
+
+.search.ng-select-without-icon ng-select /deep/  {
+  width: calc(100% - 110px);
+}
+
+.search .label {
+  width: 110px;
+  min-width: 60px;
+  margin: 0;
+  padding-left: 5px;
+}
+.search .label-middle {
+  width: calc((100% - 0px)/2);
+  min-width: 120px;
+}
+.search .label-middle:first-child {
+  border-right: 1px solid #d2d4d6;
+}
+
+.search input {
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-left: 1px solid #ddd;
+  width: calc((100% - 110px)/2);
+}
+
+.search-only-input input {
+  width: calc(100% - 110px);
+}
+
+.search-middle .label {
+  width: 140px;
+  min-width: 100px;
+}
+
+.search-middle input {
+  width: calc((100% - 140px)/2);
+}
+
+.search-middle-only-input input {
+  width: calc(100% - 140px);
+}
+
+.search-middle select {
+  width: calc(100% - 140px);
+}
+
+.search-full .label {
+  width: 100%;
+}
+
+.except-icon {
+  width: 40px;
+  height: 30px;
+  display: inline-block;
+}
+.except-icon i {
+  vertical-align: middle;
+}
+.show {
+  display: flex;
+}
+.hide {
+  display: none;
+}
+.show-block {
+  display: block;
+}
+.show-background {
+  background: white;
+}
+.hide-background {
+  background: #f6f5f5;
+}
+.cursor {
+  cursor: pointer;
+}
+.select-room {
+  background: #fbd85a;
+}
+.select-label {
+  background: #fbd85a!important;
+}

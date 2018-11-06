@@ -5,11 +5,11 @@
       <form>
         <div class="row" *ngFor="let permission of permissions">
 
-          <div class="col-3">
+          <div class="col-4">
             <b>{{permission.title}}</b>
           </div>
 
-          <div class="col-9">
+          <div class="col-8">
             <div class="form-check {{role.array_permissions[item.id].label ? 'form-check-inline' : 'form-check' }}"
                  *ngFor="let item of permission.permissions">
 

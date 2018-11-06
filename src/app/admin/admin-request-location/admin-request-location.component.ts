@@ -13,7 +13,7 @@ import {LoginService} from '../../_services/login.service';
 export class AdminRequestLocationComponent implements OnInit, OnChanges {
 
   @Input() location: any;
-  @Input() param: string;
+  @Input() deleteRequest: boolean;
   @Input() request;
 
   @Output() changed = new EventEmitter();
@@ -49,11 +49,12 @@ export class AdminRequestLocationComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: { [propName: string]: SimpleChange }) {
 
-    console.log (this.param);
-    if (this.param) {
-      if (changes['param'].previousValue !== changes['param'].currentValue) {
+    console.log (this.deleteRequest);
+
+    if (this.deleteRequest === true) {
+     // if (changes['param'].previousValue !== changes['param'].currentValue) {
         this.delete(this.request);
-      }
+    //  }
     }
   }
 
@@ -82,6 +83,8 @@ export class AdminRequestLocationComponent implements OnInit, OnChanges {
   }
 
   getRequests() {
+
+    this.requests = [];
     this.requestService.getRequests(this.search).subscribe((data) => {
       for (let i = 0; i < data.length; i++) {
         if (data[i].info.region) {
@@ -117,14 +120,15 @@ export class AdminRequestLocationComponent implements OnInit, OnChanges {
   }
 
   delete(request: Request): void {
-    //  this.sales = this.sales.filter(m => m !== sale);
-    //  this.sales = [];
+
     this.requestService.deleteRequest(request).subscribe(
       data => {
+        console.log(data);
         if (data.status === 200) {
-        //  this.message('Заявка удалена', false);
-          this.requests = this.requests.filter(r => r !== request);
-          //  this.getSales();
+          this.message('Заявка удалена', false);
+          // this.requests = this.requests.filter(r => r !== request);
+          this.getRequests();
+
         }
       },
       error => {

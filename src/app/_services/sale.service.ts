@@ -38,22 +38,25 @@ export class SaleService {
       .map((response: Response) => response.json());
   }
 
-  create(sale: Sale): Observable<Response> {
-    return this.http.post(this.globals.url + this.uri, JSON.stringify(sale));
+  create(sale: Sale) {
+    return this.http.post(this.globals.url + this.uri, JSON.stringify(sale))
+      .map((response: Response) => response.json()
+    );
   }
 
-  update(sale: Sale): Observable<Response> {
-    return this.http.put(this.globals.url + this.uri + '/' + sale.id, JSON.stringify(sale));
+  update(sale: Sale) {
+    return this.http.put(this.globals.url + this.uri + '/' + sale.id, JSON.stringify(sale))
+      .map((response: Response) => response.json()
+      );
   }
 
   delete(sale: Sale | number): Observable<Response> {
     const id = typeof sale === 'number' ? sale : sale.id;
     return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(sale));
   }
-  newLocationRequest(sale: Sale) {
-    return this.http.post(this.globals.url + this.uri + '/new_location_request', JSON.stringify(sale))
-      .map((response: Response) => response.json()
-    );
+
+  newLocationRequest(request): Observable<Response> {
+    return this.http.post(this.globals.url + this.uri + '/new_location_request', JSON.stringify(request));
   }
 
 }

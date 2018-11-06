@@ -54,7 +54,7 @@ export class SalesListSearchComponent implements OnInit {
 
   public hide = false;
   public hide_wall = false;
-  public hide_sales = false;
+  public hide_sale = false;
   public hide_repair = false;
   public hide_other = false;
 
@@ -108,9 +108,10 @@ export class SalesListSearchComponent implements OnInit {
     this.getCompanies();
   }
 
-  searchSale() {
+  searchSales() {
     this.changed.emit(this.search);
   }
+
   clear() {
     this.search = new SearchSaleModel({'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0},
       {'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0}, '', '', null,
@@ -167,8 +168,8 @@ export class SalesListSearchComponent implements OnInit {
     });
   }
 
-  getMicroDistricts(district: any = 0) {
-    this.locationService.getMicroDistricts(district).subscribe((options) => {
+  getMicroDistricts(city = 0, district: any = 0) {
+    this.locationService.getMicroDistricts(city, district).subscribe((options) => {
       this.microdistricts = [];
 
       for (let i = 0; i < options.length; i++) {
@@ -178,8 +179,8 @@ export class SalesListSearchComponent implements OnInit {
   }
 
 
-  getStreets(city: any = 0, microdistrict: any = 0) {
-    this.locationService.getStreets(city, microdistrict).subscribe((options) => {
+  getStreets(city: any = 0, district = 0, microdistrict: any = 0) {
+    this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
       this.streets = [];
 
       for (let i = 0; i < options.length; i++) {
@@ -189,7 +190,7 @@ export class SalesListSearchComponent implements OnInit {
   }
 
   getLabels() {
-    this.labelsService.getAllLabels().subscribe(data => {
+    this.labelsService.getAllLabelsSales().subscribe(data => {
       this.walls = data.walls;
       this.furniture = data.furniture;
       this.repairs = data.repairs;
@@ -253,7 +254,7 @@ export class SalesListSearchComponent implements OnInit {
   selectMicroDistrict(option: IOption) {
     this.districtsSelected.push(`${option.value}`);
     this.districtsSearch = JSON.stringify(this.districtsSelected);
-    this.getMicroDistricts(this.districtsSearch);
+    this.getMicroDistricts(0, this.districtsSearch);
   }
 
   deselectMicroDistrict(option: IOption) {
@@ -262,13 +263,13 @@ export class SalesListSearchComponent implements OnInit {
       this.districtsSelected.splice(index, 1);
     }
     this.districtsSearch = JSON.stringify(this.districtsSelected);
-    this.getMicroDistricts(this.districtsSearch);
+    this.getMicroDistricts(0, this.districtsSearch);
   }
 
   selectStreet(option: IOption) {
     this.microdistrictsSelected.push(`${option.value}`);
     this.microdistrictsSearch = JSON.stringify(this.microdistrictsSelected);
-    this.getStreets(0, this.microdistrictsSearch);
+    this.getStreets(0, 0, this.microdistrictsSearch);
   }
 
   deselectStreet(option: IOption) {
@@ -277,7 +278,7 @@ export class SalesListSearchComponent implements OnInit {
       this.microdistrictsSelected.splice(index, 1);
     }
     this.microdistrictsSearch = JSON.stringify(this.microdistrictsSelected);
-    this.getStreets(0, this.microdistrictsSearch);
+    this.getStreets(0, 0 , this.microdistrictsSearch);
   }
 
 

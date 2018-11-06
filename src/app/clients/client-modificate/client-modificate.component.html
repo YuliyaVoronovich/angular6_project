@@ -1,3 +1,590 @@
-<p>
-  client-modificate works!
-</p>
+<div class="container">
+  <div class="content myForm">
+    <div class="mark">
+      <div class="newRow">
+        <div class="row">
+          <div class="col-12">
+            <h4>Контактная информация</h4>
+          </div>
+          <div class="col-xl-6 col-12">
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.surname">
+                  <span>Фамилия</span>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4  col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.name">
+                  <span>Имя</span>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4  col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.patronymic">
+                  <span>Отчество</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-xl-6 col-12">
+            <div class="row">
+
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.phone1">
+                  <span>Телефон</span>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.phone2">
+                  <span>Телефон</span>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group">
+                  плеер
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mark">
+      <div class="newRow">
+        <div class="row">
+          <div class="col-12">
+            <h4>Месторасположение</h4>
+          </div>
+          <div class="col-xl-12 col-12">
+            <div class="row">
+
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group">
+                  <ng-select [options]="selectRegions"
+                             [(ngModel)]="''+ client.city.district_country.region.id"
+                             [allowClear]="true"
+                             placeholder="Область"
+                             (selected)="getDistrictRb($event)">
+                  </ng-select>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group">
+                  <ng-select [options]="selectDistricts_rb"
+                             [(ngModel)]="''+ client.city.district_country.id"
+                             [allowClear]="true"
+                             placeholder="Район"
+                             (selected)="getCity($event)">
+                  </ng-select>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group">
+                  <ng-select [options]="selectCities"
+                             [(ngModel)]="''+ client.city.id"
+                             [allowClear]="true"
+                             placeholder="Нас. пункт"
+                             (selected)="getDistrict($event); getMicroDistrict($event);getLocation($event)">
+                  </ng-select>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row" [hidden]="selectDistricts.length === 0">
+              <div class="col-12">
+                <div class="form-group">
+                  <ng-select [options]="selectDistricts"
+                             [(ngModel)]="client.districts"
+                             [multiple]="true"
+                             placeholder="Район">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" [hidden]="selectMicroDistricts.length === 0">
+              <div class="col-12">
+                <div class="form-group">
+                  <ng-select [options]="selectMicroDistricts"
+                             [(ngModel)]="client.microdistricts"
+                             [multiple]="true"
+                             placeholder="Микрорайон">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" [hidden]="selectDistricts.length === 0">
+              <div class="col-12">
+                <div id="map" class="map"></div>
+              </div>
+            </div>
+
+            <div class="row" [hidden]="selectDistricts.length === 0">
+              <label class="col-lg-2 col-md-2 col-12 text-left">Метро:</label>
+
+              <div class="col-lg-5 col-md-5 col-12">
+                <label class="cursor" (click)="hide_metro_first=!hide_metro_first; hideme = !hideme"
+                       style="color: #0074ca">
+                  Московская
+                  <i class="fas fa-sort-down icon-top" [hidden]="hideme"></i>
+                  <i class="fas fa-sort-up icon-bottom" [hidden]="!hideme"></i>
+                </label>
+                <div class="metro labels" [ngClass]="{'show-block' : hide_metro_first, 'hide' : !hide_metro_first}">
+                  <label class="btn label-full" (click)="allMetroFirst()">Все</label>
+                  <ng-container *ngFor="let metro of metro_first">
+                    <label class="btn" (click)="metroTrigger(metro.id); arrayMetro[metro.id] = !arrayMetro[metro.id]"
+                           [ngClass]="{'select-label' : arrayMetro[metro.id]}">
+                      <span>{{metro.title}}</span>
+                    </label>
+                  </ng-container>
+                </div>
+              </div>
+
+              <div class="col-lg-5 col-md-5 col-12">
+                <label class="cursor" (click)="hide_metro_second=!hide_metro_second;hideme2 = !hideme2"
+                       style="color: #ca474a">
+                  Автозаводская
+                  <i class="fas fa-sort-down icon-top" [hidden]="hideme2"></i>
+                  <i class="fas fa-sort-up icon-bottom" [hidden]="!hideme2"></i>
+                </label>
+                <div class="metro labels" [ngClass]="{'show-block' : hide_metro_second, 'hide' : !hide_metro_second}">
+                  <label class="btn label-full" (click)="allMetroSecond()">Все</label>
+                  <ng-container *ngFor="let metro of metro_second">
+                    <label class="btn" (click)="metroTrigger(metro.id); arrayMetro[metro.id] = !arrayMetro[metro.id]"
+                           [ngClass]="{'select-label' : arrayMetro[metro.id]}">
+                      <span>{{metro.title}}</span>
+                    </label>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mark">
+      <div class="newRow">
+        <div class="row">
+          <div class="col-12">
+            <h4>Параметры отбора</h4>
+          </div>
+
+          <div class="col-xl-6 col-12">
+            <div class="row">
+
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.price"
+                         (change)="getPriceSqr()">
+                  <span>Цена max</span>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group label">
+                  <input disabled class="form-control" type="text" placeholder=" "
+                         [(ngModel)]="price_sqr_from">
+                  <span>Цена за m2 от</span>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group label">
+                  <input disabled class="form-control" type="text" placeholder=" "
+                         [(ngModel)]="price_sqr_to">
+                  <span>Цена за m2 до</span>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.room_from">
+                  <span>Комнат от</span>
+                </div>
+              </div>
+
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.room_to">
+                  <span>Комнат до</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_from"
+                         (change)="getPriceSqr()">
+                  <span>S общая от</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_to"
+                         (change)="getPriceSqr()">
+                  <span>S общая до</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_leave_from">
+                  <span>S жилая от</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_leave_to">
+                  <span>S жилая до</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" "
+                         [(ngModel)]="client.area_kitchen_from">
+                  <span>S кухни от</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_kitchen_to">
+                  <span>S кухни до</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <select class="form-control" [(ngModel)]="client.wc" placeholder=" ">
+                    <option value="0"></option>
+                    <option *ngFor="let one of wc" [value]="one.id">{{one.title}}</option>
+                  </select>
+                  <span>Санузел</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group">
+                  <div class="checkbox">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="balcony" [(ngModel)]="client.balcony">
+                      <label for="balcony" class="form-check-label">Балкон/лоджия</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.year">
+                  <span>Год постройки от</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group">
+                  <div class="checkbox">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="big_repair" [(ngModel)]="client.big_repair">
+                      <label for="big_repair" class="form-check-label">Капремонт</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-12">
+            <div class="row">
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.storey_from">
+                  <span>Этаж от</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.storey_to">
+                  <span>Этаж до</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.storeys_from">
+                  <span>Этажность от</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.storeys_to">
+                  <span>Этажность до</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <div class="checkbox">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="no_first" [(ngModel)]="client.no_first">
+                      <label for="no_first" class="form-check-label">Не первый этаж</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <div class="checkbox">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="no_last" [(ngModel)]="client.no_last">
+                      <label for="no_last" class="form-check-label">Не последний этаж</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <div class="checkbox">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="first_hight"
+                             [(ngModel)]="client.first_hight">
+                      <label for="first_hight" class="form-check-label">Первый высокий</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <div class="checkbox">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="last_storey"
+                             [(ngModel)]="client.last_storey">
+                      <label for="last_storey" class="form-check-label">Последний (если есть технический)</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <div class="search"
+                       [ngClass]="{'show-background' : hide_wall, 'hide-background' : !hide_wall, 'select-label-full' : arrayWalls.length >0}">
+                    <label class="label-full text-center cursor" (click)="hide_wall=!hide_wall">Материал стен</label>
+                    <div class="labels" [ngClass]="{'show-block' : hide_wall, 'hide' : !hide_wall}">
+                      <ng-container *ngFor="let wall of walls">
+                        <label class="btn btn-default"
+                               (click)="wallsTrigger(wall.id); arrayWalls[wall.id] = !arrayWalls[wall.id]"
+                               [ngClass]="{'select-label' : arrayWalls[wall.id]}">
+                          <span>{{wall.title}}</span>
+                        </label>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <div class="search"
+                       [ngClass]="{'show-background' : hide_type, 'hide-background' : !hide_type, 'select-label-full' : arrayTypes.length >0}">
+                    <label class="label-full text-center cursor" (click)="hide_type=!hide_type">Тип дома</label>
+                    <div class="labels" [ngClass]="{'show-block' : hide_type, 'hide' : !hide_type}">
+                      <ng-container *ngFor="let type of types">
+                        <label class="btn btn-default"
+                               (click)="typesTrigger(type.id); arrayTypes[type.id] = !arrayTypes[type.id]"
+                               [ngClass]="{'select-label' : arrayTypes[type.id]}">
+                          <span>{{type.title}}</span>
+                        </label>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <div class="search"
+                       [ngClass]="{'show-background' : hide_repair, 'hide-background' : !hide_repair, 'select-label-full' : arrayRepairs.length > 0}">
+                    <label class="label-full text-center cursor" (click)="hide_repair=!hide_repair">Ремонт</label>
+                    <div class="labels" [ngClass]="{'show-block' : hide_repair, 'hide' : !hide_repair}">
+                      <ng-container *ngFor="let repair of repairs">
+                        <label class="btn btn-default"
+                               (click)="repairsTrigger(repair.id); arrayRepairs[repair.id] = !arrayRepairs[repair.id]"
+                               [ngClass]="{'select-label' : arrayRepairs[repair.id]}">
+                          <span>{{repair.title}}</span>
+                        </label>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="mark">
+      <div class="newRow">
+        <div class="row">
+          <div class="col-12">
+            <h4>Другая информация</h4>
+          </div>
+
+          <div class="col-xl-6 col-12">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group label">
+                  <textarea class="form-control" style="width: 100%;" rows="5" [(ngModel)]="client.description"
+                            placeholder=" "></textarea>
+                  <span>Примечание</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-5">
+                <div class="form-group label">
+                  <select class="form-control" [(ngModel)]="client.source">
+                    <option value="0"></option>
+                    <option *ngFor="let one of sources" [value]="one.id">{{one.title}}</option>
+                  </select>
+                  <span>Источник</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-5">
+                <div class="form-group label">
+                  <select class="form-control" [(ngModel)]="client.user.id"
+                          (change)="getManager($event.target.value)">
+                    <option value="0"></option>
+                    <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}}
+                      {{one.user_information.name}}
+                    </option>
+                  </select>
+                  <span>Сотрудник</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-5">
+                <div class="form-group label">
+                  <input disabled class="form-control" type="text" placeholder=" "
+                         value="{{client.user.manager_information.surname}} {{client.user.manager_information.name}}">
+                  <span>Руководитель</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-xl-6 col-12">
+            <div class="row">
+              <div class="col-4">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.contract">
+                  <span>Номер договора</span>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="form-group label">
+                  <select class="form-control" [(ngModel)]="client.contract_fraction">
+                    <option value=''>/1</option>
+                    <option value='/2'>/2</option>
+                    <option value='/3'>/3</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.contract_from"
+                         (click)="dogovor_from.toggle()" ngbDatepicker #dogovor_from="ngbDatepicker">
+                  <span>Дата от</span>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="form-group label">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.contract_to"
+                         (click)="dogovor_to.toggle()" ngbDatepicker #dogovor_to="ngbDatepicker">
+                  <span>Дата до</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group myButton">
+      <div class="col-12">
+        <button (click)="save()" class="btn btn-lg btn-info">
+          Сохранить
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

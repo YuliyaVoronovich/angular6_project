@@ -31,7 +31,7 @@ export class AdminCompanyModificateComponent implements OnInit {
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
     '', '', null, null, null, [], null, false, null);
   public user: User = new User(0, '', '', null, null, null, '', 0, null, null,
-    null, null, '', null, null);
+    null, null, '', null, null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
 
   constructor(private router: Router,

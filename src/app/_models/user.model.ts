@@ -20,6 +20,7 @@ export class User {
     public updated_at: Date,
     public api_key: string,
     public user_information: UserInformation,
+    public manager_information: UserInformation,
     public company: Company,
     public permissions: any[] = []
 

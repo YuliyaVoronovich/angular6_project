@@ -45,10 +45,6 @@
                            (selected)="city($event)">
 
                 </ng-select>
-                <!--<select (change)="region()" id="region" class="form-control" [(ngModel)]="sale.location.city.district_country.region.id"
-                        [ngModelOptions]="{standalone: true}">
-                  <option *ngFor="let one of regions" [value]="one.id">{{one.title}}</option>
-                </select>-->
               </div>
             </div>
             <div class="form-group row">
@@ -97,7 +93,7 @@
                     </div>
                     <div class="form-group row no-gutters">
                       <label class="col-3 col-form-label text-left">Улица</label>
-                      <input [(ngModel)]="sale.location.street.title">
+                      <input [(ngModel)]="streetRequest">
                     </div>
                     <div class="form-group row no-gutters">
                       <label class="col-3 col-form-label text-left">Номер дома</label>
@@ -110,9 +106,9 @@
                     <div class="form-group row no-gutters">
                       <textarea cols="35" rows="4" [(ngModel)]="textRequest"></textarea>
                     </div>
-                    <div>
+                    <!--<div>
                       <button class="btn btn-sm btn-primary" (click)="sendRequest()">Отправить</button>
-                    </div>
+                    </div>-->
                   </div>
                 </div>
                 <!---->
@@ -133,13 +129,13 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Район<span>*</span></label>
               <div class="col-7">
-                <input type="text" class="form-control" [(ngModel)]="sale.location.district.title">
+                <input disabled type="text" class="form-control" [(ngModel)]="sale.location.district.title">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Микрорайон<span>*</span></label>
               <div class="col-7">
-                <input type="text" class="form-control" [(ngModel)]="sale.location.microdistrict.title">
+                <input disabled type="text" class="form-control" [(ngModel)]="sale.location.microdistrict.title">
               </div>
             </div>
             <div class="form-group row">
@@ -159,6 +155,9 @@
             <!--<div class="col-md-6 col-sm-6">
               <div class="img img-responsive map" id="myMap" style="width:520px; height:340px"></div>
             </div>-->
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+          <div id="map" class="map"></div>
           </div>
         </div>
       </div>
@@ -294,13 +293,13 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Год постройки</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.location.year">
+                <input disabled type="text" class="form-control" [(ngModel)]="sale.location.year">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Год капремонта</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.location.year_repair">
+                <input disabled type="text" class="form-control" [(ngModel)]="sale.location.year_repair">
               </div>
             </div>
           </div>
@@ -648,7 +647,7 @@
               <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label text-left">Источник</label>
               <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <select class="form-control" [(ngModel)]="sale.source">
-                  <option value="0"></option>
+                  <option [value]="0"></option>
                   <option *ngFor="let one of sources" [value]="one.id">{{one.title}}</option>
                 </select>
               </div>
@@ -846,7 +845,7 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Сотрудник</label>
               <div class="col-6">
-                <select class="form-control" [(ngModel)]="sale.user.id">
+                <select class="form-control" [(ngModel)]="sale.user.id" (change)="getManager($event.target.value)">
                   <option value="0"></option>
                   <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}}
                     {{one.user_information.name}}

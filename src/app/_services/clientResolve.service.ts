@@ -9,7 +9,7 @@ import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@ang
 import {ClientService} from './client.service';
 
 @Injectable()
-export class SaleResolve implements Resolve<any> {
+export class ClientResolve implements Resolve<any> {
 
   constructor(private clientService: ClientService,
               private route: Router) {

@@ -1,4 +1,4 @@
-<app-client-list-search></app-client-list-search>
+<app-client-list-search (changed)="getClientsSearch($event)"></app-client-list-search>
 
 <div class="table-responsive" style="margin-bottom: 20px">
   <table class="table table-bordered table-hover">
@@ -12,8 +12,40 @@
       <th>Местоположение</th>
       <th>Примечание</th>
       <th>Агент</th>
-      <th><span class="nobr"><i class="fas fa-sort icon-color"></i>Дата доб.</span></th>
-      <th><span class="nobr"><i class="fas fa-sort icon-color"></i>Дата обн.</span></th>
+      <th>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='ASC')"
+             (click)="changeSort('created_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата доб.
+        </div>
+      </th>
+      <th>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='updated_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='ASC')"
+             (click)="changeSort('updated_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата обн.
+        </div>
+      </th>
       <th>Действия</th>
     </tr>
     </thead>
@@ -27,12 +59,20 @@
           </a>
         </td>
         <td>{{client.surname}} {{client.name}} {{client.patronymic}}</td>
-        <td>{{client.phone1}}<br/>
-          {{client.phone2}}</td>
+        <td>
+          <span [innerHTML]="client.phone1.length < 1 ? '' : client.phone1 | sanitizeHtml"></span><br/>
+          <span [innerHTML]="client.phone2.length < 1 ? '' : client.phone2 | sanitizeHtml"></span>
+        </td>
         <td>{{client.price}}</td>
         <td>{{client.room_from}}-{{client.room_to}}</td>
-        <td>{{client.city.title}}</td>
-        <td>{{client.description}}</td>
+        <td>{{client.city.title}}
+          <ng-container *ngIf="client.districts.length >0 ">:
+            <ng-container *ngFor="let district of client.districts">
+              {{district.small_title}},
+            </ng-container>
+          </ng-container>
+        </td>
+        <td>{{client.description }}</td>
         <td>{{client.user.user_information.surname}} {{client.user.user_information.name}}</td>
         <td>
           {{client.created_at | date: 'dd.MM.yyyy'}}
@@ -43,10 +83,10 @@
         <td>
           <i class="fas fa-chevron-circle-right icon-color icon-cursor" style="font-size: 20px;"
              (click)="hideme[i] = !hideme[i]"></i>
-          <!--<div class="action-window" [hidden]="!hideme[i]">
+          <div class="action-window" [hidden]="!hideme[i]">
             <div class="action">ПОДБОР ОБЪЕКТА</div>
-            <div class="action">УДАЛЕНИЕ ПОКУПАТЕЛЯ</div>
-          </div>-->
+            <div class="action" (click)="delete(client)">УДАЛЕНИЕ ПОКУПАТЕЛЯ</div>
+          </div>
         </td>
       </tr>
     </ng-container>

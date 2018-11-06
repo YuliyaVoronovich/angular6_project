@@ -39,6 +39,7 @@
     "ng4-auto-complete": "^1.0.0",
     "ngx-gallery": "^5.6.2",
     "ngx-pagination": "^3.1.1",
+    "ol": "^5.2.0",
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.2.1",
     "zone.js": "^0.8.26"

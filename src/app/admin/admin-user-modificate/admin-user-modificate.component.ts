@@ -29,7 +29,7 @@ export class AdminUserModificateComponent implements OnInit {
   public roles: Role[] = [];
   public permissions: Permission[] = [];
   public user: User = new User(0, '', '', null, null, null, '',
-    0, 0, 0, null, null, null, null, null);
+    0, 0, 0, null, null, null, null, null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, null);
   public company: Company = new Company(0, '', '', '', '', '', null, null, '',
     '', '', null, null, null, [], null, false, null);

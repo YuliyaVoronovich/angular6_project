@@ -5,6 +5,7 @@ import {Street} from './street.model';
 import {Metro} from './metro.model';
 import {Region} from './region.model';
 import {DistrictCountry} from './districtCountry.model';
+import {Direction} from './direction.model';
 
 export class Location {
 
@@ -24,6 +25,7 @@ export class Location {
     public type_house: number,
     public year: number,
     public year_repair: number,
+    public direction: Direction,
     public coordinates: string
   ) {}
 }

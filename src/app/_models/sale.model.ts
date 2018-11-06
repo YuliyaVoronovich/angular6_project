@@ -8,7 +8,6 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 export class Sale {
 
-
   constructor(
 
     public id: number,
@@ -31,14 +30,14 @@ export class Sale {
     public commission: string,
     public commission_prefix: string,
     public location: Location,
-    public number_flat: number,
+    public number_flat: string,
     public room: number,
     public room_separate: number,
     public area: number,
     public area_leave: number,
     public area_kitchen: number,
     public wc: number,
-    public roof: number,
+    public roof: string,
     public balcony: number,
     public terrace: number,
     public level: number,

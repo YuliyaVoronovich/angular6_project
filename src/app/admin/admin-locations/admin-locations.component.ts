@@ -22,6 +22,9 @@ import {map, startWith} from 'rxjs/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SaleService} from '../../_services/sale.service';
 import {Sale} from '../../_models/sale.model';
+import {Direction} from '../../_models/direction.model';
+import {House} from '../../_models/house.model';
+import {HouseService} from '../../_services/house.service';
 
 
 @Component({
@@ -51,21 +54,28 @@ export class AdminLocationsComponent implements OnInit {
   public timer: any;
   public locations: Location [] = [];
   public location: Location = new Location(0, null, null, null, null, null, null, '0', '0', null,
-    '', 0, 0, 0, 0, '');
+    '', 0, 0, 0, 0, null, '');
   public region: Region = new Region(0, null);
   public district_country: DistrictCountry = new DistrictCountry(0, null, '');
   public street: Street = new Street(0, '', null);
   public city = new City(0, null, '');
-  public district: District = new District(0, null, null, '');
-  public microdistrict: Microdistrict = new Microdistrict(0, null, null, '');
+  public district: District = new District(0, null, '', '', '');
+  public microdistrict: Microdistrict = new Microdistrict(0, null, '', '');
+  public direction: Direction = new Direction(0, null, '');
 
   public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
     '', false, false, false, '', null, null, '', '', '', null,
-    0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, false, false, false, 0,
-    0, 1, '', 1, 1, '', 1, false, '', '', false, 0, 1, null,
+    '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
+    0, 0, '', 0, 0, '', 0, false, '', '', false, 0, 0, null,
     null, null, null, false, null, null, null);
 
-  public request: Request = new Request(0, '', '' , 1);
+  public house: House = new House(0, null, null, '', '', '', '', null, null, false,
+    '', 0, 0, false, false, false, false, 0, '', null, '',
+    '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
+    false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false,
+    null, null, null, '');
+
+  public request: Request = new Request(0, '', '', 1);
 
   public walls: Label[] = [];
   public types: Label[] = [];
@@ -76,9 +86,11 @@ export class AdminLocationsComponent implements OnInit {
   public streets = [];
   public districts = [];
   public microdistricts = [];
+  public directions = [];
 
   public search = {};
-  public idSale = 0;
+  public idObject = 0;
+  public typeObject = '';
   public idRequest;
   public deleteRequest = false;
 
@@ -90,6 +102,7 @@ export class AdminLocationsComponent implements OnInit {
               private labelsService: LabelService,
               private requestService: RequestService,
               private saleService: SaleService,
+              private houseService: HouseService,
               private sharedService: SharedService) {
   }
 
@@ -107,7 +120,7 @@ export class AdminLocationsComponent implements OnInit {
     /*setTimeout(() => {
       this.getAutocomplit();
     }, 1000);*/
-    this.labelsService.getAllLabels().subscribe(data => {
+    this.labelsService.getAllLabelsSales().subscribe(data => {
       this.walls = data.walls;
       this.types = data.types;
     });
@@ -117,6 +130,7 @@ export class AdminLocationsComponent implements OnInit {
     this.location.street = this.street;
     this.location.district = this.district;
     this.location.microdistrict = this.microdistrict;
+    this.location.direction = this.direction;
   }
 
   initForm() {
@@ -129,6 +143,7 @@ export class AdminLocationsComponent implements OnInit {
       housing: 0,
       district: District,
       microdistrict: Microdistrict,
+      direction: Direction,
       wall: Label,
       type_house: Label,
       year: 0,
@@ -197,7 +212,6 @@ export class AdminLocationsComponent implements OnInit {
       );
   }
 
-
   public valueRegion = (key) => {
     //  console.log(key.id);
     const selection = this.regionsSelect.find(e => e.id === key.id);
@@ -236,6 +250,7 @@ export class AdminLocationsComponent implements OnInit {
       this.districts = data.districts;
       this.streets = data.streets;
       this.microdistricts = data.microdistricts;
+      this.directions = data.directions;
     });
   }
 
@@ -273,10 +288,10 @@ export class AdminLocationsComponent implements OnInit {
     });
   }
 
-  getStreets(city = 0, microdistrict = 0) {
+  getStreets(city = 0, district = 0, microdistrict = 0) {
     this.streetsSelect = [];
 
-    this.locationService.getStreets(city, microdistrict).subscribe((options) => {
+    this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
       for (let i = 0; i < options.length; i++) {
         this.streetsSelect.push(options[i]);
       }
@@ -328,45 +343,27 @@ export class AdminLocationsComponent implements OnInit {
 
     if (this.locationForm.controls['street'].value && this.locationForm.controls['house'].value) {
 
+      this.search['city'] = this.locationForm.controls['city'].value.id;
       this.search['street'] = this.locationForm.controls['street'].value.id;
       this.search['house'] = this.locationForm.controls['house'].value;
       this.search['housing'] = this.locationForm.controls['housing'].value;
 
       this.locationService.getLocation(this.search).subscribe((data) => {
         console.log(data);
-        if (data) {
-          this.location = data;
 
-          if (data.city.district_country.region) {
-            this.location.region = data.city.district_country.region;
-          } else {
-            this.location.region = this.region;
-          }
-          if (data.city.district_country) {
-            this.location.district_country = data.city.district_country;
-          } else {
-            this.location.district_country = this.district_country;
-          }
-          if (!data.city) {
-            this.location.city = this.city;
-          }
-          if (!data.street) {
-            this.location.street = this.street;
-          }
-          if (!data.district) {
-            this.location.district = this.district;
-          }
-          if (!data.microdistrict) {
-            this.location.microdistrict = this.microdistrict;
-          }
-        } else {
-          this.location.district_country = this.district_country;
-          this.location.region = this.region;
-          this.location.city = this.city;
-          this.location.street = this.street;
-          this.location.district = this.district;
-          this.location.microdistrict = this.microdistrict;
+        this.location = this.locationService.setLocation(data);
+        this.location.city = this.locationService.setCity(this.location.city);
+        this.location.city.district_country = this.locationService.setDistrictCountry(this.location.city.district_country);
+        this.location.city.district_country.region = this.locationService.setRegion(this.location.city.district_country.region);
+        this.location.street = this.locationService.setStreet(this.location.street);
+        this.location.district = this.locationService.setDistrict(this.location.district);
 
+        this.location.microdistrict = this.locationService.setMicroDistrict(this.location.microdistrict);
+        this.location.direction = this.locationService.setDirection(this.location.direction);
+
+        this.location.house = this.locationForm.controls['house'].value;
+        this.location.housing = this.locationForm.controls['housing'].value;
+        if (!data) {
           this.location.id = 0;
           this.location.wall = 0;
           this.location.type_house = 0;
@@ -379,10 +376,12 @@ export class AdminLocationsComponent implements OnInit {
   }
 
   onSubmit() {
+
     this.location.region = this.locationForm.controls['region'].value;
     this.location.district_country = this.locationForm.controls['district_country'].value;
     this.location.city = this.locationForm.controls['city'].value;
     this.location.street = this.locationForm.controls['street'].value;
+    this.location.direction = this.locationForm.controls['direction'].value;
     console.log(this.location);
 
     if (this.location.id !== 0) {
@@ -390,7 +389,8 @@ export class AdminLocationsComponent implements OnInit {
         data => {
           if (data.status === 200) {
             this.message('Адрес был успешно обновлен', false);
-            this.router.navigate(['admin/locations']);
+            // удалить заявку
+            this.deleteRequest = true;
           } else {
             this.message('Ошибка обновления адреса!', true);
           }
@@ -410,18 +410,7 @@ export class AdminLocationsComponent implements OnInit {
           if (data) {
             this.message('Адрес был успешно добавлен', false);
 
-            // обновить sale location_id
-            if (this.idSale) {
-              this.sale['id'] = this.idSale;
-              this.sale['location_id'] = data;
-              this.saleService.update(this.sale).subscribe(
-                data1 => {
-                  // удалить заявку
-                  this.deleteRequest = true;
-                });
-            }
-
-            this.router.navigate(['admin/locations']);
+            this.getUpdateObject(data);
           } else {
             this.message('Ошибка добавления адреса!', true);
           }
@@ -437,9 +426,45 @@ export class AdminLocationsComponent implements OnInit {
     }
   }
 
+  getUpdateObject(data) {
+    // обновить sale location_id
+    if (this.idObject && this.typeObject === 'sales') {
+      this.sale['id'] = this.idObject;
+      this.sale['location_request'] = data;
+      this.saleService.update(this.sale).subscribe(
+        data1 => {
+          // удалить заявку
+          this.deleteRequest = true;
+          console.log(this.deleteRequest);
+        });
+    }
+    // обновить house location_id
+    if (this.idObject && this.typeObject === 'houses') {
+      this.house['id'] = this.idObject;
+      this.house['location_request'] = data;
+      this.houseService.update(this.house).subscribe(
+        data1 => {
+          // удалить заявку
+          this.deleteRequest = true;
+          console.log(this.deleteRequest);
+        });
+    }
+
+  }
+
   getRequest(event) {
-    console.log(event);
-    this.idSale = event.info.sale;
+
+    this.deleteRequest = false;
+
+    if (event.info.sales) {
+      this.idObject = event.info.sales;
+      this.typeObject = 'sales';
+
+    } else if (event.info.houses) {
+      this.idObject = event.info.houses;
+      this.typeObject = 'houses';
+    }
+    // сделать выбор вида объект квартиры-дома-аренда
     this.request = event;
 
     this.locationForm.controls['region'].patchValue({id: +event.info.region});
@@ -447,6 +472,8 @@ export class AdminLocationsComponent implements OnInit {
     this.locationForm.controls['street'].patchValue({id: +event.info.street});
     this.locationForm.controls['house'].patchValue(event.info.house);
     this.locationForm.controls['housing'].patchValue(event.info.housing);
+
+    this.getInfoLocation();
   }
 
 }

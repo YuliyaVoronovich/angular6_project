@@ -16,8 +16,11 @@ import {SharedService} from '../../_services/shared.service';
 export class AdminModulesListComponent implements OnInit {
 
   public modules: Module[] = [];
+  public module: Module = new Module(0, '');
   public editRowId: any;
   public timer: any;
+
+  public hide = false;
 
   @ViewChild('myInput') inputEl: ElementRef;
 
@@ -51,14 +54,16 @@ export class AdminModulesListComponent implements OnInit {
     this.editRowId = 0;
   }
 
-  add() {
-    /*const indexForId = this.modules.length + 1
-    this.modules.push({
-      id: indexForId, title: ''
-    });*/
+  addModule(title) {
+    if (title.length > 0) {
+
+    }
+   console.log(title);
   }
 
   getModules() {
+    this.modules = [];
+
     return this.moduleService.getModules().subscribe(data => {
         for (let i = 0; i < data.length; i++) {
           this.modules.push(data[i]);
@@ -74,7 +79,7 @@ export class AdminModulesListComponent implements OnInit {
   save(module: Module) {
     console.log(module);
 
-    if (module.id !== null) {
+    if (module.id !== 0) {
       this.moduleService.update(module).subscribe(
         data => {
           if (data.status === 200) {
@@ -97,7 +102,9 @@ export class AdminModulesListComponent implements OnInit {
         data => {
           if (data.status === 201) {
             this.message('Модуль создан', false);
-            this.router.navigate(['admin/modules']);
+            this.getModules();
+            this.hide = false;
+            this.module.title = '';
           } else {
             this.message('Ошибка!', true);
           }

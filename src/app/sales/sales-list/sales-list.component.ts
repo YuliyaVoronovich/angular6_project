@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit, Renderer} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Sale} from '../../_models/sale.model';
 import {User} from '../../_models/user.model';
 import {Company} from '../../_models/company.model';
@@ -31,7 +31,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
 
   public sales: Sale[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
-    null, null, null, null, '', null, null);
+    null, null, null, null, '', null, null, null);
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
     '', '', null, null, null, [], null, false, null);
 
@@ -64,7 +64,6 @@ export class SalesListComponent implements OnInit, OnDestroy {
               private loginService: LoginService,
               private userService: UserService,
               private companyService: CompanyService,
-              private render: Renderer,
               private sharedService: SharedService) {
     /* this.render.listenGlobal('window', 'scroll', (evt) => {
        this.onScroll();
@@ -115,7 +114,6 @@ export class SalesListComponent implements OnInit, OnDestroy {
       }
 
     }
-    console.log(this.search);
     this.getSales();
   }
 
@@ -159,8 +157,10 @@ export class SalesListComponent implements OnInit, OnDestroy {
         data[i].location.street = this.locationService.setStreet(data[i].location.street);
         data[i].location.metro = this.locationService.setMetro(data[i].location.metro);
         // цена за метр
-        if (data[i].area !== 0) {
-          data[i].price_sqr = Math.floor(data[i].price / data[i].area);
+        if (data[i].area !== null && data[i].area !== 0) {
+          data[i].price_sqr = Math.floor(+ data[i].price / + data[i].area);
+        } else {
+          data[i].price_sqr = 0;
         }
         //
         this.sales.push(data[i]);

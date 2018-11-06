@@ -1,3 +1,6 @@
+.display {
+  width: calc(100% - 160px);
+}
 .dropdown:hover > .dropdown-menu {
   display: block;
   margin: 0;
@@ -7,6 +10,7 @@
   height: 100%;
 }
 .navbar-nav {
+  padding: 0.3rem 0;
   -ms-flex-direction: row;
   flex-direction: row;
 }
@@ -25,7 +29,7 @@
 .user {
   padding: 0.375rem 5px 0;
 }
-@media (max-width: 800px) {
+@media (max-width: 880px) {
   .navbar-nav .nav-item a {
     font-size: 14px;
   }

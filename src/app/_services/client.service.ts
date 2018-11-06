@@ -29,7 +29,7 @@ export class ClientService {
       );
   }
   getClient(id) {
-    return this.http.get(this.globals.url + this.uri + '/sale/' + id)
+    return this.http.get(this.globals.url + this.uri + '/client/' + id)
       .map((response: Response) => response.json());
   }
 

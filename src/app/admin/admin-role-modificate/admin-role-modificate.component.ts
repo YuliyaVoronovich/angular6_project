@@ -15,7 +15,6 @@ export class AdminRoleModificateComponent implements OnInit {
 
   public role: Role = new Role(0, '', null, []);
   public permissions: Permission[] = [];
-  public array_permissions;
   public timer: any;
 
   constructor(private router: Router,

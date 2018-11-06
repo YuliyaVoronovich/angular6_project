@@ -1,0 +1,130 @@
+<app-house-list-search (changed)="getHousesSearch($event)"></app-house-list-search>
+
+<div class="table-responsive" style="margin-bottom: 20px">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>Тип</th>
+      <th>Обл.</th>
+      <th>Район/напр</th>
+      <th>Адрес</th>
+      <th>Крыша</th>
+      <th>S</th>
+      <th>Этажность</th>
+      <th>$</th>
+      <th>$м2</th>
+      <th>Агентство</th>
+      <th>
+        Дата доб.
+      </th>
+      <th>
+        Дата обн.
+      </th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container
+      *ngFor="let house of houses | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countHouses }; let i = index">
+      <tr>
+        <td class="text-center">
+          <a routerLink="house/{{house.id}}" target="_self">
+            <i class="fas fa-pencil-alt icon-color"></i>
+          </a>
+        </td>
+        <td class="text-center">
+          <span (click)="hideme[i] = !hideme[i]">
+            <mat-icon class="icon-color size-18 icon-cursor" [hidden]="hideme[i]">keyboard_arrow_down</mat-icon>
+            <mat-icon class="icon-color size-18 icon-cursor" [hidden]="!hideme[i]">keyboard_arrow_up</mat-icon>
+          </span>
+        </td>
+        <td class="text-center">
+          <label class="form-check-label check">
+            <input class="checkbox" type="checkbox" id="{{house.id}}" (change)="hideme2[i] = !hideme2[i]">
+            <i class="fas fa-check icon-color" [hidden]="!hideme2[i]"></i>
+          </label>
+        </td>
+        <td>{{house.type.title}}</td>
+        <td>{{house.location.city.district_country.region.title}}</td>
+        <td>
+          <ng-container *ngIf="house.location.city.district_country.region.id === 5 ">
+            {{house.location.direction.small_title}}
+          </ng-container>
+          <ng-container *ngIf="house.location.city.district_country.region.id !== 5 ">
+            {{house.location.city.district_country.title}}
+          </ng-container>
+        </td>
+        <td>
+          <ng-container *ngIf="house.location.city.title.length >0 ">
+            {{house.location.city.title}},
+          </ng-container>
+          <ng-container *ngIf="house.location.street.title.length >0 ">
+            <br/> {{house.location.street.title}}
+          </ng-container>
+          {{house.location.house}}
+          <ng-container *ngIf="house.location.housing !== '0' && house.location.housing !== ''">
+            / {{house.location.housing}}
+          </ng-container>
+        </td>
+        <td>{{house.roof.small_title}}</td>
+        <td>{{house.area}}/{{house.area_leave}}/{{house.area_kitchen}}</td>
+        <td>{{house.storeys}}</td>
+        <td>{{house.price}}</td>
+        <td>{{house.price_sqr}}</td>
+        <td>{{house.company.title}}</td>
+        <td>
+          {{house.created_at | date: 'dd.MM.yyyy'}}
+        </td>
+        <td>
+          {{house.updated_at | date: 'dd.MM.yyyy'}}
+        </td>
+        <td>
+          <i class="fas fa-chevron-circle-right icon-color icon-cursor" style="font-size: 20px;"
+             (click)="hideme3[i] = !hideme3[i]"></i>
+          <div class="action-window" [hidden]="!hideme3[i]">
+            <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
+            <div class="action">ОТПРАВИТЬ В РЕКЛАМУ</div>
+            <div class="action">КАЛЬКУЛЯТОР</div>
+          </div>
+        </td>
+      </tr>
+      <tr [hidden]="!hideme[i]">
+        <td colspan="16">
+          <div class="row no-gutters text-left">
+            <div class="col-lg-6 col-md-12">
+              <!--<app-sale-list-photo [photo]="house.photo"></app-sale-list-photo>-->
+              <!--<ng-container
+                *ngFor="let photo_reclame of sale.photo_reclame">
+                <div>
+                  <img src="{{photo_reclame.path}}">
+                </div>
+              </ng-container>-->
+            </div>
+            <div class="col-lg-5 col-md-12" style="margin: 10px 0 0 10px">
+              {{house.cont_phone1}}, {{house.cont_phone2}}<br>
+              <span>{{house.text}}</span>
+              <br>
+              <a class="btn btn-sm btn-primary" routerLink="/houses/house/{{house.id}}">Подробнее</a>
+              <a class="btn">
+                <mat-icon class="size-16 icon-color">place Смотреть на карте</mat-icon>
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<div class="row no-gutters">
+  <!--Пагинация -->
+  <div class="col-12 text-center">
+    <pagination-controls (pageChange)="getHousesByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+                         directionLinks="true" autohide="true"></pagination-controls>
+  </div>
+</div>
+

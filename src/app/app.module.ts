@@ -40,16 +40,19 @@ import {LoginComponent} from './login/login.component';
 import {Error404Component} from './errors/error-404/error-404.component';
 import {GeneralMenuComponent} from './_common/general-menu/general-menu.component';
 import {AdminMenuComponent} from './_common/admin-menu/admin-menu.component';
-import {SaleListAdressComponent} from './sales/sale-list-adress/sale-list-adress.component';
 import {GeneralLeftMenuComponent} from './_common/general-left-menu/general-left-menu.component';
 import {MenuUserInfoComponent} from './_common/menu-user-info/menu-user-info.component';
 import {Error403Component} from './errors/error-403/error-403.component';
-import { ClientsListComponent } from './clients/clients-list/clients-list.component';
+import {ClientsListComponent} from './clients/clients-list/clients-list.component';
 import { ClientModificateComponent } from './clients/client-modificate/client-modificate.component';
 import { AdminRequestLocationComponent } from './admin/admin-request-location/admin-request-location.component';
 import { SalesListSearchComponent } from './sales/sales-list-search/sales-list-search.component';
 import {AgreementsCsListComponent} from './agreements-cs-list/agreements-cs-list.component';
 import { SaleReguestLocationComponent } from './sales/sale-reguest-location/sale-reguest-location.component';
+import { ClientListSearchComponent } from './clients/client-list-search/client-list-search.component';
+import { GeneralTemplateComponent } from './_common/general-template/general-template.component';
+import { HousesListComponent } from './houses/houses-list/houses-list.component';
+import { HouseModificateComponent } from './houses/house-modificate/house-modificate.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -66,12 +69,19 @@ import {ImageService} from './_services/image.service';
 import {AgreementService} from './_services/agreement.service';
 import {RequestService} from './_services/request.service';
 import {ClientService} from './_services/client.service';
+import {ClientResolve} from './_services/clientResolve.service';
+import {HouseService} from './_services/house.service';
+import {HouseResolve} from './_services/HouseResolve';
 
 import {MaterialModule} from './material.module';
 import { SaleListPhotoComponent } from './sales/sale-list-photo/sale-list-photo.component';
 import {NgxGalleryModule} from 'ngx-gallery';
-import { ClientListSearchComponent } from './clients/client-list-search/client-list-search.component';
-import { GeneralTemplateComponent } from './_common/general-template/general-template.component';
+
+
+import {SanitizeHtmlPipe} from './_pipes/sanitizeHtml.pipe';
+import { HouseListSearchComponent } from './houses/house-list-search/house-list-search.component';
+
+
 
 
 const adminCompaniesRoutes: Routes = [
@@ -106,7 +116,12 @@ const salesRoutes: Routes = [
 const clientsRoutes: Routes = [
   {path: '', component: ClientsListComponent},
   {path: 'client', component: ClientModificateComponent, canActivate: [LoginGuard]},
-  {path: 'client/:id', component: ClientModificateComponent, resolve: {data: SaleResolve}}
+  {path: 'client/:id', component: ClientModificateComponent, resolve: {data: ClientResolve}}
+];
+const housesRoutes: Routes = [
+  {path: '', component: HousesListComponent},
+  {path: 'house', component: HouseModificateComponent, canActivate: [LoginGuard]},
+  {path: 'house/:id', component: HouseModificateComponent, resolve: {data: HouseResolve}}
 ];
 
 const agreements: Routes = [
@@ -122,6 +137,7 @@ const routes: Routes = [
   {path: 'admin/locations', component: AdminComponent, children: adminLocationsRoutes},
   {path: 'sales', component: GeneralTemplateComponent, children: salesRoutes},
   {path: 'clients', component: GeneralTemplateComponent, children: clientsRoutes},
+  {path: 'houses', component: GeneralTemplateComponent, children: housesRoutes},
   {path: 'argeements/cs', component: GeneralTemplateComponent, children: agreements},
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
@@ -144,7 +160,6 @@ const routes: Routes = [
     AdminRolesListComponent,
     SaleModificateComponent,
     SalesListComponent,
-    SaleListAdressComponent,
     AdminCompaniesListComponent,
     AdminModulesListComponent,
     AdminUsersListComponent,
@@ -162,9 +177,13 @@ const routes: Routes = [
     SaleReguestLocationComponent,
     ClientListSearchComponent,
     GeneralTemplateComponent,
+    HousesListComponent,
+    HouseModificateComponent,
     DialogDeleteSaleComponent,
     DialogCompanyUnblockComponent,
-    DialogCompanyBlockComponent
+    DialogCompanyBlockComponent,
+    HouseListSearchComponent,
+    SanitizeHtmlPipe
   ],
   imports: [
     MaterialModule,
@@ -202,7 +221,11 @@ const routes: Routes = [
     RequestService,
     AgreementService,
     ClientService,
-    Globals
+    ClientResolve,
+    HouseService,
+    HouseResolve,
+    Globals,
+    SanitizeHtmlPipe
   ],
   entryComponents: [DialogDeleteSaleComponent, DialogCompanyBlockComponent, DialogCompanyUnblockComponent],
   bootstrap: [AppComponent]

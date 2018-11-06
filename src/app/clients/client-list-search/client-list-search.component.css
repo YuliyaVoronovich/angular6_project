@@ -1,7 +1,3 @@
-.padding-noright {
-  padding-left: 10px;
-  padding-right: 0;
-}
 .search-top {
   padding: 20px 0 0;
 }
@@ -41,4 +37,90 @@ input {
   background-color: #f6f5f5;
   border: 1px solid #dfdfdf;
   border-radius: 3px;
+}
+.show {
+  display: flex;
+}
+.hide {
+  display: none;
+}
+.select-label {
+  background: #fbd85a!important;
+}
+
+@media (max-width : 1360px) {
+  .padding {
+    padding-left: 7px;
+    padding-right: 3px;
+  }
+}
+@media (min-width : 1280px) {
+  .my-col-lg-none {
+    display: none;
+  }
+}
+@media (max-width : 1280px) {
+  .my-col-md-none {
+    display: none;
+  }
+}
+
+@media (max-width : 1070px) {
+  .my-col-sm-none {
+    display: none;
+  }
+  a {
+    font-size: .875rem;
+  }
+}
+
+@media (min-width : 1070px) {
+  .my-col-mdd-none {
+    display: none;
+  }
+}
+@media (max-width : 450px) {
+  .my-col-xs-none {
+    display: none;
+  }
+}
+
+@media (min-width : 450px) and (max-width : 1280px) {
+
+  .my-col-md-5 {
+    -ms-flex: 0 0 40%;
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+  .my-col-md-3 {
+    -ms-flex: 0 0 33.333%;
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+  }
+  .my-col-md-2 {
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+  .padding {
+    padding: 0 15px;
+  }
+}
+
+@media (min-width : 450px) and (max-width : 1070px) {
+  .my-col-sm-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .my-col-sm-5 {
+    -ms-flex: 0 0 40%;
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+  .my-col-sm-2 {
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
 }
