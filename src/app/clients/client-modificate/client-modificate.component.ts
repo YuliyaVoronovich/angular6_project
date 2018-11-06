@@ -182,20 +182,13 @@ export class ClientModificateComponent implements OnInit {
     this.client.city.district_country = this.locationService.setDistrictCountry(this.client.city.district_country);
     this.client.city.district_country.region = this.locationService.setRegion(this.client.city.district_country.region);
 
-    this.labelsService.getAllLabelsSales().subscribe(data => {
-      this.wc = data.wc;
-      this.walls = data.walls;
-      this.types = data.types;
-      this.repairs = data.repairs;
-      this.sources = data.sources;
-    });
-
     this.getRegions();
     this.getDistrictsRb();
     this.getCities();
     this.getDistricts();
     this.getMicroDistricts();
     this.getAllLocations();
+    this.getAllLabels();
 
     this.getPriceSqr();
     this.loginService.detailsUser().subscribe(data => {
@@ -224,6 +217,15 @@ export class ClientModificateComponent implements OnInit {
       view: this.view
     });
     /* Подгрузка карты*/
+  }
+  getAllLabels() {
+    this.labelsService.getAllLabelsSales().subscribe(data => {
+      this.wc = data.wc;
+      this.walls = data.walls;
+      this.types = data.types;
+      this.repairs = data.repairs;
+      this.sources = data.sources;
+    });
   }
 
   getAllLocations() {

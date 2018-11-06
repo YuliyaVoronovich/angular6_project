@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IOption} from 'ng-select';
 import {Photo} from '../../_models/photo.model';
 import {UserInformation} from '../../_models/userInformation.model';
@@ -46,19 +46,19 @@ export class HouseModificateComponent implements OnInit {
   marker: Feature;
 
 
-  public regions: Array<IOption> = [
+  public selectRegions: Array<IOption> = [
     {label: '', value: ''}
   ];
 
-  public districts_country: Array<IOption> = [
+  public selectDistrictsRb: Array<IOption> = [
     {label: '', value: ''}
   ];
 
-  public cities: Array<IOption> = [
+  public selectCities: Array<IOption> = [
     {label: '', value: ''}
   ];
 
-  public streets: Array<IOption> = [
+  public selectStreets: Array<IOption> = [
     {label: '', value: ''}
   ];
 
@@ -78,9 +78,12 @@ export class HouseModificateComponent implements OnInit {
   public activeTypes = 0;
 
   public metro: Metro[] = [];
+  public regions = [];
+  public districts_rb = [];
+  public cities = [];
 
   public house: House = new House(0, null, null, '', '', '', '', null, null, false,
-    '' , 0, 0, false, false, false, false, 0, '', null, '',
+    '', 0, 0, false, false, false, false, 0, '', null, '',
     '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
     false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false,
     null, null, null, '');
@@ -121,7 +124,8 @@ export class HouseModificateComponent implements OnInit {
               private locationService: LocationService,
               private userService: UserService,
               private imageService: ImageService,
-              private sharedService: SharedService) { }
+              private sharedService: SharedService) {
+  }
 
   message(mes: string, error: boolean) {
     let arr: any[] = ['show', mes, error];
@@ -185,23 +189,8 @@ export class HouseModificateComponent implements OnInit {
     this.house.location.metro = this.locationService.setMetro(this.house.location.metro);
     this.house.location.direction = this.locationService.setDirection(this.house.location.direction);
 
-
-    this.labelsService.getAllLabelsHouses().subscribe(data => {
-      this.walls = data.walls;
-      this.types = data.types;
-      this.repairs = data.repairs;
-      this.roofs = data.roofs;
-      this.sales = data.sales;
-      this.sources = data.sources;
-      this.sewage = data.sewage;
-      this.heating = data.heating;
-      this.water = data.water;
-      this.gas = data.gas;
-      this.electricity = data.electricity;
-    });
-    this.locationService.getAllLocations().subscribe(data => {
-      this.metro = data.metro;
-    });
+    this.getAllLabels();
+    this.getAllLocations();
 
     this.getRegions();
     this.getDistrictsRb(this.house.location.city.district_country.region.id);
@@ -241,40 +230,67 @@ export class HouseModificateComponent implements OnInit {
     /* Подгрузка карты*/
   }
 
+
+  getAllLocations() {
+    this.locationService.getAllLocations().subscribe((data) => {
+      this.metro = data.metro;
+      this.regions = data.regions;
+      this.districts_rb = data.districts_rb;
+      this.cities = data.cities;
+    });
+  }
+
+  getAllLabels() {
+    this.labelsService.getAllLabelsHouses().subscribe(data => {
+      this.walls = data.walls;
+      this.types = data.types;
+      this.repairs = data.repairs;
+      this.roofs = data.roofs;
+      this.sales = data.sales;
+      this.sources = data.sources;
+      this.sewage = data.sewage;
+      this.heating = data.heating;
+      this.water = data.water;
+      this.gas = data.gas;
+      this.electricity = data.electricity;
+    });
+  }
+
   getRegions() {
     this.locationService.getRegions().subscribe((options) => {
-      this.regions = [];
+      this.selectRegions = [];
       for (let i = 0; i < options.length; i++) {
-        this.regions.push({label: options[i].title, value: '' + options[i].id});
+        this.selectRegions.push({label: options[i].title, value: '' + options[i].id});
       }
     });
   }
+
   getDistrictsRb(region = 0) {
     this.locationService.getDistrictsRb(region).subscribe((options) => {
-      this.districts_country = [];
+      this.selectDistrictsRb = [];
       for (let i = 0; i < options.length; i++) {
-        this.districts_country.push({label: options[i].title, value: '' + options[i].id});
+        this.selectDistrictsRb.push({label: options[i].title, value: '' + options[i].id});
       }
     });
   }
 
   getCities(district = 0) {
     this.locationService.getCities(0, district).subscribe((options) => {
-      this.cities = [];
+      this.selectCities = [];
       for (let i = 0; i < options.length; i++) {
-        this.cities.push({label: options[i].title, value: '' + options[i].id});
+        this.selectCities.push({label: options[i].title, value: '' + options[i].id});
       }
     });
   }
 
   getStreets(city = 0, district = 0, microdistrict = 0) {
     this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
-      this.streets = [];
+      this.selectStreets = [];
       /*if (options.length === 0) {
         this.displayReq = true;
       }*/
       for (let i = 0; i < options.length; i++) {
-        this.streets.push({label: options[i].title, value: '' + options[i].id});
+        this.selectStreets.push({label: options[i].title, value: '' + options[i].id});
       }
     });
   }
@@ -291,6 +307,19 @@ export class HouseModificateComponent implements OnInit {
     this.getStreets(+`${option.value}`);
   }
 
+  getLocation(option: IOption) {
+
+    const district = this.cities.find(x => x.id === +`${option.value}`).district_id;
+    if (district) {
+      this.house.location.city.district_country.id = district;
+
+      const region = this.districts_rb.find(x => x.id === district).region_id;
+      if (region) {
+        this.house.location.city.district_country.region.id = region;
+      }
+    }
+  }
+
   getInfoLocation() {
 
     if (this.house.location.street.id && this.house.location.house) {
@@ -300,7 +329,7 @@ export class HouseModificateComponent implements OnInit {
       this.search['housing'] = (this.house.location.housing) ? this.house.location.housing : 0;
 
       this.locationService.getLocation(this.search).subscribe((data) => {
-     //   console.log(data);
+        //   console.log(data);
         if (data) {
           this.house.location.district = this.locationService.setDistrict(data.district);
           this.house.location.microdistrict = this.locationService.setMicroDistrict(data.microdistrict);
@@ -396,7 +425,7 @@ export class HouseModificateComponent implements OnInit {
     this.house.contract_from = this.contract_from;
     this.house.contract_to = this.contract_to;
 
-    this.house.location.street.id  = (this.house.location.street.id !== undefined) ? this.house.location.street.id  : 0;
+    this.house.location.street.id = (this.house.location.street.id !== undefined) ? this.house.location.street.id : 0;
 
     this.house.photo = this.upload_photo;
     console.log(this.house);
@@ -426,7 +455,7 @@ export class HouseModificateComponent implements OnInit {
         }
       );
     } else {
-     this.houseService.create(this.house).subscribe(
+      this.houseService.create(this.house).subscribe(
         data => {
           if (data) {
             this.message('Объект успешно создан', false);
@@ -457,7 +486,7 @@ export class HouseModificateComponent implements OnInit {
     const im = new Photo(file.src, '', '');
     this.upload_photo.push(im.path);
     this.house.photo = this.upload_photo;
-      console.log(this.house.photo);
+    console.log(this.house.photo);
   }
 
   onRemoved(file: FileHolder) {

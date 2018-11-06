@@ -39,7 +39,7 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Область<span>*</span></label>
               <div class="col-7">
-                <ng-select [options]="regions"
+                <ng-select [options]="selectRegions"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.district_country.region.id"
                            (selected)="city($event)">
@@ -51,10 +51,10 @@
               <label class="col-5 col-form-label text-left">Населенный
                 пункт<span>*</span></label>
               <div class="col-7">
-                <ng-select [options]="cities"
+                <ng-select [options]="selectCities"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.id"
-                           (selected)="street($event)">
+                           (selected)="street($event);getLocation($event)">
 
                 </ng-select>
               </div>
@@ -62,7 +62,7 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Улица<span>*</span></label>
               <div class="col-7">
-                <ng-select [options]="streets"
+                <ng-select [options]="selectStreets"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.street.id"
                            (selected)="getInfoLocation()"

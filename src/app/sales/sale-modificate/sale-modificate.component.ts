@@ -53,17 +53,21 @@ export class SaleModificateComponent implements OnInit {
   view: OlView;
   marker: Feature;
 
-  public regions: Array<IOption> = [
+  public selectRegions: Array<IOption> = [
     {label: '', value: ''}
   ];
 
-  public cities: Array<IOption> = [
+  public selectCities: Array<IOption> = [
     {label: '', value: ''}
   ];
 
-  public streets: Array<IOption> = [
+  public selectStreets: Array<IOption> = [
     {label: '', value: ''}
   ];
+
+  public regions = [];
+  public districts_rb = [];
+  public cities = [];
 
   public wc: Label[] = [];
   public walls: Label[] = [];
@@ -202,6 +206,9 @@ export class SaleModificateComponent implements OnInit {
     });
     this.locationService.getAllLocations().subscribe(data => {
       this.metro = data.metro;
+      this.regions = data.regions;
+      this.districts_rb = data.districts_rb;
+      this.cities = data.cities;
     });
 
     this.getRegions();
@@ -307,30 +314,30 @@ export class SaleModificateComponent implements OnInit {
 
   getRegions() {
     this.locationService.getRegions().subscribe((options) => {
-      this.regions = [];
+      this.selectRegions = [];
       for (let i = 0; i < options.length; i++) {
-        this.regions.push({label: options[i].title, value: '' + options[i].id});
+        this.selectRegions.push({label: options[i].title, value: '' + options[i].id});
       }
     });
   }
 
   getCities(region = 0) {
     this.locationService.getCities(region).subscribe((options) => {
-      this.cities = [];
+      this.selectCities = [];
       for (let i = 0; i < options.length; i++) {
-        this.cities.push({label: options[i].title, value: '' + options[i].id});
+        this.selectCities.push({label: options[i].title, value: '' + options[i].id});
       }
     });
   }
 
   getStreets(city = 0, district = 0, microdistrict = 0) {
     this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
-      this.streets = [];
+      this.selectStreets = [];
       /*if (options.length === 0) {
         this.displayReq = true;
       }*/
       for (let i = 0; i < options.length; i++) {
-        this.streets.push({label: options[i].title, value: '' + options[i].id});
+        this.selectStreets.push({label: options[i].title, value: '' + options[i].id});
       }
     });
   }
@@ -341,6 +348,19 @@ export class SaleModificateComponent implements OnInit {
 
   street(option: IOption) {
     this.getStreets(+`${option.value}`);
+  }
+
+  getLocation(option: IOption) {
+
+    const district = this.cities.find(x => x.id === +`${option.value}`).district_id;
+    if (district) {
+      this.sale.location.city.district_country.id = district;
+
+      const region = this.districts_rb.find(x => x.id === district).region_id;
+      if (region) {
+        this.sale.location.city.district_country.region.id = region;
+      }
+    }
   }
 
   getInfoLocation() {

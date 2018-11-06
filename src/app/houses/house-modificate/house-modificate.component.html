@@ -37,7 +37,7 @@
 
               <div class="col-12">
                 <div class="form-group">
-                  <ng-select [options]="regions"
+                  <ng-select [options]="selectRegions"
                              [(ngModel)]="''+ house.location.city.district_country.region.id"
                              [allowClear]="true"
                              placeholder="Область"
@@ -48,7 +48,7 @@
 
               <div class="col-12">
                 <div class="form-group">
-                  <ng-select [options]="districts_country"
+                  <ng-select [options]="selectDistrictsRb"
                              [(ngModel)]="''+ house.location.city.district_country.id"
                              [allowClear]="true"
                              placeholder="Район"
@@ -59,18 +59,18 @@
 
               <div class="col-12">
                 <div class="form-group">
-                  <ng-select [options]="cities"
+                  <ng-select [options]="selectCities"
                              [(ngModel)]="''+ house.location.city.id"
                              [allowClear]="true"
                              placeholder="Нас. пункт"
-                             (selected)="street($event)">
+                             (selected)="street($event);getLocation($event)">
                   </ng-select>
                 </div>
               </div>
 
               <div class="col-12">
                 <div class="form-group">
-                  <ng-select [options]="streets"
+                  <ng-select [options]="selectStreets"
                              [(ngModel)]="''+ house.location.street.id"
                              [allowClear]="true"
                              placeholder="Улица"
