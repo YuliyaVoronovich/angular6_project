@@ -27,8 +27,7 @@
     </tr>
     </thead>
     <tbody>
-    <ng-container
-      *ngFor="let house of houses | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countHouses }; let i = index">
+    <ng-container *ngFor="let house of houses | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countHouses }; let i = index">
       <tr>
         <td class="text-center">
           <a routerLink="house/{{house.id}}" target="_self">
@@ -95,13 +94,7 @@
         <td colspan="16">
           <div class="row no-gutters text-left">
             <div class="col-lg-6 col-md-12">
-              <!--<app-sale-list-photo [photo]="house.photo"></app-sale-list-photo>-->
-              <!--<ng-container
-                *ngFor="let photo_reclame of sale.photo_reclame">
-                <div>
-                  <img src="{{photo_reclame.path}}">
-                </div>
-              </ng-container>-->
+              <app-house-list-photo [photo]="house.photo"></app-house-list-photo>
             </div>
             <div class="col-lg-5 col-md-12" style="margin: 10px 0 0 10px">
               {{house.cont_phone1}}, {{house.cont_phone2}}<br>

@@ -48,11 +48,12 @@ import { ClientModificateComponent } from './clients/client-modificate/client-mo
 import { AdminRequestLocationComponent } from './admin/admin-request-location/admin-request-location.component';
 import { SalesListSearchComponent } from './sales/sales-list-search/sales-list-search.component';
 import {AgreementsCsListComponent} from './agreements-cs-list/agreements-cs-list.component';
-import { SaleReguestLocationComponent } from './sales/sale-reguest-location/sale-reguest-location.component';
 import { ClientListSearchComponent } from './clients/client-list-search/client-list-search.component';
 import { GeneralTemplateComponent } from './_common/general-template/general-template.component';
 import { HousesListComponent } from './houses/houses-list/houses-list.component';
 import { HouseModificateComponent } from './houses/house-modificate/house-modificate.component';
+import { HouseListSearchComponent } from './houses/house-list-search/house-list-search.component';
+import { HouseListPhotoComponent } from './houses/house-list-photo/house-list-photo.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -79,8 +80,6 @@ import {NgxGalleryModule} from 'ngx-gallery';
 
 
 import {SanitizeHtmlPipe} from './_pipes/sanitizeHtml.pipe';
-import { HouseListSearchComponent } from './houses/house-list-search/house-list-search.component';
-
 
 
 
@@ -174,7 +173,6 @@ const routes: Routes = [
     ClientsListComponent,
     ClientModificateComponent,
     SaleListPhotoComponent,
-    SaleReguestLocationComponent,
     ClientListSearchComponent,
     GeneralTemplateComponent,
     HousesListComponent,
@@ -183,6 +181,7 @@ const routes: Routes = [
     DialogCompanyUnblockComponent,
     DialogCompanyBlockComponent,
     HouseListSearchComponent,
+    HouseListPhotoComponent,
     SanitizeHtmlPipe
   ],
   imports: [
