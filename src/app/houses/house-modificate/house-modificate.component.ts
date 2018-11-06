@@ -23,7 +23,6 @@ import OlMap from 'ol/Map';
 import OlXYZ from 'ol/source/XYZ';
 import OlTileLayer from 'ol/layer/Tile';
 import OlView from 'ol/View';
-import {Style, Icon} from 'ol/Style';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 
