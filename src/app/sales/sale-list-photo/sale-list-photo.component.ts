@@ -37,10 +37,13 @@ export class SaleListPhotoComponent implements OnInit {
         preview: false
       }
     ];
-   /* for (let i = 0; i < this.photo.length; i++) {
-      this.galleryImages.push({small: this.photo[i].mini, medium: this.photo[i].midi, big: this.photo[i].path});
-    }*/
-    this.galleryImages = [
+    for (let i = 0; i < this.photo.length; i++) {
+      this.galleryImages.push({
+        small: this.photo[i].mini,
+        medium: this.photo[i].midi,
+        big: this.photo[i].path});
+    }
+    /*this.galleryImages = [
       {
         small: 'https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/1-small.jpeg',
         medium: 'https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/1-medium.jpeg',
@@ -91,7 +94,7 @@ export class SaleListPhotoComponent implements OnInit {
         medium: 'https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/5-medium.jpeg',
         big: 'https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/5-big.jpeg'
       }
-    ];
+    ];*/
   }
 
 }
