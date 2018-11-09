@@ -21,7 +21,7 @@ import {UserService} from '../../_services/user.service';
 import {LabelService} from '../../_services/label.service';
 import {Metro} from '../../_models/metro.model';
 import {Label} from '../../_models/label.model';
-import {SharedService} from "../../_services/shared.service";
+import {SharedService} from '../../_services/shared.service';
 
 @Component({
   selector: 'app-client-modificate',
@@ -67,7 +67,7 @@ export class ClientModificateComponent implements OnInit {
     [], '', '',  null, null, false, null, null);
 
   public user: User = new User(0, '', '', null, null, null, '',
-    0, 0, 0, null, null, null, null, null, null);
+    0, 0, 0,  false, null, null, null, null, null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
 
   public users: User[] = [];

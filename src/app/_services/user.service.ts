@@ -62,7 +62,7 @@ export class UserService {
   setUser(user: User) {
     if (!user) {
       return user = new User(null, '', '', null, null, null, '',
-        0, null, null, null, null, '', null, null, null);
+        0, null, null, false, null, null, '', null, null, null);
     }
     return user;
   }

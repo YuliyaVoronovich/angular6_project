@@ -16,6 +16,7 @@ export class User {
     public access: number,
     public ban: number,
     public delete_user: number,
+    public partner: boolean,
     public created_at: Date,
     public updated_at: Date,
     public api_key: string,

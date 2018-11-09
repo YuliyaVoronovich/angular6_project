@@ -54,6 +54,8 @@ import { HousesListComponent } from './houses/houses-list/houses-list.component'
 import { HouseModificateComponent } from './houses/house-modificate/house-modificate.component';
 import { HouseListSearchComponent } from './houses/house-list-search/house-list-search.component';
 import { HouseListPhotoComponent } from './houses/house-list-photo/house-list-photo.component';
+import { SaleModificateMapComponent } from './sales/sale-modificate-map/sale-modificate-map.component';
+import { HouseModificateMapComponent } from './houses/house-modificate-map/house-modificate-map.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -80,7 +82,6 @@ import {NgxGalleryModule} from 'ngx-gallery';
 
 
 import {SanitizeHtmlPipe} from './_pipes/sanitizeHtml.pipe';
-
 
 
 const adminCompaniesRoutes: Routes = [
@@ -182,6 +183,8 @@ const routes: Routes = [
     DialogCompanyBlockComponent,
     HouseListSearchComponent,
     HouseListPhotoComponent,
+    SaleModificateMapComponent,
+    HouseModificateMapComponent,
     SanitizeHtmlPipe
   ],
   imports: [

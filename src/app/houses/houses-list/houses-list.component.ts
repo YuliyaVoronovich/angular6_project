@@ -22,7 +22,7 @@ export class HousesListComponent implements OnInit, OnDestroy  {
 
   public houses: House[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
-    null, null, null, null, '', null, null, null);
+    null, null,  false, null, null, '', null, null, null);
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
     '', '', null, null, null, [], null, false, null);
 

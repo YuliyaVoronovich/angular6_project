@@ -3,6 +3,11 @@ import {IOption} from 'ng-select';
 import {Photo} from '../../_models/photo.model';
 import {UserInformation} from '../../_models/userInformation.model';
 import {User} from '../../_models/user.model';
+import {Label} from '../../_models/label.model';
+import {Metro} from '../../_models/metro.model';
+import {House} from '../../_models/house.model';
+import {HouseAdditionInformation} from '../../_models/houseAdditionInformation.model';
+
 import {LabelService} from '../../_services/label.service';
 import {LocationService} from '../../_services/location.service';
 import {ImageService} from '../../_services/image.service';
@@ -11,23 +16,10 @@ import {LoginService} from '../../_services/login.service';
 import {UserService} from '../../_services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HouseService} from '../../_services/house.service';
-import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
-import {Label} from '../../_models/label.model';
-import {Metro} from '../../_models/metro.model';
-import {House} from '../../_models/house.model';
-import {HouseAdditionInformation} from '../../_models/houseAdditionInformation.model';
+
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
-
-// карта
-import OlMap from 'ol/Map';
-import OlXYZ from 'ol/source/XYZ';
-import OlTileLayer from 'ol/layer/Tile';
-import OlView from 'ol/View';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-
-import {fromLonLat} from 'ol/proj';
 import {FileHolder} from 'angular2-image-upload';
+import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
 
 @Component({
   selector: 'app-house-modificate',
@@ -38,13 +30,6 @@ import {FileHolder} from 'angular2-image-upload';
   ]
 })
 export class HouseModificateComponent implements OnInit {
-
-  map: OlMap;
-  source: OlXYZ;
-  layer: OlTileLayer;
-  view: OlView;
-  marker: Feature;
-
 
   public selectRegions: Array<IOption> = [
     {label: '', value: ''}
@@ -93,7 +78,7 @@ export class HouseModificateComponent implements OnInit {
 
 
   public user: User = new User(0, '', '', null, null, null, '',
-    0, 0, 0, null, null, null, null, null, null);
+    0, 0, 0, false, null, null, null, null, null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
   public users: User[] = [];
 
@@ -113,6 +98,8 @@ export class HouseModificateComponent implements OnInit {
   public textRequest = '';
   public idSaleRequest = 0;
   public request = {};
+
+  public movieMapMarker = false;
 
   public noResultsTerm = '';
 
@@ -144,6 +131,7 @@ export class HouseModificateComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.route.params.subscribe(
       params => {
         if (params['id']) {
@@ -171,6 +159,7 @@ export class HouseModificateComponent implements OnInit {
             }
 
           });
+
         } else {
           this.house.house_addition_information = this.house_addition_information;
           this.house.user = this.user;
@@ -201,35 +190,7 @@ export class HouseModificateComponent implements OnInit {
       this.getUsers();
 
     });
-
-    /* Подгрузка карты*/
-
-    this.marker = new Feature({
-      geometry: new Point([27.56164, 53.902254])
-    });
-
-    this.source = new OlXYZ({
-      url: 'http://tile.osm.org/{z}/{x}/{y}.png',
-      features: this.marker
-    });
-
-    this.layer = new OlTileLayer({
-      source: this.source
-    });
-
-    this.view = new OlView({
-      center: fromLonLat([27.56164, 53.902257]),
-      zoom: 14
-    });
-
-    this.map = new OlMap({
-      target: 'map',
-      layers: [this.layer],
-      view: this.view
-    });
-    /* Подгрузка карты*/
   }
-
 
   getAllLocations() {
     this.locationService.getAllLocations().subscribe((data) => {
@@ -322,6 +283,8 @@ export class HouseModificateComponent implements OnInit {
 
   getInfoLocation() {
 
+    this.movieMapMarker = false;
+
     if (this.house.location.street.id && this.house.location.house) {
 
       this.search['street'] = this.house.location.street.id;
@@ -335,6 +298,10 @@ export class HouseModificateComponent implements OnInit {
           this.house.location.microdistrict = this.locationService.setMicroDistrict(data.microdistrict);
           this.house.location.direction = this.locationService.setDirection(data.direction);
           this.house.location.metro = this.locationService.setMetro(data.metro);
+          this.house.location.coordinates = data.coordinates;
+
+          this.movieMapMarker = true; // переместить метку на карте
+
         } else {
           this.house.location.district = this.locationService.setDistrict(null);
           this.house.location.microdistrict = this.locationService.setMicroDistrict(null);

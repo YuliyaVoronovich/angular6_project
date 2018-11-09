@@ -31,12 +31,12 @@ export class LocationService {
       .map((response: Response) => response.json());
   }
 
-  getLocations(search = {}): Observable<Location[]>  {
+  getLocations(search = {}): Observable<Location[]> {
     return this.http.get(this.globals.url + this.uri, {search: search})
       .map((response: Response) => response.json().locations);
   }
 
-  getLocation(search = {}): Observable<Location>  {
+  getLocation(search = {}): Observable<Location> {
     return this.http.get(this.globals.url + this.uri + '/location', {search: search})
       .map((response: Response) => response.json().location);
   }
@@ -58,26 +58,48 @@ export class LocationService {
       .map((response: Response) => response.json().cities);
     // .catch(this.handleError);
   }
+
   getDistricts(city = 0) {
     return this.http.get(this.globals.url + this.uri + '/districts', {search: {'city': city}})
       .map((response: Response) => response.json().districts);
     // .catch(this.handleError);
   }
+
   getMicroDistricts(city = 0, district = 0) {
-    return this.http.get(this.globals.url + this.uri + '/microdistricts', {search: {'city': city, 'district': district}})
+    return this.http.get(this.globals.url + this.uri + '/microdistricts', {
+      search: {
+        'city': city,
+        'district': district
+      }
+    })
       .map((response: Response) => response.json().microdistricts);
     // .catch(this.handleError);
   }
 
   getStreets(city, district, microdistrict) {
-    return this.http.get(this.globals.url + this.uri + '/streets', {search: {'city': city, 'district': district, 'microdistrict': microdistrict}})
+    return this.http.get(this.globals.url + this.uri + '/streets', {
+      search: {
+        'city': city,
+        'district': district,
+        'microdistrict': microdistrict
+      }
+    })
       .map((response: Response) => response.json().streets);
     // .catch(this.handleError);
   }
+
   getDirections() {
     return this.http.get(this.globals.url + this.uri + '/directions')
       .map((response: Response) => response.json().directions);
     // .catch(this.handleError);
+  }
+
+  rotateCoordinates(coordinates) {
+    let rotate_coordinates = [];
+    if (coordinates) {
+      rotate_coordinates = coordinates.split(',');
+    }
+    return rotate_coordinates;
   }
 
   setCity(city: City): City {
@@ -89,7 +111,7 @@ export class LocationService {
 
   setDistrict(district: District): District {
     if (!district) {
-      return district = new District(0, null, '', '',  '');
+      return district = new District(0, null, '', '', '');
     }
     return district;
   }
@@ -128,6 +150,7 @@ export class LocationService {
     }
     return region;
   }
+
   setDirection(direction: Direction): Direction {
     if (!direction) {
       return direction = new Direction(0, '', '');
@@ -137,7 +160,7 @@ export class LocationService {
 
   setLocation(location: Location): Location {
     if (!location) {
-      return location = new Location(0, null, null, null, null, null, null, '', '', null, '', 0, 0, 0, 0,  null, '');
+      return location = new Location(0, null, null, null, null, null, null, '', '', null, '', 0, 0, 0, 0, null, '');
     }
     return location;
   }
@@ -145,7 +168,7 @@ export class LocationService {
   create(location: Location) {
     return this.http.post(this.globals.url + this.uri, JSON.stringify(location))
       .map((response: Response) => response.json().location
-    );
+      );
   }
 
   update(location: Location): Observable<Response> {

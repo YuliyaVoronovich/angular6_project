@@ -14,7 +14,7 @@ import {UserInformation} from '../../_models/userInformation.model';
 export class MenuUserInfoComponent implements OnInit {
 
   public user: User = new User(null, '', '', null, null, null, '',
-    0, 0, 0, null, null, null, null,  null, null);
+    0, 0, 0,  false, null, null, null, null,  null, null);
   public user_information: UserInformation = new UserInformation(null, '', '', '', '', '', '', null, null);
   public hide = false;
   public hide_info = false;
