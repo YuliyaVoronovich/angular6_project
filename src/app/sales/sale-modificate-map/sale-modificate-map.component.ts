@@ -82,7 +82,7 @@ export class SaleModificateMapComponent implements OnInit, OnChanges {
     });
     /* XYZ */
     this.xyzSource = new OlXyzSource({
-      url: 'http://tile.osm.org/{z}/{x}/{y}.png'
+      url: 'https://tile.osm.org/{z}/{x}/{y}.png'
     });
     // Tile layer
     this.tileLayer = new OlTileLayer({
