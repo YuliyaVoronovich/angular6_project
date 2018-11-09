@@ -124,12 +124,10 @@ h4 {
   left:0;
   top:0;
   transition: 0.2s;
-  transition-timing-function: ease;
-  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
   opacity:0.5;
 }
 
-input:focus + span, input:not(:placeholder-shown) + span {
+input:focus + span, input:not(:placeholder-shown) + span, input:not(:-moz-placeholder) + span  {
   opacity: 0.8;
   transform: scale(0.75) translateY(-90%) translateX(-20%);
   font-size: 12px;
