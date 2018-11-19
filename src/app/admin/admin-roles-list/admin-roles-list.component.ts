@@ -34,7 +34,7 @@ export class AdminRolesListComponent implements OnInit {
 
   ngOnInit() {
     this.getRoles();
-    this.getDataForSearch();
+    this.getCompanies();
   }
 
   message(mes: string, error: boolean) {
@@ -46,7 +46,7 @@ export class AdminRolesListComponent implements OnInit {
     }, 3000);
   }
 
-  getDataForSearch() {
+  getCompanies() {
     this.companyService.getCompanies().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
         this.companies.push(data[i]);

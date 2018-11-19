@@ -82,6 +82,11 @@ import {NgxGalleryModule} from 'ngx-gallery';
 
 
 import {SanitizeHtmlPipe} from './_pipes/sanitizeHtml.pipe';
+import { RolesListComponent } from './roles/roles-list/roles-list.component';
+import {FilterPipe, RoleModificateComponent} from './roles/role-modificate/role-modificate.component';
+import { UsersListComponent } from './users/users-list/users-list.component';
+import { UserModificateComponent } from './users/user-modificate/user-modificate.component';
+import { CompanyModificationComponent } from './companies/company-modification/company-modification.component';
 
 
 const adminCompaniesRoutes: Routes = [
@@ -123,6 +128,19 @@ const housesRoutes: Routes = [
   {path: 'house', component: HouseModificateComponent, canActivate: [LoginGuard]},
   {path: 'house/:id', component: HouseModificateComponent, resolve: {data: HouseResolve}}
 ];
+const rolesRoutes: Routes = [
+  {path: '', component: RolesListComponent},
+  {path: 'role', component: RoleModificateComponent, canActivate: [LoginGuard]},
+  {path: 'role/:id', component: RoleModificateComponent}
+];
+const usersRoutes: Routes = [
+  {path: '', component: UsersListComponent},
+  {path: 'user', component: UserModificateComponent, canActivate: [LoginGuard]},
+  {path: 'user/:id', component: UserModificateComponent, resolve: {data: UserResolve}}
+];
+const companyRoutes: Routes = [
+  {path: '', component: CompanyModificationComponent, resolve: {data: CompanyResolve}}
+];
 
 const agreements: Routes = [
   {path: '', component: AgreementsCsListComponent}
@@ -138,6 +156,9 @@ const routes: Routes = [
   {path: 'sales', component: GeneralTemplateComponent, children: salesRoutes},
   {path: 'clients', component: GeneralTemplateComponent, children: clientsRoutes},
   {path: 'houses', component: GeneralTemplateComponent, children: housesRoutes},
+  {path: 'roles', component: GeneralTemplateComponent, children: rolesRoutes},
+  {path: 'users', component: GeneralTemplateComponent, children: usersRoutes},
+  {path: 'companies/company/:id', component: GeneralTemplateComponent, children: companyRoutes},
   {path: 'argeements/cs', component: GeneralTemplateComponent, children: agreements},
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
@@ -185,7 +206,13 @@ const routes: Routes = [
     HouseListPhotoComponent,
     SaleModificateMapComponent,
     HouseModificateMapComponent,
-    SanitizeHtmlPipe
+    RolesListComponent,
+    RoleModificateComponent,
+    UsersListComponent,
+    UserModificateComponent,
+    CompanyModificationComponent,
+    SanitizeHtmlPipe,
+    FilterPipe
   ],
   imports: [
     MaterialModule,

@@ -109,7 +109,7 @@ export class HousesListComponent implements OnInit, OnDestroy  {
   }
 
   getHouses() {
-   // this.search['sort'] = JSON.stringify(this.sort);
+    this.search['sort'] = JSON.stringify(this.sort);
 
     return this.houseService.getHouses(this.search).subscribe(data => {
 

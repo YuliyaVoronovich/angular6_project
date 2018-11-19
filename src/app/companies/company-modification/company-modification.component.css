@@ -1,0 +1,40 @@
+.container {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+.newRow {
+  background: #fdfdff;
+  padding: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+}
+.mark {
+  margin-top: -70px;
+  padding-top: 80px;
+  -webkit-background-clip: content-box;
+  background-clip: content-box;
+  background: none;
+}
+h4 {
+  color: #22a6dc;
+  text-decoration: underline;
+}
+.col-form-label {
+  font-weight: bold;
+}
+label span {
+  font-size: 12px;
+  font-weight: normal;
+}
+.form-group {
+  margin-bottom: 5px;
+}
+.marginBottom {
+  margin-bottom: 5px;
+}
+.myButton {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  bottom: 0;
+}

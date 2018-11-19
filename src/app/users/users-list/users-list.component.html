@@ -1,0 +1,42 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped tableSticky">
+    <thead>
+    <tr style="background:#cccccc">
+      <th></th>
+      <th>Фамилия</th>
+      <th>Имя</th>
+      <th>Отчество</th>
+      <th>Телефон</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td class="align-left">
+        <a routerLink="user/{{user.id}}" target="_self">
+          <img src="assets/images/edit.jpg" style="cursor:pointer" alt="Редактировать" title="Редактировать">
+        </a>
+      </td>
+      <td class="align-left">{{user.user_information.surname}}</td>
+      <td class="align-left">{{user.user_information.name}}</td>
+      <td class="align-left">{{user.user_information.patronymic}}</td>
+      <td class="align-left">{{user.user_information.phone1}}</td>
+      <td>
+        <button class="btn btn-danger" (click)="delete(user)">Удалить</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container-fluid" style="bottom: 0;position: fixed; width: 100%">
+  <div class="row" style=" background: #ccc; padding: 5px">
+    <div class="form-group row">
+      <label for="phone" class="col-5 col-form-label text-left">Телефон</label>
+      <div class="col-7">
+        <input type="text" class="form-control" id="phone" name="phone" (change)="getUsersSearch()"
+               [(ngModel)]="search.phone">
+      </div>
+    </div>
+  </div>
+</div>

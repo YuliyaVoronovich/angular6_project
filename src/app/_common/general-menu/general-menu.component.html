@@ -66,6 +66,22 @@
             </ng-container>
             <!-- Конец меню для HOUSES-->
 
+            <!-- Меню для USERS-->
+            <ng-container *ngIf="path==='users'">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/users/user">Добавить</a>
+              </li>
+            </ng-container>
+            <!-- Конец меню для USERS-->
+
+            <!-- Меню для ROLES-->
+            <ng-container *ngIf="path==='roles'">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/roles/role">Добавить</a>
+              </li>
+            </ng-container>
+            <!-- Конец меню для ROLES-->
+
           </ul>
         </nav>
       </div>

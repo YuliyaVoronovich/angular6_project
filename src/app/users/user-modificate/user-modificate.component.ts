@@ -18,12 +18,11 @@ import {ImageService} from '../../_services/image.service';
 import {PermissionService} from '../../_services/permission.service';
 
 @Component({
-  selector: 'app-admin-user-modificate',
-  templateUrl: './admin-user-modificate.component.html',
-  styleUrls: ['./admin-user-modificate.component.css'],
-  providers: [{provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}]
+  selector: 'app-user-modificate',
+  templateUrl: './user-modificate.component.html',
+  styleUrls: ['./user-modificate.component.css']
 })
-export class AdminUserModificateComponent implements OnInit {
+export class UserModificateComponent implements OnInit {
 
   public companies: Company[] = [];
   public users: User[] = [];
@@ -42,7 +41,7 @@ export class AdminUserModificateComponent implements OnInit {
   public upload_photo = [];
 
   public search = {
-    'company': 0
+    'company': ''
   };
 
   constructor(private router: Router,
@@ -55,7 +54,6 @@ export class AdminUserModificateComponent implements OnInit {
               private imageService: ImageService,
               private companyService: CompanyService) {
   }
-
 
   message(mes: string, error: boolean) {
     let arr: any[] = ['show', mes, error];
@@ -85,12 +83,13 @@ export class AdminUserModificateComponent implements OnInit {
           this.user.user_information = this.user_information;
           this.user.company = this.companyService.setCompany(null);
         }
-
       });
-    this.getCompanies();
-    this.getUsers();
-    this.getRoles();
-    this.getPermissions();
+    this.loginService.detailsUser().subscribe(data => {
+      this.search['company'] = data.user.company.id;
+      this.getUsers();
+      this.getRoles();
+      this.getPermissions();
+    });
   }
 
   permissionTrigger(value: string, id: number) {
@@ -98,17 +97,8 @@ export class AdminUserModificateComponent implements OnInit {
     // console.log(this.user.permissions[id] + '///' + id);
   }
 
-  getCompanies() {
-    return this.companyService.getCompanies().subscribe(data => {
-      for (let i = 0; i < data.length; i++) {
-        this.companies.push(data[i]);
-      }
-    });
-  }
-
   getUsers() {
     return this.userService.getUsers(this.search).subscribe(data => {
-      this.users = [];
       for (let i = 0; i < data.length; i++) {
         if (data[i].user_information === null) {
           data[i].user_information = this.user_information;
@@ -133,14 +123,6 @@ export class AdminUserModificateComponent implements OnInit {
         this.roles.push(data[i]);
       }
     });
-  }
-
-  infoForCompany() {
-    this.search['company'] = this.user.company.id;
-
-    this.getUsers();
-    this.getRoles();
-
   }
 
   onUploadFinished(file: FileHolder) {
@@ -181,7 +163,7 @@ export class AdminUserModificateComponent implements OnInit {
         data => {
           if (data.status === 200) {
             this.message('Пользователь был успешно обновлен', false);
-            this.router.navigate(['admin/users']);
+            this.router.navigate(['users']);
           } else {
             this.message('Пользователя не удалось обновить!', true);
           }
@@ -192,6 +174,12 @@ export class AdminUserModificateComponent implements OnInit {
           } else {
             this.message('Ошибка!', true);
           }
+          if (error.status === 404) {
+            this.router.navigate(['404']);
+          }
+          if (error.status === 403) {
+            this.router.navigate(['403']);
+          }
         }
       );
     } else {
@@ -199,7 +187,7 @@ export class AdminUserModificateComponent implements OnInit {
         data => {
           if (data.status === 201) {
             this.message('Пользователь был успешно добавлен', false);
-            this.router.navigate(['admin/users']);
+            this.router.navigate(['users']);
           } else {
             this.message('Пользователя не удалось добавить!', true);
           }
@@ -210,8 +198,16 @@ export class AdminUserModificateComponent implements OnInit {
           } else {
             this.message('Ошибка!', true);
           }
+          if (error.status === 404) {
+            this.router.navigate(['404']);
+          }
+          if (error.status === 403) {
+            this.router.navigate(['403']);
+          }
         }
       );
     }
   }
+
+
 }

@@ -1,0 +1,16 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr style="background:#cccccc">
+      <th>Роль</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let role of roles">
+      <td class="align-left"><a routerLink="role/{{role.id}}">{{role.title}}</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+

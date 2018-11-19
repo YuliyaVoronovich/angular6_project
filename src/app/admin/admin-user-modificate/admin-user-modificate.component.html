@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="row">
-      <div class="col-8 col-8">
+      <div class="col-8">
         <h3 style="margin-bottom: 40px">
           <div *ngIf="user.id;then edit else create"></div>
 
@@ -73,7 +73,7 @@
         <div class="form-group row">
           <label class="col-5 col-form-label text-left">Компания</label>
           <div class="col-7">
-            <select (ngModelChange)="infoForCompany($event)" class="form-control" [(ngModel)]="user.company_id">
+            <select (change)="infoForCompany()" class="form-control" [(ngModel)]="user.company.id">
               <option value="0"></option>
               <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
             </select>
@@ -120,9 +120,13 @@
     <h3>Специальные права</h3>
     <div style="cursor: pointer" *ngFor="let permission of permissions; let i = index" class="col-12">
 
-      <b (click)="hideme[i] = !hideme[i]">{{permission.title}}</b>
+     <span (click)="hideme[i] = !hideme[i]">
+         <i class="fas fa-sort-down icon-top" [hidden]="hideme[i]"></i>
+        <i class="fas fa-sort-up icon-bottom" [hidden]="!hideme[i]"></i>
+        <b class="category" [ngClass]="{'category_main' : permission.main}">{{permission.title}}</b>
+      </span>
 
-    <div *ngFor="let item of permission.permissions" class="row" [hidden]="!hideme[i]">
+    <div *ngFor="let item of permission.permissions" class="row permission" [hidden]="!hideme[i]">
         <div class="col-6">
           {{ item.title }}
         </div>
@@ -144,7 +148,7 @@
 
       </div>
     </div>
-    <div class="col-12 col-12">
+    <div class="col-12">
       <button (click)="save()" class="btn btn-lg btn-info">
         Сохранить
       </button>

@@ -24,6 +24,15 @@ export class AdminRoleModificateComponent implements OnInit {
               private roleSevice: RoleService) {
   }
 
+  message(mes: string, error: boolean) {
+    let arr: any[] = ['show', mes, error];
+    this.sharedService.emitChange(arr);
+    arr = ['hide', '', false];
+    this.timer = setTimeout(() => {
+      this.sharedService.emitChange(arr);
+    }, 3000);
+  }
+
   ngOnInit() {
     this.route
       .params.subscribe(
@@ -44,15 +53,6 @@ export class AdminRoleModificateComponent implements OnInit {
 
         }
       });
-  }
-
-  message(mes: string, error: boolean) {
-    let arr: any[] = ['show', mes, error];
-    this.sharedService.emitChange(arr);
-    arr = ['hide', '', false];
-    this.timer = setTimeout(() => {
-      this.sharedService.emitChange(arr);
-    }, 3000);
   }
 
   save() {

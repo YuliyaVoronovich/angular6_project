@@ -29,4 +29,9 @@ i {
   color: #676767;
   margin-right: 5px;
 }
+a {
+  color: #000000;
+  outline: none;
+  box-shadow: none!important;
+}
 

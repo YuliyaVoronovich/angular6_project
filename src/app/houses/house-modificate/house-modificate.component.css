@@ -205,13 +205,13 @@ h3 {
   transition: 0.2s;
   opacity:0.9;
 }
-
-input:focus + span, input:not(:placeholder-shown) + span, input:not(:-moz-placeholder) + span {
+input:focus + span, input:not(:placeholder-shown) + span {
   opacity: 0.8;
   transform: scale(0.75) translateY(-90%) translateX(-20%);
   font-size: 12px;
   color: #1a5a87;
 }
+
 textarea:focus + span, textarea:not(:placeholder-shown) + span {
   opacity: 0.8;
   transform: scale(0.75) translateY(-90%) translateX(-20%);
@@ -227,6 +227,23 @@ select + span {
 
 /* For IE Browsers*/
 input:focus + span, input:not(:-ms-input-placeholder) + span {
+  opacity: 0.8;
+  transform: scale(0.75) translateY(-90%) translateX(-20%);
+  color: #1a5a87;
+}
+textarea:focus + span, textarea:not(:-ms-input-placeholder) + span {
+  opacity: 0.8;
+  transform: scale(0.75) translateY(-90%) translateX(-20%);
+  color: #1a5a87;
+}
+
+/* For FF Browsers*/
+input:focus + span, input:not(:-moz-placeholder) + span {
+  opacity: 0.8;
+  transform: scale(0.75) translateY(-90%) translateX(-20%);
+  color: #1a5a87;
+}
+textarea:focus + span, textarea:not(:-moz-placeholder) + span {
   opacity: 0.8;
   transform: scale(0.75) translateY(-90%) translateX(-20%);
   color: #1a5a87;

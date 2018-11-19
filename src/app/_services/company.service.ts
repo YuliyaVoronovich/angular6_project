@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Response, Http, Headers} from '@angular/http';
-import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
+import {Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent} from 'rxjs';
 import {Company} from '../_models/company.model';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
@@ -9,10 +9,26 @@ import {Globals} from '../_common/globals';
 @Injectable()
 export class CompanyService {
 
-  private uri = '/admin/companies';
+  public uri = '/companies';
+  public admin_uri = '/admin/companies';
+  public path = '';
 
   constructor(private http: Http,
               private globals: Globals) {
+    this.getPathUrl();
+  }
+
+  getPathUrl() {
+    const location = window.location.pathname;
+    location.split('/').forEach(element => {
+      if (element !== '' && this.path === '') {
+        this.path = element;
+      }
+    });
+    if (this.path === 'admin') {
+      this.uri = this.admin_uri;
+    }
+   // console.log('route: ' + this.uri); // Root path
   }
 
   getCompanies(search = {}): Observable<Company[]> {
@@ -48,11 +64,11 @@ export class CompanyService {
     const id = typeof company === 'number' ? company : company.id;
     return this.http.post(this.globals.url + '/block/' + this.uri + '/' + id, JSON.stringify(company));
   }
+
   unblock(company: Company | number): Observable<Response> {
     const id = typeof company === 'number' ? company : company.id;
     return this.http.post(this.globals.url + '/unblock/' + id, JSON.stringify(company));
   }
-
 
 
   private handleError(error: Response) {

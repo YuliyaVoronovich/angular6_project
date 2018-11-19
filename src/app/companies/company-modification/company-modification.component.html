@@ -1,0 +1,483 @@
+<div class="container">
+  <div class="mark">
+    <div class="newRow">
+
+      <div class="row">
+        <div class="col-12">
+          <h4>Настройки</h4>
+
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Название организации</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.name_organization">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">УНП</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.ynp">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Лицензия</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.license">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Выдана</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.license_issued">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">От</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.license_from"
+                     ngbDatepicker (click)="license_from.toggle()" #license_from="ngbDatepicker">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">До</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.license_to"
+                     ngbDatepicker (click)="license_to.toggle()" #license_to="ngbDatepicker">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <h4>Модерация (продажа)</h4>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Объекты на модерацию</label>
+            <div class="col-7">
+              <select class="form-control" [(ngModel)]="company.company_information.moder_sale">
+                <option value="0"></option>
+                <option value="Без модерации">Без модерации</option>
+                <option value="С заполненым полем договор (модерация эксклюзивов)">С заполненым полем договор (модерация
+                  эксклюзивов)
+                </option>
+                <option value="С заполненной галочкой 'в рекламу' (модерация эксклюзивов и недоговорных)">С заполненной
+                  галочкой "в рекламу" (модерация эксклюзивов и недоговорных)
+                </option>
+                <option value="Все">Все</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <h4>Модерация (дома)</h4>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Объекты на модерацию</label>
+            <div class="col-7">
+              <select class="form-control" [(ngModel)]="company.company_information.moder_house">
+                <option value="0"></option>
+                <option value="Без модерации">Без модерации</option>
+                <option value="С заполненым полем договор (модерация эксклюзивов)">С заполненым полем договор (модерация
+                  эксклюзивов)
+                </option>
+                <option value="С заполненной галочкой 'в рекламу' (модерация эксклюзивов и недоговорных)">С заполненной
+                  галочкой "в рекламу" (модерация эксклюзивов и недоговорных)
+                </option>
+                <option value="Все">Все</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <h4>Настройки сайтов</h4>
+
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Ссылка на kufar.by</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.company_information.kufar_link">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Onliner.by
+              <span>(логин и пароль от аккаунта на onliner.by, на который будет производится автоматическая выгрузка объектов)</span></label>
+            <div class="col-7">
+              <input type="text" class="form-control marginBottom"
+                     [(ngModel)]="company.company_information.login_onliner" placeholder="Логин onliner.by">
+              <input type="text" class="form-control" [(ngModel)]="company.company_information.password_onliner"
+                     placeholder="Пароль onliner.by">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Realt.by
+              <span>(логин и пароль от аккаунта на realt.by, на который будет производится автоматическая выгрузка объектов)</span></label>
+            <div class="col-7">
+              <input type="text" class="form-control marginBottom" [(ngModel)]="company.company_information.login_realt"
+                     placeholder="Логин realt.by">
+              <input type="text" class="form-control" [(ngModel)]="company.company_information.password_realt"
+                     placeholder="Пароль realt.by">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="reclame_all_rent"
+                         [(ngModel)]="company.company_information.reclame_all_rent">
+                  <label for="reclame_all_rent" class="form-check-label">Рекламировать все объекты в базе по умолчанию
+                    (аренда)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="reclame_photo_rent"
+                         [(ngModel)]="company.company_information.reclame_photo_rent">
+                  <label for="reclame_photo_rent" class="form-check-label">Рекламировать только при наличии фото
+                    (аренда)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="reclame_photo_sale"
+                         [(ngModel)]="company.company_information.reclame_photo_sale">
+                  <label for="reclame_photo_sale" class="form-check-label">Рекламировать только при наличии фото
+                    (продажа)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="reclame_photo_house"
+                         [(ngModel)]="company.company_information.reclame_photo_house">
+                  <label for="reclame_photo_house" class="form-check-label">Рекламировать только при наличии фото
+                    (дома)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Контактный номер в рекламе (аренда)</label>
+            <div class="col-7">
+              <select class="form-control" [(ngModel)]="company.company_information.phone_rent" (change)="phone_rent=!phone_rent">
+                <option value="0">личный агента</option>
+                <option value="1">единый номер</option>
+              </select>
+              <div [hidden]="!phone_rent">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_rent_general_1">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_rent_general_2">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_rent_general_3">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_rent_general_4">
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Контактный номер в рекламе (продажа)</label>
+            <div class="col-7">
+              <select class="form-control" [(ngModel)]="company.company_information.phone_sale" (change)="phone_sale=!phone_sale">
+                <option value="0">личный агента</option>
+                <option value="1">единый номер</option>
+              </select>
+              <div [hidden]="!phone_sale">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_sale_general_1">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_sale_general_2">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_sale_general_3">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_sale_general_4">
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Контактный e-mail в рекламе (продажа)</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.company_information.email_sale">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Контактный номер в рекламе (дома)</label>
+            <div class="col-7">
+              <select class="form-control" [(ngModel)]="company.company_information.phone_house" (change)="phone_house=!phone_house">
+                <option value="0">личный агента</option>
+                <option value="1">единый номер</option>
+              </select>
+              <div [hidden]="!phone_house">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_house_general_1">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_house_general_2">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_house_general_3">
+                <input type="text" class="form-control"
+                       [(ngModel)]="company.company_information.phone_house_general_4">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="reason_del_sale"
+                         [(ngModel)]="company.company_information.reason_del_sale">
+                  <label for="reason_del_sale" class="form-check-label">Включить причину удаления
+                    объекта(продажа)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="reason_del_sale_client"
+                         [(ngModel)]="company.company_information.reason_del_sale_client">
+                  <label for="reason_del_sale_client" class="form-check-label">Включить причину удаления
+                    клиента(продажа)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="reason_del_rent"
+                         [(ngModel)]="company.company_information.reason_del_rent">
+                  <label for="reason_del_rent" class="form-check-label">Включить причину удаления
+                    объекта(аренда)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="reason_del_rent_client"
+                         [(ngModel)]="company.company_information.reason_del_rent_client">
+                  <label for="reason_del_rent_client" class="form-check-label">Включить причину удаления
+                    клиента(аренда)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="reason_del_house"
+                         [(ngModel)]="company.company_information.reason_del_house">
+                  <label for="reason_del_house" class="form-check-label">Включить причину удаления объекта(дома)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="reason_del_house_client"
+                         [(ngModel)]="company.company_information.reason_del_house_client">
+                  <label for="reason_del_house_client" class="form-check-label">Включить причину удаления
+                    клиента(дома)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <h4>Настройки КЦ</h4>
+
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="kc_sale"
+                         [(ngModel)]="company.company_information.kc_sale">
+                  <label for="kc_sale" class="form-check-label">Продажа</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="kc_rent"
+                         [(ngModel)]="company.company_information.kc_rent">
+                  <label for="kc_rent" class="form-check-label">Аренда</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="kc_house"
+                         [(ngModel)]="company.company_information.kc_house">
+                  <label for="kc_house" class="form-check-label">Дома</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="kc_commerce"
+                         [(ngModel)]="company.company_information.kc_commerce">
+                  <label for="kc_commerce" class="form-check-label">Коммерческая</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="kc_user"
+                         [(ngModel)]="company.company_information.kc_user">
+                  <label for="kc_user" class="form-check-label">Соединить с сотрудником</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="kc_source"
+                         [(ngModel)]="company.company_information.kc_source">
+                  <label for="kc_source" class="form-check-label">Источник</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-7 offset-xl-3 offset-5">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="kc_other"
+                         [(ngModel)]="company.company_information.kc_other">
+                  <label for="kc_other" class="form-check-label">Другое</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-12">
+          <h4>Перенос необработанных звонков из раздела звонки в клиенты</h4>
+
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Продажа</label>
+            <div class="col-7">
+              <select class="form-control" [(ngModel)]="company.company_information.transfer_calls_sale">
+                <option value="не переносятся">не переносятся</option>
+                <option value="единовременный автоматический перенос">единовременный автоматический перенос</option>
+                <option value="через 1 сутки">через 1 сутки</option>
+                <option value="через 2 суток">через 2 суток</option>
+                <option value="через 3 суток">через 3 суток</option>
+                <option value="через 4 суток">через 4 суток</option>
+                <option value="через 5 суток">через 5 суток</option>
+                <option value="через 6 суток">через 6 суток</option>
+                <option value="через 7 суток">через 7 суток</option>
+                <option value="через 8 суток">через 8 суток</option>
+                <option value="через 9 суток">через 9 суток</option>
+                <option value="через 10 суток">через 10 суток</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Аренда</label>
+            <div class="col-7">
+              <select class="form-control" [(ngModel)]="company.company_information.transfer_calls_rent">
+                <option value="не переносятся">не переносятся</option>
+                <option value="единовременный автоматический перенос">единовременный автоматический перенос</option>
+                <option value="через 1 сутки">через 1 сутки</option>
+                <option value="через 2 суток">через 2 суток</option>
+                <option value="через 3 суток">через 3 суток</option>
+                <option value="через 4 суток">через 4 суток</option>
+                <option value="через 5 суток">через 5 суток</option>
+                <option value="через 6 суток">через 6 суток</option>
+                <option value="через 7 суток">через 7 суток</option>
+                <option value="через 8 суток">через 8 суток</option>
+                <option value="через 9 суток">через 9 суток</option>
+                <option value="через 10 суток">через 10 суток</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Дома</label>
+            <div class="col-7">
+              <select class="form-control" [(ngModel)]="company.company_information.transfer_calls_house">
+                <option value="не переносятся">не переносятся</option>
+                <option value="единовременный автоматический перенос">единовременный автоматический перенос</option>
+                <option value="через 1 сутки">через 1 сутки</option>
+                <option value="через 2 суток">через 2 суток</option>
+                <option value="через 3 суток">через 3 суток</option>
+                <option value="через 4 суток">через 4 суток</option>
+                <option value="через 5 суток">через 5 суток</option>
+                <option value="через 6 суток">через 6 суток</option>
+                <option value="через 7 суток">через 7 суток</option>
+                <option value="через 8 суток">через 8 суток</option>
+                <option value="через 9 суток">через 9 суток</option>
+                <option value="через 10 суток">через 10 суток</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Коммерческая</label>
+            <div class="col-7">
+              <select class="form-control" [(ngModel)]="company.company_information.transfer_calls_commerce">
+                <option value="не переносятся">не переносятся</option>
+                <option value="единовременный автоматический перенос">единовременный автоматический перенос</option>
+                <option value="через 1 сутки">через 1 сутки</option>
+                <option value="через 2 суток">через 2 суток</option>
+                <option value="через 3 суток">через 3 суток</option>
+                <option value="через 4 суток">через 4 суток</option>
+                <option value="через 5 суток">через 5 суток</option>
+                <option value="через 6 суток">через 6 суток</option>
+                <option value="через 7 суток">через 7 суток</option>
+                <option value="через 8 суток">через 8 суток</option>
+                <option value="через 9 суток">через 9 суток</option>
+                <option value="через 10 суток">через 10 суток</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="myButton">
+          <div class="col-12">
+            <button (click)="save()" class="btn btn-lg btn-info">
+              Сохранить
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

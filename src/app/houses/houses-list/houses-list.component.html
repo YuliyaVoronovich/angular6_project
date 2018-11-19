@@ -14,14 +14,58 @@
       <th>Крыша</th>
       <th>S</th>
       <th>Этажность</th>
-      <th>$</th>
+      <th>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='price' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('price', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>$
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='ASC')"
+             (click)="changeSort('price', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>$
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='DESC')"
+             (click)="changeSort('price', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>$
+        </div>
+      </th>
       <th>$м2</th>
       <th>Агентство</th>
       <th>
-        Дата доб.
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='ASC')"
+             (click)="changeSort('created_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата доб.
+        </div>
       </th>
       <th>
-        Дата обн.
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='updated_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='ASC')"
+             (click)="changeSort('updated_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата обн.
+        </div>
       </th>
       <th>Действия</th>
     </tr>
@@ -101,9 +145,9 @@
               <span>{{house.text}}</span>
               <br>
               <a class="btn btn-sm btn-primary" routerLink="/houses/house/{{house.id}}">Подробнее</a>
-              <a class="btn">
+             <!-- <a class="btn">
                 <mat-icon class="size-16 icon-color">place Смотреть на карте</mat-icon>
-              </a>
+              </a>-->
             </div>
           </div>
         </td>

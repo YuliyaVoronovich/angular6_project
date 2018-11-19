@@ -27,7 +27,12 @@ export class AdminCompanyModificateComponent implements OnInit {
   public license_from;
   public license_to;
   public timer: any;
-  public company_information: CompanyInformation = new CompanyInformation(0, null, '', '', '', '', '');
+  public company_information: CompanyInformation = new CompanyInformation(0, null, '', '', '', '', '',
+    '', '', '', false, false, false, false, false, '',
+    '', '', '', false, '', '', '', '',
+    '', false, '', '', '', '', false, false,
+    false, false, false, false, false, false, false, false, false,
+    false, false, '', '', '', '');
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
     '', '', null, null, null, [], null, false, null);
   public user: User = new User(0, '', '', null, null, null, '', 0, null, null, false,
@@ -53,6 +58,15 @@ export class AdminCompanyModificateComponent implements OnInit {
   public message4: any;         // message text of invalid input data
 
 
+  message(mes: string, error: boolean) {
+    let arr: any[] = ['show', mes, error];
+    this.sharedService.emitChange(arr);
+    arr = ['hide', '', false];
+    this.timer = setTimeout(() => {
+      this.sharedService.emitChange(arr);
+    }, 3000);
+  }
+
   ngOnInit() {
 
     this.route
@@ -69,27 +83,20 @@ export class AdminCompanyModificateComponent implements OnInit {
             this.company.license_from = new NgbDateFRParserFormatter().parse(data.company.license_from);
             this.company.license_to = new NgbDateFRParserFormatter().parse(data.company.license_to);
             this.company.modules = data.company.arrayModules;
-            this.modules = data.modules;
           });
         } else {
           this.company.company_information = this.company_information;
-          this.create();
         }
       });
     this.company.user = this.user;
     this.company.user.user_information = this.user_information;
+
+    this.getModules();
   }
 
-  message(mes: string, error: boolean) {
-    let arr: any[] = ['show', mes, error];
-    this.sharedService.emitChange(arr);
-    arr = ['hide', '', false];
-    this.timer = setTimeout(() => {
-      this.sharedService.emitChange(arr);
-    }, 3000);
-  }
 
-  create() {
+
+  getModules() {
     return this.moduleSevice.getModules().subscribe(data => {
         for (let i = 0; i < data.length; i++) {
           this.modules.push(data[i]);
@@ -100,8 +107,13 @@ export class AdminCompanyModificateComponent implements OnInit {
           this.loginService.logout();
           this.router.navigate(['/']);
         }
+        if (error.status === 404) {
+          this.loginService.logout();
+          this.router.navigate(['404']);
+        }
       });
   }
+
   save() {
       console.log(this.company);
       // даты из формата объект в формат 0000-00-00

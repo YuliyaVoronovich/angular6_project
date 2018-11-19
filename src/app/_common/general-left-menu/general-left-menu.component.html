@@ -31,12 +31,12 @@
       <span>Сотрудники</span>
     </a>
     <div ngbDropdownMenu aria-labelledby="dropdownBasic3">
-      <a class="dropdown-item" routerLink="/sales">Агенты</a>
-      <a class="dropdown-item" routerLink="/sales">Права</a>
+      <a class="dropdown-item" routerLink="/users">Агенты</a>
+      <a class="dropdown-item" routerLink="/roles">Права</a>
     </div>
   </div>
   <div class="main-item">
-    <a class="btn">
+    <a class="btn" routerLink="/companies/company/{{company.id}}">
       <i class="fas fa-cogs"></i>
       <span>Настройки</span>
     </a>

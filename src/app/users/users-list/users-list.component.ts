@@ -1,19 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {LoginService} from '../../_services/login.service';
-import {Router} from '@angular/router';
-import {User} from '../../_models/user.model';
-import {UserService} from '../../_services/user.service';
+import { Component, OnInit } from '@angular/core';
 import {UserInformation} from '../../_models/userInformation.model';
 import {Company} from '../../_models/company.model';
-import {CompanyService} from '../../_services/company.service';
+import {User} from '../../_models/user.model';
+import {Router} from '@angular/router';
+import {UserService} from '../../_services/user.service';
 import {SharedService} from '../../_services/shared.service';
+import {LoginService} from '../../_services/login.service';
+import {CompanyService} from '../../_services/company.service';
 
 @Component({
-  selector: 'app-admin-users-list',
-  templateUrl: './admin-users-list.component.html',
-  styleUrls: ['./admin-users-list.component.css']
+  selector: 'app-users-list',
+  templateUrl: './users-list.component.html',
+  styleUrls: ['./users-list.component.css']
 })
-export class AdminUsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit {
 
   public user_information: UserInformation = new UserInformation(null, '', '', '', '', '', '', null, []);
   public users: User[] = [];
@@ -27,13 +27,11 @@ export class AdminUsersListComponent implements OnInit {
   public page = 0;
   public timer: any;
 
-
   constructor(private router: Router,
               private userService: UserService,
               private loginService: LoginService,
               private companyService: CompanyService,
-              private sharedService: SharedService) {
-  }
+              private sharedService: SharedService) { }
 
   message(mes: string, error: boolean) {
     let arr: any[] = ['show', mes, error];
@@ -45,8 +43,11 @@ export class AdminUsersListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUsers();
-    this.getCompanies();
+    this.loginService.detailsUser().subscribe(data => {
+      this.search['company'] = data.user.company.id;
+      this.getUsers();
+
+    });
   }
 
   getUsers() {
@@ -73,14 +74,6 @@ export class AdminUsersListComponent implements OnInit {
       });
   }
 
-  getCompanies() {
-    this.companyService.getCompanies().subscribe(data => {
-      for (let i = 0; i < data.length; i++) {
-        this.companies.push(data[i]);
-      }
-    });
-  }
-
   getUsersSearch() {
     //  this.page = 0;
     this.users = [];
@@ -89,63 +82,12 @@ export class AdminUsersListComponent implements OnInit {
     // console.log(this.search);
   }
 
-  add(): void {
-    this.router.navigate(['admin/users/user']);
-  }
-
-  ban(user: User): void {
-    this.userService.ban(user).subscribe(
-      data => {
-        if (data.status === 200) {
-          user.ban = 1;
-          this.message('Пользователь заблокирован', true);
-        } else {
-          user.ban = 0;
-          this.message('Ошибка!', true);
-        }
-      },
-      error => {
-        if (error.status === 401) {
-          this.loginService.logout();
-          this.router.navigate(['/']);
-        }
-        if (error.status === 403) {
-          this.router.navigate(['/403']);
-        }
-      }
-    );
-  }
-
-  unban(user: User): void {
-    this.userService.unban(user).subscribe(
-      data => {
-        if (data.status === 200) {
-          user.ban = 0;
-          this.message('Пользователь разблокирован', false);
-        } else {
-          user.ban = 1;
-          this.message('Ошибка!', true);
-        }
-      },
-      error => {
-        if (error.status === 401) {
-          this.loginService.logout();
-          this.router.navigate(['/']);
-        }
-        if (error.status === 403) {
-          this.router.navigate(['/403']);
-        }
-      }
-    );
-  }
-
   delete(user: User): void {
     this.users = this.users.filter(m => m !== user);
     this.userService.delete(user).subscribe(
       data => {
         if (data.status === 200) {
           this.message('Пользователь удален', true);
-          //  this.router.navigate(['admin/companies']);
         }
       },
       error => {
@@ -159,5 +101,4 @@ export class AdminUsersListComponent implements OnInit {
       }
     );
   }
-
 }

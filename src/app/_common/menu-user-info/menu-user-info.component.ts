@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../../_services/user.service';
 import {Router} from '@angular/router';
 import {LoginService} from '../../_services/login.service';
 import {SharedService} from '../../_services/shared.service';
@@ -22,7 +21,6 @@ export class MenuUserInfoComponent implements OnInit {
   public timer: any;
 
   constructor(private router: Router,
-              private userService: UserService,
               private loginService: LoginService,
               private sharedService: SharedService) {
   }

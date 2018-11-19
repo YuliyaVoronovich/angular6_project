@@ -1,0 +1,54 @@
+.container {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.invisible {
+  display: none;
+}
+.newRow {
+  background: #fdfdff;
+  padding: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+}
+
+.mark {
+  margin-top: -70px;
+  padding-top: 80px;
+  -webkit-background-clip: content-box;
+  background-clip: content-box;
+  background: none;
+}
+
+h3 {
+  color: #22a6dc;
+  text-decoration: underline;
+}
+.myButton {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  bottom: 0;
+}
+.icon-top {
+  vertical-align: top;
+  color: #22a6dc;
+}
+.icon-bottom {
+  vertical-align: bottom;
+  color: #22a6dc;
+}
+.category {
+  font-weight: bold;
+}
+.category_main {
+  color: #22a6dc;
+  font-size: 20px;
+  text-decoration: underline;
+}
+.permission:hover {
+  color: #0074ca;
+}
+.radio-inline:not(:last-child) {
+  margin-right: 10px;
+}

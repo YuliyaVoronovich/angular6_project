@@ -6,15 +6,33 @@ import {User} from '../_models/user.model';
 import 'rxjs/add/operator/map';
 import {UserInformation} from '../_models/userInformation.model';
 import {Globals} from '../_common/globals';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class UserService {
 
-  public params;
-  public uri = '/admin/users';
+  public uri = '/users';
+  public admin_uri = '/admin/users';
+  public path = '';
 
   constructor(private http: Http,
+              private router: Router,
               private globals: Globals) {
+    this.getPathUrl();
+  }
+
+  getPathUrl() {
+
+    const location = window.location.pathname;
+    location.split('/').forEach(element => {
+      if (element !== '' && this.path === '') {
+        this.path = element;
+      }
+    });
+    if (this.path === 'admin') {
+      this.uri = this.admin_uri;
+    }
+    console.log('route: ' + this.uri); // Root path
   }
 
 
@@ -26,12 +44,6 @@ export class UserService {
 
   getUser(id) {
     return this.http.get(this.globals.url + this.uri + '/user/' + id)
-      .map((response: Response) => response.json()
-      );
-  }
-
-  add() {
-    return this.http.get(this.globals.url + this.uri + '/add')
       .map((response: Response) => response.json()
       );
   }

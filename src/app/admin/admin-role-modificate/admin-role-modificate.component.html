@@ -6,7 +6,7 @@
         <div class="row" *ngFor="let permission of permissions">
 
           <div class="col-4">
-            <b>{{permission.title}}</b>
+            <span class="category" [ngClass]="{'category_main' : permission.main}">{{permission.title}}</span>
           </div>
 
           <div class="col-8">

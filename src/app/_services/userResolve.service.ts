@@ -4,7 +4,6 @@ import {Observable} from 'rxjs/Observable';
 /*import 'rxjs/Rx';*/
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
 import {UserService} from './user.service';
-import { map, filter, scan } from 'rxjs/operators';
 
 @Injectable()
 export class UserResolve implements Resolve<any> {
@@ -25,7 +24,11 @@ export class UserResolve implements Resolve<any> {
         if (error.status === 404) {
           this.router.navigate(['404']);
         }
+        if (error.status === 403) {
+          this.router.navigate(['403']);
+        }
         return Observable.empty();
       });
   }
+
 }

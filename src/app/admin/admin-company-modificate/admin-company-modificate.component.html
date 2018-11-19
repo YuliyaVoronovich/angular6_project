@@ -85,7 +85,7 @@
       <div class="form-group row">
         <label class="col-5 col-form-label text-left">Пароль онлайнер</label>
         <div class="col-7">
-          <input type="text" class="form-control" [(ngModel)]="company.company_information.pass_onliner">
+          <input type="text" class="form-control" [(ngModel)]="company.company_information.password_onliner">
         </div>
       </div>
       <div class="form-group row">
@@ -97,9 +97,16 @@
       <div class="form-group row">
         <label class="col-5 col-form-label text-left">Пароль реалт</label>
         <div class="col-7">
-          <input type="text" class="form-control" [(ngModel)]="company.company_information.pass_realt">
+          <input type="text" class="form-control" [(ngModel)]="company.company_information.password_realt">
         </div>
       </div>
+
+      <div class="form-group row">
+        <div class="col-12">
+          <a class="btn" target="_blank" routerLink="/companies/company/{{company.id}}">Перейти на страницу настроек компании</a>
+        </div>
+      </div>
+
     </div>
   </div>
 
