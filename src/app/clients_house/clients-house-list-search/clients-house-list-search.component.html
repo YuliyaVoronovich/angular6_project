@@ -57,25 +57,23 @@
         <div class="col-md-6 col-12">
           <div class="form-group">
             <ng-select [options]="regions"
-                       [(ngModel)]="search.regions"
+                       [(ngModel)]="search.regions.values"
                        [multiple]="true"
-                       placeholder="Область"
-                       (selected)="selectDistrictsRb($event);">
+                       placeholder="Область">
             </ng-select>
           </div>
 
           <div class="form-group">
             <ng-select [options]="districts_rb"
-                       [(ngModel)]="search.districts_country"
+                       [(ngModel)]="search.districts_country.values"
                        [multiple]="true"
-                       placeholder="Район РБ"
-                       (selected)="selectCities($event);">
+                       placeholder="Район РБ">
             </ng-select>
           </div>
 
           <div class="form-group">
             <ng-select [options]="directions"
-                       [(ngModel)]="search.directions"
+                       [(ngModel)]="search.directions.values"
                        [multiple]="true"
                        placeholder="Направление">
             </ng-select>
@@ -87,9 +85,7 @@
             <ng-select [options]="cities"
                        [multiple]="true"
                        [(ngModel)]="search.cities.values"
-                       placeholder="Нас. пункт"
-                       (selected)="selectDistrict($event)"
-                       (deselected)="deselectDistrict($event)">
+                       placeholder="Нас. пункт">
             </ng-select>
           </div>
 
