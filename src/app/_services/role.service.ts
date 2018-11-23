@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Response, Http, Headers} from '@angular/http';
 import {Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent} from 'rxjs';
 /*import 'rxjs/Rx';*/
-import {Role} from '../_models/role.model';
+import {Role} from '../_models/Role.model';
 import 'rxjs/add/operator/map';
 import {Globals} from '../_common/globals';
 import {ActivatedRoute, Router} from '@angular/router';

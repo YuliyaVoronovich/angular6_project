@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {CsAgreement} from '../_models/csAgreement.model';
+import {CsAgreement} from '../_models/CsAgreement.model';
 import {Observable} from 'rxjs/Observable';
 import {Http, Response} from '@angular/http';
 import {LoginService} from './login.service';

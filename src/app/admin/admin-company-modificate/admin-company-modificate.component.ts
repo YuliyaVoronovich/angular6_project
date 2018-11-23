@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {ModuleService} from '../../_services/module.service';
 import {Router, ActivatedRoute} from '@angular/router';
-import {Module} from '../../_models/module.model';
+import {Module} from '../../_models/Module.model';
 import {NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {LoginService} from '../../_services/login.service';
 import {CompanyService} from '../../_services/company.service';
-import {Company} from '../../_models/company.model';
+import {Company} from '../../_models/Company.model';
 import 'rxjs/add/operator/switchMap';
-import {CompanyInformation} from '../../_models/companyInformation.model';
+import {CompanyInformation} from '../../_models/CompanyInformation.model';
 import {forEach} from '@angular/router/src/utils/collection';
 import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
-import {User} from '../../_models/user.model';
-import {UserInformation} from '../../_models/userInformation.model';
+import {User} from '../../_models/User.model';
+import {UserInformation} from '../../_models/UserInformation.model';
 import {SharedService} from '../../_services/shared.service';
 
 @Component({

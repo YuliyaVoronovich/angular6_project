@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange} from '@angular/core';
 import {RequestService} from '../../_services/request.service';
-import {Request} from '../../_models/request.model';
+import {Request} from '../../_models/Request.model';
 import {SharedService} from '../../_services/shared.service';
 import {Router} from '@angular/router';
 import {LoginService} from '../../_services/login.service';

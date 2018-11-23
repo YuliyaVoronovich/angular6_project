@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Response, Http, Headers} from '@angular/http';
 import {Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent} from 'rxjs';
-import {Company} from '../_models/company.model';
+import {Company} from '../_models/Company.model';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import {Globals} from '../_common/globals';

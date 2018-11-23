@@ -1,4 +1,4 @@
-<app-house-list-search (changed)="getHousesSearch($event)"></app-house-list-search>
+<app-houses-list-search (changed)="getHousesSearch($event)"></app-houses-list-search>
 
 <div class="table-responsive" style="margin-bottom: 20px">
   <table class="table table-bordered table-hover">
@@ -126,8 +126,9 @@
         </td>
         <td>
           <i class="fas fa-chevron-circle-right icon-color icon-cursor" style="font-size: 20px;"
-             (click)="hideme3[i] = !hideme3[i]"></i>
+             (click)="close_hideme3(i);"></i>
           <div class="action-window" [hidden]="!hideme3[i]">
+            <div class="action" (click)="openDialog(house)">УДАЛИТЬ ОБЪЕКТ</div>
             <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
             <div class="action">ОТПРАВИТЬ В РЕКЛАМУ</div>
             <div class="action">КАЛЬКУЛЯТОР</div>

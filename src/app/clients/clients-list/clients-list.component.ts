@@ -1,16 +1,22 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {ClientService} from '../../_services/client.service';
-import {Client} from '../../_models/client.model';
+import {Client} from '../../_models/Client.model';
 import {LoginService} from '../../_services/login.service';
 import {LocationService} from '../../_services/location.service';
 import {UserService} from '../../_services/user.service';
 import {Router} from '@angular/router';
 import {SharedService} from '../../_services/shared.service';
 import {CompanyService} from '../../_services/company.service';
-import {SearchClientModel} from '../../_models/searchClient.model';
+import {SearchClientModel} from '../../_models/SearchClient.model';
 
 import {Subscription} from 'rxjs/index';
 import {Globals} from '../../_common/globals';
+
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+
+export interface DialogData {
+  client: Client;
+}
 
 @Component({
   selector: 'app-clients-list',
@@ -24,6 +30,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public timer: any;
   public countClients; // если не придет информация с API
   public limit; // если не придет информация с API
+  public count_delete = 0;
 
   public subscription: Subscription;
 
@@ -32,13 +39,15 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     null, false);
 
   public sort = {
-    'field' : 'created_at',
-    'value' : 'DESC'
+    'field': 'created_at',
+    'value': 'DESC'
   };
 
   public hideme = [];
+  public activeTypes = null;
 
-  constructor(private clientService: ClientService,
+  constructor(public dialog: MatDialog,
+              private clientService: ClientService,
               private route: Router,
               private locationService: LocationService,
               private loginService: LoginService,
@@ -94,10 +103,9 @@ export class ClientsListComponent implements OnInit, OnDestroy {
         }
 
 
-
         // адрес объекта
         data[i].city = this.locationService.setCity(data[i].city);
-     //   data[i].districts = this.locationService.setDistrict(data[i].districts);
+        //   data[i].districts = this.locationService.setDistrict(data[i].districts);
 
         this.clients.push(data[i]);
       }
@@ -133,13 +141,14 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.clients = [];
 
     for (const [key, value] of Object.entries(event)) {
-      if (typeof(value) === 'object' ) {
+      if (typeof(value) === 'object') {
         this.search[key] = JSON.stringify(event[key]);
       } else {
         this.search[key] = event[key];
       }
 
     }
+    console.log(this.search);
     this.getClients();
   }
 
@@ -149,7 +158,13 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       data => {
         if (data.status === 200) {
           this.message('Клиент удален', false);
-          //  this.getSales();
+          this.hideme = []; // скрыть окно действий
+          this.count_delete++;
+          if (this.count_delete > 5) {// перезагрузить объекты, если удалено больше 5 подряд
+            this.getClients();
+          } else {
+            this.clients = this.clients.filter(m => m !== client);
+          }
         }
       },
       error => {
@@ -162,5 +177,45 @@ export class ClientsListComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  openDialog(client: Client) {
+    const dialogRef = this.dialog.open(DialogDeleteClientComponent, {
+      height: '150px',
+      width: '250px',
+      data: {client: client}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delete(result);
+      }
+    });
+  }
+
+  close_hideme(event) {
+    if (this.activeTypes === event) {
+      this.hideme[event] = false;
+      this.activeTypes = null;
+    } else {
+      this.hideme[this.activeTypes] = false;
+      this.hideme[event] = true;
+      this.activeTypes = event;
+    }
+  }
+}
+
+@Component({
+  selector: 'app-dialog-delete-client',
+  templateUrl: 'app-dialog-delete-client.html',
+})
+export class DialogDeleteClientComponent {
+  constructor(
+    public dialogRef: MatDialogRef<DialogDeleteClientComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

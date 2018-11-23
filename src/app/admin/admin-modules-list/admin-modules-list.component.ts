@@ -1,10 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Module} from '../../_models/module.model';
+import {Module} from '../../_models/Module.model';
 import {LoginService} from '../../_services/login.service';
 import {Router} from '@angular/router';
 import {ModuleService} from '../../_services/module.service';
-import {Company} from '../../_models/company.model';
+import {Company} from '../../_models/Company.model';
 import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
 import {SharedService} from '../../_services/shared.service';
 

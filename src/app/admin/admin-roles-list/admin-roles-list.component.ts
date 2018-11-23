@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../../_services/login.service';
 import {Router} from '@angular/router';
 import {PermissionService} from '../../_services/permission.service';
-import {Role} from '../../_models/role.model';
+import {Role} from '../../_models/Role.model';
 import {RoleService} from '../../_services/role.service';
 import {CompanyService} from '../../_services/company.service';
-import {Company} from '../../_models/company.model';
+import {Company} from '../../_models/Company.model';
 import {SharedService} from '../../_services/shared.service';
 
 @Component({

@@ -4,16 +4,16 @@ import {Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fro
 /*import 'rxjs/Rx';*/
 import 'rxjs/add/operator/map';
 import {Router} from '@angular/router';
-import {Location} from '../_models/location.model';
-import {City} from '../_models/city.model';
-import {District} from '../_models/district.model';
-import {Region} from '../_models/region.model';
-import {Metro} from '../_models/metro.model';
-import {DistrictCountry} from '../_models/districtCountry.model';
-import {Street} from '../_models/street.model';
-import {Microdistrict} from '../_models/microdistrict.model';
+import {Location} from '../_models/Location.model';
+import {City} from '../_models/City.model';
+import {District} from '../_models/District.model';
+import {Region} from '../_models/Region.model';
+import {Metro} from '../_models/Metro.model';
+import {DistrictCountry} from '../_models/DistrictCountry.model';
+import {Street} from '../_models/Street.model';
+import {Microdistrict} from '../_models/Microdistrict.model';
 import {Globals} from '../_common/globals';
-import {Direction} from '../_models/direction.model';
+import {Direction} from '../_models/Direction.model';
 
 @Injectable()
 export class LocationService {

@@ -2,14 +2,15 @@ import {Http, Response} from '@angular/http';
 import {Globals} from '../_common/globals';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {Count} from '../_models/count.model';
+import {Count} from '../_models/Count.model';
 import {Observable} from 'rxjs/index';
-import {House} from '../_models/house.model';
+import {House} from '../_models/House.model';
 
 @Injectable()
 export class HouseService {
 
   private uri = '/houses';
+  private uri_archive = '/archive/houses';
 
 
   constructor(private http: Http,
@@ -23,7 +24,7 @@ export class HouseService {
       );
   }
 
-  countHoses(search = {}): Observable<Count> {
+  countHouses(search = {}): Observable<Count> {
     return this.http.get(this.globals.url + this.uri + '/count', {search: search})
       .map((response: Response) => response.json()
       );
@@ -51,5 +52,23 @@ export class HouseService {
   newLocationRequest(request) {
     return this.http.post(this.globals.url + this.uri + '/new_location_request', JSON.stringify(request));
   }
+
+  /*Архив*/
+  getHousesArchive(search = {}): Observable<House[]> {
+    return this.http.get(this.globals.url + this.uri_archive, {search: search})
+      .map((response: Response) => response.json().houses
+      );
+  }
+  countHousesArchive(search = {}): Observable<Count> {
+    return this.http.get(this.globals.url + this.uri_archive + '/count', {search: search})
+      .map((response: Response) => response.json()
+      );
+  }
+  restoreHouse(house: House) {
+    return this.http.put(this.globals.url + this.uri_archive + '/restore/' + house.id, JSON.stringify(house))
+      .map((response: Response) => response.json()
+      );
+  }
+  /*Архив*/
 
 }

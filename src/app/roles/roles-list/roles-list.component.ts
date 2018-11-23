@@ -4,8 +4,8 @@ import {LoginService} from '../../_services/login.service';
 import {PermissionService} from '../../_services/permission.service';
 import {SharedService} from '../../_services/shared.service';
 import {RoleService} from '../../_services/role.service';
-import {Role} from '../../_models/role.model';
-import {User} from '../../_models/user.model';
+import {Role} from '../../_models/Role.model';
+import {User} from '../../_models/User.model';
 
 @Component({
   selector: 'app-roles-list',

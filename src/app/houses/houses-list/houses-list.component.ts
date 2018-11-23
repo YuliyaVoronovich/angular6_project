@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {User} from '../../_models/user.model';
-import {Company} from '../../_models/company.model';
-import {House} from '../../_models/house.model';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {User} from '../../_models/User.model';
+import {Company} from '../../_models/Company.model';
+import {House} from '../../_models/House.model';
 import {Subscription} from 'rxjs/index';
 import {Router} from '@angular/router';
 import {LoginService} from '../../_services/login.service';
@@ -11,29 +11,37 @@ import {LocationService} from '../../_services/location.service';
 import {SharedService} from '../../_services/shared.service';
 import {HouseService} from '../../_services/house.service';
 import {LabelService} from '../../_services/label.service';
-import {SearchHouseModel} from '../../_models/searchHouse.model';
+import {SearchHouseModel} from '../../_models/SearchHouse.model';
+
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+
+export interface DialogData {
+  house: House;
+}
 
 @Component({
   selector: 'app-house-list',
   templateUrl: './houses-list.component.html',
   styleUrls: ['./houses-list.component.css']
 })
-export class HousesListComponent implements OnInit, OnDestroy  {
+export class HousesListComponent implements OnInit, OnDestroy {
 
   public houses: House[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
-    null, null,  false, null, null, '', null, null, null);
+    null, null, false, null, null, '', null, null, null);
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
     '', '', null, null, null, [], null, false, null);
 
   public hideme = [];
   public hideme2 = [];
   public hideme3 = [];
+  public activeTypes = null;
 
   public page = 0;
   public timer: any;
   public countHouses; // если не придет информация с API
   public limit; // если не придет информация с API
+  public count_delete = 0;
   public subscription: Subscription;
 
   public search = new SearchHouseModel({'values': [], 'except': 0}, {'values': [], 'except': 0},
@@ -41,14 +49,15 @@ export class HousesListComponent implements OnInit, OnDestroy  {
     {'values': [], 'except': 0}, '', null, null, null, null,
     '', '', '', '', '', '', '', '',
     '', '', [], [], [], [], '', '', [], [],
-    [], [],  false, false, false, false, false, false);
+    [], [], false, false, false, false, false, false);
 
   public sort = {
-    'field' : 'created_at',
-    'value' : 'DESC'
+    'field': 'created_at',
+    'value': 'DESC'
   };
 
-  constructor(private route: Router,
+  constructor(public dialog: MatDialog,
+              private route: Router,
               private houseService: HouseService,
               private locationService: LocationService,
               private labelsService: LabelService,
@@ -62,6 +71,7 @@ export class HousesListComponent implements OnInit, OnDestroy  {
       this.getHouses();
     });
   }
+
   message(mes: string, error: boolean) {
     let arr: any[] = ['show', mes, error];
     this.sharedService.emitChange(arr);
@@ -78,11 +88,12 @@ export class HousesListComponent implements OnInit, OnDestroy  {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
   getHousesSearch(event) {
     this.houses = [];
 
     for (const [key, value] of Object.entries(event)) {
-      if (typeof(value) === 'object' ) {
+      if (typeof(value) === 'object') {
         this.search[key] = JSON.stringify(event[key]);
       } else {
         this.search[key] = event[key];
@@ -113,7 +124,7 @@ export class HousesListComponent implements OnInit, OnDestroy  {
 
     return this.houseService.getHouses(this.search).subscribe(data => {
 
-      this.houseService.countHoses(this.search).subscribe(data1 => {
+      this.houseService.countHouses(this.search).subscribe(data1 => {
         this.limit = data1.limit;
         this.countHouses = data1.count;
       });
@@ -141,7 +152,7 @@ export class HousesListComponent implements OnInit, OnDestroy  {
 
         // цена за метр
         if (data[i].area !== null && data[i].area !== 0) {
-          data[i].price_sqr = Math.floor(+ data[i].price / + data[i].area);
+          data[i].price_sqr = Math.floor(+data[i].price / +data[i].area);
         } else {
           data[i].price_sqr = 0;
         }
@@ -159,5 +170,69 @@ export class HousesListComponent implements OnInit, OnDestroy  {
     });
   }
 
+  close_hideme3(event) {
+    if (this.activeTypes === event) {
+      this.hideme3[event] = false;
+      this.activeTypes = null;
+    } else {
+      this.hideme3[this.activeTypes] = false;
+      this.hideme3[event] = true;
+      this.activeTypes = event;
+    }
+  }
 
+  delete(house: House): void {
+    this.houseService.delete(house).subscribe(
+      data => {
+        if (data.status === 200) {
+          this.message('Объект удален', false);
+          this.hideme3 = []; // скрыть окно действий
+          this.count_delete++;
+          if (this.count_delete > 5) {// перезагрузить объекты, если удалено больше 5 подряд
+            this.getHouses();
+          } else {
+            this.houses = this.houses.filter(m => m !== house);
+          }
+        }
+      },
+      error => {
+        if (error.status === 401) {
+          this.loginService.logout();
+          this.route.navigate(['/']);
+        }
+        if (error.status === 403) {
+          this.route.navigate(['/403']);
+        }
+      }
+    );
+  }
+
+  openDialog(house: House) {
+    const dialogRef = this.dialog.open(DialogDeleteHouseComponent, {
+      height: '150px',
+      width: '250px',
+      data: {house: house}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delete(result);
+      }
+    });
+  }
+}
+
+@Component({
+  selector: 'app-dialog-delete-house',
+  templateUrl: 'app-dialog-delete-house.html',
+})
+export class DialogDeleteHouseComponent {
+  constructor(
+    public dialogRef: MatDialogRef<DialogDeleteHouseComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

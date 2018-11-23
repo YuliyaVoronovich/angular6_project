@@ -12,15 +12,15 @@ import {fromLonLat} from 'ol/proj';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../../_services/login.service';
 import {ClientService} from '../../_services/client.service';
-import {Client} from '../../_models/client.model';
-import {UserInformation} from '../../_models/userInformation.model';
-import {User} from '../../_models/user.model';
+import {Client} from '../../_models/Client.model';
+import {UserInformation} from '../../_models/UserInformation.model';
+import {User} from '../../_models/User.model';
 import {IOption} from 'ng-select';
 import {LocationService} from '../../_services/location.service';
 import {UserService} from '../../_services/user.service';
 import {LabelService} from '../../_services/label.service';
-import {Metro} from '../../_models/metro.model';
-import {Label} from '../../_models/label.model';
+import {Metro} from '../../_models/Metro.model';
+import {Label} from '../../_models/Label.model';
 import {SharedService} from '../../_services/shared.service';
 
 @Component({
@@ -60,14 +60,14 @@ export class ClientModificateComponent implements OnInit {
   public districts = [];
   public microdistricts = [];
 
-  public client: Client = new Client(0, null, null, null, null, null, '', [],  '',
-    null, [],  '', '', '', '', '', 0, 0, 0, 0, 0,
+  public client: Client = new Client(0, null, null,   null, '', [], '',
+    null, [], '', '', '', '', '', 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0,
     false, 0, false, false, false, false, false, '', 0, [], [],
-    [], '', '',  null, null, false, null, null);
+    [], '', '', null, null, false, null, null);
 
   public user: User = new User(0, '', '', null, null, null, '',
-    0, 0, 0,  false, null, null, null, null, null, null);
+    0, 0, 0, false, null, null, null, null, null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
 
   public users: User[] = [];
@@ -152,9 +152,12 @@ export class ClientModificateComponent implements OnInit {
 
             if (this.client.user === null) {
               this.client.user = this.user;
+            }
+            if (this.client.user.user_information === null) {
               this.client.user.user_information = this.user_information;
+            }
+            if (this.client.user.manager_information === null) {
               this.client.user.manager_information = this.user_information;
-
             }
             this.client.contract_from = new NgbDateFRParserFormatter().parse(data.client.contract_from);
             this.client.contract_to = new NgbDateFRParserFormatter().parse(data.client.contract_to);
@@ -218,6 +221,7 @@ export class ClientModificateComponent implements OnInit {
     });
     /* Подгрузка карты*/
   }
+
   getAllLabels() {
     this.labelsService.getAllLabelsSales().subscribe(data => {
       this.wc = data.wc;
@@ -267,6 +271,7 @@ export class ClientModificateComponent implements OnInit {
       }
     });
   }
+
   getDistricts(city = 0) {
     this.locationService.getDistricts(city).subscribe((options) => {
       this.selectDistricts = [];
@@ -275,6 +280,7 @@ export class ClientModificateComponent implements OnInit {
       }
     });
   }
+
   getMicroDistricts(city = 0, disctrict = 0) {
     this.locationService.getMicroDistricts(city, disctrict).subscribe((options) => {
       this.selectMicroDistricts = [];
@@ -291,9 +297,11 @@ export class ClientModificateComponent implements OnInit {
   getCity(option: IOption) {
     this.getCities(0, +`${option.value}`);
   }
+
   getDistrict(option: IOption) {
     this.getDistricts(+`${option.value}`);
   }
+
   getMicroDistrict(option: IOption) {
     this.getMicroDistricts(+`${option.value}`);
   }
@@ -345,6 +353,7 @@ export class ClientModificateComponent implements OnInit {
       }
     });
   }
+
   getManager(user) {
     this.client.user.manager_information = this.users.find(u => u.id === +user).manager_information;
   }
@@ -356,58 +365,60 @@ export class ClientModificateComponent implements OnInit {
     }
   }
 
+  allMetroFirst() {
+    this.select_metro_first_all = !this.select_metro_first_all;
+    for (let i = 0; i < this.metro_first.length; i++) {
+      if (this.select_metro_first_all) {
+        this.arrayMetro[this.metro_first[i].id] = true;
+
+        if (this.client.metro.find(m => m.id === this.metro_first[i].id) === undefined) {
+          this.client.metro.push(this.metro.find(m => m.id === +this.metro_first[i].id));
+        }
+      } else {
+        this.arrayMetro[this.metro_first[i].id] = false;
+        this.client.metro = this.client.metro.filter(m => m.id !== +this.metro_first[i].id);
+      }
+    }
+  }
+
+  allMetroSecond() {
+    this.select_metro_second_all = !this.select_metro_second_all;
+    for (let i = 0; i < this.metro_second.length; i++) {
+      if (this.select_metro_second_all) {
+        this.arrayMetro[this.metro_second[i].id] = true;
+
+        if (this.client.metro.find(m => m.id === this.metro_second[i].id) === undefined) {
+          this.client.metro.push(this.metro.find(m => m.id === +this.metro_second[i].id));
+        }
+      } else {
+        this.arrayMetro[this.metro_second[i].id] = false;
+        this.client.metro = this.client.metro.filter(m => m.id !== +this.metro_second[i].id);
+      }
+    }
+  }
+
   getWalls(data) {
     this.arrayWalls = [];
     for (let i = 0; i < data.walls.length; i++) {
-        this.arrayWalls[data.walls[i].id] = true;
+      this.arrayWalls[data.walls[i].id] = true;
     }
   }
 
   getTypesHouse(data) {
     this.arrayTypes = [];
     for (let i = 0; i < data.types_house.length; i++) {
-        this.arrayTypes[data.types_house[i].id] = true;
+      this.arrayTypes[data.types_house[i].id] = true;
     }
   }
 
   getRepairs(data) {
     this.arrayRepairs = [];
     for (let i = 0; i < data.repairs.length; i++) {
-        this.arrayRepairs[data.repairs[i].id] = true;
+      this.arrayRepairs[data.repairs[i].id] = true;
     }
   }
 
-  allMetroFirst() {
-    this.select_metro_first_all = !this.select_metro_first_all;
-      for (let i = 0; i < this.metro_first.length; i++) {
-        if (this.select_metro_first_all) {
-          this.arrayMetro[this.metro_first[i].id] = true;
 
-          if (this.client.metro.find(m => m.id === this.metro_first[i].id) === undefined) {
-            this.client.metro.push(this.metro.find(m => m.id === +this.metro_first[i].id));
-          }
-        } else {
-          this.arrayMetro[this.metro_first[i].id] = false;
-          this.client.metro = this.client.metro.filter(m => m.id !== +this.metro_first[i].id);
-        }
-      }
-  }
-
-  allMetroSecond() {
-    this.select_metro_second_all = !this.select_metro_second_all;
-      for (let i = 0; i < this.metro_second.length; i++) {
-        if (this.select_metro_second_all) {
-          this.arrayMetro[this.metro_second[i].id] = true;
-
-          if (this.client.metro.find(m => m.id === this.metro_second[i].id) === undefined) {
-            this.client.metro.push(this.metro.find(m => m.id === +this.metro_second[i].id));
-          }
-        } else {
-          this.arrayMetro[this.metro_second[i].id] = false;
-          this.client.metro = this.client.metro.filter(m => m.id !== +this.metro_second[i].id);
-        }
-      }
-  }
 
   metroTrigger(event) {
     if (this.arrayMetro[event]) {

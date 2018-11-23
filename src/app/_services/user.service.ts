@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {Response, Http, Headers} from '@angular/http';
 import {Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent} from 'rxjs';
 /*import 'rxjs/Rx';*/
-import {User} from '../_models/user.model';
+import {User} from '../_models/User.model';
 import 'rxjs/add/operator/map';
-import {UserInformation} from '../_models/userInformation.model';
+import {UserInformation} from '../_models/UserInformation.model';
 import {Globals} from '../_common/globals';
 import {Router} from '@angular/router';
 
@@ -32,7 +32,7 @@ export class UserService {
     if (this.path === 'admin') {
       this.uri = this.admin_uri;
     }
-    console.log('route: ' + this.uri); // Root path
+ //   console.log('route: ' + this.uri); // Root path
   }
 
 

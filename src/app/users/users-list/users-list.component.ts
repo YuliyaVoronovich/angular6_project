@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserInformation} from '../../_models/userInformation.model';
-import {Company} from '../../_models/company.model';
-import {User} from '../../_models/user.model';
+import {UserInformation} from '../../_models/UserInformation.model';
+import {Company} from '../../_models/Company.model';
+import {User} from '../../_models/User.model';
 import {Router} from '@angular/router';
 import {UserService} from '../../_services/user.service';
 import {SharedService} from '../../_services/shared.service';

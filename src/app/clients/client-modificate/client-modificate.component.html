@@ -104,8 +104,8 @@
 
             </div>
 
-            <div class="row" [hidden]="selectDistricts.length === 0">
-              <div class="col-12">
+            <div class="row">
+              <div class="col-md-6 col-12" [hidden]="selectDistricts.length === 0">
                 <div class="form-group">
                   <ng-select [options]="selectDistricts"
                              [(ngModel)]="client.districts"
@@ -114,10 +114,7 @@
                   </ng-select>
                 </div>
               </div>
-            </div>
-
-            <div class="row" [hidden]="selectMicroDistricts.length === 0">
-              <div class="col-12">
+              <div class="col-md-6 col-12" [hidden]="selectMicroDistricts.length === 0">
                 <div class="form-group">
                   <ng-select [options]="selectMicroDistricts"
                              [(ngModel)]="client.microdistricts"
@@ -127,6 +124,18 @@
                 </div>
               </div>
             </div>
+
+            <!--<div class="row" [hidden]="selectMicroDistricts.length === 0">
+              <div class="col-12">
+                <div class="form-group">
+                  <ng-select [options]="selectMicroDistricts"
+                             [(ngModel)]="client.microdistricts"
+                             [multiple]="true"
+                             placeholder="Микрорайон">
+                  </ng-select>
+                </div>
+              </div>
+            </div>-->
 
             <div class="row" [hidden]="selectDistricts.length === 0">
               <div class="col-12">
@@ -546,7 +555,7 @@
               <div class="col-2">
                 <div class="form-group label">
                   <select class="form-control" [(ngModel)]="client.contract_fraction">
-                    <option value=''>/1</option>
+                    <option value='/1'>/1</option>
                     <option value='/2'>/2</option>
                     <option value='/3'>/3</option>
                   </select>

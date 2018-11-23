@@ -1,0 +1,57 @@
+import {Company} from './Company.model';
+
+export class CompanyInformation {
+
+
+  constructor(
+
+  public id: number,
+  public company_id: Company,
+  public id_domovita: string,
+  public login_onliner: string,
+  public password_onliner: string,
+  public login_realt: string,
+  public password_realt: string,
+  public moder_sale: string,
+  public moder_house: string,
+  public kufar_link: string,
+  public reclame_all_rent: boolean,
+  public reclame_photo_rent: boolean,
+  public reclame_photo_sale: boolean,
+  public reclame_photo_house: boolean,
+  public phone_rent: boolean,
+  public phone_rent_general_1: string,
+  public phone_rent_general_2: string,
+  public phone_rent_general_3: string,
+  public phone_rent_general_4: string,
+  public phone_sale: boolean,
+  public phone_sale_general_1: string,
+  public phone_sale_general_2: string,
+  public phone_sale_general_3: string,
+  public phone_sale_general_4: string,
+  public email_sale: string,
+  public phone_house: boolean,
+  public phone_house_general_1: string,
+  public phone_house_general_2: string,
+  public phone_house_general_3: string,
+  public phone_house_general_4: string,
+  public reason_del_sale: boolean,
+  public reason_del_sale_client: boolean,
+  public reason_del_rent: boolean,
+  public reason_del_rent_client: boolean,
+  public reason_del_house: boolean,
+  public reason_del_house_client: boolean,
+  public kc_sale: boolean,
+  public kc_rent: boolean,
+  public kc_house: boolean,
+  public kc_commerce: boolean,
+  public kc_user: boolean,
+  public kc_source: boolean,
+  public kc_other: boolean,
+  public transfer_calls_sale: string,
+  public transfer_calls_rent: string,
+  public transfer_calls_house: string,
+  public transfer_calls_commerce: string,
+
+  ) {}
+}

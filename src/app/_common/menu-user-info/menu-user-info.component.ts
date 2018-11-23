@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from '../../_services/login.service';
 import {SharedService} from '../../_services/shared.service';
-import {User} from '../../_models/user.model';
-import {UserInformation} from '../../_models/userInformation.model';
+import {User} from '../../_models/User.model';
+import {UserInformation} from '../../_models/UserInformation.model';
 
 @Component({
   selector: 'app-menu-user-info',

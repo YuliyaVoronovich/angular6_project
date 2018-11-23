@@ -119,8 +119,9 @@
         </td>
         <td>
           <i class="fas fa-chevron-circle-right icon-color icon-cursor" style="font-size: 20px;"
-             (click)="hideme3[i] = !hideme3[i]"></i>
+             (click)="close_hideme3(i);"></i>
           <div class="action-window" [hidden]="!hideme3[i]">
+            <div class="action" (click)="openDialog(sale)">УДАЛИТЬ ОБЪЕКТ</div>
             <div class="action">ОТПРАВИТЬ КЛИЕНТУ</div>
             <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
             <div class="action">ОТПРАВИТЬ В РЕКЛАМУ</div>

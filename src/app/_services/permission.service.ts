@@ -3,7 +3,7 @@ import {Response, Http, Headers} from '@angular/http';
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import 'rxjs/add/operator/map';
 import {Globals} from '../_common/globals';
-import {Permission} from '../_models/permission.model';
+import {Permission} from '../_models/Permission.model';
 
 @Injectable()
 export class PermissionService {

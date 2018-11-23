@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {IOption} from 'ng-select';
-import {Photo} from '../../_models/photo.model';
-import {UserInformation} from '../../_models/userInformation.model';
-import {User} from '../../_models/user.model';
-import {Label} from '../../_models/label.model';
-import {Metro} from '../../_models/metro.model';
-import {House} from '../../_models/house.model';
-import {HouseAdditionInformation} from '../../_models/houseAdditionInformation.model';
+import {Photo} from '../../_models/Photo.model';
+import {UserInformation} from '../../_models/UserInformation.model';
+import {User} from '../../_models/User.model';
+import {Label} from '../../_models/Label.model';
+import {Metro} from '../../_models/Metro.model';
+import {House} from '../../_models/House.model';
+import {HouseAdditionInformation} from '../../_models/HouseAdditionInformation.model';
 
 import {LabelService} from '../../_services/label.service';
 import {LocationService} from '../../_services/location.service';

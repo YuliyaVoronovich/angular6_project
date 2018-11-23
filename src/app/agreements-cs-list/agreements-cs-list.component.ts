@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AgreementService} from '../_services/agreement.service';
 import {Router} from '@angular/router';
 import {LoginService} from '../_services/login.service';
-import {CsAgreement} from '../_models/csAgreement.model';
+import {CsAgreement} from '../_models/CsAgreement.model';
 
 @Component({
   selector: 'app-agreements-cs-list',

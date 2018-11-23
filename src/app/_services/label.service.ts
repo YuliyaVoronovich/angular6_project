@@ -5,7 +5,7 @@ import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fr
 import 'rxjs/add/operator/map';
 import {Router} from '@angular/router';
 import {Globals} from '../_common/globals';
-import {Label} from '../_models/label.model';
+import {Label} from '../_models/Label.model';
 
 @Injectable()
 export class LabelService {
@@ -29,14 +29,14 @@ export class LabelService {
 
   setTypeHouse(type_house: Label): Label {
     if (!type_house) {
-      return type_house = new Label(0, '', '', '');
+      return type_house = new Label(0, '', '', '','');
     }
     return type_house;
   }
 
   setRoofHouse(roof_house: Label): Label {
     if (!roof_house) {
-      return roof_house = new Label(0, '', '', '');
+      return roof_house = new Label(0, '', '', '', '');
     }
     return roof_house;
   }

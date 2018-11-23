@@ -1,7 +1,9 @@
-<h2 mat-dialog-title>Удалить квартиру</h2>
-<mat-dialog-content>Вы уверены?</mat-dialog-content>
+<h2 mat-dialog-title>
+  <i class="fa fa-exclamation-circle" style="color: #ff5619; font-size: 30px;margin-right: 5px"></i>
+  Вы уверены?</h2>
+<!--<mat-dialog-content>Вы уверены?</mat-dialog-content>-->
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.sale" cdkFocusInitial>Ok</button>
+  <button style="background: #cee0ec" mat-button (click)="onNoClick()">Отмена</button>
+  <button style="background: #cee0ec" mat-button [mat-dialog-close]="data.sale" cdkFocusInitial>ОК</button>
 </mat-dialog-actions>
 

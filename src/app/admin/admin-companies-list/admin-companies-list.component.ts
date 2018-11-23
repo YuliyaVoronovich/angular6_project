@@ -2,13 +2,13 @@ import {Component, OnInit, Inject} from '@angular/core';
 import {CompanyService} from '../../_services/company.service';
 import {LoginService} from '../../_services/login.service';
 import {Router} from '@angular/router';
-import {Company} from '../../_models/company.model';
+import {Company} from '../../_models/Company.model';
 import {Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import {SharedService} from '../../_services/shared.service';
-import {Module} from '../../_models/module.model';
-import {CompanyHistoryBlock} from '../../_models/companyHistoryBlock.model';
+import {Module} from '../../_models/Module.model';
+import {CompanyHistoryBlock} from '../../_models/CompanyHistoryBlock.model';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {ModuleService} from '../../_services/module.service';

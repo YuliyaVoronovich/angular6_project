@@ -3,8 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../../_services/login.service';
 import {RoleService} from '../../_services/role.service';
 import {SharedService} from '../../_services/shared.service';
-import {Role} from '../../_models/role.model';
-import {Permission} from '../../_models/permission.model';
+import {Role} from '../../_models/Role.model';
+import {Permission} from '../../_models/Permission.model';
 
 @Component({
   selector: 'app-admin-role-modificate',

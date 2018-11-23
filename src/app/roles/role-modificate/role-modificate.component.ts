@@ -3,8 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../../_services/login.service';
 import {SharedService} from '../../_services/shared.service';
 import {RoleService} from '../../_services/role.service';
-import {Permission} from '../../_models/permission.model';
-import {Role} from '../../_models/role.model';
+import {Permission} from '../../_models/Permission.model';
+import {Role} from '../../_models/Role.model';
 import {PermissionService} from '../../_services/permission.service';
 
 /* Фильтр по категории привилегий admin*/

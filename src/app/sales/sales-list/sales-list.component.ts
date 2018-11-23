@@ -1,22 +1,20 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {Sale} from '../../_models/sale.model';
-import {User} from '../../_models/user.model';
-import {Company} from '../../_models/company.model';
+import {Sale} from '../../_models/Sale.model';
+import {User} from '../../_models/User.model';
+import {Company} from '../../_models/Company.model';
 import {SaleService} from '../../_services/sale.service';
 import {LoginService} from '../../_services/login.service';
-import {SearchSaleModel} from '../../_models/searchSale.model';
+import {SearchSaleModel} from '../../_models/SearchSale.model';
 
 import {CompanyService} from '../../_services/company.service';
 import {UserService} from '../../_services/user.service';
 import {SharedService} from '../../_services/shared.service';
-
-import { Subscription } from 'rxjs';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {LocationService} from '../../_services/location.service';
 
+import {Subscription} from 'rxjs';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import {Router} from '@angular/router';
-
 
 export interface DialogData {
   sale: Sale;
@@ -31,29 +29,35 @@ export class SalesListComponent implements OnInit, OnDestroy {
 
   public sales: Sale[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
-    null, null,  false,null, null, '', null, null, null);
+    null, null, false, null, null, '', null, null, null);
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
     '', '', null, null, null, [], null, false, null);
 
   public hideme = [];
   public hideme2 = [];
   public hideme3 = [];
+  public activeTypes = null;
 
   public page = 0;
   public timer: any;
   public countSales; // если не придет информация с API
   public limit; // если не придет информация с API
+
+  public count_delete = 0;
   public subscription: Subscription;
-  public search = new SearchSaleModel({'values' : [], 'except' : 0}, {'values' : [], 'except' : 0}, {'values' : [], 'except' : 0},
-    {'values' : [], 'except' : 0}, {'values' : [], 'except' : 0}, {'values' : [], 'except' : 0}, '', '', null,
+  public search = new SearchSaleModel({'values': [], 'except': 0}, {'values': [], 'except': 0}, {
+      'values': [],
+      'except': 0
+    },
+    {'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0}, '', '', null,
     null, null, null, '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', '', '', '',
-    '', '', '', '',  '', '', [], [], [], false, false, false,
+    '', '', '', '', '', '', [], [], [], false, false, false,
     false, false, false, false);
 
   public sort = {
-    'field' : 'created_at',
-    'value' : 'DESC'
+    'field': 'created_at',
+    'value': 'DESC'
   };
 
 
@@ -91,10 +95,6 @@ export class SalesListComponent implements OnInit, OnDestroy {
     }, 3000);
   }
 
-  add(): void {
-    this.route.navigate(['sales/sale']);
-  }
-
   /*  onScroll(): void {
       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
         this.index++;
@@ -107,7 +107,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
     this.sales = [];
 
     for (const [key, value] of Object.entries(event)) {
-      if (typeof(value) === 'object' ) {
+      if (typeof(value) === 'object') {
         this.search[key] = JSON.stringify(event[key]);
       } else {
         this.search[key] = event[key];
@@ -137,7 +137,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
     this.search['sort'] = JSON.stringify(this.sort);
 
     return this.saleService.getSales(this.search).subscribe(data => {
-
+      this.sales = [];
       this.saleService.countSales(this.search).subscribe(data1 => {
         this.limit = data1.limit;
         this.countSales = data1.count;
@@ -158,7 +158,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
         data[i].location.metro = this.locationService.setMetro(data[i].location.metro);
         // цена за метр
         if (data[i].area !== null && data[i].area !== 0) {
-          data[i].price_sqr = Math.floor(+ data[i].price / + data[i].area);
+          data[i].price_sqr = Math.floor(+data[i].price / +data[i].area);
         } else {
           data[i].price_sqr = 0;
         }
@@ -176,14 +176,29 @@ export class SalesListComponent implements OnInit, OnDestroy {
     });
   }
 
+  close_hideme3(event) {
+    if (this.activeTypes === event) {
+      this.hideme3[event] = false;
+      this.activeTypes = null;
+    } else {
+      this.hideme3[this.activeTypes] = false;
+      this.hideme3[event] = true;
+      this.activeTypes = event;
+    }
+  }
+
   delete(sale: Sale): void {
-  //  this.sales = this.sales.filter(m => m !== sale);
-  //  this.sales = [];
     this.saleService.delete(sale).subscribe(
       data => {
         if (data.status === 200) {
-          this.message('Квартира удалена', false);
-        //  this.getSales();
+          this.message('Объект удален', false);
+          this.hideme3 = []; // скрыть окно действий
+          this.count_delete++;
+          if (this.count_delete > 5) {// перезагрузить объекты, если удалено больше 5 подряд
+            this.getSales();
+          } else {
+            this.sales = this.sales.filter(m => m !== sale);
+          }
         }
       },
       error => {
@@ -200,8 +215,8 @@ export class SalesListComponent implements OnInit, OnDestroy {
 
   openDialog(sale: Sale) {
     const dialogRef = this.dialog.open(DialogDeleteSaleComponent, {
-      height: '200px',
-      width: '300px',
+      height: '150px',
+      width: '250px',
       data: {sale: sale}
     });
 

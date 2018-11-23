@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Sale} from '../../_models/sale.model';
-import {Label} from '../../_models/label.model';
-import {Region} from '../../_models/region.model';
-import {Metro} from '../../_models/metro.model';
-import {SaleAdditionInformation} from '../../_models/saleAdditionInformation.model';
+import {Sale} from '../../_models/Sale.model';
+import {Label} from '../../_models/Label.model';
+import {Region} from '../../_models/Region.model';
+import {Metro} from '../../_models/Metro.model';
+import {SaleAdditionInformation} from '../../_models/SaleAdditionInformation.model';
 
 import {LoginService} from '../../_services/login.service';
 import {SaleService} from '../../_services/sale.service';
@@ -16,10 +16,10 @@ import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
 import {IOption} from 'ng-select';
 import {SharedService} from '../../_services/shared.service';
 import {UserService} from '../../_services/user.service';
-import {User} from '../../_models/user.model';
-import {UserInformation} from '../../_models/userInformation.model';
+import {User} from '../../_models/User.model';
+import {UserInformation} from '../../_models/UserInformation.model';
 
-import {Photo} from '../../_models/photo.model';
+import {Photo} from '../../_models/Photo.model';
 import {FileHolder} from 'angular2-image-upload';
 import {ImageService} from '../../_services/image.service';
 import {RequestService} from '../../_services/request.service';

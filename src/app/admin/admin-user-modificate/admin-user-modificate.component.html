@@ -126,6 +126,7 @@
         <b class="category" [ngClass]="{'category_main' : permission.main}">{{permission.title}}</b>
       </span>
 
+
     <div *ngFor="let item of permission.permissions" class="row permission" [hidden]="!hideme[i]">
         <div class="col-6">
           {{ item.title }}

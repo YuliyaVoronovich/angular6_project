@@ -1,4 +1,4 @@
-<app-client-list-search (changed)="getClientsSearch($event)"></app-client-list-search>
+<app-clients-list-search (changed)="getClientsSearch($event)"></app-clients-list-search>
 
 <div class="table-responsive" style="margin-bottom: 20px">
   <table class="table table-bordered table-hover">
@@ -60,8 +60,8 @@
         </td>
         <td>{{client.surname}} {{client.name}} {{client.patronymic}}</td>
         <td>
-          <span [innerHTML]="client.phone1.length < 1 ? '' : client.phone1 | sanitizeHtml"></span><br/>
-          <span [innerHTML]="client.phone2.length < 1 ? '' : client.phone2 | sanitizeHtml"></span>
+          <span [innerHTML]="client.phone1===null ? '' : client.phone1 | sanitizeHtml"></span><br/>
+          <span [innerHTML]="client.phone2===null ? '' : client.phone2 | sanitizeHtml"></span>
         </td>
         <td>{{client.price}}</td>
         <td>{{client.room_from}}-{{client.room_to}}</td>
@@ -82,10 +82,10 @@
         </td>
         <td>
           <i class="fas fa-chevron-circle-right icon-color icon-cursor" style="font-size: 20px;"
-             (click)="hideme[i] = !hideme[i]"></i>
+             (click)="close_hideme(i);"></i>
           <div class="action-window" [hidden]="!hideme[i]">
             <div class="action">ПОДБОР ОБЪЕКТА</div>
-            <div class="action" (click)="delete(client)">УДАЛЕНИЕ ПОКУПАТЕЛЯ</div>
+            <div class="action" (click)="openDialog(client)">УДАЛЕНИЕ ПОКУПАТЕЛЯ</div>
           </div>
         </td>
       </tr>

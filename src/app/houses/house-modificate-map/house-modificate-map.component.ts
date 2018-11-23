@@ -13,7 +13,7 @@ import OlIcon from 'ol/style/Icon';
 
 import {fromLonLat} from 'ol/proj';
 import {LocationService} from '../../_services/location.service';
-import {House} from '../../_models/house.model';
+import {House} from '../../_models/House.model';
 
 @Component({
   selector: 'app-house-modificate-map',

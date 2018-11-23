@@ -3,17 +3,17 @@ import {NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-boot
 import {LoginService} from '../../_services/login.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../_services/user.service';
-import {User} from '../../_models/user.model';
+import {User} from '../../_models/User.model';
 import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
-import {Company} from '../../_models/company.model';
-import {Role} from '../../_models/role.model';
+import {Company} from '../../_models/Company.model';
+import {Role} from '../../_models/Role.model';
 import {CompanyService} from '../../_services/company.service';
-import {UserInformation} from '../../_models/userInformation.model';
-import {Permission} from '../../_models/permission.model';
+import {UserInformation} from '../../_models/UserInformation.model';
+import {Permission} from '../../_models/Permission.model';
 import {RoleService} from '../../_services/role.service';
 import {SharedService} from '../../_services/shared.service';
 import {FileHolder} from 'angular2-image-upload';
-import {Photo} from '../../_models/photo.model';
+import {Photo} from '../../_models/Photo.model';
 import {ImageService} from '../../_services/image.service';
 import {PermissionService} from '../../_services/permission.service';
 
@@ -79,7 +79,7 @@ export class AdminUserModificateComponent implements OnInit {
               this.upload_photo.push(this.user.user_information.photo[i].path);
               //  console.log(this.upload_photo);
             }
-            this.user.company = this.companyService.setCompany(data.user);
+            this.user.company = data.user.company;
           });
         } else {
           this.user.user_information = this.user_information;

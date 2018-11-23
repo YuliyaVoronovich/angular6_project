@@ -1,0 +1,111 @@
+<app-clients-house-list-search (changed)="getClientsSearch($event)"></app-clients-house-list-search>
+
+<div class="table-responsive" style="margin-bottom: 20px">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Клиент</th>
+      <th>Телефон</th>
+      <th>Цена</th>
+      <th>Тип</th>
+      <th>Местоположение</th>
+      <th>Примечание</th>
+      <th>Агент</th>
+      <th>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='ASC')"
+             (click)="changeSort('created_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата доб.
+        </div>
+      </th>
+      <th>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='updated_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='ASC')"
+             (click)="changeSort('updated_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата обн.
+        </div>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container
+      *ngFor="let client of clients | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countClients }; let i  = index">
+      <tr>
+        <td class="text-center">
+          <i class="fas fa-check-circle cursor icon-color" (click)="restore(client)"></i>
+        </td>
+        <td>{{client.surname}} {{client.name}} {{client.patronymic}}</td>
+        <td>
+          <span [innerHTML]="client.phone1===null ? '' : client.phone1 | sanitizeHtml"></span><br/>
+          <span [innerHTML]="client.phone2===null ? '' : client.phone2 | sanitizeHtml"></span>
+        </td>
+        <td>{{client.price}}</td>
+        <td>
+          <ng-container *ngIf="client.types.length >0 ">
+            <ng-container *ngFor="let type of client.types">
+              {{type.small_title}},
+            </ng-container>
+          </ng-container>
+        </td>
+        <td>
+          <ng-container *ngIf="client.cities.length >0 ">
+            <ng-container *ngFor="let city of client.cities">
+              {{city.title}},
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="client.cities.length === 0 && client.districts_country.length >0 ">
+            <ng-container *ngFor="let district_country of client.districts_country">
+              {{district_country.title}},
+            </ng-container>
+          </ng-container>
+        </td>
+        <td>{{client.description }}</td>
+        <td>{{client.user.user_information.surname}} {{client.user.user_information.name}}</td>
+        <td>
+          {{client.created_at | date: 'dd.MM.yyyy'}}
+        </td>
+        <td>
+          {{client.updated_at | date: 'dd.MM.yyyy'}}
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="container bg-light" style="margin: 0; max-width: calc(100% - 150px); padding-top: 15px;">
+  <div class="row">
+    <!--Пагинация -->
+    <div class="col-12 text-center">
+      <pagination-controls (pageChange)="getClientsByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+                           directionLinks="true" autohide="true"></pagination-controls>
+    </div>
+    <!-- <div class="col-3 text-right">
+       Всего объектов в МЛС: {{countSales}}
+     </div>-->
+  </div>
+</div>
+
+

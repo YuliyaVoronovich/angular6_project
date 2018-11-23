@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class Globals {
-   public url = 'https://alfa.api.belan.by/api';
+    public url = 'https://alfa.api.belan.by/api';
  // public url = 'http://127.0.0.1:8000/api';
 
   public logoPhoneMts = 'assets/phone/mts.png';
@@ -101,6 +101,6 @@ export class Globals {
         }
       }
     }
-    return this.code + this.number;
+    return '<nobr>' + this.code + this.number + '</nobr>';
   }
 }

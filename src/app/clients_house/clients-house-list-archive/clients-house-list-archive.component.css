@@ -1,0 +1,57 @@
+table {
+  font-size: 14px;
+}
+table body {
+  background: #f9f7f7;
+}
+table tr th {
+  background: #e2e2e2;
+  border-color: #f5f5f5;
+  text-align: center;
+  padding: 0.4em;
+  color: #524d4d;
+  /* top:40px;*/
+}
+table tr td {
+  line-height: 1;
+  border-color: #f5f5f5;
+  text-align: center;
+  padding: 0.3em;
+  vertical-align: middle;
+}
+table > tbody tr:hover {
+  background: rgba(175, 212, 238, 0.18);
+}
+table th .nobr {
+  white-space: nowrap;
+}
+.action-window{
+  background:white;
+  position: absolute;
+  right: 80px;
+  border: 1px solid #8ed0ff;
+  box-shadow: 0 5px 10px #b1afaf;
+  font-size: 14px;
+  padding: 3px;
+  z-index: 1000;
+}
+.action {
+  cursor:pointer;
+  border-bottom:1px solid #7ebaee;
+  padding-top: 4px;
+}
+.action:last-child {
+  border: none;
+}
+.action:hover {
+  background: #6fbeee;
+}
+.icon-color {
+  color: #428bca
+}
+.icon-cursor {
+  cursor: pointer;
+}
+.cursor {
+  cursor: pointer;
+}

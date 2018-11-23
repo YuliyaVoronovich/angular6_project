@@ -13,7 +13,7 @@ import OlIcon from 'ol/style/Icon';
 
 import {fromLonLat} from 'ol/proj';
 import {LocationService} from '../../_services/location.service';
-import {Sale} from '../../_models/sale.model';
+import {Sale} from '../../_models/Sale.model';
 
 @Component({
   selector: 'app-sale-modificate-map',

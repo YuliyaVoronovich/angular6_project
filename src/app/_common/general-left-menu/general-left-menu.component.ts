@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../../_services/login.service';
-import {Company} from '../../_models/company.model';
+import {Company} from '../../_models/Company.model';
 
 @Component({
   selector: 'app-general-left-menu',

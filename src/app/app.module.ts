@@ -20,12 +20,12 @@ import {
   AdminCompaniesListComponent, DialogCompanyBlockComponent,
   DialogCompanyUnblockComponent
 } from './admin/admin-companies-list/admin-companies-list.component';
-import {CompanyResolve} from './_services/companyResolve.service';
+import {CompanyResolve} from './_services/company_resolve.service';
 import {AdminCompanyModificateComponent} from './admin/admin-company-modificate/admin-company-modificate.component';
 import {AdminModulesListComponent} from './admin/admin-modules-list/admin-modules-list.component';
 import {AdminUsersListComponent} from './admin/admin-users-list/admin-users-list.component';
 import {AdminUserModificateComponent} from './admin/admin-user-modificate/admin-user-modificate.component';
-import {UserResolve} from './_services/userResolve.service';
+import {UserResolve} from './_services/user_resolve.service';
 import {AdminRolesListComponent} from './admin/admin-roles-list/admin-roles-list.component';
 import {AdminRoleModificateComponent} from './admin/admin-role-modificate/admin-role-modificate.component';
 import {AdminLocationsComponent} from './admin/admin-locations/admin-locations.component';
@@ -34,7 +34,7 @@ import {
   SalesListComponent
 } from './sales/sales-list/sales-list.component';
 import {SaleModificateComponent} from './sales/sale-modificate/sale-modificate.component';
-import {SaleResolve} from './_services/saleResolve.service';
+import {SaleResolve} from './_services/sale_resolve.service';
 import {AdminComponent} from './admin/admin.component';
 import {LoginComponent} from './login/login.component';
 import {Error404Component} from './errors/error-404/error-404.component';
@@ -43,19 +43,34 @@ import {AdminMenuComponent} from './_common/admin-menu/admin-menu.component';
 import {GeneralLeftMenuComponent} from './_common/general-left-menu/general-left-menu.component';
 import {MenuUserInfoComponent} from './_common/menu-user-info/menu-user-info.component';
 import {Error403Component} from './errors/error-403/error-403.component';
-import {ClientsListComponent} from './clients/clients-list/clients-list.component';
+import {ClientsListComponent, DialogDeleteClientComponent} from './clients/clients-list/clients-list.component';
 import { ClientModificateComponent } from './clients/client-modificate/client-modificate.component';
 import { AdminRequestLocationComponent } from './admin/admin-request-location/admin-request-location.component';
 import { SalesListSearchComponent } from './sales/sales-list-search/sales-list-search.component';
 import {AgreementsCsListComponent} from './agreements-cs-list/agreements-cs-list.component';
-import { ClientListSearchComponent } from './clients/client-list-search/client-list-search.component';
+import { ClientsListSearchComponent } from './clients/clients-list-search/clients-list-search.component';
 import { GeneralTemplateComponent } from './_common/general-template/general-template.component';
-import { HousesListComponent } from './houses/houses-list/houses-list.component';
+import {DialogDeleteHouseComponent, HousesListComponent} from './houses/houses-list/houses-list.component';
 import { HouseModificateComponent } from './houses/house-modificate/house-modificate.component';
-import { HouseListSearchComponent } from './houses/house-list-search/house-list-search.component';
+import { HousesListSearchComponent } from './houses/houses-list-search/houses-list-search.component';
 import { HouseListPhotoComponent } from './houses/house-list-photo/house-list-photo.component';
 import { SaleModificateMapComponent } from './sales/sale-modificate-map/sale-modificate-map.component';
 import { HouseModificateMapComponent } from './houses/house-modificate-map/house-modificate-map.component';
+import { RolesListComponent } from './roles/roles-list/roles-list.component';
+import {FilterPipe, RoleModificateComponent} from './roles/role-modificate/role-modificate.component';
+import { UsersListComponent } from './users/users-list/users-list.component';
+import { UserModificateComponent } from './users/user-modificate/user-modificate.component';
+import { CompanyModificationComponent } from './companies/company-modification/company-modification.component';
+import { SalesListArchiveComponent } from './sales/sales-list-archive/sales-list-archive.component';
+import { HousesListArchiveComponent } from './houses/houses-list-archive/houses-list-archive.component';
+import { ClientsListArchiveComponent } from './clients/clients-list-archive/clients-list-archive.component';
+import {
+  ClientsHouseListComponent,
+  DialogDeleteClientHouseComponent
+} from './clients_house/clients-house-list/clients-house-list.component';
+import { ClientHouseModificationComponent } from './clients_house/client-house-modification/client-house-modification.component';
+import { ClientsHouseListSearchComponent } from './clients_house/clients-house-list-search/clients-house-list-search.component';
+import { ClientsHouseListArchiveComponent } from './clients_house/clients-house-list-archive/clients-house-list-archive.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -72,21 +87,18 @@ import {ImageService} from './_services/image.service';
 import {AgreementService} from './_services/agreement.service';
 import {RequestService} from './_services/request.service';
 import {ClientService} from './_services/client.service';
-import {ClientResolve} from './_services/clientResolve.service';
+import {ClientResolve} from './_services/client_resolve.service';
 import {HouseService} from './_services/house.service';
-import {HouseResolve} from './_services/HouseResolve';
+import {HouseResolve} from './_services/house_resolve';
+import {ClientHouseService} from './_services/client_house.service';
+import {ClientHouseResolve} from './_services/client_house_resolve.service';
 
 import {MaterialModule} from './material.module';
 import { SaleListPhotoComponent } from './sales/sale-list-photo/sale-list-photo.component';
 import {NgxGalleryModule} from 'ngx-gallery';
 
+import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
 
-import {SanitizeHtmlPipe} from './_pipes/sanitizeHtml.pipe';
-import { RolesListComponent } from './roles/roles-list/roles-list.component';
-import {FilterPipe, RoleModificateComponent} from './roles/role-modificate/role-modificate.component';
-import { UsersListComponent } from './users/users-list/users-list.component';
-import { UserModificateComponent } from './users/user-modificate/user-modificate.component';
-import { CompanyModificationComponent } from './companies/company-modification/company-modification.component';
 
 
 const adminCompaniesRoutes: Routes = [
@@ -116,17 +128,34 @@ const adminLocationsRoutes: Routes = [
 const salesRoutes: Routes = [
   {path: '', component: SalesListComponent},
   {path: 'sale', component: SaleModificateComponent, canActivate: [LoginGuard]},
-  {path: 'sale/:id', component: SaleModificateComponent, resolve: {data: SaleResolve}}
+  {path: 'sale/:id', component: SaleModificateComponent, resolve: {data: SaleResolve}},
+  {path: 'archive', component: SalesListArchiveComponent},
+  {path: 'archive/sale', component: SaleModificateComponent, canActivate: [LoginGuard]},
+  {path: 'archive/sale/:id', component: SaleModificateComponent, resolve: {data: SaleResolve}}
 ];
 const clientsRoutes: Routes = [
   {path: '', component: ClientsListComponent},
   {path: 'client', component: ClientModificateComponent, canActivate: [LoginGuard]},
-  {path: 'client/:id', component: ClientModificateComponent, resolve: {data: ClientResolve}}
+  {path: 'client/:id', component: ClientModificateComponent, resolve: {data: ClientResolve}},
+  {path: 'archive', component: ClientsListArchiveComponent},
+  {path: 'archive/client', component: ClientModificateComponent, canActivate: [LoginGuard]},
+  {path: 'archive/client/:id', component: ClientModificateComponent, resolve: {data: ClientResolve}}
 ];
 const housesRoutes: Routes = [
   {path: '', component: HousesListComponent},
   {path: 'house', component: HouseModificateComponent, canActivate: [LoginGuard]},
-  {path: 'house/:id', component: HouseModificateComponent, resolve: {data: HouseResolve}}
+  {path: 'house/:id', component: HouseModificateComponent, resolve: {data: HouseResolve}},
+  {path: 'archive', component: HousesListArchiveComponent},
+  {path: 'archive/house', component: HouseModificateComponent, canActivate: [LoginGuard]},
+  {path: 'archive/house/:id', component: HouseModificateComponent, resolve: {data: HouseResolve}}
+];
+const clientsHouseRoutes: Routes = [
+  {path: '', component: ClientsHouseListComponent},
+  {path: 'client', component: ClientHouseModificationComponent, canActivate: [LoginGuard]},
+  {path: 'client/:id', component: ClientHouseModificationComponent, resolve: {data: ClientHouseResolve}},
+  {path: 'archive', component: ClientsHouseListArchiveComponent},
+  {path: 'archive/client', component: ClientHouseModificationComponent, canActivate: [LoginGuard]},
+  {path: 'archive/client/:id', component: ClientHouseModificationComponent, resolve: {data: ClientHouseResolve}}
 ];
 const rolesRoutes: Routes = [
   {path: '', component: RolesListComponent},
@@ -156,10 +185,11 @@ const routes: Routes = [
   {path: 'sales', component: GeneralTemplateComponent, children: salesRoutes},
   {path: 'clients', component: GeneralTemplateComponent, children: clientsRoutes},
   {path: 'houses', component: GeneralTemplateComponent, children: housesRoutes},
+  {path: 'clients_house', component: GeneralTemplateComponent, children: clientsHouseRoutes},
   {path: 'roles', component: GeneralTemplateComponent, children: rolesRoutes},
   {path: 'users', component: GeneralTemplateComponent, children: usersRoutes},
   {path: 'companies/company/:id', component: GeneralTemplateComponent, children: companyRoutes},
-  {path: 'argeements/cs', component: GeneralTemplateComponent, children: agreements},
+  {path: 'agreements/cs', component: GeneralTemplateComponent, children: agreements},
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LoginComponent},
@@ -195,14 +225,17 @@ const routes: Routes = [
     ClientsListComponent,
     ClientModificateComponent,
     SaleListPhotoComponent,
-    ClientListSearchComponent,
+    ClientsListSearchComponent,
     GeneralTemplateComponent,
     HousesListComponent,
     HouseModificateComponent,
     DialogDeleteSaleComponent,
+    DialogDeleteHouseComponent,
+    DialogDeleteClientComponent,
+    DialogDeleteClientHouseComponent,
     DialogCompanyUnblockComponent,
     DialogCompanyBlockComponent,
-    HouseListSearchComponent,
+    HousesListSearchComponent,
     HouseListPhotoComponent,
     SaleModificateMapComponent,
     HouseModificateMapComponent,
@@ -211,6 +244,13 @@ const routes: Routes = [
     UsersListComponent,
     UserModificateComponent,
     CompanyModificationComponent,
+    SalesListArchiveComponent,
+    HousesListArchiveComponent,
+    ClientsListArchiveComponent,
+    ClientsHouseListComponent,
+    ClientHouseModificationComponent,
+    ClientsHouseListSearchComponent,
+    ClientsHouseListArchiveComponent,
     SanitizeHtmlPipe,
     FilterPipe
   ],
@@ -253,10 +293,13 @@ const routes: Routes = [
     ClientResolve,
     HouseService,
     HouseResolve,
+    ClientHouseService,
+    ClientHouseResolve,
     Globals,
     SanitizeHtmlPipe
   ],
-  entryComponents: [DialogDeleteSaleComponent, DialogCompanyBlockComponent, DialogCompanyUnblockComponent],
+  entryComponents: [DialogDeleteSaleComponent, DialogDeleteHouseComponent, DialogDeleteClientComponent, DialogDeleteClientHouseComponent,
+    DialogCompanyBlockComponent, DialogCompanyUnblockComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

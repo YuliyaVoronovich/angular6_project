@@ -3,7 +3,7 @@ import {Response, Http, Headers} from '@angular/http';
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import 'rxjs/add/operator/map';
 import {Router} from '@angular/router';
-import {User} from '../_models/user.model';
+import {User} from '../_models/User.model';
 import {Globals} from '../_common/globals';
 
 @Injectable()

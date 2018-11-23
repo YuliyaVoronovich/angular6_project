@@ -2,28 +2,28 @@ import {Component, OnInit} from '@angular/core';
 import {SharedService} from '../../_services/shared.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../../_services/login.service';
-import {Location} from '../../_models/location.model';
+import {Location} from '../../_models/Location.model';
 import {LocationService} from '../../_services/location.service';
 import {RequestService} from '../../_services/request.service';
 
 import {IOption} from 'ng-select';
-import {Label} from '../../_models/label.model';
+import {Label} from '../../_models/Label.model';
 import {LabelService} from '../../_services/label.service';
-import {Region} from '../../_models/region.model';
-import {DistrictCountry} from '../../_models/districtCountry.model';
-import {City} from '../../_models/city.model';
-import {Street} from '../../_models/street.model';
-import {District} from '../../_models/district.model';
-import {Microdistrict} from '../../_models/microdistrict.model';
-import {Request} from '../../_models/request.model';
+import {Region} from '../../_models/Region.model';
+import {DistrictCountry} from '../../_models/DistrictCountry.model';
+import {City} from '../../_models/City.model';
+import {Street} from '../../_models/Street.model';
+import {District} from '../../_models/District.model';
+import {Microdistrict} from '../../_models/Microdistrict.model';
+import {Request} from '../../_models/Request.model';
 
 import {Observable} from 'rxjs/Observable';
 import {map, startWith} from 'rxjs/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SaleService} from '../../_services/sale.service';
-import {Sale} from '../../_models/sale.model';
-import {Direction} from '../../_models/direction.model';
-import {House} from '../../_models/house.model';
+import {Sale} from '../../_models/Sale.model';
+import {Direction} from '../../_models/Direction.model';
+import {House} from '../../_models/House.model';
 import {HouseService} from '../../_services/house.service';
 
 
