@@ -59,7 +59,8 @@
             <ng-select [options]="regions"
                        [(ngModel)]="search.regions.values"
                        [multiple]="true"
-                       placeholder="Область">
+                       placeholder="Область"
+                       (selected)="selectDistrictsRb($event);">
             </ng-select>
           </div>
 
@@ -67,7 +68,8 @@
             <ng-select [options]="districts_rb"
                        [(ngModel)]="search.districts_country.values"
                        [multiple]="true"
-                       placeholder="Район РБ">
+                       placeholder="Район РБ"
+                       (selected)="selectCities($event);">
             </ng-select>
           </div>
 
@@ -85,7 +87,9 @@
             <ng-select [options]="cities"
                        [multiple]="true"
                        [(ngModel)]="search.cities.values"
-                       placeholder="Нас. пункт">
+                       placeholder="Нас. пункт"
+                       (selected)="selectDistrict($event)"
+                       (deselected)="deselectDistrict($event)">
             </ng-select>
           </div>
 
