@@ -1,0 +1,41 @@
+export class AccessModel {
+
+  constructor(
+    public admin: boolean,
+    public roles: boolean,
+    public users: boolean,
+    public settings: boolean,
+    public analytics: boolean,
+    public sales: boolean,
+    public sales_search_reclame: boolean,
+    public sales_created: boolean,
+    public sales_source: boolean,
+    public sales_create: boolean,
+    public sales_archive: boolean,
+    public sales_archive_restore: boolean,
+    public sales_parser: boolean,
+    public sales_delete_parser: boolean,
+    public sales_moderation: boolean,
+    public clients: boolean,
+    public clients_created: boolean,
+    public clients_source: boolean,
+    public clients_create: boolean,
+    public clients_archive: boolean,
+    public clients_archive_restore: boolean,
+    public houses: boolean,
+    public houses_search_reclame: boolean,
+    public houses_created: boolean,
+    public houses_source: boolean,
+    public houses_create: boolean,
+    public houses_archive: boolean,
+    public houses_archive_restore: boolean,
+    public houses_moderation: boolean,
+    public clients_houses: boolean,
+    public clients_houses_created: boolean,
+    public clients_houses_source: boolean,
+    public clients_houses_create: boolean,
+    public clients_houses_archive: boolean,
+    public clients_houses_archive_restore: boolean
+  ) {
+  }
+}

@@ -4,7 +4,6 @@ import {Sale} from '../../_models/Sale.model';
 import {Label} from '../../_models/Label.model';
 import {Region} from '../../_models/Region.model';
 import {Metro} from '../../_models/Metro.model';
-import {SaleAdditionInformation} from '../../_models/SaleAdditionInformation.model';
 
 import {LoginService} from '../../_services/login.service';
 import {SaleService} from '../../_services/sale.service';
@@ -23,6 +22,7 @@ import {Photo} from '../../_models/Photo.model';
 import {FileHolder} from 'angular2-image-upload';
 import {ImageService} from '../../_services/image.service';
 import {RequestService} from '../../_services/request.service';
+import {AccessModel} from '../../_models/Access.model';
 
 @Component({
   selector: 'app-sale-modificate',
@@ -66,23 +66,22 @@ export class SaleModificateComponent implements OnInit {
   public metro: Metro[] = [];
 
   public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
-    '', false, false, false, '', null, null, '', '', '', null,
+    '', false, false, false, '', '', null, null,  false, '', null,
     '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
-    0, 0, '', 0, 0, '', 0, false, '', '', false, 0, 0, null,
-    null, null, null, false, null, null, null);
-
-  public sale_addition_information: SaleAdditionInformation = new SaleAdditionInformation(0, false
-    , false, false, false, false, false, false, false, false, false, false
-    , false, false, false, false, false, false, false, false, false, false
-    , false, false, false, false, false, false, false);
+    0, 0,  0, 0, '', 0, false, '', '', false, 0, 0, null,
+    null, null, null,  false, false, false, null, null, null,
+    false, false, false, false);
 
   public user: User = new User(0, '', '', null, null, null, '',
     0, 0, 0, false, null, null, null, null, null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
   public users: User[] = [];
 
-  public contract_from;
-  public contract_to;
+  public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false);
 
   public images: Photo [] = [];
   public upload_photo = [];
@@ -128,44 +127,62 @@ export class SaleModificateComponent implements OnInit {
     }, 3000);
   }
 
-  keyPress(event: any) {
+  keyPressNumber(event: any) {
     const pattern = /[0-9]/g;
     if (event.keyCode !== 8 && !pattern.test(String.fromCharCode(event.charCode))) {
       event.preventDefault();
     }
   }
 
+  keyPressPoint(event: any) {
+    const pattern = /[0-9]/g;
+    if (event.keyCode !== 8 && event.keyCode !== 46 && event.keyCode !== 190 && !pattern.test(String.fromCharCode(event.charCode))) {
+      event.preventDefault();
+    }
+  }
+
+  setNgbDate() {
+
+  }
+
   ngOnInit() {
     this.route.params.subscribe(
       params => {
+
         if (params['id']) {
           this.route.data.subscribe(({data}) => {
             this.sale = data.sale;
-            if (this.sale.user === null) {
-              this.sale.user = this.user;
-              this.sale.user.user_information = this.user_information;
-              this.sale.user.manager_information = this.user_information;
-            }
-            if (this.sale.sale_addition_information === null) {
-              this.sale.sale_addition_information = this.sale_addition_information;
-            }
 
             for (let i = 0; i < this.sale.photo_reclame.length; i++) {
               this.upload_photo.push(this.sale.photo_reclame[i].path);
               //  console.log(this.upload_photo);
             }
-
             this.sale.contract_from = new NgbDateFRParserFormatter().parse(data.sale.contract_from);
             this.sale.contract_to = new NgbDateFRParserFormatter().parse(data.sale.contract_to);
+
+            if (this.sale.contract) {
+              const pos = this.sale.contract.indexOf('/');
+              if (pos !== -1) {
+                this.sale.contract_fraction = this.sale.contract.substring(pos);
+                this.sale.contract = this.sale.contract.substring(0, pos);
+              } else {
+                this.sale.contract_fraction = '';
+              }
+            }
           });
 
         } else {
-          this.sale.sale_addition_information = this.sale_addition_information;
-          this.sale.user = this.user;
-          this.sale.user.user_information = this.user_information;
-          this.sale.user.manager_information = this.user_information;
+           /*if (this.access.sales_create === false) {
+            this.router.navigate(['/403']);
+          }*/
         }
       });
+
+    this.sale.sale_addition_information = this.saleService.setSaleAdditionInformation(this.sale.sale_addition_information);
+
+    this.sale.user = this.userService.setUser(this.sale.user);
+    this.sale.user.user_information = this.userService.setUserInformation(this.sale.user.user_information);
+    this.sale.user.manager_information = this.userService.setUserInformation(this.sale.user.user_information);
 
     this.sale.location = this.locationService.setLocation(this.sale.location);
     this.sale.location.city = this.locationService.setCity(this.sale.location.city);
@@ -183,15 +200,15 @@ export class SaleModificateComponent implements OnInit {
     this.getStreets(this.sale.location.city.id);
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
+      this.access = data.array_access;
       this.getUsers();
-
     });
+
   }
   save() {
-    this.contract_from = new NgbDateFRParserFormatter().format_to_base(this.sale.contract_from);
-    this.contract_to = new NgbDateFRParserFormatter().format_to_base(this.sale.contract_to);
-    this.sale.contract_from = this.contract_from;
-    this.sale.contract_to = this.contract_to;
+
+    this.sale.contract_from = new NgbDateFRParserFormatter().format_to_base(this.sale.contract_from);
+    this.sale.contract_to = new NgbDateFRParserFormatter().format_to_base(this.sale.contract_to);
 
     this.sale.location.street.id = (this.sale.location.street.id !== undefined) ? this.sale.location.street.id : 0;
 
@@ -206,11 +223,14 @@ export class SaleModificateComponent implements OnInit {
             this.router.navigate(['sales']);
             // создание заявки если была введена неизвестная улица или автоматическая заявка
             // (новый дом на улице или в городе нет улицы - создана новая локация)
-            if (this.sale.location.street.id === 0 || data.new_location === true) {
+            if ((this.sale.location.city.id && this.sale.location.street.id === 0) || data.new_location === true) {
               this.sendRequest();
             }
           } else {
             this.message('Не удалось обновить объект!', true);
+
+            this.sale.contract_from = new NgbDateFRParserFormatter().parse('' + this.sale.contract_from);
+            this.sale.contract_to = new NgbDateFRParserFormatter().parse('' + this.sale.contract_to);
           }
         },
         error => {
@@ -218,6 +238,9 @@ export class SaleModificateComponent implements OnInit {
             this.router.navigate(['']);
           } else {
             this.message('Ошибка!', true);
+
+            this.sale.contract_from = new NgbDateFRParserFormatter().parse('' + this.sale.contract_from);
+            this.sale.contract_to = new NgbDateFRParserFormatter().parse('' + this.sale.contract_to);
           }
         }
       );
@@ -232,12 +255,15 @@ export class SaleModificateComponent implements OnInit {
             this.idSaleRequest = data.sale.id; // id созданного sale
             // создание заявки если была введена неизвестная улица или автоматическая заявка
             // (новый дом на улице или в городе нет улицы - создана новая локация)
-            if (this.sale.location.street.id === 0 || data.new_location === true) {
+            if ((this.sale.location.city.id && this.sale.location.street.id === 0) || data.new_location === true) {
               this.sendRequest();
             }
 
           } else {
             this.message('Не удалось создать объект!', true);
+
+            this.sale.contract_from = new NgbDateFRParserFormatter().parse('' + this.sale.contract_from);
+            this.sale.contract_to = new NgbDateFRParserFormatter().parse('' + this.sale.contract_to);
           }
         },
         error => {
@@ -245,6 +271,9 @@ export class SaleModificateComponent implements OnInit {
             this.router.navigate(['']);
           } else {
             this.message('Ошибка!', true);
+
+            this.sale.contract_from = new NgbDateFRParserFormatter().parse('' + this.sale.contract_from);
+            this.sale.contract_to = new NgbDateFRParserFormatter().parse('' + this.sale.contract_to);
           }
         }
       );
@@ -434,7 +463,8 @@ export class SaleModificateComponent implements OnInit {
   }
 
   getManager(user) {
-    this.sale.user.manager_information = this.users.find(u => u.id === +user).manager_information;
+    this.sale.user = this.userService.setUser(this.users.find(u => u.id === +user));
+    this.sale.user.manager_information = this.userService.setUserInformation(this.sale.user.manager_information);
   }
 
 

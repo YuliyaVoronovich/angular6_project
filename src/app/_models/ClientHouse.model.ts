@@ -1,6 +1,6 @@
 import {User} from './User.model';
 import {Company} from './Company.model';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {CallHouse} from './CallHouse.model';
 
 export class ClientHouse {
 
@@ -8,6 +8,7 @@ export class ClientHouse {
     public id: number,
     public user: User,
     public company: Company,
+    public call: CallHouse,
     public regions: any,
     public array_regions: any [] = [],
     public districts_country: any,
@@ -47,11 +48,15 @@ export class ClientHouse {
     public source: number,
     public contract: string,
     public contract_fraction: string,
-    public contract_from: NgbDateStruct,
-    public contract_to: NgbDateStruct,
+    public contract_from: any,
+    public contract_to: any,
+    public send: boolean,
     public delete_at: boolean,
     public created_at: Date,
-    public updated_at: Date
+    public updated_at: Date,
+    public access_edit: boolean,
+    public access_delete: boolean,
+    public access_own_info: boolean
 
   ) {}
 }

@@ -11,7 +11,8 @@
       <th>Тип</th>
       <th>Местоположение</th>
       <th>Примечание</th>
-      <th>Агент</th>
+      <th *ngIf="user.access===4">Агентство</th>
+      <th *ngIf="user.access!==4">Сотрудник</th>
       <th>
         <div class="nobr cursor" style="width: 100%"
              [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
@@ -54,14 +55,14 @@
       *ngFor="let client of clients | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countClients }; let i  = index">
       <tr>
         <td class="text-center">
-          <a routerLink="client/{{client.id}}" target="_self">
+          <a *ngIf="client.access_edit" routerLink="client/{{client.id}}" target="_self">
             <i class="fas fa-pencil-alt icon-color"></i>
           </a>
         </td>
         <td>{{client.surname}} {{client.name}} {{client.patronymic}}</td>
         <td>
-          <span [innerHTML]="client.phone1===null ? '' : client.phone1 | sanitizeHtml"></span><br/>
-          <span [innerHTML]="client.phone2===null ? '' : client.phone2 | sanitizeHtml"></span>
+          <span *ngIf="client.access_own_info" [innerHTML]="client.phone1===null ? '' : client.phone1 | sanitizeHtml"></span><br/>
+          <span *ngIf="client.access_own_info" [innerHTML]="client.phone2===null ? '' : client.phone2 | sanitizeHtml"></span>
         </td>
         <td>{{client.price}}</td>
         <td>
@@ -84,7 +85,8 @@
           </ng-container>
         </td>
         <td>{{client.description }}</td>
-        <td>{{client.user.user_information.surname}} {{client.user.user_information.name}}</td>
+        <td *ngIf="user.access===4">{{client.company.title}}</td>
+        <td *ngIf="user.access!==4">{{client.user.user_information.surname}} {{client.user.user_information.name}}</td>
         <td>
           {{client.created_at | date: 'dd.MM.yyyy'}}
         </td>
@@ -96,7 +98,7 @@
              (click)="close_hideme(i);"></i>
           <div class="action-window" [hidden]="!hideme[i]">
             <div class="action">ПОДБОР ОБЪЕКТА</div>
-            <div class="action" (click)="openDialog(client)">УДАЛЕНИЕ ПОКУПАТЕЛЯ</div>
+            <div *ngIf="client.access_delete" class="action" (click)="openDialog(client)">УДАЛЕНИЕ ПОКУПАТЕЛЯ</div>
           </div>
         </td>
       </tr>

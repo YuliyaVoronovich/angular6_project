@@ -12,6 +12,7 @@ import {SharedService} from '../../_services/shared.service';
 import {HouseService} from '../../_services/house.service';
 import {LabelService} from '../../_services/label.service';
 import {SearchHouseModel} from '../../_models/SearchHouse.model';
+import {AccessModel} from '../../_models/Access.model';
 
 @Component({
   selector: 'app-houses-list-archive',
@@ -43,6 +44,12 @@ export class HousesListArchiveComponent implements OnInit, OnDestroy  {
     '', '', [], [], [], [], '', '', [], [],
     [], [],  false, false, false, false, false, false);
 
+  public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false);
+
   public sort = {
     'field' : 'created_at',
     'value' : 'DESC'
@@ -59,6 +66,7 @@ export class HousesListArchiveComponent implements OnInit, OnDestroy  {
 
     this.subscription = sharedService.changeEmitted$2.subscribe(data => {
       this.houses = [];
+      this.user = data;
       this.getHouses();
     });
   }
@@ -72,7 +80,12 @@ export class HousesListArchiveComponent implements OnInit, OnDestroy  {
   }
 
   ngOnInit() {
-    this.getHouses();
+    this.loginService.detailsUser().subscribe(data => {
+      this.user = data.user;
+      this.access = data.array_access;
+
+      this.getHouses();
+    });
   }
 
   ngOnDestroy() {
@@ -121,7 +134,7 @@ export class HousesListArchiveComponent implements OnInit, OnDestroy  {
       for (let i = 0; i < data.length; i++) {
         // информация о сотруднике компании
         data[i].user = this.userService.setUser(data[i].user);
-        data[i].user.user_information = this.userService.setUserInformation(data[i].user);
+        data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
         data[i].company = this.companyService.setCompany(data[i].company);
         //
         // адрес объекта

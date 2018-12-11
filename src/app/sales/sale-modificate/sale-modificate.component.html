@@ -119,7 +119,7 @@
                 дома<span>*</span></label>
               <div class="col-2">
                 <input type="text" class="form-control" [(ngModel)]="sale.location.house" (change)="getInfoLocation()"
-                       (keypress)="keyPress($event);">
+                       (keypress)="keyPressNumber($event);">
               </div>
               <label class="col-2 col-form-label text-left">Корпус</label>
               <div class="col-2">
@@ -141,7 +141,8 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Номер квартиры</label>
               <div class="col-2">
-                <input type="text" class="form-control" [(ngModel)]="sale.number_flat"></div>
+                <input type="text" class="form-control" [(ngModel)]="sale.number_flat"
+                       (keypress)="keyPressNumber($event);"></div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Станция метро</label>
@@ -177,31 +178,36 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">Кол-во комнат<span>*</span></label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.room">
+                <input type="text" class="form-control" [(ngModel)]="sale.room"
+                       (keypress)="keyPressNumber($event);">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">Из них раздельных<span>*</span></label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.room_separate">
+                <input type="text" class="form-control" [(ngModel)]="sale.room_separate"
+                       (keypress)="keyPressNumber($event);">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">S общая<span>*</span></label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.area">
+                <input type="text" class="form-control" [(ngModel)]="sale.area"
+                       (keypress)="keyPressPoint($event);">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">S жилая<span>*</span></label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.area_leave">
+                <input type="text" class="form-control" [(ngModel)]="sale.area_leave"
+                       (keypress)="keyPressPoint($event);">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">S кухни<span>*</span></label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.area_kitchen">
+                <input type="text" class="form-control" [(ngModel)]="sale.area_kitchen"
+                       (keypress)="keyPressPoint($event);">
               </div>
             </div>
             <div class="form-group row">
@@ -218,7 +224,8 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Высота потолка</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.roof">
+                <input type="text" class="form-control" [(ngModel)]="sale.roof"
+                       (keypress)="keyPressPoint($event);">
               </div>
             </div>
             <div class="form-group row">
@@ -308,13 +315,15 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Этаж</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.storey">
+                <input type="text" class="form-control" [(ngModel)]="sale.storey"
+                       (keypress)="keyPressNumber($event);">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Этажность</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.storeys">
+                <input type="text" class="form-control" [(ngModel)]="sale.storeys"
+                       (keypress)="keyPressNumber($event);">
               </div>
             </div>
           </div>
@@ -624,17 +633,6 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xl-8 col-lg-8 col-md-8 col-12">
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label text-left">Характер инженерных
-                коммуникаций</label>
-              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                <input type="text" class="form-control" [(ngModel)]="sale.communications">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
           <div class="col-xl-8 col-lg-8 col-md-8">
             <div class="form-group row">
               <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label text-left">Примечание</label>
@@ -643,7 +641,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-4 col-lg-4 col-md-4">
+          <div *ngIf="access.sales_source" class="col-xl-4 col-lg-4 col-md-4">
             <div class="form-group row">
               <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label text-left">Источник</label>
               <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
@@ -695,7 +693,7 @@
               </div>
             </div>-->
             <div class="form-group row">
-              <label class="col-5 col-form-label text-left">Усл. продажи</label>
+              <label class="col-4 col-form-label text-left">Усл. продажи</label>
               <div class="col-6">
                 <select class="form-control" [(ngModel)]="sale.sale">
                   <option value="0"></option>
@@ -704,7 +702,7 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-5 col-form-label text-left">Вар. обмена</label>
+              <label class="col-4 col-form-label text-left">Вар. обмена</label>
               <div class="col-6">
                 <input type="text" class="form-control" [(ngModel)]="sale.exchange">
               </div>
@@ -744,50 +742,57 @@
           </div>
           <div class="col-lg-3 col-md-6">
             <div class="form-group row">
-              <label class="col-4 col-form-label text-left">Договор</label>
-              <div class="col-sm-7 col-6">
+              <label class="col-3 col-form-label text-left">Договор</label>
+              <div class="col-5">
                 <input type="text" class="form-control" [(ngModel)]="sale.contract">
+              </div>
+
+              <div class="col-4">
+                <div class="form-group label">
+                  <select class="form-control" [(ngModel)]="sale.contract_fraction">
+                    <option value='/1'>/1</option>
+                    <option value='/2'>/2</option>
+                    <option value='/3'>/3</option>
+                    <option value='/4'>/4</option>
+                    <option value='/5'>/5</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             <div class="form-group row">
-              <label class="col-4 col-form-labell text-left">От</label>
-              <div class="col-sm-7 col-6">
+              <label class="col-3 col-form-labell text-left">От</label>
+              <div class="col-sm-6 col-5">
                 <input type="text" class="form-control" [(ngModel)]="sale.contract_from"
-                       (click)="dogovor_from.toggle()" ngbDatepicker #dogovor_from="ngbDatepicker">
+                       (click)="dogovor_from.toggle()" ngbDatepicker #dogovor_from="ngbDatepicker"
+                       (keypress)="keyPressPoint($event);">
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-4 col-form-label text-left">До</label>
-              <div class="col-sm-7 col-6">
+              <label class="col-3 col-form-label text-left">До</label>
+              <div class="col-sm-6 col-5">
                 <input type="text" class="form-control" [(ngModel)]="sale.contract_to"
-                       (click)="dogovor_to.toggle()" ngbDatepicker #dogovor_to="ngbDatepicker">
+                       (click)="dogovor_to.toggle()" ngbDatepicker #dogovor_to="ngbDatepicker"
+                       (keypress)="keyPressPoint($event);">
               </div>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+
             <div class="form-group row">
-              <label class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-left">Партнерская
-                коммиссия</label>
-              <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7">
-                <input type="text" class="form-control" [(ngModel)]="sale.commission">
+              <label class="col-3 col-form-label text-left">Заявка</label>
+              <div class="col-5">
+                <input type="text" class="form-control" [(ngModel)]="sale.request_number">
+              </div>
+
+              <div class="col-4">
+                <div class="checkbox">
+                  <div class="form-check">
+                    <input [(ngModel)]="sale.request" class="form-check-input" type="checkbox" id="request">
+                    <label for="request" class="form-check-label">Заявка</label>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-            <div class="form-group row">
-              <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                <select class="form-control">
-                  <option value="0"></option>
-                  <option value="bv">базовые величины</option>
-                  <option value="pr">процент</option>
-                  <option value="byn">белорусские рубли</option>
-                  <option value="usd">доллары США</option>
-                </select>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
@@ -828,13 +833,15 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Телефон1</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone1">
+                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone1"
+                       mask="(00) 000-00-00" prefix="+375" [showMaskTyped] = "true">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Телефон2</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone2">
+                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone2"
+                       mask="(00) 000-00-00" prefix="+375" [showMaskTyped] = "true">
               </div>
             </div>
             <div class="form-group row">

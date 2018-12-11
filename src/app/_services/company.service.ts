@@ -62,12 +62,12 @@ export class CompanyService {
 
   block(company: Company | number): Observable<Response> {
     const id = typeof company === 'number' ? company : company.id;
-    return this.http.post(this.globals.url + '/block/' + this.uri + '/' + id, JSON.stringify(company));
+    return this.http.post(this.globals.url + this.uri + '/block/' + id, JSON.stringify(company));
   }
 
   unblock(company: Company | number): Observable<Response> {
     const id = typeof company === 'number' ? company : company.id;
-    return this.http.post(this.globals.url + '/unblock/' + id, JSON.stringify(company));
+    return this.http.post(this.globals.url + this.uri + '/unblock/' + id, JSON.stringify(company));
   }
 
 

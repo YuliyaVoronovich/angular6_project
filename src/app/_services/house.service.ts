@@ -5,17 +5,29 @@ import {Router} from '@angular/router';
 import {Count} from '../_models/Count.model';
 import {Observable} from 'rxjs/index';
 import {House} from '../_models/House.model';
+import {HouseAdditionInformation} from '../_models/HouseAdditionInformation.model';
 
 @Injectable()
 export class HouseService {
 
   private uri = '/houses';
-  private uri_archive = '/archive/houses';
+  private uri_archive = '/houses/archive';
+  private uri_moderation = '/houses/moderation';
+  private uri_delete = '/houses/delete';
 
 
   constructor(private http: Http,
               private router: Router,
               private globals: Globals) {
+  }
+
+  setHouseAdditionInformation(house_addition_information: HouseAdditionInformation) {
+    if (!house_addition_information) {
+      return house_addition_information = new HouseAdditionInformation(0, false
+        , false, false, false, false, false, false, false, false, false, false
+        , false, false, false, false, false, false, false, false, false, false);
+    }
+    return house_addition_information;
   }
 
   getHouses(search = {}): Observable<House[]> {
@@ -70,5 +82,46 @@ export class HouseService {
       );
   }
   /*Архив*/
+
+  /*Модерация*/
+  getHousesModeration(search = {}): Observable<House[]> {
+    return this.http.get(this.globals.url + this.uri_moderation, {search: search})
+      .map((response: Response) => response.json().houses
+      );
+  }
+  countHousesModeration(search = {}): Observable<Count> {
+    return this.http.get(this.globals.url + this.uri_moderation + '/count', {search: search})
+      .map((response: Response) => response.json()
+      );
+  }
+  returnModeration(house: House) {
+    return this.http.put(this.globals.url + this.uri_moderation + '/' + house.id, JSON.stringify(house))
+      .map((response: Response) => response.json()
+      );
+  }
+  /*Модерация*/
+
+  /*Удаленные*/
+  getHousesDelete(search = {}): Observable<House[]> {
+    return this.http.get(this.globals.url + this.uri_delete, {search: search})
+      .map((response: Response) => response.json().houses
+      );
+  }
+  countHousesDelete(search = {}): Observable<Count> {
+    return this.http.get(this.globals.url + this.uri_delete + '/count', {search: search})
+      .map((response: Response) => response.json()
+      );
+  }
+  returnDelete(house: House) {
+    return this.http.put(this.globals.url + this.uri_delete + '/' + house.id, JSON.stringify(house))
+      .map((response: Response) => response.json()
+      );
+  }
+
+  archiveDelete(house: House | number): Observable<Response> {
+    const id = typeof house === 'number' ? house : house.id;
+    return this.http.post(this.globals.url + this.uri_delete + '/' + id, JSON.stringify(house));
+  }
+  /*Удаленные*/
 
 }

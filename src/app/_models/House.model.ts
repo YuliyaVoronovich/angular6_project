@@ -2,7 +2,6 @@ import {Company} from './Company.model';
 import {User} from './User.model';
 import {HouseAdditionInformation} from './HouseAdditionInformation.model';
 import {Photo} from './Photo.model';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {Location} from './Location.model';
 import {Label} from './Label.model';
 
@@ -16,8 +15,9 @@ export class House {
     public cont_phone2: string,
     public fio: string,
     public contract: string,
-    public contract_from: NgbDateStruct,
-    public contract_to: NgbDateStruct,
+    public contract_fraction: string,
+    public contract_from: any,
+    public contract_to: any,
     public request: boolean,
     public request_number: string,
     public price: number,
@@ -58,11 +58,17 @@ export class House {
     public title: string,
     public comment: string,
     public photo: Photo [],
+    public moderation: boolean,
+    public delete_moderation: boolean,
     public delete_at: boolean,
     public created_at: Date,
     public updated_at: Date,
     public house_addition_information: HouseAdditionInformation,
-    public streetRequest: string
+    public streetRequest: string,
+    public access_edit: boolean,
+    public access_delete: boolean,
+    public access_own_info: boolean,
+    public access_reclame: boolean
   ) {
 
   }

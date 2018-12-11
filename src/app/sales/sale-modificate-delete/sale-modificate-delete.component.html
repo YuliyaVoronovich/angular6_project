@@ -1,0 +1,858 @@
+<!-- Nav tabs -->
+<div class="topMenu container sticky-top">
+  <!-- <div class="btn-group buttonGroup" style="float: left;">
+     <a href="#" role="button" class="btn btn-primary" style="font-size: 16px">
+               <span class="icon-arrow-circle-o-left" data-toggle="tooltip" data-placement="righ"><span
+                 style="padding: 3px">Назад</span></span>
+     </a>
+   </div>-->
+  <div class="text-center">
+    <div class="btn-group buttonGroup">
+      <button [scrollTo]="areas" [scrollDuration]="300" [scrollOffset]="-80" class="btn btn-outline-info">Место</button>
+      <button [scrollTo]="characteristic" [scrollDuration]="300" [scrollOffset]="-20" class="btn btn-outline-info">
+        Характеристики
+      </button>
+      <button [scrollTo]="dopCharacteristics" [scrollDuration]="100" [scrollOffset]="-20" class="btn btn-outline-info">
+        Доп
+        хар-ки
+      </button>
+      <button [scrollTo]="deal" [scrollDuration]="300" [scrollOffset]="-20" class="btn btn-outline-info">Условия
+        сделки
+      </button>
+      <button [scrollTo]="advert" [scrollDuration]="300" [scrollOffset]="-20" class="btn btn-outline-info">Объявление
+      </button>
+      <button [scrollTo]="contact" [scrollDuration]="300" [scrollOffset]="-20" class="btn btn-outline-info">Контакты
+      </button>
+      <button [scrollTo]="photos" [scrollDuration]="300" [scrollOffset]="-20" class="btn btn-outline-info">Фото</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="content myForm">
+    <div #areas class="mark">
+      <div class="newRow">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <h3>Месторасположение</h3>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Область<span>*</span></label>
+              <div class="col-7">
+                <ng-select [options]="selectRegions"
+                           [allowClear]="true"
+                           [(ngModel)]="''+ sale.location.city.district_country.region.id"
+                           (selected)="city($event)">
+
+                </ng-select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Населенный
+                пункт<span>*</span></label>
+              <div class="col-7">
+                <ng-select [options]="selectCities"
+                           [allowClear]="true"
+                           [(ngModel)]="''+ sale.location.city.id"
+                           (selected)="street($event);getLocation($event)">
+
+                </ng-select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Улица<span>*</span></label>
+              <div class="col-7">
+                <ng-select [options]="selectStreets"
+                           [allowClear]="true"
+                           [(ngModel)]="''+ sale.location.street.id"
+                           (selected)="getInfoLocation()"
+                           (noOptionsFound)="onNoOptionsFound($event)"
+                           (filterInputChanged)="onFilterInputChanged($event)"
+                           notFoundMsg="Введенная улица не найдена">
+
+                </ng-select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Номер
+                дома<span>*</span></label>
+              <div class="col-2">
+                <input type="text" class="form-control" [(ngModel)]="sale.location.house" (change)="getInfoLocation()"
+                       (keypress)="keyPressNumber($event);">
+              </div>
+              <label class="col-2 col-form-label text-left">Корпус</label>
+              <div class="col-2">
+                <input type="text" class="form-control" [(ngModel)]="sale.location.housing" (change)="getInfoLocation()">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Район<span>*</span></label>
+              <div class="col-7">
+                <input disabled type="text" class="form-control" [(ngModel)]="sale.location.district.title">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Микрорайон<span>*</span></label>
+              <div class="col-7">
+                <input disabled type="text" class="form-control" [(ngModel)]="sale.location.microdistrict.title">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Номер квартиры</label>
+              <div class="col-2">
+                <input type="text" class="form-control" [(ngModel)]="sale.number_flat"
+                       (keypress)="keyPressNumber($event);"></div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Станция метро</label>
+              <div class="col-7">
+                <select class="form-control" [(ngModel)]="sale.location.metro.id">
+                  <option value="0"></option>
+                  <option *ngFor="let one of metro" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+            <!--<div class="col-md-6 col-sm-6">
+              <div class="img img-responsive map" id="myMap" style="width:520px; height:340px"></div>
+            </div>-->
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <app-sale-modificate-map [sale]="sale" [movieMapMarker]="movieMapMarker"></app-sale-modificate-map>
+            <!--<div id="map" class="map"></div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div #characteristic class="mark">
+      <div class="newRow">
+        <div class="row">
+          <div class="col-12">
+            <h3>Характеристики объекта</h3>
+            <div class="titleSecond">Планировка квартиры</div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left required">Кол-во комнат<span>*</span></label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.room"
+                       (keypress)="keyPressNumber($event);">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left required">Из них раздельных<span>*</span></label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.room_separate"
+                       (keypress)="keyPressNumber($event);">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left required">S общая<span>*</span></label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.area"
+                       (keypress)="keyPressPoint($event);">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left required">S жилая<span>*</span></label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.area_leave"
+                       (keypress)="keyPressPoint($event);">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left required">S кухни<span>*</span></label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.area_kitchen"
+                       (keypress)="keyPressPoint($event);">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Санузел</label>
+              <div class="col-6">
+                <select class="form-control" [(ngModel)]="sale.wc">
+                  <option value="0"></option>
+                  <option *ngFor="let one of wc" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Высота потолка</label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.roof"
+                       (keypress)="keyPressPoint($event);">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Балкон</label>
+              <div class="col-6">
+                <select class="form-control" [(ngModel)]="sale.balcony">
+                  <option value="0"></option>
+                  <option *ngFor="let one of balconies" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Терраса</label>
+              <div class="col-6">
+                <select class="form-control" [(ngModel)]="sale.terrace">
+                  <option value="0"></option>
+                  <option *ngFor="let one of terraces" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Уровни</label>
+              <div class="col-6">
+                <select class="form-control" [(ngModel)]="sale.level">
+                  <option value="0"></option>
+                  <option *ngFor="let one of levels" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-7 offset-5">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.elite" class="form-check-input" type="checkbox" id="elite">
+                  <label for="elite" class="form-check-label">
+                    Элитная
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-7 offset-5">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.free_layout" class="form-check-input" type="checkbox" id="free_layout">
+                  <label for="free_layout" class="form-check-label">
+                    Свободная планировка
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="titleSecond">Тип дома</div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Материал стен</label>
+              <div class="col-6">
+                <select class="form-control" [(ngModel)]="sale.location.wall">
+                  <option value="0"></option>
+                  <option *ngFor="let one of walls" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Тип дома</label>
+              <div class="col-6">
+                <select class="form-control" [(ngModel)]="sale.location.type_house">
+                  <option value="0"></option>
+                  <option *ngFor="let one of types" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Год постройки</label>
+              <div class="col-6">
+                <input disabled type="text" class="form-control" [(ngModel)]="sale.location.year">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Год капремонта</label>
+              <div class="col-6">
+                <input disabled type="text" class="form-control" [(ngModel)]="sale.location.year_repair">
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Этаж</label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.storey"
+                       (keypress)="keyPressNumber($event);">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Этажность</label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.storeys"
+                       (keypress)="keyPressNumber($event);">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div #dopCharacteristics class="mark">
+      <div class="newRow">
+        <div class="row">
+          <div class="col-xl-8 col-lg-8 col-md-8 col-12">
+            <h3>Дополнительная информация</h3>
+            <div class="form-group row">
+              <label class="col-3 col-form-label text-left">Ремонт</label>
+              <div class="col-8">
+                <select class="form-control" [(ngModel)]="sale.repair">
+                  <option value="0"></option>
+                  <option *ngFor="let one of repairs" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-3 col-form-label text-left">Тип пола</label>
+              <div class="col-8">
+                <select class="form-control" [(ngModel)]="sale.floor">
+                  <option value="0"></option>
+                  <option *ngFor="let one of floors" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-3 col-form-label text-left">Мебель</label>
+              <div class="col-8">
+                <select class="form-control" [(ngModel)]="sale.furniture">
+                  <option value="0"></option>
+                  <option *ngFor="let one of furniture" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row myCheckbox">
+          <div class="col-2">
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.phone" class="form-check-input" type="checkbox"
+                         id="phone">
+                  <label for="phone" class="form-check-label">Телефон</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.internet" class="form-check-input" type="checkbox"
+                         id="internet">
+                  <label for="internet" class="form-check-label">Интернет</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.tv" class="form-check-input" type="checkbox"
+                         id="tv">
+                  <label for="tv" class="form-check-label">Спутниковое ТВ</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.intercom" class="form-check-input" type="checkbox"
+                         id="intercom">
+                  <label for="intercom" class="form-check-label">Домофон</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.video_intercom" class="form-check-input"
+                         type="checkbox" id="video_intercom">
+                  <label for="video_intercom" class="form-check-label">Видеодомофон</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.cctv" class="form-check-input" type="checkbox"
+                         id="cctv">
+                  <label for="cctv" class="form-check-label">Видеонаблюдение</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.signaling" class="form-check-input" type="checkbox"
+                         id="signaling">
+                  <label for="signaling" class="form-check-label">Охранная сигнализация</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.concierge" class="form-check-input" type="checkbox"
+                         id="concierge">
+                  <label for="concierge" class="form-check-label">Консьерж</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.door" class="form-check-input" type="checkbox"
+                         id="door">
+                  <label for="door" class="form-check-label">Металлическая дверь</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.elevator" class="form-check-input" type="checkbox"
+                         id="elevator">
+                  <label for="elevator" class="form-check-label">Лифт</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.chute" class="form-check-input" type="checkbox"
+                         id="chute">
+                  <label for="chute" class="form-check-label">Мусоропровод</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.single_enter" class="form-check-input"
+                         type="checkbox" id="single_enter">
+                  <label for="single_enter" class="form-check-label">Отдельный вход</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.garage" class="form-check-input" type="checkbox"
+                         id="garage">
+                  <label for="garage" class="form-check-label">Гараж</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.parking" class="form-check-input" type="checkbox"
+                         id="parking">
+                  <label for="parking" class="form-check-label">Стоянка авто</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.protected_parking" class="form-check-input"
+                         type="checkbox" id="protected_parking">
+                  <label for="protected_parking" class="form-check-label">Охраняемая
+                    стоянка</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.conditioner" class="form-check-input"
+                         type="checkbox" id="conditioner">
+                  <label for="conditioner" class="form-check-label">Кондиционер</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.sanitary" class="form-check-input" type="checkbox"
+                         id="sanitary">
+                  <label for="sanitary" class="form-check-label">Сантехника</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.window" class="form-check-input" type="checkbox"
+                         id="window">
+                  <label for="window" class="form-check-label">Стеклопакеты</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.cupboard" class="form-check-input" type="checkbox"
+                         id="cupboard">
+                  <label for="cupboard" class="form-check-label">Встроен. шкаф</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.appliances" class="form-check-input"
+                         type="checkbox" id="appliances">
+                  <label for="appliances" class="form-check-label">Бытовая техника</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.dishwasher" class="form-check-input"
+                         type="checkbox" id="dishwasher">
+                  <label for="dishwasher" class="form-check-label">Посудомоечная машина</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.washer" class="form-check-input" type="checkbox"
+                         id="washer">
+                  <label for="washer" class="form-check-label">Стиральная машина</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.fridge" class="form-check-input" type="checkbox"
+                         id="fridge">
+                  <label for="fridge" class="form-check-label">Холодильник</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.fireplace" class="form-check-input" type="checkbox"
+                         id="fireplace">
+                  <label for="fireplace" class="form-check-label">Камин</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.basement" class="form-check-input" type="checkbox"
+                         id="basement">
+                  <label for="basement" class="form-check-label">Подвал/кладовая</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.pool" class="form-check-input" type="checkbox"
+                         id="pool">
+                  <label for="pool" class="form-check-label">Бассейн</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.jacuzzi" class="form-check-input" type="checkbox"
+                         id="jacuzzi">
+                  <label for="jacuzzi" class="form-check-label">Джакузи</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="checkbox">
+                <div class="form-check">
+                  <input [(ngModel)]="sale.sale_addition_information.water_meters" class="form-check-input"
+                         type="checkbox" id="water_meters">
+                  <label for="water_meters" class="form-check-label"> Счетчики воды</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-8 col-lg-8 col-md-8">
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label text-left">Примечание</label>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <textarea style="width: 100%;" [(ngModel)]="sale.comment" rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="access.sales_source" class="col-xl-4 col-lg-4 col-md-4">
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label text-left">Источник</label>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <select class="form-control" [(ngModel)]="sale.source">
+                  <option [value]="0"></option>
+                  <option *ngFor="let one of sources" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div #deal class="mark">
+      <div class="newRow">
+        <div class="row">
+          <div class="col-12">
+            <h3>Условия сделки</h3>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left required">Стоимость<span>*</span></label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.price">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-10">
+                <div class="checkbox">
+                  <div class="form-check">
+                    <input [(ngModel)]="sale.auction" class="form-check-input" type="checkbox" id="auction">
+                    <label for="auction" class="form-check-label">Торг</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <!--<div class="form-group row">
+              <label class="col-5 col-form-label text-left">Собственность</label>
+              <div class="col-6">
+                <select class="form-control" [(ngModel)]="sale.own"
+                        [ngModelOptions]="{standalone: true}">
+                  <option *ngFor="let one of owns" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>-->
+            <div class="form-group row">
+              <label class="col-4 col-form-label text-left">Усл. продажи</label>
+              <div class="col-6">
+                <select class="form-control" [(ngModel)]="sale.sale">
+                  <option value="0"></option>
+                  <option *ngFor="let one of sales" [value]="one.id">{{one.title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-4 col-form-label text-left">Вар. обмена</label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.exchange">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <div class="form-group row">
+              <div class="col-12">
+                <div class="checkbox">
+                  <div class="form-check">
+                    <input [(ngModel)]="sale.credit" class="form-check-input" type="checkbox" id="credit">
+                    <label for="credit" class="form-check-label">С исп. кредита</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12">
+                <div class="checkbox">
+                  <div class="form-check">
+                    <input [(ngModel)]="sale.execution" class="form-check-input" type="checkbox" id="execution">
+                    <label for="execution" class="form-check-label">С оформлением</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12">
+                <div class="checkbox">
+                  <div class="form-check">
+                    <input [(ngModel)]="sale.quickly" class="form-check-input" type="checkbox" id="quickly">
+                    <label for="quickly" class="form-check-label">Срочно</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="form-group row">
+              <label class="col-3 col-form-label text-left">Договор</label>
+              <div class="col-5">
+                <input type="text" class="form-control" [(ngModel)]="sale.contract">
+              </div>
+
+              <div class="col-4">
+                <div class="form-group label">
+                  <select class="form-control" [(ngModel)]="sale.contract_fraction">
+                    <option value='/1'>/1</option>
+                    <option value='/2'>/2</option>
+                    <option value='/3'>/3</option>
+                    <option value='/4'>/4</option>
+                    <option value='/5'>/5</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-3 col-form-labell text-left">От</label>
+              <div class="col-sm-6 col-5">
+                <input type="text" class="form-control" [(ngModel)]="sale.contract_from"
+                       (click)="dogovor_from.toggle()" ngbDatepicker #dogovor_from="ngbDatepicker"
+                       (keypress)="keyPressPoint($event);">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-3 col-form-label text-left">До</label>
+              <div class="col-sm-6 col-5">
+                <input type="text" class="form-control" [(ngModel)]="sale.contract_to"
+                       (click)="dogovor_to.toggle()" ngbDatepicker #dogovor_to="ngbDatepicker"
+                       (keypress)="keyPressPoint($event);">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-3 col-form-label text-left">Заявка</label>
+              <div class="col-5">
+                <input type="text" class="form-control" [(ngModel)]="sale.request_number">
+              </div>
+
+              <div class="col-4">
+                <div class="checkbox">
+                  <div class="form-check">
+                    <input [(ngModel)]="sale.request" class="form-check-input" type="checkbox" id="request">
+                    <label for="request" class="form-check-label">Заявка</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div #advert class="mark">
+      <div class="newRow">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <h3>Характеристики объявления</h3>
+            <div class="form-group row">
+              <div class="col-10">
+                <div class="checkbox">
+                  <div class="form-check">
+                    <input [(ngModel)]="sale.send" class="form-check-input" type="checkbox" id="send">
+                    <label for="send" class="form-check-label">Отправить в рекламу</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Заголовок</label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.title">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Рекламный текст</label>
+              <div class="col-6">
+                <textarea style="width: 100%" class="form-control" [(ngModel)]="sale.text"></textarea>
+              </div>
+            </div>
+          </div>
+          <div #contact class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <h3>Контакты</h3>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Телефон1</label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone1"
+                       mask="(00) 000-00-00" prefix="+375" [showMaskTyped] = "true">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Телефон2</label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone2"
+                       mask="(00) 000-00-00" prefix="+375" [showMaskTyped] = "true">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">ФИО</label>
+              <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="sale.fio">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left">Сотрудник</label>
+              <div class="col-6">
+                <select class="form-control" [(ngModel)]="sale.user.id" (change)="getManager($event.target.value)">
+                  <option value="0"></option>
+                  <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}}
+                    {{one.user_information.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div #photos class="mark">
+      <div class="newRow">
+        <div class="row">
+          <div class="col-12">
+            <h3>Фото</h3>
+          </div>
+          <div class="col-12">
+            <image-upload (uploadFinished)="onUploadFinished($event)" [uploadedFiles]="upload_photo"
+                          (removed)="onRemoved($event)"></image-upload>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group myButton">
+      <div class="col-12">
+        <button (click)="archive()" class="btn btn-lg btn-info">
+          Одобрить
+        </button>
+        <button (click)="return()" class="btn btn-lg btn-danger">
+          Отмена
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

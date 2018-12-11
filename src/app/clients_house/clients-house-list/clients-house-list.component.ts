@@ -13,6 +13,8 @@ import {Subscription} from 'rxjs/index';
 import {Globals} from '../../_common/globals';
 
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {AccessModel} from '../../_models/Access.model';
+import {User} from '../../_models/User.model';
 
 
 
@@ -40,6 +42,16 @@ export class ClientsHouseListComponent implements OnInit, OnDestroy {
     {'values': []}, {'values': []}, '', [],  0,  null, null, null,
     null, false);
 
+  public user: User = new User(0, '', '', null, null, null, '', 0,
+    null, null, false, null, null, '', null, null, null);
+
+
+  public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false);
+
   public sort = {
     'field': 'created_at',
     'value': 'DESC'
@@ -60,13 +72,18 @@ export class ClientsHouseListComponent implements OnInit, OnDestroy {
 
     this.subscription = sharedService.changeEmitted$2.subscribe(data => {
       this.clients = [];
-    //  this.getClients();
+      this.user = data;
+      this.getClients();
     });
 
   }
 
   ngOnInit() {
-    this.getClients();
+    this.loginService.detailsUser().subscribe(data => {
+      this.user = data.user;
+      this.access = data.array_access;
+      this.getClients();
+    });
   }
 
   ngOnDestroy() {
@@ -93,7 +110,7 @@ export class ClientsHouseListComponent implements OnInit, OnDestroy {
       });
       for (let i = 0; i < data.length; i++) {
         data[i].user = this.userService.setUser(data[i].user);
-        data[i].user.user_information = this.userService.setUserInformation(data[i].user);
+        data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
         data[i].company = this.companyService.setCompany(data[i].company);
 
         // телефоны с логотипами

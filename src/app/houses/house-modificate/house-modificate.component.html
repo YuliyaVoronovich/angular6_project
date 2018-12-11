@@ -114,9 +114,9 @@
                       <div class="form-group row no-gutters">
                         <textarea cols="35" rows="4" [(ngModel)]="textRequest"></textarea>
                       </div>
-                     <!-- <div>
-                        <button class="btn btn-sm btn-primary" (click)="sendRequest()">Отправить</button>
-                      </div>-->
+                      <!-- <div>
+                         <button class="btn btn-sm btn-primary" (click)="sendRequest()">Отправить</button>
+                       </div>-->
                     </div>
                   </div>
                   <!---->
@@ -125,13 +125,15 @@
 
               <div class="col-7">
                 <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.location.house" placeholder=" " (change)="getInfoLocation()">
+                  <input class="form-control" [(ngModel)]="house.location.house" placeholder=" "
+                         (change)="getInfoLocation()" (keypress)="keyPressNumber($event);">
                   <span>Дом</span>
                 </div>
               </div>
               <div class="col-5">
                 <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.location.housing" placeholder=" " (change)="getInfoLocation()">
+                  <input class="form-control" [(ngModel)]="house.location.housing" placeholder=" "
+                         (change)="getInfoLocation()">
                   <span>Корпус</span>
                 </div>
               </div>
@@ -227,7 +229,7 @@
               </label>
 
               <div class="form-group label">
-                <input class="form-control" [(ngModel)]="house.year" placeholder=" ">
+                <input class="form-control" [(ngModel)]="house.year" placeholder=" " (keypress)="keyPressNumber($event);">
                 <span>Год постройки</span>
               </div>
 
@@ -262,21 +264,24 @@
 
               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                 <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.area" placeholder=" ">
+                  <input class="form-control" [(ngModel)]="house.area" placeholder=" "
+                         (keypress)="keyPressPoint($event);">
                   <span>S общая</span>
                 </div>
               </div>
 
               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                 <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.area_leave" placeholder=" ">
+                  <input class="form-control" [(ngModel)]="house.area_leave" placeholder=" "
+                         (keypress)="keyPressPoint($event);">
                   <span>S жилая</span>
                 </div>
               </div>
 
               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                 <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.area_kitchen" placeholder=" ">
+                  <input class="form-control" [(ngModel)]="house.area_kitchen" placeholder=" "
+                         (keypress)="keyPressPoint($event);">
                   <span>S кухни</span>
                 </div>
               </div>
@@ -291,13 +296,15 @@
                 <div class="row">
                   <div class="col-xl-12 col-sm-6 col-12">
                     <div class="form-group label">
-                      <input class="form-control" [(ngModel)]="house.room" placeholder=" ">
+                      <input class="form-control" [(ngModel)]="house.room" placeholder=" "
+                             (keypress)="keyPressNumber($event);">
                       <span>Количество комнат</span>
                     </div>
                   </div>
                   <div class="col-xl-12 col-sm-6 col-12">
                     <div class="form-group label">
-                      <input class="form-control" [(ngModel)]="house.room_separate" placeholder=" ">
+                      <input class="form-control" [(ngModel)]="house.room_separate" placeholder=" "
+                             (keypress)="keyPressNumber($event);">
                       <span>Из них раздельных</span>
                     </div>
                   </div>
@@ -333,456 +340,474 @@
 
                 <div class="form-group label">
                   <div class="form-group label">
-                    <input class="form-control" [(ngModel)]="house.storeys" placeholder=" ">
-                  <span>Этажность</span>
-                </div>
+                    <input class="form-control" [(ngModel)]="house.storeys" placeholder=" "
+                           (keypress)="keyPressNumber($event);">
+                    <span>Этажность</span>
+                  </div>
 
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div #dopCharacteristics class="mark">
-      <div class="newRow">
-        <div class="row">
-          <div class="col-12">
-            <h3>Дополнительные характеристики объекта</h3>
-          </div>
-
-          <div class="col-xl-4 col-12">
-            <div class="row">
-
-              <div class="col-12">
-                <div class="form-group label">
-                  <select class="form-control" [(ngModel)]="house.repair">
-                    <option value="0"></option>
-                    <option *ngFor="let one of repairs" [value]="one.id">{{one.title}}</option>
-                  </select>
-                  <span>Ремонт</span>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group label">
-                  <select class="form-control" [(ngModel)]="house.heating">
-                    <option value="0"></option>
-                    <option *ngFor="let one of heating" [value]="one.id">{{one.title}}</option>
-                  </select>
-                  <span>Отопление</span>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group label">
-                  <select class="form-control" [(ngModel)]="house.water">
-                    <option value="0"></option>
-                    <option *ngFor="let one of water" [value]="one.id">{{one.title}}</option>
-                  </select>
-                  <span>Водоснабжение</span>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group label">
-                  <select class="form-control" [(ngModel)]="house.gas">
-                    <option value="0"></option>
-                    <option *ngFor="let one of gas" [value]="one.id">{{one.title}}</option>
-                  </select>
-                  <span>Газоснабжение</span>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group label">
-                  <select class="form-control" [(ngModel)]="house.electricity">
-                    <option value="0"></option>
-                    <option *ngFor="let one of electricity" [value]="one.id">{{one.title}}</option>
-                  </select>
-                  <span>Электричество</span>
-                </div>
-              </div>
-
+      <div #dopCharacteristics class="mark">
+        <div class="newRow">
+          <div class="row">
+            <div class="col-12">
+              <h3>Дополнительные характеристики объекта</h3>
             </div>
-          </div>
 
-          <div class="col-xl-8 col-12">
-            <div class="row">
-              <div class="labels-lg" style="margin-top: 10px;">
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.phone = !house.house_addition_information.phone"
-                       [ngClass]="{'select-label' : house.house_addition_information.phone}">
-                  <span>Телефон</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.furniture = !house.house_addition_information.furniture"
-                       [ngClass]="{'select-label' : house.house_addition_information.furniture}">
-                  <span>Мебель</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.terrace = !house.house_addition_information.terrace"
-                       [ngClass]="{'select-label' : house.house_addition_information.terrace}">
-                  <span>Терраса</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.garage = !house.house_addition_information.garage"
-                       [ngClass]="{'select-label' : house.house_addition_information.garage}">
-                  <span>Гараж</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.outbuildings = !house.house_addition_information.outbuildings"
-                       [ngClass]="{'select-label' : house.house_addition_information.outbuildings}">
-                  <span>Хоз. постройки</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.euro_finish = !house.house_addition_information.euro_finish"
-                       [ngClass]="{'select-label' : house.house_addition_information.euro_finish}">
-                  <span>Евро-отделка</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.wood_finish = !house.house_addition_information.wood_finish"
-                       [ngClass]="{'select-label' : house.house_addition_information.wood_finish}">
-                  <span>Отделка деревом</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.sauna = !house.house_addition_information.sauna"
-                       [ngClass]="{'select-label' : house.house_addition_information.sauna}">
-                  <span>Сауна/баня</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.landscape_design = !house.house_addition_information.landscape_design"
-                       [ngClass]="{'select-label' : house.house_addition_information.landscape_design}">
-                  <span>Ландш. дизайн</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.river = !house.house_addition_information.river"
-                       [ngClass]="{'select-label' : house.house_addition_information.river}">
-                  <span>Рядом речка/водоем</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.forest = !house.house_addition_information.forest"
-                       [ngClass]="{'select-label' : house.house_addition_information.forest}">
-                  <span>Рядом лес</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.beautiful_place = !house.house_addition_information.beautiful_place"
-                       [ngClass]="{'select-label' : house.house_addition_information.beautiful_place}">
-                  <span>Живописное место</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.tv = !house.house_addition_information.tv"
-                       [ngClass]="{'select-label' : house.house_addition_information.tv}">
-                  <span>Спутниковое/кабельное ТВ</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.signaling = !house.house_addition_information.signaling"
-                       [ngClass]="{'select-label' : house.house_addition_information.signaling}">
-                  <span>Сигнализация</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.security_territory = !house.house_addition_information.security_territory"
-                       [ngClass]="{'select-label' : house.house_addition_information.security_territory}">
-                  <span>Охрана</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.fireplace = !house.house_addition_information.fireplace"
-                       [ngClass]="{'select-label' : house.house_addition_information.fireplace}">
-                  <span>Камин</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.asphalt = !house.house_addition_information.asphalt"
-                       [ngClass]="{'select-label' : house.house_addition_information.asphalt}">
-                  <span>Асфальтированный подъезд</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.pool = !house.house_addition_information.pool"
-                       [ngClass]="{'select-label' : house.house_addition_information.pool}">
-                  <span>Бассейн</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.arbor = !house.house_addition_information.arbor"
-                       [ngClass]="{'select-label' : house.house_addition_information.arbor}">
-                  <span>Беседка</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.garden = !house.house_addition_information.garden"
-                       [ngClass]="{'select-label' : house.house_addition_information.garden}">
-                  <span>Сад</span>
-                </label>
-                <label class="btn btn-default"
-                       (click)="house.house_addition_information.greenhouse = !house.house_addition_information.greenhouse"
-                       [ngClass]="{'select-label' : house.house_addition_information.greenhouse}">
-                  <span>Теплица</span>
-                </label>
+            <div class="col-xl-4 col-12">
+              <div class="row">
+
+                <div class="col-12">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="house.repair">
+                      <option value="0"></option>
+                      <option *ngFor="let one of repairs" [value]="one.id">{{one.title}}</option>
+                    </select>
+                    <span>Ремонт</span>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="house.heating">
+                      <option value="0"></option>
+                      <option *ngFor="let one of heating" [value]="one.id">{{one.title}}</option>
+                    </select>
+                    <span>Отопление</span>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="house.water">
+                      <option value="0"></option>
+                      <option *ngFor="let one of water" [value]="one.id">{{one.title}}</option>
+                    </select>
+                    <span>Водоснабжение</span>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="house.gas">
+                      <option value="0"></option>
+                      <option *ngFor="let one of gas" [value]="one.id">{{one.title}}</option>
+                    </select>
+                    <span>Газоснабжение</span>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="house.electricity">
+                      <option value="0"></option>
+                      <option *ngFor="let one of electricity" [value]="one.id">{{one.title}}</option>
+                    </select>
+                    <span>Электричество</span>
+                  </div>
+                </div>
+
               </div>
             </div>
-          </div>
 
-          <div class="col-xl-7 col-lg-7 offset-xl-2 offset-ld-2 col-12">
-            <div class="form-group label">
+            <div class="col-xl-8 col-12">
+              <div class="row">
+                <div class="labels-lg" style="margin-top: 10px;">
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.phone = !house.house_addition_information.phone"
+                         [ngClass]="{'select-label' : house.house_addition_information.phone}">
+                    <span>Телефон</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.furniture = !house.house_addition_information.furniture"
+                         [ngClass]="{'select-label' : house.house_addition_information.furniture}">
+                    <span>Мебель</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.terrace = !house.house_addition_information.terrace"
+                         [ngClass]="{'select-label' : house.house_addition_information.terrace}">
+                    <span>Терраса</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.garage = !house.house_addition_information.garage"
+                         [ngClass]="{'select-label' : house.house_addition_information.garage}">
+                    <span>Гараж</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.outbuildings = !house.house_addition_information.outbuildings"
+                         [ngClass]="{'select-label' : house.house_addition_information.outbuildings}">
+                    <span>Хоз. постройки</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.euro_finish = !house.house_addition_information.euro_finish"
+                         [ngClass]="{'select-label' : house.house_addition_information.euro_finish}">
+                    <span>Евро-отделка</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.wood_finish = !house.house_addition_information.wood_finish"
+                         [ngClass]="{'select-label' : house.house_addition_information.wood_finish}">
+                    <span>Отделка деревом</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.sauna = !house.house_addition_information.sauna"
+                         [ngClass]="{'select-label' : house.house_addition_information.sauna}">
+                    <span>Сауна/баня</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.landscape_design = !house.house_addition_information.landscape_design"
+                         [ngClass]="{'select-label' : house.house_addition_information.landscape_design}">
+                    <span>Ландш. дизайн</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.river = !house.house_addition_information.river"
+                         [ngClass]="{'select-label' : house.house_addition_information.river}">
+                    <span>Рядом речка/водоем</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.forest = !house.house_addition_information.forest"
+                         [ngClass]="{'select-label' : house.house_addition_information.forest}">
+                    <span>Рядом лес</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.beautiful_place = !house.house_addition_information.beautiful_place"
+                         [ngClass]="{'select-label' : house.house_addition_information.beautiful_place}">
+                    <span>Живописное место</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.tv = !house.house_addition_information.tv"
+                         [ngClass]="{'select-label' : house.house_addition_information.tv}">
+                    <span>Спутниковое/кабельное ТВ</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.signaling = !house.house_addition_information.signaling"
+                         [ngClass]="{'select-label' : house.house_addition_information.signaling}">
+                    <span>Сигнализация</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.security_territory = !house.house_addition_information.security_territory"
+                         [ngClass]="{'select-label' : house.house_addition_information.security_territory}">
+                    <span>Охрана</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.fireplace = !house.house_addition_information.fireplace"
+                         [ngClass]="{'select-label' : house.house_addition_information.fireplace}">
+                    <span>Камин</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.asphalt = !house.house_addition_information.asphalt"
+                         [ngClass]="{'select-label' : house.house_addition_information.asphalt}">
+                    <span>Асфальтированный подъезд</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.pool = !house.house_addition_information.pool"
+                         [ngClass]="{'select-label' : house.house_addition_information.pool}">
+                    <span>Бассейн</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.arbor = !house.house_addition_information.arbor"
+                         [ngClass]="{'select-label' : house.house_addition_information.arbor}">
+                    <span>Беседка</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.garden = !house.house_addition_information.garden"
+                         [ngClass]="{'select-label' : house.house_addition_information.garden}">
+                    <span>Сад</span>
+                  </label>
+                  <label class="btn btn-default"
+                         (click)="house.house_addition_information.greenhouse = !house.house_addition_information.greenhouse"
+                         [ngClass]="{'select-label' : house.house_addition_information.greenhouse}">
+                    <span>Теплица</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-7 col-lg-7 offset-xl-2 offset-ld-2 col-12">
+              <div class="form-group label">
                   <textarea class="form-control" style="width: 100%;" rows="5" [(ngModel)]="house.comment"
                             placeholder=" "></textarea>
-              <span>Примечание</span>
+                <span>Примечание</span>
+              </div>
+
             </div>
 
           </div>
-
         </div>
       </div>
-    </div>
 
-    <div #deal class="mark">
-      <div class="newRow">
-        <div class="row">
-          <div class="col-12">
-            <h3>Условия сделки</h3>
-          </div>
-
-          <div class="col-xl-4 col-12">
-            <div class="row">
-
-              <div class="col-12">
-                <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.price" placeholder=" ">
-                  <span>Стоимость USD</span>
-                </div>
-              </div>
-
-              <div class="col-xl-12 col-lg-6 col-md-6 col-12">
-                <div class="row">
-
-                  <div class="col-6">
-                    <div class="labels-lg">
-                      <label class="btn btn-default" (click)="house. auction  = !house. auction "
-                             [ngClass]="{'select-label' : house. auction }">
-                        <span>Торг</span>
-                      </label>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="labels-lg">
-                      <label class="btn btn-default" (click)="house.credit = !house.credit"
-                             [ngClass]="{'select-label' : house.credit}">
-                        <span>Кредит</span>
-                      </label>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="col-xl-12 col-lg-6 col-md-6 col-12">
-                <div class="row">
-
-                  <div class="col-6">
-                    <div class="labels-lg">
-                      <label class="btn btn-default" (click)="house.execution = !house.execution"
-                             [ngClass]="{'select-label' : house.execution}">
-                        <span>С оформлением</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="col-6">
-                    <div class="labels-lg">
-                      <label class="btn btn-default" (click)="house.quickly = !house.quickly"
-                             [ngClass]="{'select-label' : house.quickly}">
-                        <span>Срочно</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+      <div #deal class="mark">
+        <div class="newRow">
+          <div class="row">
+            <div class="col-12">
+              <h3>Условия сделки</h3>
             </div>
-          </div>
 
-          <div class="col-xl-4 col-12">
-            <div class="row">
+            <div class="col-xl-4 col-12">
+              <div class="row">
 
-              <div class="col-xl-12 col-6">
-                <div class="form-group label">
-                  <select class="form-control" [(ngModel)]="house.sale">
-                    <option value="0"></option>
-                    <option *ngFor="let one of sales" [value]="one.id">{{one.title}}</option>
-                  </select>
-                  <span>Условия сделки</span>
+                <div class="col-12">
+                  <div class="form-group label">
+                    <input class="form-control" [(ngModel)]="house.price" placeholder=" ">
+                    <span>Стоимость USD</span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-xl-12 col-6">
-                <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.exchange" placeholder=" ">
-                  <span>Вариант обмена</span>
+                <div class="col-xl-12 col-lg-6 col-md-6 col-12">
+                  <div class="row">
+
+                    <div class="col-6">
+                      <div class="labels-lg">
+                        <label class="btn btn-default" (click)="house. auction  = !house. auction "
+                               [ngClass]="{'select-label' : house. auction }">
+                          <span>Торг</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="labels-lg">
+                        <label class="btn btn-default" (click)="house.credit = !house.credit"
+                               [ngClass]="{'select-label' : house.credit}">
+                          <span>Кредит</span>
+                        </label>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
-              </div>
 
+                <div class="col-xl-12 col-lg-6 col-md-6 col-12">
+                  <div class="row">
+
+                    <div class="col-6">
+                      <div class="labels-lg">
+                        <label class="btn btn-default" (click)="house.execution = !house.execution"
+                               [ngClass]="{'select-label' : house.execution}">
+                          <span>С оформлением</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <div class="labels-lg">
+                        <label class="btn btn-default" (click)="house.quickly = !house.quickly"
+                               [ngClass]="{'select-label' : house.quickly}">
+                          <span>Срочно</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
-          </div>
 
-          <div class="col-xl-4 col-12">
-            <div class="row">
+            <div class="col-xl-4 col-12">
+              <div class="row">
 
-              <div class="col-8">
-                <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.contract" placeholder=" ">
-                  <span>Договор №</span>
+                <div class="col-xl-12 col-6">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="house.sale">
+                      <option value="0"></option>
+                      <option *ngFor="let one of sales" [value]="one.id">{{one.title}}</option>
+                    </select>
+                    <span>Условия сделки</span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-8">
-                <div class="form-group label">
-                  <input type="text" class="form-control" [(ngModel)]="house.contract_from" placeholder=" "
-                         (click)="dogovor_from.toggle()" ngbDatepicker #dogovor_from="ngbDatepicker">
-                  <span>Дата заключения договора</span>
+                <div class="col-xl-12 col-6">
+                  <div class="form-group label">
+                    <input class="form-control" [(ngModel)]="house.exchange" placeholder=" ">
+                    <span>Вариант обмена</span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-8">
-                <div class="form-group label">
-                  <input type="text" class="form-control" [(ngModel)]="house.contract_to" placeholder=" "
-                         (click)="dogovor_to.toggle()" ngbDatepicker #dogovor_to="ngbDatepicker">
-                  <span>Дата окончания договора</span>
-                </div>
               </div>
-
-              <div class="col-8">
-                <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.request_number" placeholder=" ">
-                  <span>Заявка №</span>
-                </div>
-              </div>
-
-              <div class="col-4">
-                <div class="labels-lg">
-                  <label class="btn btn-default" style="margin-top: 10px; min-width: 80px"
-                         (click)="house.request = !house.request"
-                         [ngClass]="{'select-label' : house.request}">
-                    <span>Заявка</span>
-                  </label>
-                </div>
-              </div>
-
             </div>
-          </div>
 
+            <div class="col-xl-4 col-12">
+              <div class="row">
+
+                <div class="col-8">
+                  <div class="form-group label">
+                    <input class="form-control" [(ngModel)]="house.contract" placeholder=" ">
+                    <span>Договор №</span>
+                  </div>
+                </div>
+
+                <div class="col-4">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="house.contract_fraction">
+                      <option value='/1'>/1</option>
+                      <option value='/2'>/2</option>
+                      <option value='/3'>/3</option>
+                      <option value='/4'>/4</option>
+                      <option value='/5'>/5</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-xl-8 col-sm-6 col-8">
+                  <div class="form-group label">
+                    <input type="text" class="form-control" [(ngModel)]="house.contract_from" placeholder=" "
+                           (click)="dogovor_from.toggle()" ngbDatepicker #dogovor_from="ngbDatepicker"
+                           (keypress)="keyPressPoint($event);">
+                    <span>Дата заключения договора</span>
+                  </div>
+                </div>
+
+                <div class="col-xl-8 col-sm-6 col-8">
+                  <div class="form-group label">
+                    <input type="text" class="form-control" [(ngModel)]="house.contract_to" placeholder=" "
+                           (click)="dogovor_to.toggle()" ngbDatepicker #dogovor_to="ngbDatepicker"
+                           (keypress)="keyPressPoint($event);">
+                    <span>Дата окончания договора</span>
+                  </div>
+                </div>
+
+                <div class="col-8">
+                  <div class="form-group label">
+                    <input class="form-control" [(ngModel)]="house.request_number" placeholder=" ">
+                    <span>Заявка №</span>
+                  </div>
+                </div>
+
+                <div class="col-4">
+                  <div class="labels-lg">
+                    <label class="btn btn-default" style="margin-top: 10px; min-width: 80px"
+                           (click)="house.request = !house.request"
+                           [ngClass]="{'select-label' : house.request}">
+                      <span>Заявка</span>
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
-    </div>
 
-    <div #advert class="mark">
-      <div class="newRow">
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-            <h3>Характеристики объявления</h3>
+      <div #advert class="mark">
+        <div class="newRow">
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <h3>Характеристики объявления</h3>
 
-            <div class="row">
+              <div class="row">
 
-              <div class="col-12">
-                <div class="labels-lg">
-                  <label class="btn btn-default" (click)="house.send = !house.send"
-                         [ngClass]="{'select-label' : house.send}">
-                    <span>Реклама</span>
-                  </label>
+                <div class="col-12">
+                  <div class="labels-lg">
+                    <label class="btn btn-default" (click)="house.send = !house.send"
+                           [ngClass]="{'select-label' : house.send}">
+                      <span>Реклама</span>
+                    </label>
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-12">
-                <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.title" placeholder=" ">
-                  <span>Заголовок</span>
+                <div class="col-12">
+                  <div class="form-group label">
+                    <input class="form-control" [(ngModel)]="house.title" placeholder=" ">
+                    <span>Заголовок</span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-12">
-                <div class="form-group label">
+                <div class="col-12">
+                  <div class="form-group label">
                   <textarea class="form-control" style="width: 100%;" rows="5" [(ngModel)]="house.text"
                             placeholder=" "></textarea>
-                  <span>Текст объявления</span>
+                    <span>Текст объявления</span>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+            <div #contact class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <h3>Контакты</h3>
+              <div class="row">
+
+                <div class="col-12">
+                  <div class="form-group label">
+                    <input class="form-control" [(ngModel)]="house.cont_phone1" placeholder=" "
+                           mask="(00) 000-00-00" prefix="+375" [showMaskTyped] = "true">
+                    <span>Телефон собственника 1</span>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group label">
+                    <input class="form-control" [(ngModel)]="house.cont_phone2" placeholder=" "
+                           mask="(00) 000-00-00" prefix="+375" [showMaskTyped] = "true">
+                    <span>Телефон собственника 2</span>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group label">
+                    <input class="form-control" [(ngModel)]="house.fio" placeholder=" ">
+                    <span>ФИО собственника</span>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="house.user.id"
+                            (change)="getManager($event.target.value)">
+                      <option value="0"></option>
+                      <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}}
+                        {{one.user_information.name}}
+                      </option>
+                    </select>
+                    <span>Сотрудник</span>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group label">
+                    <input disabled class="form-control" type="text" placeholder=" "
+                           value="{{house.user.manager_information.surname}} {{house.user.manager_information.name}}">
+                    <span>Руководитель</span>
+                  </div>
                 </div>
 
               </div>
 
             </div>
           </div>
+        </div>
+      </div>
 
-          <div #contact class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-            <h3>Контакты</h3>
-            <div class="row">
+      <div #photos class="mark">
+        <div class="newRow">
+          <div class="row">
+            <div class="col-12">
+              <h3>Фото</h3>
+            </div>
 
-              <div class="col-12">
-                <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.cont_phone1" placeholder=" ">
-                  <span>Телефон собственника 1</span>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.cont_phone2" placeholder=" ">
-                  <span>Телефон собственника 2</span>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.fio" placeholder=" ">
-                  <span>ФИО собственника</span>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group label">
-                  <select class="form-control" [(ngModel)]="house.user.id"
-                          (change)="getManager($event.target.value)">
-                    <option value="0"></option>
-                    <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}}
-                      {{one.user_information.name}}
-                    </option>
-                  </select>
-                  <span>Сотрудник</span>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group label">
-                  <input disabled class="form-control" type="text" placeholder=" "
-                         value="{{house.user.manager_information.surname}} {{house.user.manager_information.name}}">
-                  <span>Руководитель</span>
-                </div>
-              </div>
-
+            <div class="col-12">
+              <image-upload (uploadFinished)="onUploadFinished($event)" [uploadedFiles]="upload_photo"
+                            (removed)="onRemoved($event)"></image-upload>
             </div>
 
           </div>
         </div>
       </div>
-    </div>
 
-    <div #photos class="mark">
-      <div class="newRow">
-        <div class="row">
-          <div class="col-12">
-            <h3>Фото</h3>
-          </div>
-
-          <div class="col-12">
-            <image-upload (uploadFinished)="onUploadFinished($event)" [uploadedFiles]="upload_photo"
-                          (removed)="onRemoved($event)"></image-upload>
-          </div>
-
+      <div class="form-group myButton">
+        <div class="col-12">
+          <button (click)="save()" class="btn btn-lg btn-info">
+            Сохранить
+          </button>
         </div>
       </div>
-    </div>
 
-    <div class="form-group myButton">
-      <div class="col-12">
-        <button (click)="save()" class="btn btn-lg btn-info">
-          Сохранить
-        </button>
-      </div>
     </div>
-
   </div>
 </div>

@@ -14,6 +14,7 @@ import {LabelService} from '../../_services/label.service';
 import {SearchHouseModel} from '../../_models/SearchHouse.model';
 
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {AccessModel} from '../../_models/Access.model';
 
 export interface DialogData {
   house: House;
@@ -51,8 +52,15 @@ export class HousesListComponent implements OnInit, OnDestroy {
     '', '', [], [], [], [], '', '', [], [],
     [], [], false, false, false, false, false, false);
 
+
+  public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false);
+
   public sort = {
-    'field': 'created_at',
+    'field': 'updated_at',
     'value': 'DESC'
   };
 
@@ -68,6 +76,7 @@ export class HousesListComponent implements OnInit, OnDestroy {
 
     this.subscription = sharedService.changeEmitted$2.subscribe(data => {
       this.houses = [];
+      this.user = data;
       this.getHouses();
     });
   }
@@ -82,7 +91,12 @@ export class HousesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getHouses();
+    this.loginService.detailsUser().subscribe(data => {
+      this.user = data.user;
+      this.access = data.array_access;
+
+      this.getHouses();
+    });
   }
 
   ngOnDestroy() {
@@ -132,7 +146,7 @@ export class HousesListComponent implements OnInit, OnDestroy {
       for (let i = 0; i < data.length; i++) {
         // информация о сотруднике компании
         data[i].user = this.userService.setUser(data[i].user);
-        data[i].user.user_information = this.userService.setUserInformation(data[i].user);
+        data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
         data[i].company = this.companyService.setCompany(data[i].company);
         //
         // адрес объекта

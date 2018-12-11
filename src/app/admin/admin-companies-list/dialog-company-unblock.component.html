@@ -1,15 +1,16 @@
-<div *ngIf="modules" class="row">
-  <div class="col-md-6 col-sm-6">
-    <h4>Модули</h4>
+<h2 mat-dialog-title>
+  <i class="fa fa-check-circle" style="color: #10b64e; font-size: 30px;margin-right: 5px"></i>
+  Отметьте необходимые модули!</h2>
+<mat-dialog-content>
+  <h4>Модули</h4>
     <div *ngFor="let module of modules" class="form-check">
-      <input class="form-check-input" type="checkbox" id="{{ module.id}}" name="company.modules[]">
+      <input class="form-check-input" type="checkbox" id="{{ module.id}}"
+             (change)="data.company.modules[module.id] = !data.company.modules[module.id]">
       <label class="form-check-label">
         {{ module.title}}
       </label>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <button (click)="unblock(company)">Разблокировать</button>
-  <button (click)="closeDialog()">Отмена</button>
-</div>
+    </div></mat-dialog-content>
+<mat-dialog-actions>
+  <button style="background: #cee0ec" mat-button (click)="onNoClick()">Отмена</button>
+  <button style="background: #cee0ec" mat-button [mat-dialog-close]="data.company" cdkFocusInitial>ОК</button>
+</mat-dialog-actions>

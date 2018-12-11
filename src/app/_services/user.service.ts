@@ -73,17 +73,17 @@ export class UserService {
 
   setUser(user: User) {
     if (!user) {
-      return user = new User(null, '', '', null, null, null, '',
+      return user = new User(0, '', '', null, null, null, '',
         0, null, null, false, null, null, '', null, null, null);
     }
     return user;
   }
 
-  setUserInformation(user: User) {
-    if (!user.user_information) {
-      return user.user_information = new UserInformation(null, '', '', '', '', '', '', null, []);
+  setUserInformation(user_information: UserInformation) {
+    if (!user_information) {
+      return user_information = new UserInformation(0, '', '', '', '', '', '', null, []);
     }
-    return user.user_information;
+    return user_information;
   }
 
 }

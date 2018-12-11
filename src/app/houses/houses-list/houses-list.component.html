@@ -32,8 +32,9 @@
         </div>
       </th>
       <th>$м2</th>
-      <th>Агентство</th>
-      <th>
+      <th *ngIf="user.access===4">Агентство</th>
+      <th *ngIf="user.access!==4">Сотрудник</th>
+      <th *ngIf="access.houses_created">
         <div class="nobr cursor" style="width: 100%"
              [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
              (click)="changeSort('created_at', 'DESC')">
@@ -74,7 +75,7 @@
     <ng-container *ngFor="let house of houses | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countHouses }; let i = index">
       <tr>
         <td class="text-center">
-          <a routerLink="house/{{house.id}}" target="_self">
+          <a *ngIf="house.access_edit" routerLink="house/{{house.id}}" target="_self">
             <i class="fas fa-pencil-alt icon-color"></i>
           </a>
         </td>
@@ -117,18 +118,19 @@
         <td>{{house.storeys}}</td>
         <td>{{house.price}}</td>
         <td>{{house.price_sqr}}</td>
-        <td>{{house.company.title}}</td>
+        <td *ngIf="user.access===4">{{house.company.title}}</td>
+        <td *ngIf="user.access!==4">{{house.user.user_information.surname}} {{house.user.user_information.name}}</td>
         <td>
           {{house.created_at | date: 'dd.MM.yyyy'}}
         </td>
-        <td>
+        <td *ngIf="access.houses_created">
           {{house.updated_at | date: 'dd.MM.yyyy'}}
         </td>
         <td>
           <i class="fas fa-chevron-circle-right icon-color icon-cursor" style="font-size: 20px;"
              (click)="close_hideme3(i);"></i>
           <div class="action-window" [hidden]="!hideme3[i]">
-            <div class="action" (click)="openDialog(house)">УДАЛИТЬ ОБЪЕКТ</div>
+            <div *ngIf="house.access_edit" class="action" (click)="openDialog(house)">УДАЛИТЬ ОБЪЕКТ</div>
             <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
             <div class="action">ОТПРАВИТЬ В РЕКЛАМУ</div>
             <div class="action">КАЛЬКУЛЯТОР</div>
@@ -142,10 +144,10 @@
               <app-house-list-photo [photo]="house.photo"></app-house-list-photo>
             </div>
             <div class="col-lg-5 col-md-12" style="margin: 10px 0 0 10px">
-              {{house.cont_phone1}}, {{house.cont_phone2}}<br>
+              <span *ngIf="house.access_own_info">+375 {{house.cont_phone1}}, +375 {{house.cont_phone2}}</span><br>
               <span>{{house.text}}</span>
               <br>
-              <a class="btn btn-sm btn-primary" routerLink="/houses/house/{{house.id}}">Подробнее</a>
+              <a *ngIf="house.access_edit" class="btn btn-sm btn-primary" routerLink="/houses/house/{{house.id}}">Подробнее</a>
              <!-- <a class="btn">
                 <mat-icon class="size-16 icon-color">place Смотреть на карте</mat-icon>
               </a>-->

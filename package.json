@@ -38,6 +38,7 @@
     "ng2-scroll-to-el": "^1.2.1",
     "ng4-auto-complete": "^1.0.0",
     "ngx-gallery": "^5.6.2",
+    "ngx-mask": "^7.0.1",
     "ngx-pagination": "^3.1.1",
     "ol": "^5.2.0",
     "rxjs": "^6.2.1",

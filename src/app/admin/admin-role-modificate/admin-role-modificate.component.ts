@@ -55,8 +55,26 @@ export class AdminRoleModificateComponent implements OnInit {
       });
   }
 
+  setAccessMain(role_now, item) {
+
+    if (item.title === 'Доступ к разделу') {
+      if (role_now.check) {
+        const map = new Map(Object.entries(this.role.array_permissions));
+        map.forEach((keys: any, value: any) => {
+          if (keys.section === item.section) {// из того же раздела чекбоксы
+
+            role_now.check = true; // вернуть клик у  Доступа (временное решение)
+            keys.check = false;
+
+          }
+        });
+      }
+    }
+    role_now.check = !role_now.check;
+  }
+
   save() {
-   // console.log(this.role);
+    console.log(this.role);
     if (this.role.id !== 0) {
       this.roleSevice.update(this.role).subscribe(
         data => {

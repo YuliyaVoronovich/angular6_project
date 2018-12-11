@@ -36,14 +36,16 @@
 
               <div class="col-lg-4 col-md-4 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.phone1">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.phone1"
+                         mask="(00) 000-00-00" prefix="+375" [showMaskTyped] = "true">
                   <span>Телефон</span>
                 </div>
               </div>
 
               <div class="col-lg-4 col-md-4 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.phone2">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.phone2"
+                         mask="(00) 000-00-00" prefix="+375" [showMaskTyped] = "true">
                   <span>Телефон</span>
                 </div>
               </div>
@@ -183,29 +185,33 @@
 
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_land_from">
-                  <span>S учатска от</span>
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_land_from"
+                         (keypress)="keyPressPoint($event);">
+                  <span>S участка от</span>
                 </div>
               </div>
 
 
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_land_to">
-                  <span>S учатска до</span>
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_land_to"
+                         (keypress)="keyPressPoint($event);">
+                  <span>S участка до</span>
                 </div>
               </div>
 
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_build_from">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_build_from"
+                         (keypress)="keyPressPoint($event);">
                   <span>S застройки от</span>
                 </div>
               </div>
 
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_build_to">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_build_to"
+                         (keypress)="keyPressPoint($event);">
                   <span>S застройки до</span>
                 </div>
               </div>
@@ -217,7 +223,7 @@
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
                   <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_from"
-                         (change)="getPriceSqr()">
+                         (change)="getPriceSqr()" (keypress)="keyPressPoint($event);">
                   <span>S общая от</span>
                 </div>
               </div>
@@ -225,22 +231,23 @@
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
                   <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_to"
-                         (change)="getPriceSqr()">
+                         (change)="getPriceSqr()" (keypress)="keyPressPoint($event);">
                   <span>S общая до</span>
                 </div>
               </div>
 
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" "
-                         [(ngModel)]="client.area_leave_from">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_leave_from"
+                         (keypress)="keyPressPoint($event);">
                   <span>S жилая от</span>
                 </div>
               </div>
 
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_leave_to">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_leave_to"
+                         (keypress)="keyPressPoint($event);">
                   <span>S жилая до</span>
                 </div>
               </div>
@@ -251,15 +258,16 @@
 
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" "
-                         [(ngModel)]="client.area_kitchen_from">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_kitchen_from"
+                         (keypress)="keyPressPoint($event);">
                   <span>S кухни от</span>
                 </div>
               </div>
 
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_kitchen_to">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.area_kitchen_to"
+                         (keypress)="keyPressPoint($event);">
                   <span>S кухни до</span>
                 </div>
               </div>
@@ -272,7 +280,8 @@
               <div class="col-12 text-center align">
                 <div class="labels-lg" style="margin-top: 10px;">
                   <ng-container *ngFor="let type of types">
-                    <label class="btn btn-default" (click)="typesTrigger(type.id); arrayTypes[type.id] = !arrayTypes[type.id]"
+                    <label class="btn btn-default"
+                           (click)="typesTrigger(type.id); arrayTypes[type.id] = !arrayTypes[type.id]"
                            [ngClass]="{'select-label' : arrayTypes[type.id]}">
                       <span>{{type.title}}</span>
                     </label>
@@ -378,119 +387,137 @@
                     <span>Электричество</span>
                   </label>
                 </div>
-            </div>
+              </div>
 
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="mark">
-      <div class="newRow">
-        <div class="row">
-          <div class="col-12">
-            <h4>Другая информация</h4>
-          </div>
+      <div class="mark">
+        <div class="newRow">
+          <div class="row">
+            <div class="col-12">
+              <h4>Другая информация</h4>
+            </div>
 
-          <div class="col-xl-6 col-12">
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group label">
+            <div class="col-xl-6 col-12">
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group label">
                   <textarea class="form-control" style="width: 100%;" rows="5" [(ngModel)]="client.description"
                             placeholder=" "></textarea>
-                  <span>Примечание</span>
+                    <span>Примечание</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="row">
-              <div class="col-5">
-                <div class="form-group label">
-                  <select class="form-control" [(ngModel)]="client.source">
-                    <option value="0"></option>
-                    <option *ngFor="let one of sources" [value]="one.id">{{one.title}}</option>
-                  </select>
-                  <span>Источник</span>
+              <div class="row">
+                <div class="col-5">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="client.source">
+                      <option value="0"></option>
+                      <option *ngFor="let one of sources" [value]="one.id">{{one.title}}</option>
+                    </select>
+                    <span>Источник</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="row">
-              <div class="col-5">
-                <div class="form-group label">
-                  <select class="form-control" [(ngModel)]="client.user.id"
-                          (change)="getManager($event.target.value)">
-                    <option value="0"></option>
-                    <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}}
-                      {{one.user_information.name}}
-                    </option>
-                  </select>
-                  <span>Сотрудник</span>
+              <div class="row">
+                <div class="col-5">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="client.user.id"
+                            (change)="getManager($event.target.value)">
+                      <option value="0"></option>
+                      <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}}
+                        {{one.user_information.name}}
+                      </option>
+                    </select>
+                    <span>Сотрудник</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="row">
-              <div class="col-5">
-                <div class="form-group label">
-                  <input disabled class="form-control" type="text" placeholder=" "
-                         value="{{client.user.manager_information.surname}} {{client.user.manager_information.name}}">
-                  <span>Руководитель</span>
+              <div class="row">
+                <div class="col-5">
+                  <div class="form-group label">
+                    <input disabled class="form-control" type="text" placeholder=" "
+                           value="{{client.user.manager_information.surname}} {{client.user.manager_information.name}}">
+                    <span>Руководитель</span>
+                  </div>
                 </div>
               </div>
+
+            </div>
+            <div class="col-xl-6 col-12">
+              <div class="row">
+                <div class="col-4">
+                  <div class="form-group label">
+                    <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.contract">
+                    <span>Номер договора</span>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group label">
+                    <select class="form-control" [(ngModel)]="client.contract_fraction">
+                      <option value='/1'>/1</option>
+                      <option value='/2'>/2</option>
+                      <option value='/3'>/3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-12">
+                  <div class="form-group label">
+                    <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.contract_from"
+                           (click)="dogovor_from.toggle()" ngbDatepicker #dogovor_from="ngbDatepicker"
+                           (keypress)="keyPressPoint($event);">
+                    <span>Дата от</span>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-12">
+                  <div class="form-group label">
+                    <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.contract_to"
+                           (click)="dogovor_to.toggle()" ngbDatepicker #dogovor_to="ngbDatepicker"
+                           (keypress)="keyPressPoint($event);">
+                    <span>Дата до</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="send"
+                               [(ngModel)]="client.send">
+                        <label for="send" class="form-check-label">Отправить в MLS</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
             </div>
 
           </div>
-          <div class="col-xl-6 col-12">
-            <div class="row">
-              <div class="col-4">
-                <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.contract">
-                  <span>Номер договора</span>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="form-group label">
-                  <select class="form-control" [(ngModel)]="client.contract_fraction">
-                    <option value='/1'>/1</option>
-                    <option value='/2'>/2</option>
-                    <option value='/3'>/3</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-lg-4 col-md-4 col-12">
-                <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.contract_from"
-                         (click)="dogovor_from.toggle()" ngbDatepicker #dogovor_from="ngbDatepicker">
-                  <span>Дата от</span>
-                </div>
-              </div>
-
-              <div class="col-lg-4 col-md-4 col-12">
-                <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.contract_to"
-                         (click)="dogovor_to.toggle()" ngbDatepicker #dogovor_to="ngbDatepicker">
-                  <span>Дата до</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
         </div>
       </div>
-    </div>
 
-    <div class="form-group myButton">
-      <div class="col-12">
-        <button (click)="save()" class="btn btn-lg btn-info">
-          Сохранить
-        </button>
+      <div class="form-group myButton">
+        <div class="col-12">
+          <button (click)="save()" class="btn btn-lg btn-info">
+            Сохранить
+          </button>
+        </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </div>

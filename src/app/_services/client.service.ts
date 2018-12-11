@@ -10,7 +10,7 @@ import {Client} from '../_models/Client.model';
 export class ClientService {
 
   private uri = '/clients';
-  private uri_archive = '/archive/clients';
+  private uri_archive = '/clients/archive';
 
 
   constructor(private http: Http,

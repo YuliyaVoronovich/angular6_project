@@ -76,8 +76,29 @@ export class AdminCompaniesListComponent implements OnInit {
           company.disable = true;
           this.message('Компания заблокирована', true);
         } else {
-          company.disable = false;
           this.message('Компанию не удалось заблокировать', true);
+        }
+      },
+      error => {
+        if (error.status === 401) {
+          this.loginService.logout();
+          this.router.navigate(['/']);
+        }
+        if (error.status === 403) {
+          this.router.navigate(['/403']);
+        }
+      }
+    );
+  }
+
+  unBlock(company: Company): void {
+    this.companyService.unblock(company).subscribe(
+      data => {
+        if (data.status === 200) {
+          company.disable = false;
+          this.message('Компания разблокирована', false);
+        } else {
+          this.message('Компанию не удалось разблокировать', true);
         }
       },
       error => {
@@ -96,15 +117,32 @@ export class AdminCompaniesListComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogCompanyBlockComponent, {
       data: {company: company}
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // заблокировать компанию
+        this.block(company);
+      }
+    });
+
   }
 
   openDialogUnblock(company: Company): void {
+
     const dialogRef = this.dialog.open(DialogCompanyUnblockComponent, {
       data: {company: company}
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      //  company.company_history_blocks.status = 1;
+        // разблокировать компанию
+        this.unBlock(company);
+      }
+    });
   }
 }
-
+/*Диалоговое окно блокировки компании*/
 @Component({
   selector: 'app-dialog-company-block',
   templateUrl: 'dialog-company-block.component.html',
@@ -122,53 +160,14 @@ export class DialogCompanyBlockComponent  implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  closeDialog() {
-    this.dialogRef.close();
-  }
-
-  message(mes: string, error: boolean) {
-    let arr: any[] = ['show', mes, error];
-    this.sharedService.emitChange(arr);
-    arr = ['hide', '', false];
-    this.timer = setTimeout(() => {
-      this.sharedService.emitChange(arr);
-    }, 3000);
-  }
-
-  block(company: Company): void {
-    this.company_history_blocks.status = 1;
-    this.companyService.block(company).subscribe(
-      data => {
-        if (data.status === 200) {
-          company.disable = true;
-          this.message('Компания заблокирована', true);
-        } else {
-          company.disable = false;
-          this.message('Компанию не удалось заблокировать', true);
-        }
-      },
-      error => {
-        if (error.status === 401) {
-          this.loginService.logout();
-          this.router.navigate(['/']);
-        }
-        if (error.status === 403) {
-          this.router.navigate(['/403']);
-        }
-      }
-    );
-    this.dialogRef.close();
-  }
-
 }
-
+/*Диалоговое окно разблокировки компании*/
 @Component({
   selector: 'app-dialog-company-unblock',
   templateUrl: 'dialog-company-unblock.component.html',
@@ -197,19 +196,6 @@ export class DialogCompanyUnblockComponent  implements OnInit {
     this.dialogRef.close();
   }
 
-  closeDialog() {
-    this.dialogRef.close();
-  }
-
-  message(mes: string, error: boolean) {
-    let arr: any[] = ['show', mes, error];
-    this.sharedService.emitChange(arr);
-    arr = ['hide', '', false];
-    this.timer = setTimeout(() => {
-      this.sharedService.emitChange(arr);
-    }, 3000);
-  }
-
   getModules() {
     return this.moduleSevice.getModules().subscribe(data => {
         for (let i = 0; i < data.length; i++) {
@@ -219,28 +205,6 @@ export class DialogCompanyUnblockComponent  implements OnInit {
     );
   }
 
-  unblock(company: Company): void {
-    this.companyService.unblock(company).subscribe(
-      data => {
-        if (data.status === 200) {
-          company.disable = true;
-          this.message('Компания разблокирована', true);
-        } else {
-          company.disable = false;
-          this.message('Компанию не удалось разблокировать', true);
-        }
-      },
-      error => {
-        if (error.status === 401) {
-          this.loginService.logout();
-          this.router.navigate(['/']);
-        }
-        if (error.status === 403) {
-          this.router.navigate(['/403']);
-        }
-      }
-    );
-  }
 
 }
 

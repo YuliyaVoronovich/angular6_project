@@ -1,12 +1,7 @@
 import {User} from './User.model';
 import {Company} from './Company.model';
-import {Label} from './Label.model';
-import {Microdistrict} from './Microdistrict.model';
-import {DistrictCountry} from './DistrictCountry.model';
 import {City} from './City.model';
-import {District} from './District.model';
-import {Region} from './Region.model';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {CallSale} from './CallSale.model';
 
 export class Client {
 
@@ -14,6 +9,7 @@ export class Client {
     public id: number,
     public user: User,
     public company: Company,
+    public call: CallSale,
     public city: City,
     public districts: any,
     public array_districts: any [] = [],
@@ -53,11 +49,15 @@ export class Client {
     public repairs: any[] = [],
     public contract: string,
     public contract_fraction: string,
-    public contract_from: NgbDateStruct,
-    public contract_to: NgbDateStruct,
+    public contract_from: any,
+    public contract_to: any,
+    public send: boolean,
     public delete_at: boolean,
     public created_at: Date,
-    public updated_at: Date
-
-  ) {}
+    public updated_at: Date,
+    public access_edit: boolean,
+    public access_delete: boolean,
+    public access_own_info: boolean
+  ) {
+  }
 }

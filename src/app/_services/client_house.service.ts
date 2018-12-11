@@ -10,7 +10,7 @@ import {ClientHouse} from '../_models/ClientHouse.model';
 export class ClientHouseService {
 
   private uri = '/clients_house';
-  private uri_archive = '/archive/clients_house';
+  private uri_archive = '/clients_house/archive';
 
 
   constructor(private http: Http,

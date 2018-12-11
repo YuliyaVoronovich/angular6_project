@@ -1,0 +1,118 @@
+<div class="table-responsive" style="margin-bottom: 20px">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th></th>
+      <th><span class="nobr">Нас. пункт</span></th>
+      <th>Район</th>
+      <th>Мкрн</th>
+      <th>Адрес</th>
+      <th>Комнат</th>
+      <th>Площадь</th>
+      <th>Этаж</th>
+      <th>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='price' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('price', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Цена,$
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='ASC')"
+             (click)="changeSort('price', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Цена,$
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='DESC')"
+             (click)="changeSort('price', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Цена,$
+        </div>
+      </th>
+      <th>$m2</th>
+      <th *ngIf="user.access===4">Агентство</th>
+      <th *ngIf="user.access!==4">Сотрудник</th>
+      <th *ngIf="access.sales_created">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='ASC')"
+             (click)="changeSort('created_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата доб.
+        </div>
+      </th>
+      <th>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='updated_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='ASC')"
+             (click)="changeSort('updated_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата обн.
+        </div>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container
+      *ngFor="let sale of sales | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countSales }; let i = index">
+      <tr>
+        <td class="text-center">
+          <a routerLink="sale/{{sale.id}}" target="_self">
+            <i class="fas fa-pencil-alt icon-color"></i>
+          </a>
+        </td>
+        <td>{{sale.location.city.title}}</td>
+        <td>{{sale.location.district.title}}</td>
+        <td>{{sale.location.microdistrict.title}}</td>
+        <td>
+          <ng-container *ngIf="sale.location.street.title.length >0 ">
+            {{sale.location.street.title}},
+          </ng-container>
+          {{sale.location.house}}
+          <ng-container *ngIf="sale.location.housing !== '0' && sale.location.housing !== ''">
+            / {{sale.location.housing}}
+          </ng-container>
+        </td>
+        <td>{{sale.room}}/{{sale.room_separate}}</td>
+        <td>{{sale.area}}/{{sale.area_leave}}/{{sale.area_kitchen}}</td>
+        <td>{{sale.storey}}/{{sale.storeys}}</td>
+        <td>{{sale.price}}</td>
+        <td>{{sale.price_sqr}}</td>
+        <td *ngIf="user.access===4">{{sale.company.title}}</td>
+        <td *ngIf="user.access!==4">{{sale.user.user_information.surname}} {{sale.user.user_information.name}}</td>
+        <td *ngIf="access.sales_created">
+          {{sale.created_at | date: 'dd.MM.yyyy'}}
+        </td>
+        <td>
+          {{sale.updated_at | date: 'dd.MM.yyyy'}}
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="row no-gutters">
+  <!--Пагинация -->
+  <div class="col-12 text-center">
+    <pagination-controls (pageChange)="getSalesByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+                         directionLinks="true" autohide="true"></pagination-controls>
+  </div>
+</div>
+
+

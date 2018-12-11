@@ -4,8 +4,6 @@ import {SaleAdditionInformation} from './SaleAdditionInformation.model';
 import {Photo} from './Photo.model';
 import {Company} from './Company.model';
 
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-
 export class Sale {
 
   constructor(
@@ -24,11 +22,11 @@ export class Sale {
     public execution: boolean,
     public quickly: boolean,
     public contract: string,
-    public contract_from: NgbDateStruct,
-    public contract_to: NgbDateStruct,
-    public request: string,
-    public commission: string,
-    public commission_prefix: string,
+    public contract_fraction: string,
+    public contract_from: any,
+    public contract_to: any,
+    public request: boolean,
+    public request_number: string,
     public location: Location,
     public number_flat: string,
     public room: number,
@@ -47,7 +45,6 @@ export class Sale {
     public storey: number,
     public storeys: number,
     public repair: number,
-    public communications: string,
     public floor: number,
     public furniture: number,
     public comment: string,
@@ -62,9 +59,15 @@ export class Sale {
     public photo_plan: Photo [],
     public photo_request: Photo [],
     public photo_inside: Photo [],
+    public moderation: boolean,
+    public delete_moderation: boolean,
     public delete_at: boolean,
     public created_at: Date,
     public updated_at: Date,
-    public sale_addition_information: SaleAdditionInformation
+    public sale_addition_information: SaleAdditionInformation,
+    public access_edit: boolean,
+    public access_delete: boolean,
+    public access_own_info: boolean,
+    public access_reclame: boolean
   ) {}
 }

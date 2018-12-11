@@ -6,7 +6,6 @@ import {User} from '../../_models/User.model';
 import {Label} from '../../_models/Label.model';
 import {Metro} from '../../_models/Metro.model';
 import {House} from '../../_models/House.model';
-import {HouseAdditionInformation} from '../../_models/HouseAdditionInformation.model';
 
 import {LabelService} from '../../_services/label.service';
 import {LocationService} from '../../_services/location.service';
@@ -20,6 +19,7 @@ import {HouseService} from '../../_services/house.service';
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {FileHolder} from 'angular2-image-upload';
 import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
+import {AccessModel} from '../../_models/Access.model';
 
 @Component({
   selector: 'app-house-modificate',
@@ -67,20 +67,22 @@ export class HouseModificateComponent implements OnInit {
   public districts_rb = [];
   public cities = [];
 
-  public house: House = new House(0, null, null, '', '', '', '', null, null, false,
+  public house: House = new House(0, null, null, '', '', '', '',  '', null, null, false,
     '', 0, 0, false, false, false, false, 0, '', null, '',
     '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
-    false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false,
-    null, null, null, '');
-  public house_addition_information: HouseAdditionInformation = new HouseAdditionInformation(0, false
-    , false, false, false, false, false, false, false, false, false, false
-    , false, false, false, false, false, false, false, false, false, false);
-
+    false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
+    false, null, null, null, '', false, false, false, false);
 
   public user: User = new User(0, '', '', null, null, null, '',
     0, 0, 0, false, null, null, null, null, null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
   public users: User[] = [];
+
+  public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false);
 
   public contract_from;
   public contract_to;
@@ -123,9 +125,16 @@ export class HouseModificateComponent implements OnInit {
     }, 3000);
   }
 
-  keyPress(event: any) {
+  keyPressNumber(event: any) {
     const pattern = /[0-9]/g;
     if (event.keyCode !== 8 && !pattern.test(String.fromCharCode(event.charCode))) {
+      event.preventDefault();
+    }
+  }
+
+  keyPressPoint(event: any) {
+    const pattern = /[0-9]/g;
+    if (event.keyCode !== 8 && event.keyCode !== 46 && event.keyCode !== 190 && !pattern.test(String.fromCharCode(event.charCode))) {
       event.preventDefault();
     }
   }
@@ -137,14 +146,6 @@ export class HouseModificateComponent implements OnInit {
         if (params['id']) {
           this.route.data.subscribe(({data}) => {
             this.house = data.house;
-            if (this.house.user === null) {
-              this.house.user = this.user;
-              this.house.user.user_information = this.user_information;
-              this.house.user.manager_information = this.user_information;
-            }
-            if (this.house.house_addition_information === null) {
-              this.house.house_addition_information = this.house_addition_information;
-            }
 
             for (let i = 0; i < this.house.photo.length; i++) {
               this.upload_photo.push(this.house.photo[i].path);
@@ -153,6 +154,16 @@ export class HouseModificateComponent implements OnInit {
             this.house.contract_from = new NgbDateFRParserFormatter().parse(data.house.contract_from);
             this.house.contract_to = new NgbDateFRParserFormatter().parse(data.house.contract_to);
 
+            if (this.house.contract) {
+              const pos = this.house.contract.indexOf('/');
+              if (pos !== -1) {
+                this.house.contract_fraction = this.house.contract.substring(pos);
+                this.house.contract = this.house.contract.substring(0, pos);
+              } else {
+                this.house.contract_fraction = '';
+              }
+            }
+
             if (data.house.type !== 0) {// для типа дома
               this.arrayTypes[data.house.type] = true;
               this.activeTypes = data.house.type;
@@ -160,13 +171,14 @@ export class HouseModificateComponent implements OnInit {
 
           });
 
-        } else {
-          this.house.house_addition_information = this.house_addition_information;
-          this.house.user = this.user;
-          this.house.user.user_information = this.user_information;
-          this.house.user.manager_information = this.user_information;
         }
       });
+
+    this.house.house_addition_information = this.houseService.setHouseAdditionInformation(this.house.house_addition_information);
+
+    this.house.user = this.userService.setUser(this.house.user);
+    this.house.user.user_information = this.userService.setUserInformation(this.house.user.user_information);
+    this.house.user.manager_information = this.userService.setUserInformation(this.house.user.user_information);
 
     this.house.location = this.locationService.setLocation(this.house.location);
     this.house.location.city = this.locationService.setCity(this.house.location.city);
@@ -187,6 +199,7 @@ export class HouseModificateComponent implements OnInit {
     this.getStreets(this.house.location.city.id);
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
+      this.access = data.array_access;
       this.getUsers();
 
     });
@@ -383,14 +396,13 @@ export class HouseModificateComponent implements OnInit {
   }
 
   getManager(user) {
-    this.house.user.manager_information = this.users.find(u => u.id === +user).manager_information;
+    this.house.user = this.userService.setUser(this.users.find(u => u.id === +user));
+    this.house.user.manager_information = this.userService.setUserInformation(this.house.user.manager_information);
   }
 
   save() {
-    this.contract_from = new NgbDateFRParserFormatter().format_to_base(this.house.contract_from);
-    this.contract_to = new NgbDateFRParserFormatter().format_to_base(this.house.contract_to);
-    this.house.contract_from = this.contract_from;
-    this.house.contract_to = this.contract_to;
+    this.house.contract_from = new NgbDateFRParserFormatter().format_to_base(this.house.contract_from);
+    this.house.contract_to = new NgbDateFRParserFormatter().format_to_base(this.house.contract_to);
 
     this.house.location.street.id = (this.house.location.street.id !== undefined) ? this.house.location.street.id : 0;
 
@@ -411,6 +423,9 @@ export class HouseModificateComponent implements OnInit {
             }
           } else {
             this.message('Не удалось обновить объект!', true);
+
+            this.house.contract_from = new NgbDateFRParserFormatter().parse('' + this.house.contract_from);
+            this.house.contract_to = new NgbDateFRParserFormatter().parse('' + this.house.contract_to);
           }
         },
         error => {
@@ -418,6 +433,9 @@ export class HouseModificateComponent implements OnInit {
             this.router.navigate(['']);
           } else {
             this.message('Ошибка!', true);
+
+            this.house.contract_from = new NgbDateFRParserFormatter().parse('' + this.house.contract_from);
+            this.house.contract_to = new NgbDateFRParserFormatter().parse('' + this.house.contract_to);
           }
         }
       );

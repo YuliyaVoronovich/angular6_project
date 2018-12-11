@@ -48,8 +48,8 @@ export class NgbDateFRParserFormatter extends NgbDateParserFormatter {
   format_to_base(date: NgbDateStruct): string {
     let stringDate = '';
     if (date) {
-      stringDate += date.year + '-';
-      stringDate += isNumber(date.month) ? padNumber(date.month) + '-' : '00';
+      stringDate += isNumber(date.year) ? date.year + '-' : '0000-';
+      stringDate += isNumber(date.month) ? padNumber(date.month) + '-' : '00-';
       stringDate += isNumber(date.day) ? padNumber(date.day) : '00';
     }
     return stringDate;

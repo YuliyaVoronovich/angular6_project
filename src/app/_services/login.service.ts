@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Response, Http, Headers} from '@angular/http';
-import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
+import {Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent} from 'rxjs';
 import 'rxjs/add/operator/map';
 import {Router} from '@angular/router';
 import {User} from '../_models/User.model';
@@ -14,7 +14,7 @@ export class LoginService {
   private loginUri = '/check';
 
   constructor(private http: Http,
-              private route: Router,
+              private router: Router,
               private globals: Globals) {
 
   }
@@ -22,7 +22,10 @@ export class LoginService {
   doLogin(login: string, password: string): Observable<boolean> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post(this.globals.url + this.uri, JSON.stringify({login: login, password: password}), {headers: headers})
+    return this.http.post(this.globals.url + this.uri, JSON.stringify({
+      login: login,
+      password: password
+    }), {headers: headers})
       .map((response: Response) => {
         this.token = response.json().token;
         if (this.token) {
@@ -51,7 +54,7 @@ export class LoginService {
     return this.http.get(this.globals.url + this.loginUri);
   }
 
-  detailsUser(): any  {
+  detailsUser(): any {
     return this.http.get(this.globals.url + this.loginUri)
       .map((response: Response) => response.json());
   }

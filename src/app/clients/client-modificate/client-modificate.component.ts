@@ -22,6 +22,7 @@ import {LabelService} from '../../_services/label.service';
 import {Metro} from '../../_models/Metro.model';
 import {Label} from '../../_models/Label.model';
 import {SharedService} from '../../_services/shared.service';
+import {AccessModel} from '../../_models/Access.model';
 
 @Component({
   selector: 'app-client-modificate',
@@ -60,23 +61,26 @@ export class ClientModificateComponent implements OnInit {
   public districts = [];
   public microdistricts = [];
 
-  public client: Client = new Client(0, null, null,   null, '', [], '',
+  public client: Client = new Client(0, null, null, null, null, '', [], '',
     null, [], '', '', '', '', '', 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0,
     false, 0, false, false, false, false, false, '', 0, [], [],
-    [], '', '', null, null, false, null, null);
+    [], '', '', null, null, false, false, null, null, false,
+    false, false);
 
   public user: User = new User(0, '', '', null, null, null, '',
     0, 0, 0, false, null, null, null, null, null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
-
   public users: User[] = [];
+
+  public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false);
 
   public price_sqr_from = '';
   public price_sqr_to = '';
-
-  public contract_from;
-  public contract_to;
 
   public search = {
     'company': 0
@@ -129,9 +133,16 @@ export class ClientModificateComponent implements OnInit {
     }, 3000);
   }
 
-  keyPress(event: any) {
+  keyPressNumber(event: any) {
     const pattern = /[0-9]/g;
     if (event.keyCode !== 8 && !pattern.test(String.fromCharCode(event.charCode))) {
+      event.preventDefault();
+    }
+  }
+
+  keyPressPoint(event: any) {
+    const pattern = /[0-9]/g;
+    if (event.keyCode !== 8 && event.keyCode !== 46 && event.keyCode !== 190 && !pattern.test(String.fromCharCode(event.charCode))) {
       event.preventDefault();
     }
   }
@@ -150,17 +161,9 @@ export class ClientModificateComponent implements OnInit {
 
             this.getMetro(data.client);
 
-            if (this.client.user === null) {
-              this.client.user = this.user;
-            }
-            if (this.client.user.user_information === null) {
-              this.client.user.user_information = this.user_information;
-            }
-            if (this.client.user.manager_information === null) {
-              this.client.user.manager_information = this.user_information;
-            }
             this.client.contract_from = new NgbDateFRParserFormatter().parse(data.client.contract_from);
             this.client.contract_to = new NgbDateFRParserFormatter().parse(data.client.contract_to);
+
             if (this.client.contract) {
               const pos = this.client.contract.indexOf('/');
               if (pos !== -1) {
@@ -174,12 +177,12 @@ export class ClientModificateComponent implements OnInit {
             this.client.districts = data.client.array_districts;
             this.client.microdistricts = data.client.array_microdistricts;
           });
-        } else {
-          this.client.user = this.user;
-          this.client.user.user_information = this.user_information;
-          this.client.user.manager_information = this.user_information;
         }
       });
+
+    this.client.user = this.userService.setUser(this.client.user);
+    this.client.user.user_information = this.userService.setUserInformation(this.client.user.user_information);
+    this.client.user.manager_information = this.userService.setUserInformation(this.client.user.user_information);
 
     this.client.city = this.locationService.setCity(this.client.city);
     this.client.city.district_country = this.locationService.setDistrictCountry(this.client.city.district_country);
@@ -196,13 +199,14 @@ export class ClientModificateComponent implements OnInit {
     this.getPriceSqr();
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
+      this.access = data.array_access;
       this.getUsers();
 
     });
 
     /* Подгрузка карты*/
     this.source = new OlXYZ({
-      url: 'http://tile.osm.org/{z}/{x}/{y}.png'
+      url: 'https://tile.osm.org/{z}/{x}/{y}.png'
     });
 
     this.layer = new OlTileLayer({
@@ -355,7 +359,8 @@ export class ClientModificateComponent implements OnInit {
   }
 
   getManager(user) {
-    this.client.user.manager_information = this.users.find(u => u.id === +user).manager_information;
+    this.client.user = this.userService.setUser(this.users.find(u => u.id === +user));
+    this.client.user.manager_information = this.userService.setUserInformation(this.client.user.manager_information);
   }
 
   getMetro(data) {
@@ -419,7 +424,6 @@ export class ClientModificateComponent implements OnInit {
   }
 
 
-
   metroTrigger(event) {
     if (this.arrayMetro[event]) {
       this.client.metro = this.client.metro.filter(m => m.id !== +event);
@@ -453,10 +457,8 @@ export class ClientModificateComponent implements OnInit {
   }
 
   save() {
-    this.contract_from = new NgbDateFRParserFormatter().format_to_base(this.client.contract_from);
-    this.contract_to = new NgbDateFRParserFormatter().format_to_base(this.client.contract_to);
-    this.client.contract_from = this.contract_from;
-    this.client.contract_to = this.contract_to;
+    this.client.contract_from = new NgbDateFRParserFormatter().format_to_base(this.client.contract_from);
+    this.client.contract_to = new NgbDateFRParserFormatter().format_to_base(this.client.contract_to);
 
     console.log(this.client);
 
@@ -468,6 +470,9 @@ export class ClientModificateComponent implements OnInit {
             this.router.navigate(['clients']);
           } else {
             this.message('Не удалось обновить клиента!', true);
+
+            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
           }
         },
         error => {
@@ -475,6 +480,9 @@ export class ClientModificateComponent implements OnInit {
             this.router.navigate(['']);
           } else {
             this.message('Ошибка!', true);
+
+            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
           }
         }
       );
@@ -486,6 +494,9 @@ export class ClientModificateComponent implements OnInit {
             this.router.navigate(['clients']);
           } else {
             this.message('Не удалось создать клиента!', true);
+
+            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
           }
         },
         error => {
@@ -493,6 +504,9 @@ export class ClientModificateComponent implements OnInit {
             this.router.navigate(['']);
           } else {
             this.message('Ошибка!', true);
+
+            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
           }
         }
       );

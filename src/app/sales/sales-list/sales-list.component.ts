@@ -15,6 +15,7 @@ import {Subscription} from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import {Router} from '@angular/router';
+import {AccessModel} from '../../_models/Access.model';
 
 export interface DialogData {
   sale: Sale;
@@ -33,6 +34,12 @@ export class SalesListComponent implements OnInit, OnDestroy {
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
     '', '', null, null, null, [], null, false, null);
 
+  public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, false, false,
+    false, false);
+
   public hideme = [];
   public hideme2 = [];
   public hideme3 = [];
@@ -45,10 +52,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
 
   public count_delete = 0;
   public subscription: Subscription;
-  public search = new SearchSaleModel({'values': [], 'except': 0}, {'values': [], 'except': 0}, {
-      'values': [],
-      'except': 0
-    },
+  public search = new SearchSaleModel({'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0},
     {'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0}, '', '', null,
     null, null, null, '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', '', '', '',
@@ -56,7 +60,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
     false, false, false, false);
 
   public sort = {
-    'field': 'created_at',
+    'field': 'updated_at',
     'value': 'DESC'
   };
 
@@ -74,12 +78,17 @@ export class SalesListComponent implements OnInit, OnDestroy {
      });*/
     this.subscription = sharedService.changeEmitted$2.subscribe(data => {
       this.sales = [];
+      this.user = data;
       this.getSales();
     });
   }
 
   ngOnInit() {
-    this.getSales();
+    this.loginService.detailsUser().subscribe(data => {
+      this.user = data.user;
+      this.access = data.array_access;
+      this.getSales();
+    });
   }
 
   ngOnDestroy() {
@@ -146,7 +155,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
       for (let i = 0; i < data.length; i++) {
         // информация о сотруднике компании
         data[i].user = this.userService.setUser(data[i].user);
-        data[i].user.user_information = this.userService.setUserInformation(data[i].user);
+        data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
         data[i].company = this.companyService.setCompany(data[i].company);
         //
         // адрес объекта

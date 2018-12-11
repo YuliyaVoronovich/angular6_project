@@ -32,8 +32,9 @@
         </div>
       </th>
       <th>$m2</th>
-      <th>Агентство</th>
-      <th>
+      <th *ngIf="user.access===4">Агентство</th>
+      <th *ngIf="user.access!==4">Сотрудник</th>
+      <th *ngIf="access.sales_created">
         <div class="nobr cursor" style="width: 100%"
              [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
              (click)="changeSort('created_at', 'DESC')">
@@ -75,7 +76,7 @@
       *ngFor="let sale of sales | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countSales }; let i = index">
       <tr>
         <td class="text-center">
-          <a routerLink="sale/{{sale.id}}" target="_self">
+          <a *ngIf="sale.access_edit" routerLink="sale/{{sale.id}}" target="_self">
             <i class="fas fa-pencil-alt icon-color"></i>
           </a>
         </td>
@@ -109,9 +110,9 @@
         <td>{{sale.storey}}/{{sale.storeys}}</td>
         <td>{{sale.price}}</td>
         <td>{{sale.price_sqr}}</td>
-        <td>{{sale.company.title}}</td>
-        <!--<td>{{sale.user.user_information.surname}} {{sale.user.user_information.name}}</td>-->
-        <td>
+        <td *ngIf="user.access===4">{{sale.company.title}}</td>
+        <td *ngIf="user.access!==4">{{sale.user.user_information.surname}} {{sale.user.user_information.name}}</td>
+        <td *ngIf="access.sales_created">
           {{sale.created_at | date: 'dd.MM.yyyy'}}
         </td>
         <td>
@@ -121,7 +122,7 @@
           <i class="fas fa-chevron-circle-right icon-color icon-cursor" style="font-size: 20px;"
              (click)="close_hideme3(i);"></i>
           <div class="action-window" [hidden]="!hideme3[i]">
-            <div class="action" (click)="openDialog(sale)">УДАЛИТЬ ОБЪЕКТ</div>
+            <div *ngIf="sale.access_delete" class="action" (click)="openDialog(sale)">УДАЛИТЬ ОБЪЕКТ</div>
             <div class="action">ОТПРАВИТЬ КЛИЕНТУ</div>
             <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
             <div class="action">ОТПРАВИТЬ В РЕКЛАМУ</div>
@@ -142,10 +143,10 @@
               </ng-container>-->
             </div>
             <div class="col-lg-5 col-md-12" style="margin: 10px 0 0 10px">
-              {{sale.cont_phone1}}, {{sale.cont_phone2}}<br>
+              <span *ngIf="sale.access_own_info">+375 {{sale.cont_phone1}}, +375 {{sale.cont_phone2}}</span><br>
               <span>{{sale.text}}</span>
               <br>
-              <a class="btn btn-sm btn-primary" routerLink="/sales/sale/{{sale.id}}">Подробнее</a>
+              <a *ngIf="sale.access_edit" class="btn btn-sm btn-primary" routerLink="/sales/sale/{{sale.id}}">Подробнее</a>
             <!--  <a class="btn">
                 <mat-icon class="size-16 icon-color">place Смотреть на карте</mat-icon>
               </a>-->

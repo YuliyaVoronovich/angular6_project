@@ -55,7 +55,7 @@ export class MenuUserInfoComponent implements OnInit {
     this.loginService.setAccess(this.user).subscribe(
       data => {
         if (data.status === 200) {
-          this.sharedService.emitChange2();
+          this.sharedService.emitChange2(this.user);
           this.message('Доступ обновлен', false);
           this.hide = false;
           this.hide_info = false;

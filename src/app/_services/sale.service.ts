@@ -7,13 +7,16 @@ import {Router} from '@angular/router';
 import {Sale} from '../_models/Sale.model';
 import {Count} from '../_models/Count.model';
 import {Globals} from '../_common/globals';
+import {SaleAdditionInformation} from '../_models/SaleAdditionInformation.model';
 
 
 @Injectable()
 export class SaleService {
 
   private uri = '/sales';
-  private uri_archive = '/archive/sales';
+  private uri_archive = '/sales/archive';
+  private uri_moderation = '/sales/moderation';
+  private uri_delete = '/sales/delete';
 
 
   constructor(private http: Http,
@@ -21,12 +24,21 @@ export class SaleService {
               private globals: Globals) {
   }
 
+  setSaleAdditionInformation(sale_addition_information: SaleAdditionInformation) {
+    if (!sale_addition_information) {
+      return sale_addition_information = new SaleAdditionInformation(0, false
+        , false, false, false, false, false, false, false, false, false, false
+        , false, false, false, false, false, false, false, false, false, false
+        , false, false, false, false, false, false, false);
+    }
+    return sale_addition_information;
+  }
 
   getSales(search = {}): Observable<Sale[]> {
     return this.http.get(this.globals.url + this.uri, {search: search})
-      .map((response: Response) => response.json().sales
-      );
+      .map((response: Response) => response.json().sales);
   }
+
   countSales(search = {}): Observable<Count> {
     return this.http.get(this.globals.url + this.uri + '/count', {search: search})
       .map((response: Response) => response.json()
@@ -70,6 +82,7 @@ export class SaleService {
       .map((response: Response) => response.json()
       );
   }
+
   deleteArchive(sale: Sale | number): Observable<Response> {
     const id = typeof sale === 'number' ? sale : sale.id;
     return this.http.post(this.globals.url + this.uri_archive + '/' + id, JSON.stringify(sale));
@@ -80,5 +93,46 @@ export class SaleService {
       );
   }
   /*Архив*/
+
+  /*Модерация*/
+  getSalesModeration(search = {}): Observable<Sale[]> {
+    return this.http.get(this.globals.url + this.uri_moderation, {search: search})
+      .map((response: Response) => response.json().sales
+      );
+  }
+  countSalesModeration(search = {}): Observable<Count> {
+    return this.http.get(this.globals.url + this.uri_moderation + '/count', {search: search})
+      .map((response: Response) => response.json()
+      );
+  }
+  returnModeration(sale: Sale) {
+    return this.http.put(this.globals.url + this.uri_moderation + '/' + sale.id, JSON.stringify(sale))
+      .map((response: Response) => response.json()
+      );
+  }
+  /*Модерация*/
+
+  /*Удаленные*/
+  getSalesDelete(search = {}): Observable<Sale[]> {
+    return this.http.get(this.globals.url + this.uri_delete, {search: search})
+      .map((response: Response) => response.json().sales
+      );
+  }
+  countSalesDelete(search = {}): Observable<Count> {
+    return this.http.get(this.globals.url + this.uri_delete + '/count', {search: search})
+      .map((response: Response) => response.json()
+      );
+  }
+  returnDelete(sale: Sale) {
+    return this.http.put(this.globals.url + this.uri_delete + '/' + sale.id, JSON.stringify(sale))
+      .map((response: Response) => response.json()
+      );
+  }
+
+  archiveDelete(sale: Sale | number): Observable<Response> {
+    const id = typeof sale === 'number' ? sale : sale.id;
+    return this.http.post(this.globals.url + this.uri_delete + '/' + id, JSON.stringify(sale));
+  }
+  /*Удаленные*/
 
 }

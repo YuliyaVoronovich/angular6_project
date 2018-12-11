@@ -20,17 +20,17 @@
           <ul class="navbar-nav">
             <!-- Меню для SALES-->
             <ng-container *ngIf="path==='sales'">
-              <li class="nav-item">
+              <li *ngIf="access.sales_create" class="nav-item">
                 <a class="nav-link" routerLink="/sales/sale">Добавить</a>
               </li>
-              <li class="nav-item">
+              <li *ngIf="access.sales_archive" class="nav-item">
                 <a class="nav-link" routerLink="/sales/archive">Архив</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="#">Удаленные</a>
+              <li *ngIf="access.sales_moderation" class="nav-item">
+                <a class="nav-link" routerLink="/sales/delete">Удаленные</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="#">Модерация</a>
+              <li *ngIf="access.sales_moderation" class="nav-item">
+                <a class="nav-link" routerLink="/sales/moderation">Модерация</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" routerLink="#">Карта</a>
@@ -40,10 +40,10 @@
 
             <!-- Меню для CLIENTS-->
             <ng-container *ngIf="path==='clients'">
-              <li class="nav-item">
+              <li *ngIf="access.clients_create" class="nav-item">
                 <a class="nav-link" routerLink="/clients/client">Добавить</a>
               </li>
-              <li class="nav-item">
+              <li *ngIf="access.clients_archive" class="nav-item">
                 <a class="nav-link" routerLink="/clients/archive">Архив</a>
               </li>
               <li class="nav-item">
@@ -54,24 +54,27 @@
 
             <!-- Меню для HOUSES-->
             <ng-container *ngIf="path==='houses'">
-              <li class="nav-item">
+              <li *ngIf="access.houses_create" class="nav-item">
                 <a class="nav-link" routerLink="/houses/house">Добавить</a>
               </li>
-              <li class="nav-item">
+              <li *ngIf="access.houses_archive" class="nav-item">
                 <a class="nav-link" routerLink="/houses/archive">Архив</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="#">Звонки</a>
+              <li *ngIf="access.houses_moderation" class="nav-item">
+                <a class="nav-link" routerLink="/houses/delete">Удаленные</a>
+              </li>
+              <li *ngIf="access.houses_moderation" class="nav-item">
+                <a class="nav-link" routerLink="/houses/moderation">Модерация</a>
               </li>
             </ng-container>
             <!-- Конец меню для HOUSES-->
 
             <!-- Меню для CLIENTS-HOUSE-->
             <ng-container *ngIf="path==='clients_house'">
-              <li class="nav-item">
+              <li *ngIf="access.clients_houses_create" class="nav-item">
                 <a class="nav-link" routerLink="/clients_house/client">Добавить</a>
               </li>
-              <li class="nav-item">
+              <li *ngIf="access.clients_houses_archive" class="nav-item">
                 <a class="nav-link" routerLink="/clients_house/archive">Архив</a>
               </li>
               <li class="nav-item">

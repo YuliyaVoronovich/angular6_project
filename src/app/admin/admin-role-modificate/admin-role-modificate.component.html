@@ -15,10 +15,12 @@
 
               <input class="form-check-input" type="checkbox" id="{{ item.id}}" name="user.permissions[]"
                      [checked]="role.array_permissions[item.id].check"
-                     (change)="role.array_permissions[item.id].check = !role.array_permissions[item.id].check">
-              <label class="form-check-label">
+                     (change)="setAccessMain(role.array_permissions[item.id], item)">
+              <label class="form-check-label"
+                     (click)="setAccessMain(role.array_permissions[item.id], item)">
                 {{ item.title}}
               </label>
+
             </div>
           </div>
 

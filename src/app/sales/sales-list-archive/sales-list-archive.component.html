@@ -4,7 +4,7 @@
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th></th>
+      <th *ngIf="access.sales_archive_restore"></th>
       <th></th>
       <th><span class="nobr">Нас. пункт</span></th>
       <th>Район</th>
@@ -31,7 +31,8 @@
         </div>
       </th>
       <th>$m2</th>
-      <th>Агентство</th>
+      <th *ngIf="user.access===4">Агентство</th>
+      <th *ngIf="user.access!==4">Сотрудник</th>
       <th>
         <div class="nobr cursor" style="width: 100%"
              [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
@@ -72,7 +73,7 @@
     <ng-container
       *ngFor="let sale of sales | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countSales }; let i = index">
       <tr>
-        <td class="text-center">
+        <td *ngIf="access.sales_archive_restore" class="text-center">
           <i class="fas fa-check-circle cursor icon-color" (click)="restore(sale)"></i>
         </td>
         <td class="text-center">
@@ -99,8 +100,8 @@
         <td>{{sale.storey}}/{{sale.storeys}}</td>
         <td>{{sale.price}}</td>
         <td>{{sale.price_sqr}}</td>
-        <td>{{sale.company.title}}</td>
-        <!--<td>{{sale.user.user_information.surname}} {{sale.user.user_information.name}}</td>-->
+        <td *ngIf="user.access===4">{{sale.company.title}}</td>
+        <td *ngIf="user.access!==4">{{sale.user.user_information.surname}} {{sale.user.user_information.name}}</td>
         <td>
           {{sale.created_at | date: 'dd.MM.yyyy'}}
         </td>

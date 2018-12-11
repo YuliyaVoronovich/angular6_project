@@ -4,7 +4,7 @@
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th></th>
+      <th *ngIf="access.houses_archive_restore"></th>
       <th></th>
       <th></th>
       <th>Тип</th>
@@ -32,7 +32,8 @@
         </div>
       </th>
       <th>$м2</th>
-      <th>Агентство</th>
+      <th *ngIf="user.access===4">Агентство</th>
+      <th *ngIf="user.access!==4">Сотрудник</th>
       <th>
         <div class="nobr cursor" style="width: 100%"
              [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
@@ -72,7 +73,7 @@
     <tbody>
     <ng-container *ngFor="let house of houses | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countHouses }; let i = index">
       <tr>
-        <td class="text-center">
+        <td *ngIf="access.houses_archive_restore" class="text-center">
           <i class="fas fa-check-circle cursor icon-color" (click)="restore(house)"></i>
         </td>
         <td class="text-center">
@@ -114,7 +115,8 @@
         <td>{{house.storeys}}</td>
         <td>{{house.price}}</td>
         <td>{{house.price_sqr}}</td>
-        <td>{{house.company.title}}</td>
+        <td *ngIf="user.access===4">{{house.company.title}}</td>
+        <td *ngIf="user.access!==4">{{house.user.user_information.surname}} {{house.user.user_information.name}}</td>
         <td>
           {{house.created_at | date: 'dd.MM.yyyy'}}
         </td>
