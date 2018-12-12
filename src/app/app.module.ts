@@ -11,7 +11,6 @@ import {SelectModule} from 'ng-select';
 import {ImageUploadModule} from 'angular2-image-upload';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {NgxMaskModule} from 'ngx-mask'
 
 import {LoginGuard} from './_guard/login.guard';
 import {Globals} from './_common/globals';
@@ -292,8 +291,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     ImageUploadModule.forRoot(),
     NgbModule.forRoot(),
-    ScrollToModule.forRoot(),
-    NgxMaskModule.forRoot()
+    ScrollToModule.forRoot()
   ],
   providers: [
     {provide: RequestOptions, useClass: HeaderService},
