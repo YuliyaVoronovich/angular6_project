@@ -71,7 +71,7 @@ export class HouseModificateComponent implements OnInit {
     '', 0, 0, false, false, false, false, 0, '', null, '',
     '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
     false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
-    false, null, null, null, '', false, false, false, false);
+    false, null, null, null,  false, false, false, false);
 
   public user: User = new User(0, '', '', null, null, null, '',
     0, 0, 0, false, null, null, null, null, null, null);
@@ -99,6 +99,7 @@ export class HouseModificateComponent implements OnInit {
   public displayRequest = false;
   public textRequest = '';
   public idSaleRequest = 0;
+  public streetRequest = '';
   public request = {};
 
   public movieMapMarker = false;
@@ -364,7 +365,7 @@ export class HouseModificateComponent implements OnInit {
 
     this.request['house'] = (this.house.id !== 0) ? this.house.id : this.idSaleRequest;
     this.request['location'] = this.house.location;
-    this.request['streetRequest'] = this.house.streetRequest;
+    this.request['streetRequest'] = this.streetRequest;
     this.request['textRequest'] = this.textRequest;
 
     return this.houseService.newLocationRequest(this.request).subscribe(data => {

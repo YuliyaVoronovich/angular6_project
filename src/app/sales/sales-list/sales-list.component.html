@@ -143,7 +143,7 @@
               </ng-container>-->
             </div>
             <div class="col-lg-5 col-md-12" style="margin: 10px 0 0 10px">
-              <span *ngIf="sale.access_own_info">+375 {{sale.cont_phone1}}, +375 {{sale.cont_phone2}}</span><br>
+              <span *ngIf="sale.access_own_info">{{sale.cont_phone1}}, {{sale.cont_phone2}}</span><br>
               <span>{{sale.text}}</span>
               <br>
               <a *ngIf="sale.access_edit" class="btn btn-sm btn-primary" routerLink="/sales/sale/{{sale.id}}">Подробнее</a>

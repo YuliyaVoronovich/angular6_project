@@ -79,6 +79,10 @@ import {HousesListDeleteComponent} from './houses/houses-list-delete/houses-list
 import {HousesListModerationComponent} from './houses/houses-list-moderation/houses-list-moderation.component';
 import {HouseModificateModerationComponent} from './houses/house-modificate-moderation/house-modificate-moderation.component';
 import {HouseModificateDeleteComponent} from './houses/house-modificate-delete/house-modificate-delete.component';
+import { CallsListComponent } from './calls/calls-list/calls-list.component';
+import { CallModificateComponent } from './calls/call-modificate/call-modificate.component';
+import { CallsHouseListComponent } from './calls_house/calls-house-list/calls-house-list.component';
+import { CallHouseModificateComponent } from './calls_house/call-house-modificate/call-house-modificate.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -274,6 +278,10 @@ const routes: Routes = [
     HousesListModerationComponent,
     HouseModificateModerationComponent,
     HouseModificateDeleteComponent,
+    CallsListComponent,
+    CallModificateComponent,
+    CallsHouseListComponent,
+    CallHouseModificateComponent,
     SanitizeHtmlPipe,
     FilterPipe
   ],

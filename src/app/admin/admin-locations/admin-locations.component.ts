@@ -74,7 +74,7 @@ export class AdminLocationsComponent implements OnInit {
     '', 0, 0, false, false, false, false, 0, '', null, '',
     '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
     false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
-    false, null, null, null, '', false, false, false, false);
+    false, null, null, null, false, false, false, false);
 
   public request: Request = new Request(0, '', '', 1);
 

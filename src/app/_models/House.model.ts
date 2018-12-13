@@ -64,7 +64,6 @@ export class House {
     public created_at: Date,
     public updated_at: Date,
     public house_addition_information: HouseAdditionInformation,
-    public streetRequest: string,
     public access_edit: boolean,
     public access_delete: boolean,
     public access_own_info: boolean,

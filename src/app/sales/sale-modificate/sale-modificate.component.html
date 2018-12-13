@@ -79,14 +79,14 @@
                     </div>
                     <div class="form-group row no-gutters">
                       <label class="col-3 col-form-label text-left">Область</label>
-                      <ng-select style="background:#fff; width: 60%" [options]="regions"
+                      <ng-select style="background:#fff; width: 60%" [options]="selectRegions"
                                  [allowClear]="true"
                                  [(ngModel)]="''+ sale.location.city.district_country.region.id">
                       </ng-select>
                     </div>
                     <div class="form-group row no-gutters">
                       <label class="col-3 col-form-label text-left">Нас. пункт</label>
-                      <ng-select style="background:#fff; width: 60%" [options]="cities"
+                      <ng-select style="background:#fff; width: 60%" [options]="selectCities"
                                  [allowClear]="true"
                                  [(ngModel)]="''+ sale.location.city.id">
                       </ng-select>
