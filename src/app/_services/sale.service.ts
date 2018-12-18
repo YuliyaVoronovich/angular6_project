@@ -23,6 +23,17 @@ export class SaleService {
               private router: Router,
               private globals: Globals) {
   }
+  setSale(sale: Sale) {
+    if (!sale) {
+      return sale = new Sale(0, null, null, '', '', '', 0, 0, false,
+        '', false, false, false, '', '', null, null,  false, '', null,
+        '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
+        0, 0,  0, 0, '', 0, false, '', '', false, 0, 0, null,
+        null, null, null,  false, false, false, null, null, null,
+        false, false, false, false);
+    }
+    return sale;
+  }
 
   setSaleAdditionInformation(sale_addition_information: SaleAdditionInformation) {
     if (!sale_addition_information) {

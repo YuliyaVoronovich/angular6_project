@@ -1,0 +1,86 @@
+<div class="table-responsive" style="margin-bottom: 20px">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Комнат</th>
+      <th>Цена</th>
+      <th>Адрес</th>
+      <th>Телефон</th>
+      <th>Примечание</th>
+      <th>Сотрудник</th>
+      <th *ngIf="access.clients_created">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='ASC')"
+             (click)="changeSort('created_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата доб.
+        </div>
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>Источник</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container
+      *ngFor="let call of calls | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countClients }; let i  = index">
+      <tr>
+        <td class="text-center">
+          <a *ngIf="call.ready ===0" routerLink="call/{{call.id}}" target="_self">
+            <i class="fas fa-user-plus icon-color"></i>
+          </a>
+        </td>
+        <td>{{call.sale.room}}</td>
+        <td>{{call.sale.price}}</td>
+        <td>
+          <ng-container *ngIf="call.sale.location.street.title.length >0 ">
+            {{call.sale.location.street.title}},
+          </ng-container>
+          {{call.sale.location.house}}
+          <ng-container *ngIf="call.sale.location.housing !== '0' && call.sale.location.housing !== ''">
+            / {{call.sale.location.housing}}
+          </ng-container>
+        </td>
+        <td>
+          <span  [innerHTML]="call.phone===null ? '' : call.phone | sanitizeHtml"></span><br/>
+        </td>
+        <td>{{call.description }}</td>
+        <td>{{call.user.user_information.surname}} {{call.user.user_information.name}}</td>
+        <td>
+          {{call.created_at | date: 'dd.MM.yyyy'}}
+        </td>
+        <td> <i class="fas fa-headphones icon-color"></i></td>
+        <td> <i class="fas fa-headphones icon-color"></i></td>
+        <td></td>
+        <td>{{call.source.title}}</td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="container bg-light" style="margin: 0; max-width: calc(100% - 150px); padding-top: 15px;">
+  <div class="row">
+    <!--Пагинация -->
+    <div class="col-12 text-center">
+      <pagination-controls (pageChange)="getCallsByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+                           directionLinks="true" autohide="true"></pagination-controls>
+    </div>
+    <!-- <div class="col-3 text-right">
+       Всего объектов в МЛС: {{countSales}}
+     </div>-->
+  </div>
+</div>
+

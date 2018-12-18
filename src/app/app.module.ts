@@ -79,7 +79,10 @@ import {HousesListDeleteComponent} from './houses/houses-list-delete/houses-list
 import {HousesListModerationComponent} from './houses/houses-list-moderation/houses-list-moderation.component';
 import {HouseModificateModerationComponent} from './houses/house-modificate-moderation/house-modificate-moderation.component';
 import {HouseModificateDeleteComponent} from './houses/house-modificate-delete/house-modificate-delete.component';
-
+import { CallsListComponent } from './calls/calls-list/calls-list.component';
+import { CallModificateComponent } from './calls/call-modificate/call-modificate.component';
+import { CallsHouseListComponent } from './calls_house/calls-house-list/calls-house-list.component';
+import { CallHouseModificateComponent } from './calls_house/call-house-modificate/call-house-modificate.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -101,6 +104,10 @@ import {HouseService} from './_services/house.service';
 import {HouseResolve} from './_services/house_resolve';
 import {ClientHouseService} from './_services/client_house.service';
 import {ClientHouseResolve} from './_services/client_house_resolve.service';
+import {CallResolve} from './_services/call_resolve.service';
+import {CallService} from './_services/call.service';
+import {CallHouseService} from './_services/call_house.service';
+import {CallHouseResolve} from './_services/call_house_resolve.service';
 
 import {MaterialModule} from './material.module';
 import {SaleListPhotoComponent} from './sales/sale-list-photo/sale-list-photo.component';
@@ -186,6 +193,14 @@ const usersRoutes: Routes = [
 const companyRoutes: Routes = [
   {path: '', component: CompanyModificationComponent, resolve: {data: CompanyResolve}}
 ];
+const callsRoutes: Routes = [
+  {path: '', component: CallsListComponent},
+  {path: 'call/:id', component: CallModificateComponent, resolve: {data: CallResolve}}
+];
+const callsHouseRoutes: Routes = [
+  {path: '', component: CallsHouseListComponent},
+  {path: 'call/:id', component: CallHouseModificateComponent, resolve: {data: CallHouseResolve}}
+];
 
 const agreements: Routes = [
   {path: '', component: AgreementsCsListComponent}
@@ -202,6 +217,8 @@ const routes: Routes = [
   {path: 'clients', component: GeneralTemplateComponent, children: clientsRoutes},
   {path: 'houses', component: GeneralTemplateComponent, children: housesRoutes},
   {path: 'clients_house', component: GeneralTemplateComponent, children: clientsHouseRoutes},
+  {path: 'calls', component: GeneralTemplateComponent, children: callsRoutes},
+  {path: 'calls_house', component: GeneralTemplateComponent, children: callsHouseRoutes},
   {path: 'roles', component: GeneralTemplateComponent, children: rolesRoutes},
   {path: 'users', component: GeneralTemplateComponent, children: usersRoutes},
   {path: 'companies/company/:id', component: GeneralTemplateComponent, children: companyRoutes},
@@ -275,6 +292,10 @@ const routes: Routes = [
     HousesListModerationComponent,
     HouseModificateModerationComponent,
     HouseModificateDeleteComponent,
+    CallsListComponent,
+    CallModificateComponent,
+    CallsHouseListComponent,
+    CallHouseModificateComponent,
     SanitizeHtmlPipe,
     FilterPipe
   ],
@@ -319,6 +340,10 @@ const routes: Routes = [
     HouseResolve,
     ClientHouseService,
     ClientHouseResolve,
+    CallService,
+    CallResolve,
+    CallHouseService,
+    CallHouseResolve,
     Globals,
     SanitizeHtmlPipe
   ],

@@ -27,6 +27,13 @@ export class LabelService {
       .map((response: Response) => response.json());
   }
 
+  setSaleSource(source: Label): Label {
+    if (!source) {
+      return source = new Label(0, '', '', '', '');
+    }
+    return source;
+  }
+
   setTypeHouse(type_house: Label): Label {
     if (!type_house) {
       return type_house = new Label(0, '', '', '','');

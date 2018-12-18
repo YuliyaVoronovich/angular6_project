@@ -20,6 +20,17 @@ export class HouseService {
               private router: Router,
               private globals: Globals) {
   }
+  setHouse(house: House) {
+    if (!house) {
+      return house = new House(0, null, null, '', '', '', '',  '', null, null, false,
+        '', 0, 0, false, false, false, false, 0, '', null, '',
+        '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
+        false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
+        false, null, null, null,  false, false, false, false);
+    }
+    return house;
+  }
+
 
   setHouseAdditionInformation(house_addition_information: HouseAdditionInformation) {
     if (!house_addition_information) {

@@ -53,7 +53,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     false, false);
 
   public sort = {
-    'field': 'created_at',
+    'field': 'updated_at',
     'value': 'DESC'
   };
 
