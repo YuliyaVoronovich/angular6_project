@@ -32,6 +32,9 @@ export class LoginComponent implements OnInit {
         if (error.status === 401) {
           this.message = 'Неправильный логин или пароль!';
         }
+        if (error.status === 403) {
+          this.message = 'Доступ закрыт!';
+        }
       });
   }
 
