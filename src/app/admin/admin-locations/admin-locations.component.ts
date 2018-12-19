@@ -470,6 +470,7 @@ export class AdminLocationsComponent implements OnInit {
 
     this.locationForm.controls['region'].patchValue({id: +event.info.region});
     this.locationForm.controls['city'].patchValue({id: +event.info.city});
+    this.getStreets(event.info.city);
     this.locationForm.controls['street'].patchValue({id: +event.info.street});
     this.locationForm.controls['house'].patchValue(event.info.house);
     this.locationForm.controls['housing'].patchValue(event.info.housing);
