@@ -382,8 +382,6 @@ export class AdminLocationsComponent implements OnInit {
     this.location.district_country = this.locationForm.controls['district_country'].value;
     this.location.city = this.locationForm.controls['city'].value;
     this.location.street = this.locationForm.controls['street'].value;
-    this.location.direction = this.locationForm.controls['direction'].value;
-    console.log(this.location);
 
     if (this.location.id !== 0) {
       this.locationService.update(this.location).subscribe(
