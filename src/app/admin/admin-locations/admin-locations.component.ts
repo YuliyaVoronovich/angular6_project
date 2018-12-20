@@ -350,7 +350,6 @@ export class AdminLocationsComponent implements OnInit {
       this.search['housing'] = this.locationForm.controls['housing'].value;
 
       this.locationService.getLocation(this.search).subscribe((data) => {
-        console.log(data);
 
         this.location = this.locationService.setLocation(data);
         this.location.city = this.locationService.setCity(this.location.city);
@@ -364,6 +363,7 @@ export class AdminLocationsComponent implements OnInit {
 
         this.location.house = this.locationForm.controls['house'].value;
         this.location.housing = this.locationForm.controls['housing'].value;
+
         if (!data) {
           this.location.id = 0;
           this.location.wall = 0;
@@ -436,7 +436,6 @@ export class AdminLocationsComponent implements OnInit {
         data1 => {
           // удалить заявку
           this.deleteRequest = true;
-          console.log(this.deleteRequest);
         });
     }
     // обновить house location_id
@@ -447,7 +446,6 @@ export class AdminLocationsComponent implements OnInit {
         data1 => {
           // удалить заявку
           this.deleteRequest = true;
-          console.log(this.deleteRequest);
         });
     }
 

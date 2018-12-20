@@ -123,7 +123,6 @@ export class AdminRequestLocationComponent implements OnInit, OnChanges {
 
     this.requestService.deleteRequest(request).subscribe(
       data => {
-        console.log(data);
         if (data.status === 200) {
           this.message('Заявка удалена', false);
           // this.requests = this.requests.filter(r => r !== request);
