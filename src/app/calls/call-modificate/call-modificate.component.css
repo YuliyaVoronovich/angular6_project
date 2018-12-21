@@ -171,3 +171,10 @@ textarea:focus + span, textarea:not(:-moz-placeholder) + span {
   color: #1a5a87;
 }
 /*Placeholder move to top*/
+
+video {
+  height: 30px;
+  width: 100%;
+  margin: auto;
+  margin-top: 10px;
+}

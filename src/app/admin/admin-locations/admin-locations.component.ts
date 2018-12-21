@@ -169,7 +169,7 @@ export class AdminLocationsComponent implements OnInit {
   }
 
   private _filter(array, value: string): string[] {
-    const filterValue = value;
+    const filterValue = value.toString().toLowerCase();
 
     return array.filter(option => option.title.toLowerCase().includes(filterValue));
   }
