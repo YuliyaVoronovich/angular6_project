@@ -132,7 +132,7 @@
           <div class="action-window" [hidden]="!hideme3[i]">
             <div *ngIf="house.access_edit" class="action" (click)="openDialog(house)">УДАЛИТЬ ОБЪЕКТ</div>
             <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
-            <div class="action">ОТПРАВИТЬ В РЕКЛАМУ</div>
+            <div *ngIf="house.access_reclame" class="action" (click)="openDialogReclame(house)">УПРАВЛЕНИЕ РЕКЛАМОЙ</div>
             <div class="action">КАЛЬКУЛЯТОР</div>
           </div>
         </td>

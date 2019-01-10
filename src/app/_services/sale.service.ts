@@ -8,6 +8,7 @@ import {Sale} from '../_models/Sale.model';
 import {Count} from '../_models/Count.model';
 import {Globals} from '../_common/globals';
 import {SaleAdditionInformation} from '../_models/SaleAdditionInformation.model';
+import {SaleReclame} from '../_models/SaleReclame.model';
 
 
 @Injectable()
@@ -30,7 +31,7 @@ export class SaleService {
         '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
         0, 0,  0, 0, '', 0, false, '', '', false, 0, 0, null,
         null, null, null,  false, false, false, null, null, null,
-        false, false, false, false);
+        null, false, false, false, false);
     }
     return sale;
   }
@@ -43,6 +44,13 @@ export class SaleService {
         , false, false, false, false, false, false, false);
     }
     return sale_addition_information;
+  }
+
+  setSaleReclame(sale_reclame: SaleReclame) {
+    if (!sale_reclame) {
+      return sale_reclame = new SaleReclame(0, false, false, false, false, false, false, false, false, false);
+    }
+    return sale_reclame;
   }
 
   getSales(search = {}): Observable<Sale[]> {
@@ -76,6 +84,11 @@ export class SaleService {
   delete(sale: Sale | number): Observable<Response> {
     const id = typeof sale === 'number' ? sale : sale.id;
     return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(sale));
+  }
+
+  saveReclame(sale: Sale | number): Observable<Response> {
+    const id = typeof sale === 'number' ? sale : sale.id;
+    return this.http.post(this.globals.url + this.uri + '/save_reclame/' + id, JSON.stringify(sale));
   }
 
   newLocationRequest(request): Observable<Response> {

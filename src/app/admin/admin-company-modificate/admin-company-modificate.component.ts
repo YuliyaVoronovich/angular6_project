@@ -24,8 +24,6 @@ export class AdminCompanyModificateComponent implements OnInit {
 
   public modules: Module[] = [];
   public id;
-  public license_from;
-  public license_to;
   public timer: any;
   public company_information: CompanyInformation = new CompanyInformation(0, null, '', '', '', '', '',
     '', '', '', false, false, false, false, false, '',
@@ -117,10 +115,8 @@ export class AdminCompanyModificateComponent implements OnInit {
   save() {
       console.log(this.company);
       // даты из формата объект в формат 0000-00-00
-      this.license_from = new NgbDateFRParserFormatter().format_to_base(this.company.license_from);
-      this.license_to = new NgbDateFRParserFormatter().format_to_base(this.company.license_to);
-      this.company.license_from = this.license_from;
-      this.company.license_to = this.license_to;
+      this.company.license_from = new NgbDateFRParserFormatter().format_to_base(this.company.license_from);
+      this.company.license_to = new NgbDateFRParserFormatter().format_to_base(this.company.license_to);
 
       if (this.company.id !== null) {
         if (this.validationTitle() === true) {
@@ -131,6 +127,9 @@ export class AdminCompanyModificateComponent implements OnInit {
                 this.router.navigate(['admin/companies']);
               } else {
                 this.message('Ошибка обновления компании!', true);
+
+                this.company.license_from = new NgbDateFRParserFormatter().parse('' + this.company.license_from);
+                this.company.license_to = new NgbDateFRParserFormatter().parse('' + this.company.license_to);
               }
             },
             error => {
@@ -138,6 +137,9 @@ export class AdminCompanyModificateComponent implements OnInit {
                 this.router.navigate(['']);
               } else {
                 this.message('Ошибка обновления компании!', true);
+
+                this.company.license_from = new NgbDateFRParserFormatter().parse('' + this.company.license_from);
+                this.company.license_to = new NgbDateFRParserFormatter().parse('' + this.company.license_to);
               }
             }
           );
@@ -151,6 +153,9 @@ export class AdminCompanyModificateComponent implements OnInit {
                 this.router.navigate(['admin/companies']);
               } else {
                 this.message('Ошибка добавления компании!', true);
+
+                this.company.license_from = new NgbDateFRParserFormatter().parse('' + this.company.license_from);
+                this.company.license_to = new NgbDateFRParserFormatter().parse('' + this.company.license_to);
               }
             },
             error => {
@@ -158,6 +163,9 @@ export class AdminCompanyModificateComponent implements OnInit {
                 this.router.navigate(['']);
               } else {
                 this.message('Ошибка добавления компании!', true);
+
+                this.company.license_from = new NgbDateFRParserFormatter().parse('' + this.company.license_from);
+                this.company.license_to = new NgbDateFRParserFormatter().parse('' + this.company.license_to);
               }
             }
           );

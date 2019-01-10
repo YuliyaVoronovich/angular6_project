@@ -3,6 +3,7 @@ import {User} from './User.model';
 import {SaleAdditionInformation} from './SaleAdditionInformation.model';
 import {Photo} from './Photo.model';
 import {Company} from './Company.model';
+import {SaleReclame} from './SaleReclame.model';
 
 export class Sale {
 
@@ -65,6 +66,7 @@ export class Sale {
     public created_at: Date,
     public updated_at: Date,
     public sale_addition_information: SaleAdditionInformation,
+    public reclame: SaleReclame,
     public access_edit: boolean,
     public access_delete: boolean,
     public access_own_info: boolean,

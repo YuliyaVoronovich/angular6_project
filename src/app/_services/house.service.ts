@@ -6,6 +6,7 @@ import {Count} from '../_models/Count.model';
 import {Observable} from 'rxjs/index';
 import {House} from '../_models/House.model';
 import {HouseAdditionInformation} from '../_models/HouseAdditionInformation.model';
+import {HouseReclame} from '../_models/HouseReclame.model';
 
 @Injectable()
 export class HouseService {
@@ -26,11 +27,10 @@ export class HouseService {
         '', 0, 0, false, false, false, false, 0, '', null, '',
         '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
         false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
-        false, null, null, null,  false, false, false, false);
+        false, null, null, null,   null, false, false, false, false);
     }
     return house;
   }
-
 
   setHouseAdditionInformation(house_addition_information: HouseAdditionInformation) {
     if (!house_addition_information) {
@@ -39,6 +39,13 @@ export class HouseService {
         , false, false, false, false, false, false, false, false, false, false);
     }
     return house_addition_information;
+  }
+
+  setHouseReclame(house_reclame: HouseReclame) {
+    if (!house_reclame) {
+      return house_reclame = new HouseReclame(0, false, false, false, false, false, false, false, false, false);
+    }
+    return house_reclame;
   }
 
   getHouses(search = {}): Observable<House[]> {
@@ -72,6 +79,12 @@ export class HouseService {
     const id = typeof house === 'number' ? house : house.id;
     return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(house));
   }
+
+  saveReclame(house: House | number): Observable<Response> {
+    const id = typeof house === 'number' ? house : house.id;
+    return this.http.post(this.globals.url + this.uri + '/save_reclame/' + id, JSON.stringify(house));
+  }
+
   newLocationRequest(request) {
     return this.http.post(this.globals.url + this.uri + '/new_location_request', JSON.stringify(request));
   }

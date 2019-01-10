@@ -149,6 +149,7 @@ export class HousesListComponent implements OnInit, OnDestroy {
         data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
         data[i].company = this.companyService.setCompany(data[i].company);
         //
+        data[i].reclame = this.houseService.setHouseReclame(data[i].reclame);
         // адрес объекта
         data[i].location = this.locationService.setLocation(data[i].location);
         data[i].location.city = this.locationService.setCity(data[i].location.city);
@@ -221,6 +222,27 @@ export class HousesListComponent implements OnInit, OnDestroy {
     );
   }
 
+  saveReclame(house: House) {
+
+    this.houseService.saveReclame(house).subscribe(
+      data => {
+        if (data) {
+          this.message('Реклама обновлена', false);
+          this.hideme3 = []; // скрыть окно действий
+        }
+      },
+      error => {
+        if (error.status === 401) {
+          this.loginService.logout();
+          this.route.navigate(['/']);
+        }
+        if (error.status === 403) {
+          this.route.navigate(['/403']);
+        }
+      }
+    );
+  }
+
   openDialog(house: House) {
     const dialogRef = this.dialog.open(DialogDeleteHouseComponent, {
       height: '150px',
@@ -234,6 +256,20 @@ export class HousesListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  openDialogReclame(house: House) {
+    const dialogRef = this.dialog.open(DialogReclameHouseComponent, {
+      height: '650px',
+      width: '700px',
+      data: {house: house}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.saveReclame(result);
+      }
+    });
+  }
 }
 
 @Component({
@@ -243,6 +279,21 @@ export class HousesListComponent implements OnInit, OnDestroy {
 export class DialogDeleteHouseComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogDeleteHouseComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-dialog-reclame-house',
+  templateUrl: 'app-dialog-reclame-house.html',
+})
+export class DialogReclameHouseComponent {
+  constructor(
+    public dialogRef: MatDialogRef<DialogReclameHouseComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 

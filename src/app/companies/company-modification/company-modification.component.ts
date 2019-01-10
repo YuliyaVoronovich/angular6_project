@@ -23,8 +23,6 @@ export class CompanyModificationComponent implements OnInit {
 
   public modules: Module[] = [];
   public id;
-  public license_from;
-  public license_to;
 
   public timer: any;
   public company_information: CompanyInformation = new CompanyInformation(0, null, '', '', '', '', '',
@@ -92,21 +90,23 @@ export class CompanyModificationComponent implements OnInit {
   save() {
     console.log(this.company);
     // даты из формата объект в формат 0000-00-00
-    this.license_from = new NgbDateFRParserFormatter().format_to_base(this.company.license_from);
-    this.license_to = new NgbDateFRParserFormatter().format_to_base(this.company.license_to);
-    this.company.license_from = this.license_from;
-    this.company.license_to = this.license_to;
+    this.company.license_from = new NgbDateFRParserFormatter().format_to_base(this.company.license_from);
+    this.company.license_to = new NgbDateFRParserFormatter().format_to_base(this.company.license_to);
 
     if (this.company.id !== null) {
       this.companySevice.update(this.company).subscribe(
         data => {
           if (data.status === 200) {
             this.message('Настройки сохранены', false);
+
             this.company.license_from = new NgbDateFRParserFormatter().parse('' + this.company.license_from);
             this.company.license_to = new NgbDateFRParserFormatter().parse('' + this.company.license_to);
 
           } else {
             this.message('Ошибка!', true);
+
+            this.company.license_from = new NgbDateFRParserFormatter().parse('' + this.company.license_from);
+            this.company.license_to = new NgbDateFRParserFormatter().parse('' + this.company.license_to);
           }
         },
         error => {
@@ -114,6 +114,9 @@ export class CompanyModificationComponent implements OnInit {
             this.router.navigate(['']);
           } else {
             this.message('Ошибка!', true);
+
+            this.company.license_from = new NgbDateFRParserFormatter().parse('' + this.company.license_from);
+            this.company.license_to = new NgbDateFRParserFormatter().parse('' + this.company.license_to);
           }
         }
       );

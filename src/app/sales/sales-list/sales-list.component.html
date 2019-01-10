@@ -98,9 +98,9 @@
         <td>{{sale.location.microdistrict.title}}</td>
         <td>
           <ng-container *ngIf="sale.location.street.title.length >0 ">
-            {{sale.location.street.title}},
-          </ng-container>
-           {{sale.location.house}}
+          {{sale.location.street.title}},
+        </ng-container>
+          {{sale.location.house}}
           <ng-container *ngIf="sale.location.housing !== '0' && sale.location.housing !== ''">
             / {{sale.location.housing}}
           </ng-container>
@@ -122,10 +122,10 @@
           <i class="fas fa-chevron-circle-right icon-color icon-cursor" style="font-size: 20px;"
              (click)="close_hideme3(i);"></i>
           <div class="action-window" [hidden]="!hideme3[i]">
-            <div *ngIf="sale.access_delete" class="action" (click)="openDialog(sale)">УДАЛИТЬ ОБЪЕКТ</div>
-            <div class="action">ОТПРАВИТЬ КЛИЕНТУ</div>
+            <div *ngIf="sale.access_delete" class="action" (click)="openDialogDelete(sale)">УДАЛИТЬ ОБЪЕКТ</div>
+            <!--<div class="action">ОТПРАВИТЬ КЛИЕНТУ</div>-->
             <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
-            <div class="action">ОТПРАВИТЬ В РЕКЛАМУ</div>
+            <div *ngIf="sale.access_reclame" class="action" (click)="openDialogReclame(sale)">УПРАВЛЕНИЕ РЕКЛАМОЙ</div>
             <div class="action">КАЛЬКУЛЯТОР</div>
           </div>
         </td>

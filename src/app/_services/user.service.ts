@@ -42,6 +42,12 @@ export class UserService {
       );
   }
 
+  getUsersWithoutAccess(search = {}): Observable<User[]> {
+    return this.http.get(this.globals.url + this.uri + '/noaccess', {search: search})
+      .map((response: Response) => response.json().users
+      );
+  }
+
   getUser(id) {
     return this.http.get(this.globals.url + this.uri + '/user/' + id)
       .map((response: Response) => response.json()

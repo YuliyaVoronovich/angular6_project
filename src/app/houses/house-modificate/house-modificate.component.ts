@@ -71,7 +71,7 @@ export class HouseModificateComponent implements OnInit {
     '', 0, 0, false, false, false, false, 0, '', null, '',
     '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
     false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
-    false, null, null, null,  false, false, false, false);
+    false, null, null, null,   null, false, false, false, false);
 
   public user: User = new User(0, '', '', null, null, null, '',
     0, 0, 0, false, null, null, null, null, null, null);
@@ -386,7 +386,7 @@ export class HouseModificateComponent implements OnInit {
 
     this.search['company'] = this.user.company.id;
 
-    return this.userService.getUsers(this.search).subscribe(data => {
+    return this.userService.getUsersWithoutAccess(this.search).subscribe(data => {
       for (let i = 0; i < data.length; i++) {
         if (data[i].user_information === null) {
           data[i].user_information = this.user_information;

@@ -359,7 +359,7 @@ export class CallModificateComponent implements OnInit {
 
     this.search['company'] = this.user.company.id;
 
-    return this.userService.getUsers(this.search).subscribe(data => {
+    return this.userService.getUsersWithoutAccess(this.search).subscribe(data => {
       for (let i = 0; i < data.length; i++) {
         if (data[i].user_information === null) {
           data[i].user_information = this.user_information;

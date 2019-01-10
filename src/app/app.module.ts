@@ -30,8 +30,7 @@ import {AdminRolesListComponent} from './admin/admin-roles-list/admin-roles-list
 import {AdminRoleModificateComponent} from './admin/admin-role-modificate/admin-role-modificate.component';
 import {AdminLocationsComponent} from './admin/admin-locations/admin-locations.component';
 import {
-  DialogDeleteSaleComponent,
-  SalesListComponent
+  DialogDeleteSaleComponent, DialogReclameSaleComponent, SalesListComponent
 } from './sales/sales-list/sales-list.component';
 import {SaleModificateComponent} from './sales/sale-modificate/sale-modificate.component';
 import {SaleResolve} from './_services/sale_resolve.service';
@@ -50,7 +49,11 @@ import {SalesListSearchComponent} from './sales/sales-list-search/sales-list-sea
 import {AgreementsCsListComponent} from './agreements-cs-list/agreements-cs-list.component';
 import {ClientsListSearchComponent} from './clients/clients-list-search/clients-list-search.component';
 import {GeneralTemplateComponent} from './_common/general-template/general-template.component';
-import {DialogDeleteHouseComponent, HousesListComponent} from './houses/houses-list/houses-list.component';
+import {
+  DialogDeleteHouseComponent,
+  DialogReclameHouseComponent,
+  HousesListComponent
+} from './houses/houses-list/houses-list.component';
 import {HouseModificateComponent} from './houses/house-modificate/house-modificate.component';
 import {HousesListSearchComponent} from './houses/houses-list-search/houses-list-search.component';
 import {HouseListPhotoComponent} from './houses/house-list-photo/house-list-photo.component';
@@ -263,7 +266,9 @@ const routes: Routes = [
     HousesListComponent,
     HouseModificateComponent,
     DialogDeleteSaleComponent,
+    DialogReclameSaleComponent,
     DialogDeleteHouseComponent,
+    DialogReclameHouseComponent,
     DialogDeleteClientComponent,
     DialogDeleteClientHouseComponent,
     DialogCompanyUnblockComponent,
@@ -347,8 +352,8 @@ const routes: Routes = [
     Globals,
     SanitizeHtmlPipe
   ],
-  entryComponents: [DialogDeleteSaleComponent, DialogDeleteHouseComponent, DialogDeleteClientComponent, DialogDeleteClientHouseComponent,
-    DialogCompanyBlockComponent, DialogCompanyUnblockComponent],
+  entryComponents: [DialogDeleteSaleComponent, DialogReclameSaleComponent, DialogDeleteHouseComponent, DialogReclameHouseComponent, DialogDeleteClientComponent,
+    DialogDeleteClientHouseComponent,  DialogCompanyBlockComponent, DialogCompanyUnblockComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

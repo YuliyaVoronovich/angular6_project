@@ -16,6 +16,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import {Router} from '@angular/router';
 import {AccessModel} from '../../_models/Access.model';
+import {NgbDateFRParserFormatter} from "../../ngb-date-fr-parser-formatter";
 
 export interface DialogData {
   sale: Sale;
@@ -158,6 +159,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
         data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
         data[i].company = this.companyService.setCompany(data[i].company);
         //
+        data[i].reclame = this.saleService.setSaleReclame(data[i].reclame);
         // адрес объекта
         data[i].location = this.locationService.setLocation(data[i].location);
         data[i].location.city = this.locationService.setCity(data[i].location.city);
@@ -222,7 +224,28 @@ export class SalesListComponent implements OnInit, OnDestroy {
     );
   }
 
-  openDialog(sale: Sale) {
+  saveReclame(sale: Sale) {
+
+    this.saleService.saveReclame(sale).subscribe(
+      data => {
+        if (data) {
+          this.message('Реклама обновлена', false);
+          this.hideme3 = []; // скрыть окно действий
+        }
+      },
+      error => {
+        if (error.status === 401) {
+          this.loginService.logout();
+          this.route.navigate(['/']);
+        }
+        if (error.status === 403) {
+          this.route.navigate(['/403']);
+        }
+      }
+    );
+  }
+
+  openDialogDelete(sale: Sale) {
     const dialogRef = this.dialog.open(DialogDeleteSaleComponent, {
       height: '150px',
       width: '250px',
@@ -235,6 +258,20 @@ export class SalesListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  openDialogReclame(sale: Sale) {
+    const dialogRef = this.dialog.open(DialogReclameSaleComponent, {
+      height: '650px',
+      width: '700px',
+      data: {sale: sale}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.saveReclame(result);
+      }
+    });
+  }
 }
 
 @Component({
@@ -244,6 +281,21 @@ export class SalesListComponent implements OnInit, OnDestroy {
 export class DialogDeleteSaleComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogDeleteSaleComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-dialog-reclame-sale',
+  templateUrl: 'app-dialog-reclame-sale.html',
+})
+export class DialogReclameSaleComponent {
+  constructor(
+    public dialogRef: MatDialogRef<DialogReclameSaleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 

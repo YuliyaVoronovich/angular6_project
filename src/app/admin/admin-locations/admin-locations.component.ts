@@ -66,15 +66,15 @@ export class AdminLocationsComponent implements OnInit {
   public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
     '', false, false, false, '', '', null, null,  false, '', null,
     '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
-    0, 0, 0, 0, '', 0, false, '', '', false, 0, 0, null,
+    0, 0,  0, 0, '', 0, false, '', '', false, 0, 0, null,
     null, null, null,  false, false, false, null, null, null,
-    false, false, false, false);
+    null, false, false, false, false);
 
   public house: House = new House(0, null, null, '', '', '', '',  '', null, null, false,
     '', 0, 0, false, false, false, false, 0, '', null, '',
     '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
     false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
-    false, null, null, null, false, false, false, false);
+    false, null, null, null,   null, false, false, false, false);
 
   public request: Request = new Request(0, '', '', 1);
 
