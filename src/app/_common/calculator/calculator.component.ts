@@ -15,7 +15,7 @@ export class CalculatorComponent implements OnInit {
   public curs_usd: number;
   public price_byn: number;
   public price_usd: number;
-  public percent;
+  public percent = 0;
   public service_cost_byn: number;
   public service_cost_usd: number;
   public amount_base_value: number;
@@ -96,8 +96,8 @@ export class CalculatorComponent implements OnInit {
       this.percent = 1.0;
     }
 
-    this.service_cost_byn = (+this.percent * +this.price_byn) / 100;
-    this.service_cost_usd = (+this.percent * +this.price_usd) / 100;
+    this.service_cost_byn = Math.floor((+this.percent * +this.price_byn) / 100);
+    this.service_cost_usd = Math.floor((+this.percent * +this.price_usd) / 100);
 
     this.amount_base_value_service_cost = Math.floor(+this.service_cost_byn / +this.globals.base_value);
 
