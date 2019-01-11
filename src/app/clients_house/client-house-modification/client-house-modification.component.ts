@@ -106,6 +106,11 @@ export class ClientHouseModificationComponent implements OnInit {
   public arrayHeating = [];
   public arrayWater = [];
 
+  public validation_phone: any = true; // flag of variable (valid input data or not)
+  public message_phone: any;         // message text of invalid input data
+  public validation_price: any = true; // flag of variable (valid input data or not)
+  public message_price: any;         // message text of invalid input data
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private loginService: LoginService,
@@ -394,55 +399,97 @@ export class ClientHouseModificationComponent implements OnInit {
 
     console.log(this.client);
 
-    if (this.client.id !== 0) {
-      this.clientHouseService.update(this.client).subscribe(
-        data => {
-          if (data.status === 200) {
-            this.message('Клиент успешно обновлен', false);
-            this.router.navigate(['clients_house']);
-          } else {
-            this.message('Не удалось обновить клиента!', true);
+    if (this.validation() === true) {
 
-            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
-            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
-          }
-        },
-        error => {
-          if (error.status === 401) {
-            this.router.navigate(['']);
-          } else {
-            this.message('Ошибка!', true);
+      if (this.client.id !== 0) {
+        this.clientHouseService.update(this.client).subscribe(
+          data => {
+            if (data.status === 200) {
+              this.message('Клиент успешно обновлен', false);
+              this.router.navigate(['clients_house']);
+            } else {
+              this.message('Не удалось обновить клиента!', true);
 
-            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
-            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
-          }
-        }
-      );
-    } else {
-      this.clientHouseService.create(this.client).subscribe(
-        data => {
-          if (data.status === 201) {
-            this.message('Клиент успешно создан', false);
-            this.router.navigate(['clients_house']);
-          } else {
-            this.message('Не удалось создать клиента!', true);
+              this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+              this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+            }
+          },
+          error => {
+            if (error.status === 401) {
+              this.router.navigate(['']);
+            } else {
+              this.message('Ошибка!', true);
 
-            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
-            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+              this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+              this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+            }
           }
-        },
-        error => {
-          if (error.status === 401) {
-            this.router.navigate(['']);
-          } else {
-            this.message('Ошибка!', true);
+        );
+      } else {
+        this.clientHouseService.create(this.client).subscribe(
+          data => {
+            if (data.status === 201) {
+              this.message('Клиент успешно создан', false);
+              this.router.navigate(['clients_house']);
+            } else {
+              this.message('Не удалось создать клиента!', true);
 
-            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
-            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+              this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+              this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+            }
+          },
+          error => {
+            if (error.status === 401) {
+              this.router.navigate(['']);
+            } else {
+              this.message('Ошибка!', true);
+
+              this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+              this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+            }
           }
-        }
-      );
+        );
+      }
     }
   }
+
+  /*  Валидация */
+  validationPhone(): boolean {
+    if (this.client.phone1.length > 0) {
+      this.validation_phone = true;
+      this.message_phone = '';
+
+      return true;
+    } else {
+      this.validation_phone = false;
+      this.message_phone = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationPrice(): boolean {
+    if (this.client.price > 0) {
+      this.validation_price = true;
+      this.message_price = '';
+
+      return true;
+    } else {
+      this.validation_price = false;
+      this.message_price = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validation(): boolean {
+
+    if (this.validationPhone() === true && this.validationPrice() === true) {
+      return true;
+    }
+    return false;
+  }
+
+  /*  Конец валидации */
 
 }

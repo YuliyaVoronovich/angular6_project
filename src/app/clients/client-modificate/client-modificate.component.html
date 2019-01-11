@@ -36,8 +36,9 @@
 
               <div class="col-lg-4 col-md-4 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.phone1">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.phone1" (blur)="validationPhone()">
                   <span>Телефон</span>
+                  <small *ngIf="validation_phone === false" class="form-text text-danger">{{message_phone}}</small>
                 </div>
               </div>
 
@@ -97,8 +98,10 @@
                              [(ngModel)]="''+ client.city.id"
                              [allowClear]="true"
                              placeholder="Нас. пункт"
-                             (selected)="getDistrict($event); getMicroDistrict($event);getLocation($event)">
+                             (selected)="getDistrict($event); getMicroDistrict($event);getLocation($event);validationCity()"
+                             (deselected)="validationCity()">
                   </ng-select>
+                  <small *ngIf="validation_city === false" class="form-text text-danger">{{message_city}}</small>
                 </div>
               </div>
 
@@ -200,8 +203,9 @@
               <div class="col-lg-4 col-md-4 col-12">
                 <div class="form-group label">
                   <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.price"
-                         (change)="getPriceSqr()">
+                         (change)="getPriceSqr()" (blur)="validationPrice()">
                   <span>Цена max</span>
+                  <small *ngIf="validation_price === false" class="form-text text-danger">{{message_price}}</small>
                 </div>
               </div>
 
@@ -227,8 +231,9 @@
               <div class="col-lg-3 col-md-3 col-12">
                 <div class="form-group label">
                   <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.room_from"
-                         (keypress)="keyPressNumber($event);">
+                         (keypress)="keyPressNumber($event);" (blur)="validationRoom()">
                   <span>Комнат от</span>
+                  <small *ngIf="validation_room=== false" class="form-text text-danger">{{message_room}}</small>
                 </div>
               </div>
 

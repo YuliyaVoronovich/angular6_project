@@ -114,6 +114,16 @@ export class ClientModificateComponent implements OnInit {
   public arrayTypes = [];
   public arrayRepairs = [];
 
+  // валидация
+  public validation_phone: any = true; // flag of variable (valid input data or not)
+  public message_phone: any;         // message text of invalid input data
+  public validation_city: any = true; // flag of variable (valid input data or not)
+  public message_city: any;         // message text of invalid input data
+  public validation_price: any = true; // flag of variable (valid input data or not)
+  public message_price: any;         // message text of invalid input data
+  public validation_room: any = true; // flag of variable (valid input data or not)
+  public message_room: any;         // message text of invalid input data
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private loginService: LoginService,
@@ -461,56 +471,127 @@ export class ClientModificateComponent implements OnInit {
     this.client.contract_to = new NgbDateFRParserFormatter().format_to_base(this.client.contract_to);
 
     console.log(this.client);
+    if (this.validation() === true) {
 
-    if (this.client.id !== 0) {
-      this.clientService.update(this.client).subscribe(
-        data => {
-          if (data.status === 200) {
-            this.message('Клиент успешно обновлен', false);
-            this.router.navigate(['clients']);
-          } else {
-            this.message('Не удалось обновить клиента!', true);
+      if (this.client.id !== 0) {
+        this.clientService.update(this.client).subscribe(
+          data => {
+            if (data.status === 200) {
+              this.message('Клиент успешно обновлен', false);
+              this.router.navigate(['clients']);
+            } else {
+              this.message('Не удалось обновить клиента!', true);
 
-            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
-            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+              this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+              this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+            }
+          },
+          error => {
+            if (error.status === 401) {
+              this.router.navigate(['']);
+            } else {
+              this.message('Ошибка!', true);
+
+              this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+              this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+            }
           }
-        },
-        error => {
-          if (error.status === 401) {
-            this.router.navigate(['']);
-          } else {
-            this.message('Ошибка!', true);
+        );
+      } else {
+        this.clientService.create(this.client).subscribe(
+          data => {
+            if (data.status === 201) {
+              this.message('Клиент успешно создан', false);
+              this.router.navigate(['clients']);
+            } else {
+              this.message('Не удалось создать клиента!', true);
 
-            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
-            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
-          }
-        }
-      );
-    } else {
-      this.clientService.create(this.client).subscribe(
-        data => {
-          if (data.status === 201) {
-            this.message('Клиент успешно создан', false);
-            this.router.navigate(['clients']);
-          } else {
-            this.message('Не удалось создать клиента!', true);
+              this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+              this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+            }
+          },
+          error => {
+            if (error.status === 401) {
+              this.router.navigate(['']);
+            } else {
+              this.message('Ошибка!', true);
 
-            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
-            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+              this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
+              this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
+            }
           }
-        },
-        error => {
-          if (error.status === 401) {
-            this.router.navigate(['']);
-          } else {
-            this.message('Ошибка!', true);
-
-            this.client.contract_from = new NgbDateFRParserFormatter().parse('' + this.client.contract_from);
-            this.client.contract_to = new NgbDateFRParserFormatter().parse('' + this.client.contract_to);
-          }
-        }
-      );
+        );
+      }
     }
   }
+
+  /*  Валидация */
+  validationPhone(): boolean {
+    if (this.client.phone1.length > 0) {
+      this.validation_phone = true;
+      this.message_phone = '';
+
+      return true;
+    } else {
+      this.validation_phone = false;
+      this.message_phone = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationCity(): boolean {
+
+    if (this.client.city.id) {
+      this.validation_city = true;
+      this.message_city = '';
+
+      return true;
+    } else {
+      this.validation_city = false;
+      this.message_city = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationRoom(): boolean {
+    if (this.client.room_from > 0) {
+      this.validation_room = true;
+      this.message_room = '';
+
+      return true;
+    } else {
+      this.validation_room = false;
+      this.message_room = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+
+  validationPrice(): boolean {
+    if (this.client.price > 0) {
+      this.validation_price = true;
+      this.message_price = '';
+
+      return true;
+    } else {
+      this.validation_price = false;
+      this.message_price = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validation(): boolean {
+
+    if (this.validationPhone() === true && this.validationCity() === true && this.validationPrice() === true && this.validationRoom() === true) {
+      return true;
+    }
+    return false;
+  }
+
+  /*  Конец валидации */
 
 }

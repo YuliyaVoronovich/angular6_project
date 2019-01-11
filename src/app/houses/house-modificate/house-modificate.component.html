@@ -41,8 +41,10 @@
                              [(ngModel)]="''+ house.location.city.district_country.region.id"
                              [allowClear]="true"
                              placeholder="Область"
-                             (selected)="district_rb($event)">
+                             (selected)="district_rb($event); validationRegion()"
+                             (deselected)="validationRegion()">
                   </ng-select>
+                  <small *ngIf="validation_region === false" class="form-text text-danger">{{message_region}}</small>
                 </div>
               </div>
 
@@ -52,8 +54,10 @@
                              [(ngModel)]="''+ house.location.city.district_country.id"
                              [allowClear]="true"
                              placeholder="Район"
-                             (selected)="city($event)">
+                             (selected)="city($event); validationDistrict()"
+                             (deselected)="validationRegion()">
                   </ng-select>
+                  <small *ngIf="validation_district === false" class="form-text text-danger">{{message_district}}</small>
                 </div>
               </div>
 
@@ -63,8 +67,10 @@
                              [(ngModel)]="''+ house.location.city.id"
                              [allowClear]="true"
                              placeholder="Нас. пункт"
-                             (selected)="street($event);getLocation($event)">
+                             (selected)="street($event);getLocation($event);validationCity()"
+                             (deselected)="validationCity()">
                   </ng-select>
+                  <small *ngIf="validation_city === false" class="form-text text-danger">{{message_city}}</small>
                 </div>
               </div>
 
@@ -126,8 +132,9 @@
               <div class="col-7">
                 <div class="form-group label">
                   <input class="form-control" [(ngModel)]="house.location.house" placeholder=" "
-                         (change)="getInfoLocation()" (keypress)="keyPressNumber($event);">
+                         (change)="getInfoLocation()" (keypress)="keyPressNumber($event);" (blur)="validationHouse()">
                   <span>Дом</span>
+                  <small *ngIf="validation_house === false" class="form-text text-danger">{{message_house}}</small>
                 </div>
               </div>
               <div class="col-5">
@@ -204,6 +211,7 @@
 
           <div class="col-12 text-center align">
             <div class="labels-lg" style="margin-top: 10px;">
+              <small *ngIf="validation_type === false" class="form-text text-danger">{{message_type}}</small>
               <ng-container *ngFor="let type of types">
                 <label class="btn btn-default" (click)="typesTrigger(type.id);"
                        [ngClass]="{'select-label' : arrayTypes[type.id]}">
@@ -245,8 +253,9 @@
             <div class="row">
               <div class="col-xl-4 col-lg-4 col-md-4 col-12">
                 <div class="form-group label">
-                  <input class="form-control" [(ngModel)]="house.area_land" placeholder=" ">
+                  <input class="form-control" [(ngModel)]="house.area_land" placeholder=" " (change)="validationAreaLand()">
                   <span>S участка</span>
+                  <small *ngIf="validation_area_land === false" class="form-text text-danger">{{message_area_land}}</small>
                 </div>
               </div>
 
@@ -265,8 +274,9 @@
               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                 <div class="form-group label">
                   <input class="form-control" [(ngModel)]="house.area" placeholder=" "
-                         (keypress)="keyPressPoint($event);">
+                         (keypress)="keyPressPoint($event);" (change)="validationArea()">
                   <span>S общая</span>
+                  <small *ngIf="validation_area === false" class="form-text text-danger">{{message_area}}</small>
                 </div>
               </div>
 
@@ -552,8 +562,9 @@
 
                 <div class="col-12">
                   <div class="form-group label">
-                    <input class="form-control" [(ngModel)]="house.price" placeholder=" ">
+                    <input class="form-control" [(ngModel)]="house.price" placeholder=" " (change)="validationPrice()">
                     <span>Стоимость USD</span>
+                    <small *ngIf="validation_price === false" class="form-text text-danger">{{message_price}}</small>
                   </div>
                 </div>
 

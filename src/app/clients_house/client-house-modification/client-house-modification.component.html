@@ -36,8 +36,9 @@
 
               <div class="col-lg-4 col-md-4 col-12">
                 <div class="form-group label">
-                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.phone1">
+                  <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.phone1" (blur)="validationPhone()">
                   <span>Телефон</span>
+                  <small *ngIf="validation_phone === false" class="form-text text-danger">{{message_phone}}</small>
                 </div>
               </div>
 
@@ -157,8 +158,9 @@
               <div class="col-lg-4 col-md-4 col-12">
                 <div class="form-group label">
                   <input class="form-control" type="text" placeholder=" " [(ngModel)]="client.price"
-                         (change)="getPriceSqr()">
+                         (change)="getPriceSqr()" (blur)="validationPrice()">
                   <span>Цена max</span>
+                  <small *ngIf="validation_price === false" class="form-text text-danger">{{message_price}}</small>
                 </div>
               </div>
 
