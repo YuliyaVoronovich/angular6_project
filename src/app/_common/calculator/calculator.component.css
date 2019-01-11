@@ -1,0 +1,21 @@
+h3 {
+  color: #428bca;
+}
+table {
+  font-size: 14px;
+}
+table tr th {
+  background: #e2e2e2;
+  border-color: #dfdfdf;
+  text-align: center;
+  padding: 0.6em;
+  color: #524d4d;
+  /* top:40px;*/
+}
+table tr td {
+  line-height: 1;
+  border-color: #dfdfdf;
+  text-align: center;
+  padding: 0.6em;
+  vertical-align: middle;
+}

@@ -86,6 +86,8 @@ import { CallsListComponent } from './calls/calls-list/calls-list.component';
 import { CallModificateComponent } from './calls/call-modificate/call-modificate.component';
 import { CallsHouseListComponent } from './calls_house/calls-house-list/calls-house-list.component';
 import { CallHouseModificateComponent } from './calls_house/call-house-modificate/call-house-modificate.component';
+import {SaleListPhotoComponent} from './sales/sale-list-photo/sale-list-photo.component';
+import {CalculatorComponent} from './_common/calculator/calculator.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -113,10 +115,10 @@ import {CallHouseService} from './_services/call_house.service';
 import {CallHouseResolve} from './_services/call_house_resolve.service';
 
 import {MaterialModule} from './material.module';
-import {SaleListPhotoComponent} from './sales/sale-list-photo/sale-list-photo.component';
 import {NgxGalleryModule} from 'ngx-gallery';
 
 import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
+
 
 
 const adminCompaniesRoutes: Routes = [
@@ -273,6 +275,7 @@ const routes: Routes = [
     DialogDeleteClientHouseComponent,
     DialogCompanyUnblockComponent,
     DialogCompanyBlockComponent,
+    CalculatorComponent,
     HousesListSearchComponent,
     HouseListPhotoComponent,
     SaleModificateMapComponent,
@@ -301,6 +304,7 @@ const routes: Routes = [
     CallModificateComponent,
     CallsHouseListComponent,
     CallHouseModificateComponent,
+    CalculatorComponent,
     SanitizeHtmlPipe,
     FilterPipe
   ],
@@ -353,7 +357,7 @@ const routes: Routes = [
     SanitizeHtmlPipe
   ],
   entryComponents: [DialogDeleteSaleComponent, DialogReclameSaleComponent, DialogDeleteHouseComponent, DialogReclameHouseComponent, DialogDeleteClientComponent,
-    DialogDeleteClientHouseComponent,  DialogCompanyBlockComponent, DialogCompanyUnblockComponent],
+    DialogDeleteClientHouseComponent,  DialogCompanyBlockComponent, DialogCompanyUnblockComponent, CalculatorComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

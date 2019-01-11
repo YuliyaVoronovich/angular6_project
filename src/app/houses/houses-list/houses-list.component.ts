@@ -15,6 +15,7 @@ import {SearchHouseModel} from '../../_models/SearchHouse.model';
 
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {AccessModel} from '../../_models/Access.model';
+import {CalculatorComponent} from '../../_common/calculator/calculator.component';
 
 export interface DialogData {
   house: House;
@@ -268,6 +269,14 @@ export class HousesListComponent implements OnInit, OnDestroy {
       if (result) {
         this.saveReclame(result);
       }
+    });
+  }
+
+  openCalculator(house: House) {
+    const dialogRef = this.dialog.open(CalculatorComponent, {
+      height: '280px',
+      width: '600px',
+      data: {price: house.price}
     });
   }
 }

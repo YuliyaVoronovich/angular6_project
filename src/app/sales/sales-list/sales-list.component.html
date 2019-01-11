@@ -126,7 +126,7 @@
             <!--<div class="action">ОТПРАВИТЬ КЛИЕНТУ</div>-->
             <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
             <div *ngIf="sale.access_reclame" class="action" (click)="openDialogReclame(sale)">УПРАВЛЕНИЕ РЕКЛАМОЙ</div>
-            <div class="action">КАЛЬКУЛЯТОР</div>
+            <div class="action" (click)="openCalculator(sale)">КАЛЬКУЛЯТОР</div>
           </div>
         </td>
       </tr>

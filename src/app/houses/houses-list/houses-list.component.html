@@ -133,7 +133,7 @@
             <div *ngIf="house.access_edit" class="action" (click)="openDialog(house)">УДАЛИТЬ ОБЪЕКТ</div>
             <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
             <div *ngIf="house.access_reclame" class="action" (click)="openDialogReclame(house)">УПРАВЛЕНИЕ РЕКЛАМОЙ</div>
-            <div class="action">КАЛЬКУЛЯТОР</div>
+            <div class="action" (click)="openCalculator(house)">КАЛЬКУЛЯТОР</div>
           </div>
         </td>
       </tr>

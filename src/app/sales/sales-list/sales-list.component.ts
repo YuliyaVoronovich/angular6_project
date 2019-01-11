@@ -16,7 +16,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import {Router} from '@angular/router';
 import {AccessModel} from '../../_models/Access.model';
-import {NgbDateFRParserFormatter} from "../../ngb-date-fr-parser-formatter";
+import {CalculatorComponent} from '../../_common/calculator/calculator.component';
 
 export interface DialogData {
   sale: Sale;
@@ -270,6 +270,14 @@ export class SalesListComponent implements OnInit, OnDestroy {
       if (result) {
         this.saveReclame(result);
       }
+    });
+  }
+
+  openCalculator(sale: Sale) {
+    const dialogRef = this.dialog.open(CalculatorComponent, {
+      height: '280px',
+      width: '600px',
+      data: {price: sale.price}
     });
   }
 }

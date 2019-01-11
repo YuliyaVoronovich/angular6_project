@@ -1,0 +1,26 @@
+<h3 mat-dialog-title>Расчёт стоимости услуг</h3>
+
+<table class="table table-bordered table-hover">
+  <tr>
+    <th></th>
+    <th>BYN</th>
+    <th>USD</th>
+    <th>кол-во базовых</th>
+  </tr>
+  <tr>
+    <td style="text-align: left!important;">стоимость объекта</td>
+    <td>{{price_byn}}</td>
+    <td>{{data.price}}</td>
+    <td>{{amount_base_value}}</td>
+  </tr>
+  <tr>
+    <td style="text-align: left!important;">процент</td>
+    <td colspan="3">{{percent}}</td>
+  </tr>
+  <tr>
+    <td style="text-align: left!important;">стоимость услуги</td>
+    <td>{{service_cost_byn}}</td>
+    <td>{{service_cost_usd}}</td>
+    <td>{{amount_base_value_service_cost}}</td>
+  </tr>
+</table>
