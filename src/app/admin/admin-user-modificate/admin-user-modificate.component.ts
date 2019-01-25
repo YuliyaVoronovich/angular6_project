@@ -81,6 +81,7 @@ export class AdminUserModificateComponent implements OnInit {
             }
             this.user.company = data.user.company;
           });
+          this.search['company'] = this.user.company.id;
         } else {
           this.user.user_information = this.user_information;
           this.user.company = this.companyService.setCompany(null);
