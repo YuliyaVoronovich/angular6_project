@@ -1,124 +1,127 @@
 <div class="container">
 
-    <div class="row">
-      <div class="col-8">
-        <h3 style="margin-bottom: 40px">
-          <div *ngIf="user.id;then edit else create"></div>
+  <div class="row">
+    <div class="col-8">
+      <h3 style="margin-bottom: 40px">
+        <div *ngIf="user.id;then edit else create"></div>
 
-          <ng-template #create>Добавление сотрудника</ng-template>
-          <ng-template #edit>Редактирование сотрудника</ng-template>
+        <ng-template #create>Добавление сотрудника</ng-template>
+        <ng-template #edit>Редактирование сотрудника</ng-template>
 
-        </h3>
-        <div class="form-group row">
-          <label class="col-5 col-form-label text-left">Логин</label>
-          <div class="col-7">
-            <input type="text" class="form-control" [(ngModel)]="user.login">
-          </div>
+      </h3>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Логин</label>
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="user.login">
         </div>
-        <div class="form-group row">
-          <label for="password" class="col-5 col-form-label text-left">Пароль</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="password" name="password" [(ngModel)]="user.password_first">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="password" class="col-5 col-form-label text-left">Пароль</label>
+        <div class="col-7">
+          <input type="text" class="form-control" id="password" name="password" [(ngModel)]="user.password_first">
         </div>
-        <div class="form-group row">
-          <label for="name" class="col-5 col-form-label text-left">Имя</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="user.user_information.name">
-          </div>
-        </div>
-        <div class="form-group row">
+      </div>
+      <div class="form-group row">
         <label for="surname" class="col-5 col-form-label text-left">Фамилия</label>
         <div class="col-7">
           <input type="text" class="form-control" id="surname" name="surname"
                  [(ngModel)]="user.user_information.surname">
         </div>
       </div>
-        <div class="form-group row">
-          <label for="patronymic" class="col-5 col-form-label text-left">Отчество</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="patronymic" name="patronymic"
-                   [(ngModel)]="user.user_information.patronymic">
-          </div>
+      <div class="form-group row">
+        <label for="name" class="col-5 col-form-label text-left">Имя</label>
+        <div class="col-7">
+          <input type="text" class="form-control" id="name" name="name" [(ngModel)]="user.user_information.name">
         </div>
-        <div class="form-group row">
-          <label for="phone1" class="col-5 col-form-label text-left">Телефон1</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="phone1" name="phone1"
-                   [(ngModel)]="user.user_information.phone1">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="patronymic" class="col-5 col-form-label text-left">Отчество</label>
+        <div class="col-7">
+          <input type="text" class="form-control" id="patronymic" name="patronymic"
+                 [(ngModel)]="user.user_information.patronymic">
         </div>
-        <div class="form-group row">
-          <label for="phone2" class="col-5 col-form-label text-left">Телефон2</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="phone2" name="phone2"
-                   [(ngModel)]="user.user_information.phone2">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="phone1" class="col-5 col-form-label text-left">Телефон1</label>
+        <div class="col-7">
+          <input type="text" class="form-control" id="phone1" name="phone1"
+                 [(ngModel)]="user.user_information.phone1">
         </div>
-        <div class="form-group row">
-          <label for="passport" class="col-5 col-form-label text-left">Паспортные данные</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="passport" name="passport"
-                   [(ngModel)]="user.user_information.passport">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="phone2" class="col-5 col-form-label text-left">Телефон2</label>
+        <div class="col-7">
+          <input type="text" class="form-control" id="phone2" name="phone2"
+                 [(ngModel)]="user.user_information.phone2">
         </div>
-        <div class="form-group row">
-          <label for="date_of_birth" class="col-5 col-form-label text-left">Дата рождения</label>
-          <div class="col-7">
-            <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" (click)="d.toggle()"
-                   [(ngModel)]="user.user_information.date_of_birth" ngbDatepicker
-                   #d="ngbDatepicker">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="passport" class="col-5 col-form-label text-left">Паспортные данные</label>
+        <div class="col-7">
+          <input type="text" class="form-control" id="passport" name="passport"
+                 [(ngModel)]="user.user_information.passport">
         </div>
-        <div class="form-group row">
-          <label class="col-5 col-form-label text-left">Компания</label>
-          <div class="col-7">
-            <select (change)="infoForCompany()" class="form-control" [(ngModel)]="user.company.id">
-              <option value="0"></option>
-              <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
-            </select>
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="date_of_birth" class="col-5 col-form-label text-left">Дата рождения</label>
+        <div class="col-7">
+          <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" (click)="d.toggle()"
+                 [(ngModel)]="user.user_information.date_of_birth" ngbDatepicker
+                 #d="ngbDatepicker">
         </div>
-        <div class="form-group row">
-          <label class="col-5 col-form-label text-left">Менеджер</label>
-          <div class="col-7">
-            <select class="form-control" [(ngModel)]="user.manager_id">
-              <option value="0"></option>
-              <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}} {{one.user_information.name}}</option>
-            </select>
-          </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Компания</label>
+        <div class="col-7">
+          <select (change)="infoForCompany()" class="form-control" [(ngModel)]="user.company.id">
+            <option value="0"></option>
+            <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
+          </select>
         </div>
-        <div class="form-group row">
-          <label class="col-5 col-form-label text-left">Фото</label>
-          <div class="col-7">
-            <image-upload (uploadFinished)="onUploadFinished($event)" [uploadedFiles]="upload_photo" (removed)="onRemoved($event)"></image-upload>
-          </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Менеджер</label>
+        <div class="col-7">
+          <select class="form-control" [(ngModel)]="user.manager_id">
+            <option value="0"></option>
+            <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}}
+              {{one.user_information.name}}
+            </option>
+          </select>
         </div>
-        <div class="form-group row">
-          <div class="col-7 col-offset-5">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="ban" name="ban" [(ngModel)]="user.ban">
-              <label class="form-check-label">
-                Забанить
-              </label>
-            </div>
-          </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Фото</label>
+        <div class="col-7">
+          <image-upload (uploadFinished)="onUploadFinished($event)" [uploadedFiles]="upload_photo"
+                        (removed)="onRemoved($event)"></image-upload>
         </div>
-        <div class="form-group row">
-          <label class="col-5 col-form-label text-left">Право</label>
-          <div class="col-7">
-            <select class="form-control" [(ngModel)]="user.role_id"
-                    [ngModelOptions]="{standalone: true}">
-              <option value="0"></option>
-              <option *ngFor="let one of roles" [value]="one.id">{{one.title}}</option>
-            </select>
+      </div>
+      <div class="form-group row">
+        <div class="col-7 col-offset-5">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="ban" name="ban" [(ngModel)]="user.ban">
+            <label class="form-check-label">
+              Забанить
+            </label>
           </div>
         </div>
       </div>
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Право</label>
+        <div class="col-7">
+          <select class="form-control" [(ngModel)]="user.role_id"
+                  [ngModelOptions]="{standalone: true}">
+            <option value="0"></option>
+            <option *ngFor="let one of roles" [value]="one.id">{{one.title}}</option>
+          </select>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <h3>Специальные права</h3>
-    <div style="cursor: pointer" *ngFor="let permission of permissions; let i = index" class="col-12">
+  <h3>Специальные права</h3>
+  <div style="cursor: pointer" *ngFor="let permission of permissions; let i = index" class="col-12">
 
      <span (click)="hideme[i] = !hideme[i]">
          <i class="fas fa-sort-down icon-top" [hidden]="hideme[i]"></i>
@@ -128,30 +131,32 @@
 
 
     <div *ngFor="let item of permission.permissions" class="row permission" [hidden]="!hideme[i]">
-        <div class="col-6">
-          {{ item.title }}
-        </div>
-        <div class="col-4">
-          <label class="radio-inline">
-            <input type="radio" name="userPermission[{{ item.id }}]" [checked]="user.permissions[item.id]===1"
-                   (change)="permissionTrigger(1, item.id)">Да
-          </label>
-          <label class="radio-inline">
-            <input type="radio" name="userPermission[{{ item.id }}]" [checked]="user.permissions[item.id]===0"
-                   (change)="permissionTrigger(0, item.id)">Нет
-          </label>
-          <label class="radio-inline">
-            <input type="radio" name="userPermission[{{ item.id }}]" [checked]="user.permissions[item.id]===2"
-                   (change)="permissionTrigger(2, item.id)">Группа
-          </label>
-
-        </div>
+      <div class="col-6">
+        {{ item.title }}
+      </div>
+      <div class="col-4">
+        <label class="radio-inline">
+          <input type="radio" name="userPermission[{{ item.id }}]" [checked]="user.permissions[item.id]===1"
+                 (change)="permissionTrigger(1, item.id)">Да
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="userPermission[{{ item.id }}]" [checked]="user.permissions[item.id]===0"
+                 (change)="permissionTrigger(0, item.id)">Нет
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="userPermission[{{ item.id }}]" [checked]="user.permissions[item.id]===2"
+                 (change)="permissionTrigger(2, item.id)">Группа
+        </label>
 
       </div>
+
     </div>
+  </div>
+  <div class="form-group myButton">
     <div class="col-12">
       <button (click)="save()" class="btn btn-lg btn-info">
         Сохранить
       </button>
     </div>
+  </div>
 </div>
