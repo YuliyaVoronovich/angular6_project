@@ -240,6 +240,7 @@ export class SalesListSearchComponent implements OnInit {
     this.citiesSelected.push(`${option.value}`);
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
+    this.getStreets(this.citiesSearch, 0, 0);
   }
 
   deselectDistrict(option: IOption) {
@@ -249,6 +250,7 @@ export class SalesListSearchComponent implements OnInit {
     }
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
+    this.getStreets(this.citiesSearch, 0, 0);
   }
 
   selectMicroDistrict(option: IOption) {

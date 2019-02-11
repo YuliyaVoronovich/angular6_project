@@ -8,16 +8,18 @@
             <ng-select [options]="districts_rb"
                        [(ngModel)]="search.district_rb.values"
                        [multiple]="true"
-                       placeholder="Район РБ">
+                       placeholder="Район РБ"
+                       (selected)="selectCities($event)"
+                       (deselected)="deselectCities($event)">
             </ng-select>
           </div>
         </div>
         <div class="col-6 my-col-sm-12">
           <div class="form-group">
-            <ng-select [options]="streets"
-                       [(ngModel)]="search.street.values"
+            <ng-select [options]="cities"
+                       [(ngModel)]="search.city.values"
                        [multiple]="true"
-                       placeholder="Улица">
+                       placeholder="Нас. пункт">
             </ng-select>
           </div>
         </div>
