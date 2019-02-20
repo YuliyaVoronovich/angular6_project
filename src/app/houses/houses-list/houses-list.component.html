@@ -118,8 +118,13 @@
         <td>{{house.storeys}}</td>
         <td>{{house.price}}</td>
         <td>{{house.price_sqr}}</td>
-        <td *ngIf="user.access===4">{{house.company.title}}</td>
-        <td *ngIf="user.access!==4">{{house.user.user_information.surname}} {{house.user.user_information.name}}</td>
+        <td class="user_information">
+          <span *ngIf="house.user.partner" class="partner">
+            Партнерские продажи
+          </span>
+          <span *ngIf="user.access===4" [ngClass]="{'bold': house.user.partner, 'cursor': house.user.partner}"> {{house.company.title}}</span>
+          <span *ngIf="user.access!==4" [ngClass]="{'bold': house.user.partner, 'cursor': house.user.partner}"> {{house.user.user_information.surname}} {{house.user.user_information.name}}</span>
+        </td>
         <td>
           {{house.created_at | date: 'dd.MM.yyyy'}}
         </td>

@@ -39,7 +39,8 @@ export class SearchHouseModel {
     public gas: any,
     public electricity: any,
     public new_building: any,
-    public finished: any
+    public finished: any,
+    public partner: boolean
   ) {
   }
 }

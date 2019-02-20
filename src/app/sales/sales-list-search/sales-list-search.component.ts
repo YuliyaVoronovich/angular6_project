@@ -58,6 +58,8 @@ export class SalesListSearchComponent implements OnInit {
   public hide_repair = false;
   public hide_other = false;
 
+  public showStreet = false;
+
   public walls: Label[] = [];
   public furniture: Label[] = [];
   public repairs: Label[] = [];
@@ -241,6 +243,8 @@ export class SalesListSearchComponent implements OnInit {
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
     this.getStreets(this.citiesSearch, 0, 0);
+
+    this.showStreet = true;
   }
 
   deselectDistrict(option: IOption) {
@@ -251,6 +255,8 @@ export class SalesListSearchComponent implements OnInit {
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
     this.getStreets(this.citiesSearch, 0, 0);
+
+    this.showStreet = false;
   }
 
   selectMicroDistrict(option: IOption) {

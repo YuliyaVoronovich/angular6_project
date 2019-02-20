@@ -51,7 +51,7 @@ export class HousesListComponent implements OnInit, OnDestroy {
     {'values': [], 'except': 0}, '', null, null, null, null,
     '', '', '', '', '', '', '', '',
     '', '', [], [], [], [], '', '', [], [],
-    [], [], false, false, false, false, false, false);
+    [], [], false, false, false, false, false, false, false);
 
 
   public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,

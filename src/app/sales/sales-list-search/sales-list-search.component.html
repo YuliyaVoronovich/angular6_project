@@ -14,7 +14,11 @@
           </div>
         </div>
         <div class="col-6 my-col-sm-12">
-          <div class="form-group">
+          <div class="form-group" [hidden]="showStreet">
+              <input class="form-control" type="text" placeholder="Улица" disabled>
+          </div>
+
+          <div class="form-group" [hidden]="!showStreet">
             <ng-select [options]="streets"
                        [(ngModel)]="search.street.values"
                        [multiple]="true"
@@ -51,7 +55,8 @@
       </div>
     </div>
 
-    <div class="col-lg-3 my-col-md-5 my-col-sm-4 my-col-xs-12 my-col-xxs-12  text-right padding-left" style="color: #428bca">
+    <div class="col-lg-3 my-col-md-5 my-col-sm-4 my-col-xs-12 my-col-xxs-12  text-right padding-left"
+         style="color: #428bca">
       <a class="btn" (click)="hide=!hide">
         <i class="fas fa-search-plus"></i>
         <span>Расширенный поиск</span>
@@ -163,12 +168,17 @@
 
 
         <div class="col-12">
-          <div class="form-group">
+          <div class="form-group" [hidden]="showStreet">
+            <input class="form-control" type="text" placeholder="Улица" disabled>
+          </div>
+
+          <div class="form-group" [hidden]="!showStreet">
             <div class="search">
               <label class="label text-left">Улица</label>
               <ng-select [options]="streets"
                          [(ngModel)]="search.street.values"
-                         [multiple]="true">
+                         [multiple]="true"
+              >
               </ng-select>
               <div class="except-icon text-center cursor" (click)="search.street.except=!search.street.except"
                    [ngClass]="{'select-label' : search.street.except}">
@@ -471,11 +481,12 @@
 
   <div class="row" style="color: #428bca" [ngClass]="{'show' : hide, 'hide' : !hide}">
     <div class="col-3">
-      <a style="text-decoration: underline" class="btn" (click)="clear()">Очистить <span class="my-col-xs-none">поиск</span></a>
+      <a style="text-decoration: underline" class="btn" (click)="clear()">Очистить <span
+        class="my-col-xs-none">поиск</span></a>
     </div>
-   <!-- <div class="col-4 text-center">
-      <button style="margin-left: 10px" class="btn btn-md btn-primary" (click)="searchSales()">Поиск</button>
-    </div>-->
+    <!-- <div class="col-4 text-center">
+       <button style="margin-left: 10px" class="btn btn-md btn-primary" (click)="searchSales()">Поиск</button>
+     </div>-->
 
     <div class="col-9 text-right padding">
       <button style="margin-right: 10px" class="btn btn-sm btn-primary" (click)="searchSales()">Поиск</button>

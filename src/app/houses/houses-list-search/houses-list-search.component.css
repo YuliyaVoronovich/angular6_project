@@ -190,6 +190,13 @@ input {
   background: #fbd85a!important;
 }
 /* Собственная разметка*/
+@media (max-width : 1710px) and (min-width: 992px) {
+  .my-col-lg-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
 @media (max-width : 1474px) {
   .my-col-md-12 {
     -ms-flex: 0 0 100%;

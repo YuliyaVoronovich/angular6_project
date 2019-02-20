@@ -49,6 +49,7 @@ export class AdminUsersListComponent implements OnInit {
     this.getCompanies();
   }
 
+
   getUsers() {
     return this.userService.getUsers(this.search).subscribe(data => {
         for (let i = 0; i < data.length; i++) {
@@ -60,6 +61,16 @@ export class AdminUsersListComponent implements OnInit {
           }
           this.users.push(data[i]);
         }
+       /* this.users.sort(function (a, b) {
+          if (a.user_information.surname > b.user_information.surname) {
+            return 1;
+          }
+          if (a.user_information.surname < b.user_information.surname) {
+            return -1;
+          }
+          // a должно быть равным b
+          return 0;
+        });*/// безумно долго грузится!
       },
       error => {
         if (error.status === 401) {
@@ -71,6 +82,7 @@ export class AdminUsersListComponent implements OnInit {
           this.router.navigate(['403']);
         }
       });
+
   }
 
   getCompanies() {

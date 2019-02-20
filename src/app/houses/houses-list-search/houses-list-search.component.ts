@@ -82,7 +82,7 @@ export class HousesListSearchComponent implements OnInit {
     {'values': [], 'except': 0}, '', null, null, null, null,
     '', '', '', '', '', '', '', '',
     '', '', [], [], [], [], '', '', [], [],
-    [], [],  false, false, false, false, false, false);
+    [], [],  false, false, false, false, false, false, false);
 
   constructor(private locationService: LocationService,
               private labelsService: LabelService,
@@ -111,7 +111,7 @@ export class HousesListSearchComponent implements OnInit {
       {'values': [], 'except': 0}, '', null, null, null, null,
       '', '', '', '', '', '', '', '',
       '', '', [], [], [], [], '', '', [], [],
-      [], [],  false, false, false, false, false, false);
+      [], [],  false, false, false, false, false, false, false);
 
   }
 

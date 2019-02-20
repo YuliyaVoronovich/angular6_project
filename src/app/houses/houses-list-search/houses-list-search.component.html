@@ -37,7 +37,7 @@
                 </label>
               </ng-container>
         </span>
-        <span class="text-right">
+      <span class="text-right">
           <input type="text" class="form-control input-mini" [(ngModel)]="search.price_from" placeholder="Цена от">-
           <input type="text" class="form-control input-mini" [(ngModel)]="search.price_to" placeholder="Цена до">
         </span>
@@ -305,17 +305,30 @@
         </div>
 
         <div class="col-12">
-          <div class="form-group">
-            <div class="search search-middle ng-select-without-icon">
-              <label class="label text-left">Агентство</label>
-              <select [(ngModel)]="search.company">
-                <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
-              </select>
+          <div class="row">
+            <div class="col-xl-8 my-col-lg-12 col-lg-8 col-md-8 col-sm-8 col-12">
+              <div class="form-group">
+                <div class="search search-middle ng-select-without-icon">
+                  <label class="label text-left">Агентство</label>
+                  <select [(ngModel)]="search.company">
+                    <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-4 my-col-lg-12 col-lg-4 col-md-4 col-sm-4 col-12">
+              <div class="labels-lg">
+                <label class="btn btn-default" (click)="search.partner = !search.partner"
+                       [ngClass]="{'select-label' : search.partner}">
+                  <span>Партнерские продажи</span>
+                </label>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
-
     </div>
 
     <div class="col-lg-4 col-md-12 col-sm-12">
