@@ -8,7 +8,6 @@ import {Sale} from '../_models/Sale.model';
 import {Count} from '../_models/Count.model';
 import {Globals} from '../_common/globals';
 import {SaleAdditionInformation} from '../_models/SaleAdditionInformation.model';
-import {SaleReclame} from '../_models/SaleReclame.model';
 
 
 @Injectable()
@@ -44,13 +43,6 @@ export class SaleService {
         , false, false, false, false, false, false, false);
     }
     return sale_addition_information;
-  }
-
-  setSaleReclame(sale_reclame: SaleReclame) {
-    if (!sale_reclame) {
-      return sale_reclame = new SaleReclame(0, false, false, false, false, false, false, false, false, false);
-    }
-    return sale_reclame;
   }
 
   getSales(search = {}): Observable<Sale[]> {

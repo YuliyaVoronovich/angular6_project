@@ -4,8 +4,6 @@ import {Module} from '../../_models/Module.model';
 import {LoginService} from '../../_services/login.service';
 import {Router} from '@angular/router';
 import {ModuleService} from '../../_services/module.service';
-import {Company} from '../../_models/Company.model';
-import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
 import {SharedService} from '../../_services/shared.service';
 
 @Component({
@@ -58,7 +56,6 @@ export class AdminModulesListComponent implements OnInit {
     if (title.length > 0) {
 
     }
-   console.log(title);
   }
 
   getModules() {

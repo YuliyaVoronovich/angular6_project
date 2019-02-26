@@ -4,7 +4,6 @@ import {HouseAdditionInformation} from './HouseAdditionInformation.model';
 import {Photo} from './Photo.model';
 import {Location} from './Location.model';
 import {Label} from './Label.model';
-import {HouseReclame} from './HouseReclame.model';
 
 export class House {
 
@@ -65,7 +64,7 @@ export class House {
     public created_at: Date,
     public updated_at: Date,
     public house_addition_information: HouseAdditionInformation,
-    public reclame: HouseReclame,
+    public arraySites: any[] = [],
     public access_edit: boolean,
     public access_delete: boolean,
     public access_own_info: boolean,

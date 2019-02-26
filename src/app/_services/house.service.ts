@@ -6,7 +6,6 @@ import {Count} from '../_models/Count.model';
 import {Observable} from 'rxjs/index';
 import {House} from '../_models/House.model';
 import {HouseAdditionInformation} from '../_models/HouseAdditionInformation.model';
-import {HouseReclame} from '../_models/HouseReclame.model';
 
 @Injectable()
 export class HouseService {
@@ -39,13 +38,6 @@ export class HouseService {
         , false, false, false, false, false, false, false, false, false, false);
     }
     return house_addition_information;
-  }
-
-  setHouseReclame(house_reclame: HouseReclame) {
-    if (!house_reclame) {
-      return house_reclame = new HouseReclame(0, false, false, false, false, false, false, false, false, false);
-    }
-    return house_reclame;
   }
 
   getHouses(search = {}): Observable<House[]> {

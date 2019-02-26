@@ -16,9 +16,12 @@ import {SearchHouseModel} from '../../_models/SearchHouse.model';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {AccessModel} from '../../_models/Access.model';
 import {CalculatorComponent} from '../../_common/calculator/calculator.component';
+import {SiteService} from '../../_services/site_service';
+import {Site} from '../../_models/Site';
 
 export interface DialogData {
   house: House;
+  sites: Site[];
 }
 
 @Component({
@@ -29,6 +32,7 @@ export interface DialogData {
 export class HousesListComponent implements OnInit, OnDestroy {
 
   public houses: House[] = [];
+  public sites: Site[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
     null, null, false, null, null, '', null, null, null);
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
@@ -73,7 +77,8 @@ export class HousesListComponent implements OnInit, OnDestroy {
               private loginService: LoginService,
               private userService: UserService,
               private companyService: CompanyService,
-              private sharedService: SharedService) {
+              private sharedService: SharedService,
+              private siteService: SiteService) {
 
     this.subscription = sharedService.changeEmitted$2.subscribe(data => {
       this.houses = [];
@@ -135,6 +140,9 @@ export class HousesListComponent implements OnInit, OnDestroy {
   }
 
   getHouses() {
+
+    this.getSites();
+
     this.search['sort'] = JSON.stringify(this.sort);
 
     return this.houseService.getHouses(this.search).subscribe(data => {
@@ -149,8 +157,6 @@ export class HousesListComponent implements OnInit, OnDestroy {
         data[i].user = this.userService.setUser(data[i].user);
         data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
         data[i].company = this.companyService.setCompany(data[i].company);
-        //
-        data[i].reclame = this.houseService.setHouseReclame(data[i].reclame);
         // адрес объекта
         data[i].location = this.locationService.setLocation(data[i].location);
         data[i].location.city = this.locationService.setCity(data[i].location.city);
@@ -184,6 +190,15 @@ export class HousesListComponent implements OnInit, OnDestroy {
         this.route.navigate(['403']);
       }
     });
+  }
+
+  getSites() {
+    return this.siteService.getSites().subscribe(data => {
+        for (let i = 0; i < data.length; i++) {
+          this.sites.push(data[i]);
+        }
+      }
+    );
   }
 
   close_hideme3(event) {
@@ -262,7 +277,7 @@ export class HousesListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DialogReclameHouseComponent, {
       height: '650px',
       width: '700px',
-      data: {house: house}
+      data: {house: house, sites: this.sites}
     });
 
     dialogRef.afterClosed().subscribe(result => {

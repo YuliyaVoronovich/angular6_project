@@ -2,100 +2,16 @@
   <h5 style="color: #428bca!important;">Отправка объектов в рекламу</h5>
 
   <table class="table table-bordered">
-    <tr>
+    <tr *ngFor="let site of data.sites">
       <td>
         <div class="checkbox">
           <div class="form-check">
-            <input [(ngModel)]="data.house.reclame.pron" class="form-check-input" type="checkbox">
-            <label class="form-check-label">Pro-n.by</label>
-          </div>
-        </div>
-      </td>
-      <td style="min-width: 200px"></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="checkbox">
-          <div class="form-check">
-            <input [(ngModel)]="data.house.reclame.metr" class="form-check-input" type="checkbox">
-            <label class="form-check-label">Metr.by</label>
-          </div>
-        </div>
-      </td>
-      <td style="min-width: 200px"></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="checkbox">
-          <div class="form-check">
-            <input [(ngModel)]="data.house.reclame.gohome" class="form-check-input" type="checkbox">
-            <label class="form-check-label">Gohome.by</label>
-          </div>
-        </div>
-      </td>
-      <td style="min-width: 200px"></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="checkbox">
-          <div class="form-check">
-            <input [(ngModel)]="data.house.reclame.reinport" class="form-check-input" type="checkbox">
-            <label class="form-check-label">Reinport.by</label>
-          </div>
-        </div>
-      </td>
-      <td style="min-width: 200px"></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="checkbox">
-          <div class="form-check">
-            <input [(ngModel)]="data.house.reclame.domovita" class="form-check-input" type="checkbox">
-            <label class="form-check-label">Domovita.by</label>
-          </div>
-        </div>
-      </td>
-      <td style="min-width: 200px"></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="checkbox">
-          <div class="form-check">
-            <input [(ngModel)]="data.house.reclame.kufar" class="form-check-input" type="checkbox">
-            <label class="form-check-label">Kufar.by</label>
-          </div>
-        </div>
-      </td>
-      <td style="min-width: 200px"></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="checkbox">
-          <div class="form-check">
-            <input [(ngModel)]="data.house.reclame.onliner" class="form-check-input" type="checkbox">
-            <label class="form-check-label">Onliner.by</label>
-          </div>
-        </div>
-      </td>
-      <td style="min-width: 200px"></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="checkbox">
-          <div class="form-check">
-            <input [(ngModel)]="data.house.reclame.realt" class="form-check-input" type="checkbox">
-            <label class="form-check-label">Realt.by</label>
-          </div>
-        </div>
-      </td>
-      <td style="min-width: 200px"></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="checkbox">
-          <div class="form-check">
-            <input [(ngModel)]="data.house.reclame.mls" class="form-check-input" type="checkbox">
-            <label class="form-check-label">MLS</label>
+            <input class="form-check-input" type="checkbox" id="{{ site.id}}"
+                   [checked]="data.house.arraySites[site.id]"
+                   (change)="data.house.arraySites[site.id] = !data.house.arraySites[site.id]">
+            <label class="form-check-label">
+              {{ site.title}}
+            </label>
           </div>
         </div>
       </td>

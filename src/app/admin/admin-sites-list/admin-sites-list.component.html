@@ -8,15 +8,13 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let module of modules">
-        <td *ngIf="module.id == editRowId">
-          <input #myInput type="text" [(ngModel)]="module.title" (blur)="change(module)">
-        </td>
-        <td *ngIf="module.id !== editRowId" (dblclick)="toggle(module.id)">
-          {{module.title}}
+      <tr *ngFor="let site of sites">
+        <td>
+          {{site.title}}
         </td>
         <td>
-          <button class="btn btn-danger btn-sm" (click)="delete(module)">Удалить</button>
+          <button class="btn btn-sm btn-danger {{site.block ? 'd-none' : '' }}" (click)="block(site)">Заблокировать</button>
+          <button class="btn btn-sm btn-primary {{!site.block ? 'd-none' : '' }}" (click)="unBlock(site)">Разблокировать</button>
         </td>
       </tr>
       </tbody>
@@ -28,10 +26,10 @@
       <div class="form-group row">
         <label class="col-5 col-form-label text-left">Название</label>
         <div class="col-10">
-          <input type="text" class="form-control" [(ngModel)]="module.title">
+          <input type="text" class="form-control" [(ngModel)]="site.title">
         </div>
         <div class="col-1">
-          <button style="margin-right: 10px" class="btn btn-sm btn-primary" (click)="save(module)">ОК</button>
+          <button style="margin-right: 10px" class="btn btn-sm btn-primary" (click)="save(site)">ОК</button>
         </div>
       </div>
     </div>
@@ -44,4 +42,3 @@
     <button class="btn btn-primary" (click)="hide=!hide">Скрыть</button>
   </div>
 </div>
-

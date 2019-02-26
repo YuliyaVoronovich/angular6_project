@@ -88,6 +88,7 @@ import { CallsHouseListComponent } from './calls_house/calls-house-list/calls-ho
 import { CallHouseModificateComponent } from './calls_house/call-house-modificate/call-house-modificate.component';
 import {SaleListPhotoComponent} from './sales/sale-list-photo/sale-list-photo.component';
 import {CalculatorComponent} from './_common/calculator/calculator.component';
+import { AdminSitesListComponent } from './admin/admin-sites-list/admin-sites-list.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -113,12 +114,12 @@ import {CallResolve} from './_services/call_resolve.service';
 import {CallService} from './_services/call.service';
 import {CallHouseService} from './_services/call_house.service';
 import {CallHouseResolve} from './_services/call_house_resolve.service';
+import {SiteService} from './_services/site_service';
 
 import {MaterialModule} from './material.module';
 import {NgxGalleryModule} from 'ngx-gallery';
 
 import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
-
 
 
 const adminCompaniesRoutes: Routes = [
@@ -130,6 +131,9 @@ const adminCompaniesRoutes: Routes = [
 
 const adminModulesRoutes: Routes = [
   {path: '', component: AdminModulesListComponent},
+];
+const adminSitesRoutes: Routes = [
+  {path: '', component: AdminSitesListComponent},
 ];
 const adminUsersRoutes: Routes = [
   {path: '', component: AdminUsersListComponent},
@@ -218,6 +222,7 @@ const routes: Routes = [
   {path: 'admin/users', component: AdminComponent, children: adminUsersRoutes},
   {path: 'admin/roles', component: AdminComponent, children: adminRolesRoutes},
   {path: 'admin/locations', component: AdminComponent, children: adminLocationsRoutes},
+  {path: 'admin/sites', component: AdminComponent, children: adminSitesRoutes},
   {path: 'sales', component: GeneralTemplateComponent, children: salesRoutes},
   {path: 'clients', component: GeneralTemplateComponent, children: clientsRoutes},
   {path: 'houses', component: GeneralTemplateComponent, children: housesRoutes},
@@ -255,6 +260,7 @@ const routes: Routes = [
     GeneralLeftMenuComponent,
     AdminRoleModificateComponent,
     AdminLocationsComponent,
+    AdminSitesListComponent,
     MenuUserInfoComponent,
     Error403Component,
     AdminRequestLocationComponent,
@@ -344,6 +350,7 @@ const routes: Routes = [
     RequestService,
     AgreementService,
     ClientService,
+    SiteService,
     ClientResolve,
     HouseService,
     HouseResolve,

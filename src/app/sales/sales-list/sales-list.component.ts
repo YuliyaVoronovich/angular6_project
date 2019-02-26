@@ -10,6 +10,7 @@ import {CompanyService} from '../../_services/company.service';
 import {UserService} from '../../_services/user.service';
 import {SharedService} from '../../_services/shared.service';
 import {LocationService} from '../../_services/location.service';
+import {SiteService} from '../../_services/site_service';
 
 import {Subscription} from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -17,9 +18,12 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {Router} from '@angular/router';
 import {AccessModel} from '../../_models/Access.model';
 import {CalculatorComponent} from '../../_common/calculator/calculator.component';
+import {Site} from '../../_models/Site';
+
 
 export interface DialogData {
   sale: Sale;
+  sites: Site[];
 }
 
 @Component({
@@ -30,6 +34,7 @@ export interface DialogData {
 export class SalesListComponent implements OnInit, OnDestroy {
 
   public sales: Sale[] = [];
+  public sites: Site[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
     null, null, false, null, null, '', null, null, null);
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
@@ -73,7 +78,8 @@ export class SalesListComponent implements OnInit, OnDestroy {
               private loginService: LoginService,
               private userService: UserService,
               private companyService: CompanyService,
-              private sharedService: SharedService) {
+              private sharedService: SharedService,
+              private siteService: SiteService) {
     /* this.render.listenGlobal('window', 'scroll', (evt) => {
        this.onScroll();
      });*/
@@ -144,6 +150,9 @@ export class SalesListComponent implements OnInit, OnDestroy {
   }
 
   getSales() {
+
+    this.getSites();
+
     this.search['sort'] = JSON.stringify(this.sort);
 
     return this.saleService.getSales(this.search).subscribe(data => {
@@ -158,8 +167,6 @@ export class SalesListComponent implements OnInit, OnDestroy {
         data[i].user = this.userService.setUser(data[i].user);
         data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
         data[i].company = this.companyService.setCompany(data[i].company);
-        //
-        data[i].reclame = this.saleService.setSaleReclame(data[i].reclame);
         // адрес объекта
         data[i].location = this.locationService.setLocation(data[i].location);
         data[i].location.city = this.locationService.setCity(data[i].location.city);
@@ -185,6 +192,15 @@ export class SalesListComponent implements OnInit, OnDestroy {
         this.route.navigate(['403']);
       }
     });
+  }
+
+  getSites() {
+    return this.siteService.getSites().subscribe(data => {
+        for (let i = 0; i < data.length; i++) {
+          this.sites.push(data[i]);
+        }
+      }
+    );
   }
 
   close_hideme3(event) {
@@ -263,7 +279,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DialogReclameSaleComponent, {
       height: '650px',
       width: '700px',
-      data: {sale: sale}
+      data: {sale: sale, sites: this.sites}
     });
 
     dialogRef.afterClosed().subscribe(result => {
