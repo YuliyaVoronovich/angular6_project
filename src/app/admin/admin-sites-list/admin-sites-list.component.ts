@@ -15,7 +15,7 @@ export class AdminSitesListComponent implements OnInit {
 
 
   public sites: Site[] = [];
-  public site: Site = new Site(0, '', false);
+  public site: Site = new Site(0, '', false, 0);
   public timer: any;
   public hide = false;
 
