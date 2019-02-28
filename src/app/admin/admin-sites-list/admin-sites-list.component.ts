@@ -101,11 +101,10 @@ export class AdminSitesListComponent implements OnInit {
   }
 
   block(site: Site): void {
-    this.site.block = true;
+   site.block = true;
     this.siteService.update(site).subscribe(
       data => {
         if (data.status === 200) {
-          site.block = true;
           this.message('Сайт заблокирован', true);
         } else {
           this.message('Сайт не удалось заблокировать', true);
@@ -124,11 +123,10 @@ export class AdminSitesListComponent implements OnInit {
   }
 
   unBlock(site: Site): void {
-    this.site.block = false;
+    site.block = false;
     this.siteService.update(site).subscribe(
       data => {
         if (data.status === 200) {
-          site.block = false;
           this.message('Сайт разблокирован', false);
         } else {
           this.message('Сайт не удалось разблокировать', true);
