@@ -33,6 +33,12 @@ export class LabelService {
     }
     return source;
   }
+  setHouseSource(source: Label): Label {
+    if (!source) {
+      return source = new Label(0, '', '', '', '');
+    }
+    return source;
+  }
 
   setTypeHouse(type_house: Label): Label {
     if (!type_house) {

@@ -121,6 +121,10 @@ export class CallsListComponent implements OnInit, OnDestroy {
         // labels
         data[i].source = this.labelsService.setSaleSource(data[i].source);
 
+        if (data[i].description) {
+          data[i].description = data[i].description.replace('нестандартные примечания от клиента', '');
+        }
+
         this.calls.push(data[i]);
       }
 

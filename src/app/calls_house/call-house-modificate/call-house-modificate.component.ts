@@ -168,7 +168,7 @@ export class CallHouseModificateComponent implements OnInit {
             this.call.house.location.district = this.locationService.setDistrict(this.call.house.location.district);
             this.call.house.location.direction = this.locationService.setDirection(this.call.house.location.direction);
               // labels
-            this.call.source = this.labelsService.setSaleSource(this.call.source);
+            this.call.source = this.labelsService.setHouseSource(this.call.source);
             this.call.house.type = this.labelsService.setTypeHouse(this.call.house.type);
 
             // соотнести информацию о звонке с клиентом

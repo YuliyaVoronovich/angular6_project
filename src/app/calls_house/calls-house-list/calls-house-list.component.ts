@@ -118,7 +118,11 @@ export class CallsHouseListComponent implements OnInit, OnDestroy  {
         data[i].house.location.street = this.locationService.setStreet(data[i].house.location.street);
         data[i].house.location.direction = this.locationService.setDirection(data[i].house.location.direction);
         data[i].house.type = this.labelsService.setTypeHouse(data[i].house.type);
-        data[i].source = this.labelsService.setSaleSource(data[i].source);
+        data[i].source = this.labelsService.setHouseSource(data[i].source);
+
+        if (data[i].description) {
+          data[i].description = data[i].description.replace('нестандартные примечания от клиента', '');
+        }
 
         this.calls.push(data[i]);
       }
