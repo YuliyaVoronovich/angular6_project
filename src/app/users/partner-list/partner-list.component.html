@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped tableSticky">
+    <thead>
+    <tr style="background:#cccccc">
+      <th>Компания</th>
+      <th>ФИО</th>
+      <th>Телефон</th>
+      <th>Телефон</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td class="align-left">{{user.company.title}}</td>
+      <td class="align-left">{{user.user_information.surname}} {{user.user_information.name}} {{user.user_information.patronymic}}</td>
+      <td class="align-left">{{user.user_information.phone1}}</td>
+      <td class="align-left">{{user.user_information.phone2}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container-fluid" style="bottom: 0;position: fixed; width: 100%">
+  <div class="row" style=" background: #ccc; padding: 5px">
+    <div class="form-group row">
+      <div class="col-12">
+        <select class="form-control" [(ngModel)]="search.company" (change)="getUsersSearch()">
+          <option value="" [disabled]="true">Компания</option>
+          <option value="0"></option>
+          <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -120,6 +120,7 @@ import {MaterialModule} from './material.module';
 import {NgxGalleryModule} from 'ngx-gallery';
 
 import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
+import { PartnerListComponent } from './users/partner-list/partner-list.component';
 
 
 const adminCompaniesRoutes: Routes = [
@@ -199,6 +200,9 @@ const usersRoutes: Routes = [
   {path: 'user', component: UserModificateComponent, canActivate: [LoginGuard]},
   {path: 'user/:id', component: UserModificateComponent, resolve: {data: UserResolve}}
 ];
+const partnersRoutes: Routes = [
+  {path: '', component: PartnerListComponent}
+];
 const companyRoutes: Routes = [
   {path: '', component: CompanyModificationComponent, resolve: {data: CompanyResolve}}
 ];
@@ -231,6 +235,7 @@ const routes: Routes = [
   {path: 'calls_house', component: GeneralTemplateComponent, children: callsHouseRoutes},
   {path: 'roles', component: GeneralTemplateComponent, children: rolesRoutes},
   {path: 'users', component: GeneralTemplateComponent, children: usersRoutes},
+  {path: 'partners', component: GeneralTemplateComponent, children: partnersRoutes},
   {path: 'companies/company/:id', component: GeneralTemplateComponent, children: companyRoutes},
   {path: 'agreements/cs', component: GeneralTemplateComponent, children: agreements},
   {path: '', component: LoginComponent},
@@ -310,6 +315,7 @@ const routes: Routes = [
     CallModificateComponent,
     CallsHouseListComponent,
     CallHouseModificateComponent,
+    PartnerListComponent,
     CalculatorComponent,
     SanitizeHtmlPipe,
     FilterPipe

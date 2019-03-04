@@ -35,19 +35,26 @@
     <div ngbDropdownMenu aria-labelledby="dropdownBasic3">
       <a class="dropdown-item" routerLink="/users">Агенты</a>
       <a *ngIf="access.roles" class="dropdown-item" routerLink="/roles">Права</a>
+      <a *ngIf="user.partner" class="dropdown-item" routerLink="/partners">ПП</a>
     </div>
   </div>
 
-  <!-- Если есть доступ к Права и нет к Сотрудники-->
+  <!-- Если есть доступ к Права или ПП и нет к Сотрудники-->
   <div class="main-item">
     <a *ngIf="access.roles && !access.users" class="btn" routerLink="/roles">
       <i class="fas fa-users"></i>
       <span>Права</span>
     </a>
   </div>
+  <div class="main-item">
+    <a *ngIf="user.partner && !access.users" class="btn" routerLink="/partners">
+      <i class="fas fa-users"></i>
+      <span>ПП</span>
+    </a>
+  </div>
 
   <div class="main-item">
-    <a *ngIf="access.settings" class="btn" routerLink="/companies/company/{{company.id}}">
+    <a *ngIf="access.settings" class="btn" routerLink="/companies/company/{{user.company.id}}">
       <i class="fas fa-cogs"></i>
       <span>Настройки</span>
     </a>
