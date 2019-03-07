@@ -54,7 +54,7 @@ export class AdminLocationsComponent implements OnInit {
   public timer: any;
   public locations: Location [] = [];
   public location: Location = new Location(0, null, null, null, null, null, null, '0', '0', null,
-    '', 0, 0, 0, 0, null, '');
+    '', null, null, 0, 0, null, '');
   public region: Region = new Region(0, null);
   public district_country: DistrictCountry = new DistrictCountry(0, null, '');
   public street: Street = new Street(0, '', null);
@@ -366,8 +366,8 @@ export class AdminLocationsComponent implements OnInit {
 
         if (!data) {
           this.location.id = 0;
-          this.location.wall = 0;
-          this.location.type_house = 0;
+          this.location.wall = this.labelsService.setWall(null);
+          this.location.type_house = this.labelsService.setTypeHouse(null);
           this.location.year = 0;
           this.location.year_repair = 0;
         }

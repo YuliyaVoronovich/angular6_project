@@ -160,7 +160,7 @@ export class LocationService {
 
   setLocation(location: Location): Location {
     if (!location) {
-      return location = new Location(0, null, null, null, null, null, null, '', '', null, '', 0, 0, 0, 0, null, '');
+      return location = new Location(0, null, null, null, null, null, null, '', '', null, '', null, null, 0, 0, null, '');
     }
     return location;
   }

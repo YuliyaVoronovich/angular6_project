@@ -39,6 +39,12 @@ export class LabelService {
     }
     return source;
   }
+  setWall(wall: Label): Label {
+    if (!wall) {
+      return wall = new Label(0, '', '', '','');
+    }
+    return wall;
+  }
 
   setTypeHouse(type_house: Label): Label {
     if (!type_house) {

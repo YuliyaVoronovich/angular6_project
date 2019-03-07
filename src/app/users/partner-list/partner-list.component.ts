@@ -66,7 +66,7 @@ export class PartnerListComponent implements OnInit {
             data[i].company = this.company;
           }
           this.users.push(data[i]);
-          console.log(this.users);
+        //  console.log(this.users);
         }
       },
       error => {

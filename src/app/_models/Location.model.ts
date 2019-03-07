@@ -6,6 +6,7 @@ import {Metro} from './Metro.model';
 import {Region} from './Region.model';
 import {DistrictCountry} from './DistrictCountry.model';
 import {Direction} from './Direction.model';
+import {Label} from './Label.model';
 
 export class Location {
 
@@ -21,8 +22,8 @@ export class Location {
     public housing: string,
     public metro: Metro,
     public series: string,
-    public wall: number,
-    public type_house: number,
+    public wall: Label,
+    public type_house: Label,
     public year: number,
     public year_repair: number,
     public direction: Direction,

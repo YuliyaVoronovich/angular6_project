@@ -291,7 +291,7 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Материал стен</label>
               <div class="col-6">
-                <select class="form-control" [(ngModel)]="sale.location.wall">
+                <select class="form-control" [(ngModel)]="sale.location.wall.id">
                   <option value="0"></option>
                   <option *ngFor="let one of walls" [value]="one.id">{{one.title}}</option>
                 </select>
@@ -300,7 +300,7 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Тип дома</label>
               <div class="col-6">
-                <select class="form-control" [(ngModel)]="sale.location.type_house">
+                <select class="form-control" [(ngModel)]="sale.location.type_house.id">
                   <option value="0"></option>
                   <option *ngFor="let one of types" [value]="one.id">{{one.title}}</option>
                 </select>
@@ -309,13 +309,13 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Год постройки</label>
               <div class="col-6">
-                <input disabled type="text" class="form-control" [(ngModel)]="sale.location.year">
+                <input type="text" class="form-control" [(ngModel)]="sale.location.year">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Год капремонта</label>
               <div class="col-6">
-                <input disabled type="text" class="form-control" [(ngModel)]="sale.location.year_repair">
+                <input type="text" class="form-control" [(ngModel)]="sale.location.year_repair">
               </div>
             </div>
           </div>
