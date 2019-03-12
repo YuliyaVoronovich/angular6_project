@@ -55,15 +55,17 @@
           </ng-container>
         </td>
         <td>
-          <span  [innerHTML]="call.phone===null ? '' : call.phone | sanitizeHtml"></span><br/>
+          <span [innerHTML]="call.phone===null ? '' : call.phone | sanitizeHtml"></span><br/>
         </td>
         <td>{{call.description }}</td>
         <td>{{call.user.user_information.surname}} {{call.user.user_information.name}}</td>
         <td>
           {{call.created_at | date: 'dd.MM.yyyy'}}
         </td>
-        <td> <a *ngIf="call.uid" target="_blank" href="assets/call/{{call.uid}}.wav"><i class="fas fa-headphones icon-color"></i></a></td>
-        <td> <a *ngIf="call.uid2" target="_blank" href="assets/call/{{call.uid2}}.wav"><i class="fas fa-headphones icon-color"></i></a></td>
+        <td><a *ngIf="call.uid" target="_blank" href="assets/call/{{call.uid}}.wav"><i
+          class="fas fa-headphones icon-color"></i></a></td>
+        <td><a *ngIf="call.uid2" target="_blank" href="assets/call/{{call.uid2}}.wav"><i
+          class="fas fa-headphones icon-color"></i></a></td>
         <td></td>
         <td>{{call.source.title}}</td>
       </tr>
@@ -73,17 +75,16 @@
 </div>
 
 
-<div class="container bg-light" style="margin: 0; max-width: calc(100% - 150px); padding-top: 15px;">
-  <div class="row">
-    <!--Пагинация -->
-    <div class="col-12 text-center">
-      <pagination-controls (pageChange)="getCallsByPage($event)" maxSize="7" previousLabel="" nextLabel=""
-                           directionLinks="true" autohide="true"></pagination-controls>
-    </div>
-    <!-- <div class="col-3 text-right">
-       Всего объектов в МЛС: {{countSales}}
-     </div>-->
+<div class="row no-gutters">
+  <!--Пагинация -->
+  <div class="col-12 text-center">
+    <pagination-controls (pageChange)="getCallsByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+                         directionLinks="true" autohide="true"></pagination-controls>
   </div>
+  <!-- <div class="col-3 text-right">
+     Всего объектов в МЛС: {{countSales}}
+   </div>-->
 </div>
+
 
 

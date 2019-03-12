@@ -61,8 +61,10 @@
         </td>
         <td>{{client.surname}} {{client.name}} {{client.patronymic}}</td>
         <td>
-          <span *ngIf="client.access_own_info" [innerHTML]="client.phone1===null ? '' : client.phone1 | sanitizeHtml"></span><br/>
-          <span *ngIf="client.access_own_info" [innerHTML]="client.phone2===null ? '' : client.phone2 | sanitizeHtml"></span>
+          <span *ngIf="client.access_own_info"
+                [innerHTML]="client.phone1===null ? '' : client.phone1 | sanitizeHtml"></span><br/>
+          <span *ngIf="client.access_own_info"
+                [innerHTML]="client.phone2===null ? '' : client.phone2 | sanitizeHtml"></span>
         </td>
         <td>{{client.price}}</td>
         <td>
@@ -108,16 +110,14 @@
 </div>
 
 
-<div class="container bg-light" style="margin: 0; max-width: calc(100% - 150px); padding-top: 15px;">
-  <div class="row">
-    <!--Пагинация -->
-    <div class="col-12 text-center">
-      <pagination-controls (pageChange)="getClientsByPage($event)" maxSize="7" previousLabel="" nextLabel=""
-                           directionLinks="true" autohide="true"></pagination-controls>
-    </div>
-    <!-- <div class="col-3 text-right">
-       Всего объектов в МЛС: {{countSales}}
-     </div>-->
+<div class="row no-gutters">
+  <!--Пагинация -->
+  <div class="col-12 text-center">
+    <pagination-controls (pageChange)="getClientsByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+                         directionLinks="true" autohide="true"></pagination-controls>
   </div>
+  <!-- <div class="col-3 text-right">
+     Всего объектов в МЛС: {{countSales}}
+   </div>-->
 </div>
 
