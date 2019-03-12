@@ -98,8 +98,8 @@
         <td>{{sale.location.microdistrict.title}}</td>
         <td>
           <ng-container *ngIf="sale.location.street.title.length >0 ">
-          {{sale.location.street.title}},
-        </ng-container>
+            {{sale.location.street.title}},
+          </ng-container>
           {{sale.location.house}}
           <ng-container *ngIf="sale.location.housing !== '0' && sale.location.housing !== ''">
             / {{sale.location.housing}}
@@ -148,13 +148,17 @@
               </ng-container>-->
             </div>
             <div class="col-lg-5 col-md-12" style="margin: 10px 0 0 10px">
-              <span *ngIf="sale.access_own_info"><b>{{sale.cont_phone1}}</b>, <b>{{sale.cont_phone2}}</b></span><br>
+              <span *ngIf="sale.access_own_info">
+                <ng-container *ngIf="sale.cont_phone1 && sale.cont_phone1!='375'"><b>{{sale.cont_phone1}}</b></ng-container>
+                <ng-container *ngIf="sale.cont_phone2 && sale.cont_phone2!='375'">,<b>{{sale.cont_phone2}}</b></ng-container>
+              </span><br>
               <span>{{sale.text}}</span>
               <br>
-              <a *ngIf="sale.access_edit" class="btn btn-sm btn-primary" routerLink="/sales/sale/{{sale.id}}">Подробнее</a>
-            <!--  <a class="btn">
-                <mat-icon class="size-16 icon-color">place Смотреть на карте</mat-icon>
-              </a>-->
+              <a *ngIf="sale.access_edit" class="btn btn-sm btn-primary"
+                 routerLink="/sales/sale/{{sale.id}}">Подробнее</a>
+              <!--  <a class="btn">
+                  <mat-icon class="size-16 icon-color">place Смотреть на карте</mat-icon>
+                </a>-->
             </div>
           </div>
         </td>

@@ -131,7 +131,10 @@
               <app-house-list-photo [photo]="house.photo"></app-house-list-photo>
             </div>
             <div class="col-lg-5 col-md-12" style="margin: 10px 0 0 10px">
-              <span *ngIf="house.access_own_info"><b>{{house.cont_phone1}}</b>, <b>{{house.cont_phone2}}</b></span><br>
+              <span *ngIf="house.access_own_info">
+                <ng-container *ngIf="house.cont_phone1 && house.cont_phone1!='375'"><b>{{house.cont_phone1}}</b></ng-container>
+                <ng-container *ngIf="house.cont_phone2 && house.cont_phone2!='375'">,<b>{{house.cont_phone2}}</b></ng-container>
+              </span><br>
               <span>{{house.text}}</span>
               <br>
               <a class="btn btn-sm btn-primary" routerLink="/houses/house/{{house.id}}">Подробнее</a>
