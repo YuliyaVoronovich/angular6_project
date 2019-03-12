@@ -629,7 +629,7 @@ export class HouseModificateComponent implements OnInit {
 
   validation(): boolean {
 
-    if (this.validationRegion() === true && this.validationDistrict() && this.validationCity() === true && this.validationHouse() === true
+    if (this.validationRegion() === true && this.validationDistrict() && this.validationCity() === true
       && this.validationAreaLand() === true && this.validationArea() === true && this.validationType() === true && this.validationPrice() === true) {
       return true;
     }

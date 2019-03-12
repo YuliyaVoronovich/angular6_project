@@ -132,9 +132,9 @@
               <div class="col-7">
                 <div class="form-group label">
                   <input class="form-control" [(ngModel)]="house.location.house" placeholder=" "
-                         (change)="getInfoLocation()" (keypress)="keyPressNumber($event);" (blur)="validationHouse()">
+                         (change)="getInfoLocation()" (keypress)="keyPressNumber($event);">
                   <span>Дом</span>
-                  <small *ngIf="validation_house === false" class="form-text text-danger">{{message_house}}</small>
+                  <!--<small *ngIf="validation_house === false" class="form-text text-danger">{{message_house}}</small>-->
                 </div>
               </div>
               <div class="col-5">
