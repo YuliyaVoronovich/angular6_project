@@ -46,7 +46,7 @@ export class PartnerListComponent implements OnInit {
 
   ngOnInit() {
     this.loginService.detailsUser().subscribe(data => {
-      if (data.user.partner) {
+      if (data.user.partner === 1) {
         this.getUsers();
         this.getCompanies();
       } else {
@@ -57,7 +57,7 @@ export class PartnerListComponent implements OnInit {
   }
 
   getUsers() {
-    return this.userService.getUsers(this.search).subscribe(data => {
+    return this.userService.getUsersWithoutAccess(this.search).subscribe(data => {
         for (let i = 0; i < data.length; i++) {
           if (data[i].user_information === null) {
             data[i].user_information = this.user_information;
@@ -66,18 +66,10 @@ export class PartnerListComponent implements OnInit {
             data[i].company = this.company;
           }
           this.users.push(data[i]);
-        //  console.log(this.users);
+          //  console.log(this.users);
         }
-      },
-      error => {
-        if (error.status === 401) {
-          this.loginService.logout();
-          this.router.navigate(['/']);
-        }
-        if (error.status === 403) {
-          this.router.navigate(['/403']);
-        }
-      });
+      }
+     );
   }
 
   getUsersSearch() {
