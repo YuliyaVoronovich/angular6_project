@@ -48,7 +48,7 @@ export class CallsHouseListComponent implements OnInit, OnDestroy  {
     false, false);
 
   public sort = {
-    'field': 'updated_at',
+    'field': 'created_at',
     'value': 'DESC'
   };
 
