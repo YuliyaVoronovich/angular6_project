@@ -151,7 +151,7 @@ export class HousesListArchiveComponent implements OnInit, OnDestroy  {
         data[i].type = this.labelsService.setTypeHouse(data[i].type);
         data[i].roof = this.labelsService.setRoofHouse(data[i].roof);
 
-        data[i].text = data[i].text.replace(new RegExp('&quot;', 'gm'), '"');
+      //  data[i].text = data[i].text.replace(new RegExp('&quot;', 'gm'), '"');
 
         // цена за метр
         if (data[i].area !== null && data[i].area !== 0) {

@@ -175,7 +175,7 @@ export class HousesListComponent implements OnInit, OnDestroy {
         data[i].type = this.labelsService.setTypeHouse(data[i].type);
         data[i].roof = this.labelsService.setRoofHouse(data[i].roof);
 
-        data[i].text = this.regExp(data[i].text);
+       // data[i].text = this.regExp(data[i].text);
 
         // цена за метр
         if (data[i].area !== null && data[i].area !== 0) {
