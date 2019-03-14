@@ -147,10 +147,11 @@ export class HousesListArchiveComponent implements OnInit, OnDestroy  {
         data[i].location.street = this.locationService.setStreet(data[i].location.street);
         data[i].location.metro = this.locationService.setMetro(data[i].location.metro);
         data[i].location.direction = this.locationService.setDirection(data[i].location.direction);
-
         // labels
         data[i].type = this.labelsService.setTypeHouse(data[i].type);
         data[i].roof = this.labelsService.setRoofHouse(data[i].roof);
+
+        data[i].text = data[i].text.replace(new RegExp('&quot;', 'gm'), '"');
 
         // цена за метр
         if (data[i].area !== null && data[i].area !== 0) {

@@ -58,7 +58,7 @@
         <td>{{call.description }}</td>
         <td>{{call.user.user_information.surname}} {{call.user.user_information.name}}</td>
         <td>
-          {{call.created_at | date: 'dd.MM.yyyy'}}
+          {{call.created_at}}
         </td>
         <td><a *ngIf="call.uid" target="_blank" href="http://pbx.virtual-office.by:20080/media/{{call.uid}}.wav"><i
           class="fas fa-headphones icon-color"></i></a></td>

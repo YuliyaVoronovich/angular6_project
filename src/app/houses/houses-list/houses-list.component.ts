@@ -96,6 +96,10 @@ export class HousesListComponent implements OnInit, OnDestroy {
     }, 3000);
   }
 
+  regExp (data) {
+    return data.replace(new RegExp('&quot;', 'gm'), '"');
+  }
+
   ngOnInit() {
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
@@ -167,10 +171,11 @@ export class HousesListComponent implements OnInit, OnDestroy {
         data[i].location.street = this.locationService.setStreet(data[i].location.street);
         data[i].location.metro = this.locationService.setMetro(data[i].location.metro);
         data[i].location.direction = this.locationService.setDirection(data[i].location.direction);
-
         // labels
         data[i].type = this.labelsService.setTypeHouse(data[i].type);
         data[i].roof = this.labelsService.setRoofHouse(data[i].roof);
+
+        data[i].text = this.regExp(data[i].text);
 
         // цена за метр
         if (data[i].area !== null && data[i].area !== 0) {
