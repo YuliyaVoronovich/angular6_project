@@ -107,6 +107,7 @@ export class HousesListComponent implements OnInit, OnDestroy {
       this.access = data.array_access;
 
       this.getHouses();
+      this.getSites();
     });
   }
 
@@ -197,7 +198,7 @@ export class HousesListComponent implements OnInit, OnDestroy {
   }
 
   getSites() {
-    this.sites=[];
+    this.sites = [];
     return this.siteService.getSites().subscribe(data => {
         for (let i = 0; i < data.length; i++) {
           this.sites.push(data[i]);
