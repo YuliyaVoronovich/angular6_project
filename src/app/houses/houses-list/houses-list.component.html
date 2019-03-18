@@ -108,7 +108,9 @@
           <ng-container *ngIf="house.location.street.title.length >0 ">
             <br/> {{house.location.street.title}}
           </ng-container>
-          {{house.location.house}}
+          <ng-container *ngIf="house.location.house !== 0">
+            {{house.location.house}}
+          </ng-container>
           <ng-container *ngIf="house.location.housing !== '0' && house.location.housing !== ''">
             / {{house.location.housing}}
           </ng-container>
