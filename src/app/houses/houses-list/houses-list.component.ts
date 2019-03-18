@@ -84,6 +84,7 @@ export class HousesListComponent implements OnInit, OnDestroy {
       this.houses = [];
       this.user = data;
       this.getHouses();
+      this.getSites();
     });
   }
 
@@ -145,8 +146,6 @@ export class HousesListComponent implements OnInit, OnDestroy {
 
   getHouses() {
 
-    this.getSites();
-
     this.search['sort'] = JSON.stringify(this.sort);
 
     return this.houseService.getHouses(this.search).subscribe(data => {
@@ -198,6 +197,7 @@ export class HousesListComponent implements OnInit, OnDestroy {
   }
 
   getSites() {
+    this.sites=[];
     return this.siteService.getSites().subscribe(data => {
         for (let i = 0; i < data.length; i++) {
           this.sites.push(data[i]);
