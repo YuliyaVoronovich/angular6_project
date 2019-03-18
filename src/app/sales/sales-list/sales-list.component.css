@@ -42,7 +42,8 @@ table th .nobr {
   padding: 3px;
   position: absolute;
   visibility: hidden;
-  margin-top: 15px;
+  margin-top: 1em;
+  right: 20%;
   font-size: 12px;
 }
 .check {

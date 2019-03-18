@@ -295,6 +295,7 @@ export class AdminLocationsComponent implements OnInit {
     this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
       for (let i = 0; i < options.length; i++) {
         this.streetsSelect.push(options[i]);
+
       }
       this.autoComplitStreets();
     });
@@ -463,11 +464,15 @@ export class AdminLocationsComponent implements OnInit {
     }
     // сделать выбор вида объект квартиры-дома-аренда
     this.request = event;
+    console.log(event.info);
 
     this.locationForm.controls['region'].patchValue({id: +event.info.region});
     this.locationForm.controls['city'].patchValue({id: +event.info.city});
     this.getStreets(event.info.city);
-    this.locationForm.controls['street'].patchValue({id: +event.info.street});
+    setTimeout(() => {
+      this.locationForm.controls['street'].patchValue({id: +event.info.street});
+    }, 1000);
+    // this.locationForm.controls['street'].patchValue({id: +event.info.street});
     this.locationForm.controls['house'].patchValue(event.info.house);
     this.locationForm.controls['housing'].patchValue(event.info.housing);
 
