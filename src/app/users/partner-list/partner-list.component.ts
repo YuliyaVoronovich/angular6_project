@@ -24,7 +24,7 @@ export class PartnerListComponent implements OnInit {
   public search = {
     'phone': '',
     'company': '',
-    'partner': 1
+    'partner': true
   };
   public timer: any;
 
