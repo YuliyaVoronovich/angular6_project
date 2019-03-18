@@ -95,6 +95,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
       this.user = data.user;
       this.access = data.array_access;
       this.getSales();
+      this.getSites();
     });
   }
 
@@ -154,8 +155,6 @@ export class SalesListComponent implements OnInit, OnDestroy {
   }
 
   getSales() {
-
-    this.getSites();
 
     this.search['sort'] = JSON.stringify(this.sort);
 
