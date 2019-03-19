@@ -5,6 +5,7 @@ import {Company} from '../_models/Company.model';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import {Globals} from '../_common/globals';
+import {CompanyInformation} from '../_models/CompanyInformation.model';
 
 @Injectable()
 export class CompanyService {
@@ -28,7 +29,7 @@ export class CompanyService {
     if (this.path === 'admin') {
       this.uri = this.admin_uri;
     }
-   // console.log('route: ' + this.uri); // Root path
+    // console.log('route: ' + this.uri); // Root path
   }
 
   getCompanies(search = {}): Observable<Company[]> {
@@ -50,6 +51,17 @@ export class CompanyService {
         '', '', null, null, null, [], null, false, null);
     }
     return company;
+  }
+
+  setCompanyInformation(company_information: CompanyInformation) {
+    if (!company_information) {
+      return company_information = new CompanyInformation(null, null, '', '', '', '', null, null, '',
+        '', false, null, null, null, false, null, '', '',
+        '', false, '', '', '', '', '', false, '',
+        '', '', '', false, false, false, false, false,
+        false, false, false, false, false, false, false, false, '', '', '', '');
+    }
+    return company_information;
   }
 
   create(company: Company): Observable<Response> {

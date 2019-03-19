@@ -151,6 +151,7 @@ export class SalesListArchiveComponent implements OnInit, OnDestroy {
         data[i].user = this.userService.setUser(data[i].user);
         data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
         data[i].company = this.companyService.setCompany(data[i].company);
+        data[i].company.company_information = this.companyService.setCompanyInformation(data[i].company.company_information);
         //
         // адрес объекта
         data[i].location = this.locationService.setLocation(data[i].location);

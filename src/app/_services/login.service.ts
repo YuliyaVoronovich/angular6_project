@@ -30,7 +30,6 @@ export class LoginService {
         this.token = response.json().token;
         if (this.token) {
           localStorage.setItem('tokenUser', this.token);
-          localStorage.setItem('array_roles', JSON.stringify(response.json().array_roles)); // массив привилегий
           return true;
         } else {
           return false;
