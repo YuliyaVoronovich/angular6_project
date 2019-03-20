@@ -71,7 +71,7 @@ export class CallModificateComponent implements OnInit {
     [], '', '', null, null, false, false, null, null, false,
     false, false);
 
-  public call: CallSale = new CallSale(0, null, null, '', null, '', '', '', '', 0, null, null);
+  public call: CallSale = new CallSale(0, null, null,  null,'', null, '', '', '', '', 0, null, null);
 
   public user: User = new User(0, '', '', null, null, null, '',
     0, 0, 0, false, null, null, null, null, null, null);

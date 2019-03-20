@@ -9,7 +9,7 @@
       <th>Телефон</th>
       <th>Примечание</th>
       <th>Сотрудник</th>
-      <th *ngIf="access.clients_created">
+      <th>
         <div class="nobr cursor" style="width: 100%"
              [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
              (click)="changeSort('created_at', 'DESC')">
@@ -58,7 +58,7 @@
         <td>{{call.description }}</td>
         <td>{{call.user.user_information.surname}} {{call.user.user_information.name}}</td>
         <td>
-          {{call.created_at}}
+          {{call.created_at | date: 'dd.MM.yyyy HH:mm:ss'}}
         </td>
         <td><a *ngIf="call.uid" target="_blank" href="http://pbx.virtual-office.by:20080/media/{{call.uid}}.wav"><i
           class="fas fa-headphones icon-color"></i></a></td>
@@ -79,9 +79,6 @@
     <pagination-controls (pageChange)="getCallsByPage($event)" maxSize="7" previousLabel="" nextLabel=""
                          directionLinks="true" autohide="true"></pagination-controls>
   </div>
-  <!-- <div class="col-3 text-right">
-     Всего объектов в МЛС: {{countSales}}
-   </div>-->
 </div>
 
 

@@ -1,6 +1,7 @@
 import {User} from './User.model';
 import {Label} from './Label.model';
 import {House} from './House.model';
+import {Company} from './Company.model';
 
 export class CallHouse {
 
@@ -8,6 +9,7 @@ export class CallHouse {
     public id: number,
     public house: House,
     public user: User,
+    public company: Company,
     public phone: string,
     public source: Label,
     public description: string,

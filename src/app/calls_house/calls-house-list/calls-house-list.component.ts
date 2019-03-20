@@ -109,7 +109,7 @@ export class CallsHouseListComponent implements OnInit, OnDestroy  {
       for (let i = 0; i < data.length; i++) {
         data[i].user = this.userService.setUser(data[i].user);
         data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
-        data[i].user.company = this.companyService.setCompany(data[i].user.company);
+        data[i].company = this.companyService.setCompany(data[i].user.company);
         // объект
         data[i].house = this.houseService.setHouse(data[i].house);
         // адрес объекта

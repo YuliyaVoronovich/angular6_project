@@ -385,6 +385,31 @@
             </div>
           </div>
 
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Уточнение адреса</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.company_information.specify_address">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Уточнение источника</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.company_information.specify_source">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Перед переключением</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.company_information.before_switch">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-5 col-form-label text-left">Если переключение не удалось</label>
+            <div class="col-7">
+              <input type="text" class="form-control" [(ngModel)]="company.company_information.no_switch">
+            </div>
+          </div>
+
         </div>
 
         <div class="col-12">

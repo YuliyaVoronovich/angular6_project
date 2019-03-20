@@ -36,22 +36,31 @@
       <a class="dropdown-item" routerLink="/users">Агенты</a>
       <a *ngIf="access.roles" class="dropdown-item" routerLink="/roles">Права</a>
       <a *ngIf="user.partner" class="dropdown-item" routerLink="/partners">ПП</a>
+      <a class="dropdown-item" routerLink="/calls_other">Звонки</a>
     </div>
   </div>
 
   <!-- Если есть доступ к Права или ПП и нет к Сотрудники-->
-  <div class="main-item">
-    <a *ngIf="access.roles && !access.users" class="btn" routerLink="/roles">
-      <i class="fas fa-users"></i>
-      <span>Права</span>
-    </a>
-  </div>
-  <div class="main-item">
-    <a *ngIf="user.partner && !access.users" class="btn" routerLink="/partners">
-      <i class="fas fa-users"></i>
-      <span>ПП</span>
-    </a>
-  </div>
+  <ng-container *ngIf="!access.users">
+    <div class="main-item">
+      <a *ngIf="access.roles" class="btn" routerLink="/roles">
+        <i class="fas fa-users"></i>
+        <span>Права</span>
+      </a>
+    </div>
+    <div class="main-item">
+      <a *ngIf="user.partner" class="btn" routerLink="/partners">
+        <i class="fas fa-users"></i>
+        <span>ПП</span>
+      </a>
+    </div>
+    <div class="main-item">
+      <a class="btn" routerLink="/calls_other">
+        <i class="fas fa-users"></i>
+        <span>Звонки</span>
+      </a>
+    </div>
+  </ng-container>
 
   <div class="main-item">
     <a *ngIf="access.settings" class="btn" routerLink="/companies/company/{{user.company.id}}">

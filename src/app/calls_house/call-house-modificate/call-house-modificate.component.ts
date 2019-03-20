@@ -71,7 +71,7 @@ export class CallHouseModificateComponent implements OnInit {
     '', null, null, false, false, null, null, false,
     false, false);
 
-  public call: CallHouse = new CallHouse(0, null, null, '', null, '', '', '', '', 0, null, null);
+  public call: CallHouse = new CallHouse(0, null, null,  null, '', null, '', '', '', '', 0, null, null);
 
   public user: User = new User(0, '', '', null, null, null, '',
     0, 0, 0, false, null, null, null, null, null, null);

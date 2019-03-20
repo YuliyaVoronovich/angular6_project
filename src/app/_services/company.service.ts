@@ -59,7 +59,8 @@ export class CompanyService {
         '', false, null, null, null, false, null, '', '',
         '', false, '', '', '', '', '', false, '',
         '', '', '', false, false, false, false, false,
-        false, false, false, false, false, false, false, false, '', '', '', '');
+        false, false, false, false, false, false, false, false,  '','', '',
+        '', '', '', '', '');
     }
     return company_information;
   }

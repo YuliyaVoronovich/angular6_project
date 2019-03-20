@@ -1,17 +1,14 @@
-import {Sale} from './Sale.model';
 import {User} from './User.model';
-import {Label} from './Label.model';
 import {Company} from './Company.model';
 
-export class CallSale {
+
+export class CallOther {
 
   constructor(
     public id: number,
-    public sale: Sale,
     public user: User,
     public company: Company,
     public phone: string,
-    public source: Label,
     public description: string,
     public uid: string,
     public uid2: string,
