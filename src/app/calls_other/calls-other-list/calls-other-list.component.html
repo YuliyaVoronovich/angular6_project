@@ -1,0 +1,67 @@
+<div class="table-responsive" style="margin-bottom: 20px">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>Телефон</th>
+      <th>Примечание</th>
+      <th>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='ASC')"
+             (click)="changeSort('created_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата доб.
+        </div>
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container
+      *ngFor="let call of calls | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countClients }; let i  = index">
+      <tr>
+        <td>
+          <span [innerHTML]="call.phone===null ? '' : call.phone | sanitizeHtml"></span>
+        </td>
+        <td *ngIf="call.id == editRowId">
+          <textarea rows="5" col="25" #myInput type="text" [(ngModel)]="call.description" (blur)="change(call)"></textarea>
+        </td>
+        <td *ngIf="call.id !== editRowId">
+          <i class="fas fa-pen icon-color cursor" (click)="toggle(call.id)"></i>
+          {{call.description}}
+        </td>
+        <td>
+          {{call.created_at  | date: 'dd.MM.yyyy HH:mm:ss'}}
+        </td>
+        <td><a *ngIf="call.uid" target="_blank" href="http://pbx.virtual-office.by:20080/media/{{call.uid}}.wav"><i
+          class="fas fa-headphones icon-color"></i></a></td>
+        <td><a *ngIf="call.uid2" target="_blank" href="http://pbx.virtual-office.by:20080/media/{{call.uid2}}.wav"><i
+          class="fas fa-headphones icon-color"></i></a></td>
+        <td></td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="row no-gutters">
+  <!--Пагинация -->
+  <div class="col-12 text-center">
+    <pagination-controls (pageChange)="getCallsByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+                         directionLinks="true" autohide="true"></pagination-controls>
+  </div>
+</div>
+
+
+
