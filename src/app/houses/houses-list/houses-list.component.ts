@@ -17,11 +17,11 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {AccessModel} from '../../_models/Access.model';
 import {CalculatorComponent} from '../../_common/calculator/calculator.component';
 import {SiteService} from '../../_services/site_service';
-import {Site} from '../../_models/Site';
+import {SiteModel} from '../../_models/Site.model';
 
 export interface DialogData {
   house: House;
-  sites: Site[];
+  sites: SiteModel[];
 }
 
 @Component({
@@ -32,7 +32,7 @@ export interface DialogData {
 export class HousesListComponent implements OnInit, OnDestroy {
 
   public houses: House[] = [];
-  public sites: Site[] = [];
+  public sites: SiteModel[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
     null, null, false, null, null, '', null, null, null);
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',

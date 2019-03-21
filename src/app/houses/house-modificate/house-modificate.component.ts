@@ -67,11 +67,11 @@ export class HouseModificateComponent implements OnInit {
   public districts_rb = [];
   public cities = [];
 
-  public house: House = new House(0, null, null, '', '', '', '',  '', null, null, false,
+  public house: House = new House(0, null, null, '', '', '', '', '', null, null, false,
     '', 0, 0, false, false, false, false, 0, '', null, '',
     '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
     false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
-    false, null, null, null,   null, false, false, false, false);
+    false, null, null, null, null, false, false, false, false);
 
   public user: User = new User(0, '', '', null, null, null, '',
     0, 0, 0, false, null, null, null, null, null, null);
@@ -379,16 +379,16 @@ export class HouseModificateComponent implements OnInit {
     }, 100);
   }
 
-  sendRequest() {
+  sendRequest(location_id = 0) {
 
     this.request['house'] = (this.house.id !== 0) ? this.house.id : this.idSaleRequest;
     this.request['location'] = this.house.location;
+    this.request['location']['id'] = location_id;
     this.request['streetRequest'] = this.streetRequest;
     this.request['textRequest'] = this.textRequest;
+    console.log(this.request);
 
     return this.houseService.newLocationRequest(this.request).subscribe(data => {
-
-      console.log(data);
 
       if (data.status === 200) {
         this.message('Заявка по адресу отправлена на модерацию', false);
@@ -426,7 +426,6 @@ export class HouseModificateComponent implements OnInit {
     this.house.location.street.id = (this.house.location.street.id !== undefined) ? this.house.location.street.id : 0;
 
     this.house.photo = this.upload_photo;
-    console.log(this.house);
 
     if (this.validation() === true) {
 
@@ -440,7 +439,7 @@ export class HouseModificateComponent implements OnInit {
               // создание заявки если была введена неизвестная улица или автоматическая заявка
               // (новый дом на улице или в городе нет улицы - создана новая локация)
               if (this.house.location.street.id === 0 || data.new_location === true) {
-                this.sendRequest();
+                this.sendRequest(data.location_id);
               }
             } else {
               this.message('Не удалось обновить объект!', true);
@@ -471,7 +470,7 @@ export class HouseModificateComponent implements OnInit {
               // создание заявки если была введена неизвестная улица или автоматическая заявка
               // (новый дом на улице или в городе нет улицы - создана новая локация)
               if (this.house.location.street.id === 0 || data.new_location === true) {
-                this.sendRequest();
+                  this.sendRequest(data.location_id);
               }
             } else {
               this.message('Не удалось создать объект!', true);
@@ -530,6 +529,7 @@ export class HouseModificateComponent implements OnInit {
       return false;
     }
   }
+
   validationDistrict(): boolean {
 
     if (this.house.location.city.district_country.id) {
@@ -572,6 +572,7 @@ export class HouseModificateComponent implements OnInit {
       return false;
     }
   }
+
   validationArea(): boolean {
     if (this.house.area > 0) {
       this.validation_area = true;
@@ -585,6 +586,7 @@ export class HouseModificateComponent implements OnInit {
       return false;
     }
   }
+
   validationAreaLand(): boolean {
     if (this.house.area_land > 0) {
       this.validation_area_land = true;
@@ -635,6 +637,7 @@ export class HouseModificateComponent implements OnInit {
     }
     return false;
   }
+
   /*  Конец валидации */
 
 }

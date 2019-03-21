@@ -3,7 +3,7 @@ import {SharedService} from '../../_services/shared.service';
 import {LoginService} from '../../_services/login.service';
 import {Router} from '@angular/router';
 import {SiteService} from '../../_services/site_service';
-import {Site} from '../../_models/Site';
+import {SiteModel} from '../../_models/Site.model';
 import {Company} from "../../_models/Company.model";
 
 @Component({
@@ -14,8 +14,8 @@ import {Company} from "../../_models/Company.model";
 export class AdminSitesListComponent implements OnInit {
 
 
-  public sites: Site[] = [];
-  public site: Site = new Site(0, '', false, 0);
+  public sites: SiteModel[] = [];
+  public site: SiteModel = new SiteModel(0, '', false, 0);
   public timer: any;
   public hide = false;
 
@@ -56,7 +56,7 @@ export class AdminSitesListComponent implements OnInit {
       });
   }
 
-  save(site: Site) {
+  save(site: SiteModel) {
     console.log(site);
 
     if (site.id !== 0) {
@@ -100,7 +100,7 @@ export class AdminSitesListComponent implements OnInit {
     }
   }
 
-  block(site: Site): void {
+  block(site: SiteModel): void {
    site.block = true;
     this.siteService.update(site).subscribe(
       data => {
@@ -122,7 +122,7 @@ export class AdminSitesListComponent implements OnInit {
     );
   }
 
-  unBlock(site: Site): void {
+  unBlock(site: SiteModel): void {
     site.block = false;
     this.siteService.update(site).subscribe(
       data => {

@@ -431,7 +431,6 @@ export class AdminLocationsComponent implements OnInit {
     if (this.idObject && this.typeObject === 'sales') {
       this.sale['id'] = this.idObject;
       this.sale['location_request'] = data;
-      console.log(this.sale);
       this.saleService.update(this.sale).subscribe(
         data1 => {
           // удалить заявку
@@ -465,19 +464,18 @@ export class AdminLocationsComponent implements OnInit {
     }
     // сделать выбор вида объект квартиры-дома-аренда
     this.request = event;
-    console.log(event.info);
-
+    this.location.id = event.info.location;
     this.locationForm.controls['region'].patchValue({id: +event.info.region});
     this.locationForm.controls['city'].patchValue({id: +event.info.city});
     this.getStreets(event.info.city);
-   /* setTimeout(() => {
+    /*setTimeout(() => {
       this.locationForm.controls['street'].patchValue({id: +event.info.street});
     }, 1000);*/
     // this.locationForm.controls['street'].patchValue({id: +event.info.street});
     this.locationForm.controls['house'].patchValue(event.info.house);
     this.locationForm.controls['housing'].patchValue(event.info.housing);
 
-    this.getInfoLocation();
+   // this.getInfoLocation();
   }
 
 }

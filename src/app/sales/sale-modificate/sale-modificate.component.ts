@@ -66,10 +66,10 @@ export class SaleModificateComponent implements OnInit {
   public metro: Metro[] = [];
 
   public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
-    '', false, false, false, '', '', null, null,  false, '', null,
+    '', false, false, false, '', '', null, null, false, '', null,
     '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
-    0, 0,  0, 0, '', 0, false, '', '', false, 0, 0, null,
-    null, null, null,  false, false, false, null, null, null,
+    0, 0, 0, 0, '', 0, false, '', '', false, 0, 0, null,
+    null, null, null, false, false, false, null, null, null,
     null, false, false, false, false);
 
   public user: User = new User(0, '', '', null, null, null, '',
@@ -252,7 +252,7 @@ export class SaleModificateComponent implements OnInit {
               // создание заявки если была введена неизвестная улица или автоматическая заявка
               // (новый дом на улице или в городе нет улицы - создана новая локация)
               if ((this.sale.location.city.id && this.sale.location.street.id === 0) || data.new_location === true) {
-                this.sendRequest();
+                this.sendRequest(data.location_id);
               }
             } else {
               this.message('Не удалось обновить объект!', true);
@@ -284,7 +284,7 @@ export class SaleModificateComponent implements OnInit {
               // создание заявки если была введена неизвестная улица или автоматическая заявка
               // (новый дом на улице или в городе нет улицы - создана новая локация)
               if ((this.sale.location.city.id && this.sale.location.street.id === 0) || data.new_location === true) {
-                this.sendRequest();
+                this.sendRequest(data.location_id);
               }
 
             } else {
@@ -397,7 +397,7 @@ export class SaleModificateComponent implements OnInit {
       this.search['housing'] = (this.sale.location.housing) ? this.sale.location.housing : 0;
 
       this.locationService.getLocation(this.search).subscribe((data) => {
-          console.log(data);
+        console.log(data);
         if (data) {
           this.sale.location.district = this.locationService.setDistrict(data.district);
           this.sale.location.microdistrict = this.locationService.setMicroDistrict(data.microdistrict);
@@ -458,10 +458,11 @@ export class SaleModificateComponent implements OnInit {
     }, 100);
   }
 
-  sendRequest() {
+  sendRequest(location_id = 0) {
 
     this.request['sale'] = (this.sale.id !== 0) ? this.sale.id : this.idSaleRequest;
     this.request['location'] = this.sale.location;
+    this.request['location']['id'] = location_id;
     this.request['streetRequest'] = this.streetRequest;
     this.request['textRequest'] = this.textRequest;
 
@@ -523,6 +524,7 @@ export class SaleModificateComponent implements OnInit {
     //  console.log(this.upload_photo);
     this.sale.photo_reclame = this.upload_photo;
   }
+
   /*Конец Фото*/
 
   /* Валидация */
@@ -596,6 +598,7 @@ export class SaleModificateComponent implements OnInit {
       return false;
     }
   }
+
   validationArea(): boolean {
     if (this.sale.area > 0) {
       this.validation_area = true;
@@ -609,6 +612,7 @@ export class SaleModificateComponent implements OnInit {
       return false;
     }
   }
+
   validationAreaLeave(): boolean {
     if (this.sale.area_leave > 0) {
       this.validation_area_leave = true;
@@ -622,6 +626,7 @@ export class SaleModificateComponent implements OnInit {
       return false;
     }
   }
+
   validationAreaKitchen(): boolean {
     if (this.sale.area_kitchen > 0) {
       this.validation_area_kitchen = true;
@@ -635,6 +640,7 @@ export class SaleModificateComponent implements OnInit {
       return false;
     }
   }
+
   validationStorey(): boolean {
     if (this.sale.storey > 0) {
       this.validation_storey = true;
@@ -648,6 +654,7 @@ export class SaleModificateComponent implements OnInit {
       return false;
     }
   }
+
   validationStoreys(): boolean {
     if (this.sale.storeys > 0) {
       this.validation_storeys = true;
@@ -661,6 +668,7 @@ export class SaleModificateComponent implements OnInit {
       return false;
     }
   }
+
   validationPrice(): boolean {
     if (this.sale.price > 0) {
       this.validation_price = true;
@@ -685,5 +693,6 @@ export class SaleModificateComponent implements OnInit {
     }
     return false;
   }
+
   /*  Конец валидации */
 }

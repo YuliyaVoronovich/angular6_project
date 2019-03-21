@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {Globals} from '../_common/globals';
 import {Observable} from 'rxjs/index';
-import {Site} from '../_models/Site';
+import {SiteModel} from '../_models/Site.model';
 
 @Injectable()
 export class SiteService {
@@ -16,16 +16,16 @@ export class SiteService {
               private globals: Globals) {
   }
 
-  getSites(search = {}): Observable<Site[]> {
+  getSites(search = {}): Observable<SiteModel[]> {
     return this.http.get(this.globals.url + this.uri, {search: search})
       .map((response: Response) => response.json().sites);
   }
 
-  create(site: Site): Observable<Response> {
+  create(site: SiteModel): Observable<Response> {
     return this.http.post(this.globals.url + this.uri, JSON.stringify(site));
   }
 
-  update(site: Site): Observable<Response> {
+  update(site: SiteModel): Observable<Response> {
     return this.http.put(this.globals.url + this.uri + '/' + site.id, JSON.stringify(site));
   }
 

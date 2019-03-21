@@ -18,12 +18,12 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {Router} from '@angular/router';
 import {AccessModel} from '../../_models/Access.model';
 import {CalculatorComponent} from '../../_common/calculator/calculator.component';
-import {Site} from '../../_models/Site';
+import {SiteModel} from '../../_models/Site.model';
 
 
 export interface DialogData {
   sale: Sale;
-  sites: Site[];
+  sites: SiteModel[];
 }
 
 @Component({
@@ -34,7 +34,7 @@ export interface DialogData {
 export class SalesListComponent implements OnInit, OnDestroy {
 
   public sales: Sale[] = [];
-  public sites: Site[] = [];
+  public sites: SiteModel[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
     null, null, false, null, null, '', null, null, null);
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',

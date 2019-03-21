@@ -91,6 +91,7 @@ import {CalculatorComponent} from './_common/calculator/calculator.component';
 import { AdminSitesListComponent } from './admin/admin-sites-list/admin-sites-list.component';
 import { PartnerListComponent } from './users/partner-list/partner-list.component';
 import { CallsOtherListComponent } from './calls_other/calls-other-list/calls-other-list.component';
+import { AdminSousesListComponent } from './admin/admin-souses-list/admin-souses-list.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -123,7 +124,6 @@ import {MaterialModule} from './material.module';
 import {NgxGalleryModule} from 'ngx-gallery';
 
 import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
-
 
 
 const adminCompaniesRoutes: Routes = [
@@ -327,6 +327,7 @@ const routes: Routes = [
     PartnerListComponent,
     CalculatorComponent,
     CallsOtherListComponent,
+    AdminSousesListComponent,
     SanitizeHtmlPipe,
     FilterPipe
   ],

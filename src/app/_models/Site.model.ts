@@ -1,5 +1,5 @@
 
-export class Site {
+export class SiteModel {
 
   constructor(
     public id: number,
