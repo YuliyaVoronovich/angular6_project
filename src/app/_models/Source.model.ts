@@ -1,8 +1,8 @@
-export class SourceModel {
+export class Source {
 
   constructor(
     public id: number,
     public title: string,
-    public priority: boolean
+    public priority: number
   ) {}
 }

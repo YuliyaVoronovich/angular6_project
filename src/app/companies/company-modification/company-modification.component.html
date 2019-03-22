@@ -413,6 +413,19 @@
         </div>
 
         <div class="col-12">
+          <h4>Источники</h4>
+          <div *ngFor="let source of sources" class="form-check">
+            <input class="form-check-input" type="checkbox" id="{{ source.id}}"
+                   [checked]="company.sources[source.id]"
+                   (change)="company.sources[source.id] = !company.sources[source.id]">
+            <label class="form-check-label">
+              {{ source.title}}
+            </label>
+          </div>
+
+        </div>
+
+        <div class="col-12">
           <h4>Перенос необработанных звонков из раздела звонки в клиенты</h4>
 
           <div class="form-group row">

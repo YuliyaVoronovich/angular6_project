@@ -32,7 +32,7 @@ export class AdminCompanyModificateComponent implements OnInit {
     false, false, false, false, false, false, false, false,  '','', '',
     '', '', '', '', '');
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
-    '', '', null, null, null, [], null, false, null);
+    '', '', null, null, null, [], null, false, [], null);
   public user: User = new User(0, '', '', null, null, null, '', 0, null, null, false,
     null, null, '', null, null, null);
   public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
@@ -98,16 +98,6 @@ export class AdminCompanyModificateComponent implements OnInit {
     return this.moduleSevice.getModules().subscribe(data => {
         for (let i = 0; i < data.length; i++) {
           this.modules.push(data[i]);
-        }
-      },
-      error => {
-        if (error.status === 401) {
-          this.loginService.logout();
-          this.router.navigate(['/']);
-        }
-        if (error.status === 404) {
-          this.loginService.logout();
-          this.router.navigate(['404']);
         }
       });
   }

@@ -23,6 +23,7 @@ export class Company {
     public modules: any[] = [],
     public user: User,
     public disable: boolean,
+    public sources: any[] = [],
     public company_history_blocks: CompanyHistoryBlock
   ) {
   }

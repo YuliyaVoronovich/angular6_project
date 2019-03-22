@@ -48,7 +48,7 @@ export class CompanyService {
   setCompany(company: Company) {
     if (!company) {
       return company = new Company(null, '', '', '', '', '', null, null, '',
-        '', '', null, null, null, [], null, false, null);
+        '', '', null, null, null, [], null, false, [], null);
     }
     return company;
   }

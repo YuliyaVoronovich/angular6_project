@@ -19,7 +19,7 @@ export class UsersListComponent implements OnInit {
   public users: User[] = [];
   public companies: Company[] = [];
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
-    '', '', null, null, null, [], null, false, null);
+    '', '', null, null, null, [], null, false, [], null);
   public search = {
     'phone': '',
     'company': ''

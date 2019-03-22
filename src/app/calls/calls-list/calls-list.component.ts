@@ -38,7 +38,7 @@ export class CallsListComponent implements OnInit, OnDestroy {
   public user: User = new User(0, '', '', null, null, null, '', 0,
     null, null, false, null, null, '', null, null, null);
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
-    '', '', null, null, null, [], null, false, null);
+    '', '', null, null, null, [], null, false, [], null);
 
   public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false, false,

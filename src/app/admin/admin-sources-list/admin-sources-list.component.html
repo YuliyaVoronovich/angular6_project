@@ -1,0 +1,54 @@
+<div style="margin-left: 20px">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped" style="width: 400px">
+      <thead>
+      <tr style="background:#cccccc">
+        <th>Название</th>
+        <th>Приоритет</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let source of sources">
+        <td *ngIf="source.id == editRowId">
+          <input #myInput type="text" [(ngModel)]="source.title" (blur)="change(source)">
+        </td>
+        <td *ngIf="source.id !== editRowId" (dblclick)="toggle(source.id)">
+          {{source.title}}
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="source.priority" (blur)="change(source)">
+        </td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="delete(source)">Удалить</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row no-gutters" [ngClass]="{'show' : hide, 'hide' : !hide}">
+    <div class="col-2">
+      <label class="col-form-label text-left">Название</label>
+      <div class="form-group row">
+        <div class="col-7">
+          <input type="text" class="form-control" [(ngModel)]="source.title">
+        </div>
+        <div class="col-3">
+          <input type="text" class="form-control" [(ngModel)]="source.priority">
+        </div>
+        <div class="col-1">
+          <button style="margin-right: 10px" class="btn btn-sm btn-primary" (click)="save(source)">ОК</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row no-gutters" [hidden]="hide">
+    <button class="btn btn-primary" (click)="hide=!hide">Добавить</button>
+  </div>
+  <div class="row no-gutters" [hidden]="!hide">
+    <button class="btn btn-primary" (click)="hide=!hide">Скрыть</button>
+  </div>
+</div>
+

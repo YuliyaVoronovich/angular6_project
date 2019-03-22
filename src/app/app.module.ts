@@ -91,7 +91,7 @@ import {CalculatorComponent} from './_common/calculator/calculator.component';
 import { AdminSitesListComponent } from './admin/admin-sites-list/admin-sites-list.component';
 import { PartnerListComponent } from './users/partner-list/partner-list.component';
 import { CallsOtherListComponent } from './calls_other/calls-other-list/calls-other-list.component';
-import { AdminSousesListComponent } from './admin/admin-souses-list/admin-souses-list.component';
+import { AdminSourcesListComponent } from './admin/admin-sources-list/admin-sources-list.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -119,11 +119,13 @@ import {CallHouseService} from './_services/call_house.service';
 import {CallHouseResolve} from './_services/call_house_resolve.service';
 import {SiteService} from './_services/site_service';
 import {CallOtherService} from './_services/call_other.service';
+import {SourceService} from './_services/source.service';
 
 import {MaterialModule} from './material.module';
 import {NgxGalleryModule} from 'ngx-gallery';
 
 import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
+
 
 
 const adminCompaniesRoutes: Routes = [
@@ -138,6 +140,9 @@ const adminModulesRoutes: Routes = [
 ];
 const adminSitesRoutes: Routes = [
   {path: '', component: AdminSitesListComponent},
+];
+const adminSourcesRoutes: Routes = [
+  {path: '', component: AdminSourcesListComponent},
 ];
 const adminUsersRoutes: Routes = [
   {path: '', component: AdminUsersListComponent},
@@ -229,12 +234,14 @@ const agreements: Routes = [
 /*определение основных маршрутов*/
 const routes: Routes = [
 
+  {path: 'admin', component: AdminComponent, children: adminCompaniesRoutes},
   {path: 'admin/companies', component: AdminComponent, children: adminCompaniesRoutes},
   {path: 'admin/modules', component: AdminComponent, children: adminModulesRoutes},
   {path: 'admin/users', component: AdminComponent, children: adminUsersRoutes},
   {path: 'admin/roles', component: AdminComponent, children: adminRolesRoutes},
   {path: 'admin/locations', component: AdminComponent, children: adminLocationsRoutes},
   {path: 'admin/sites', component: AdminComponent, children: adminSitesRoutes},
+  {path: 'admin/sources', component: AdminComponent, children: adminSourcesRoutes},
   {path: 'sales', component: GeneralTemplateComponent, children: salesRoutes},
   {path: 'clients', component: GeneralTemplateComponent, children: clientsRoutes},
   {path: 'houses', component: GeneralTemplateComponent, children: housesRoutes},
@@ -327,7 +334,7 @@ const routes: Routes = [
     PartnerListComponent,
     CalculatorComponent,
     CallsOtherListComponent,
-    AdminSousesListComponent,
+    AdminSourcesListComponent,
     SanitizeHtmlPipe,
     FilterPipe
   ],
@@ -378,6 +385,7 @@ const routes: Routes = [
     CallHouseService,
     CallHouseResolve,
     CallOtherService,
+    SourceService,
     Globals,
     SanitizeHtmlPipe
   ],

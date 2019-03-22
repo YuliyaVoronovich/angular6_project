@@ -12,6 +12,8 @@ import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
 import {User} from '../../_models/User.model';
 import {UserInformation} from '../../_models/UserInformation.model';
 import {SharedService} from '../../_services/shared.service';
+import {SourceService} from '../../_services/source.service';
+import {Source} from '../../_models/Source.model';
 
 @Component({
   selector: 'app-company-modification',
@@ -21,7 +23,7 @@ import {SharedService} from '../../_services/shared.service';
 })
 export class CompanyModificationComponent implements OnInit {
 
-  public modules: Module[] = [];
+  public sources: Source[] = [];
   public id;
 
   public timer: any;
@@ -29,10 +31,10 @@ export class CompanyModificationComponent implements OnInit {
     '', false, null, null, null, false, null, '', '',
     '', false, '', '', '', '', '', false, '',
     '', '', '', false, false, false, false, false,
-    false, false, false, false, false, false, false, false,  '','', '',
+    false, false, false, false, false, false, false, false,  '', '', '',
     '', '', '', '', '');
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
-    '', '', null, null, null, [], null, false, null);
+    '', '', null, null, null, [], null, false, [], null);
 
   public user: User = new User(0, '', '', null, null, null, '', 0, null, null, false,
     null, null, '', null, null, null);
@@ -46,7 +48,8 @@ export class CompanyModificationComponent implements OnInit {
               private route: ActivatedRoute,
               private loginService: LoginService,
               private sharedService: SharedService,
-              private companySevice: CompanyService) {
+              private companySevice: CompanyService,
+              private sourceService: SourceService) {
   }
 
   message(mes: string, error: boolean) {
@@ -73,7 +76,7 @@ export class CompanyModificationComponent implements OnInit {
             // даты из формата 0000-00-00 в формат объект
             this.company.license_from = new NgbDateFRParserFormatter().parse(data.company.license_from);
             this.company.license_to = new NgbDateFRParserFormatter().parse(data.company.license_to);
-            this.company.modules = data.company.arrayModules;
+            this.company.sources = data.company.arraySources;
 
             if (this.company.company_information.phone_rent) { this.phone_rent = true; }
             if (this.company.company_information.phone_sale) { this.phone_sale = true; }
@@ -85,6 +88,18 @@ export class CompanyModificationComponent implements OnInit {
       });
     this.company.user = this.user;
     this.company.user.user_information = this.user_information;
+
+    this.getSources();
+  }
+
+  getSources() {
+    this.sources = [];
+
+    return this.sourceService.getSources().subscribe(data => {
+        for (let i = 0; i < data.length; i++) {
+          this.sources.push(data[i]);
+        }
+      });
   }
 
   save() {

@@ -12,7 +12,7 @@ import {User} from '../../_models/User.model';
 export class GeneralLeftMenuComponent implements OnInit {
 
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
-    '', '', null, null, null, [], null, false, null);
+    '', '', null, null, null, [], null, false, [], null);
 
   public user: User = new User(0, '', '', null, null, null, '',
     0, 0, 0, false, null, null, null, null, null, null);

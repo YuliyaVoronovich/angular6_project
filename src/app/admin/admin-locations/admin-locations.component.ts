@@ -461,7 +461,7 @@ export class AdminLocationsComponent implements OnInit {
     } else if (event.info.houses) {
       this.idObject = event.info.houses;
       this.typeObject = 'houses';
-    }
+  }
     // сделать выбор вида объект квартиры-дома-аренда
     this.request = event;
     this.location.id = event.info.location;
