@@ -77,6 +77,7 @@ export class CompanyModificationComponent implements OnInit {
             this.company.license_from = new NgbDateFRParserFormatter().parse(data.company.license_from);
             this.company.license_to = new NgbDateFRParserFormatter().parse(data.company.license_to);
             this.company.sources = data.company.arraySources;
+            this.company.modules = data.company.arrayModules;
 
             if (this.company.company_information.phone_rent) { this.phone_rent = true; }
             if (this.company.company_information.phone_sale) { this.phone_sale = true; }
