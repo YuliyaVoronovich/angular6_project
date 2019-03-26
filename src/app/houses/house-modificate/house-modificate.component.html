@@ -653,11 +653,9 @@
                 <div class="col-4">
                   <div class="form-group label">
                     <select class="form-control" [(ngModel)]="house.contract_fraction">
-                      <option value='/1'>/1</option>
-                      <option value='/2'>/2</option>
-                      <option value='/3'>/3</option>
-                      <option value='/4'>/4</option>
-                      <option value='/5'>/5</option>
+                      <ng-container *ngFor="let item of number_dogovor">
+                        <option value="/{{item}}">/{{item}}</option>
+                      </ng-container>
                     </select>
                   </div>
                 </div>

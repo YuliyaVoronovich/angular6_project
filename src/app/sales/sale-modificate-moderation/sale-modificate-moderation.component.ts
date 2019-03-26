@@ -34,6 +34,8 @@ import {AccessModel} from '../../_models/Access.model';
 })
 export class SaleModificateModerationComponent implements OnInit {
 
+  public number_dogovor = [1, 2, 3, 4, 5, 20];
+
   public selectRegions: Array<IOption> = [
     {label: '', value: ''}
   ];
