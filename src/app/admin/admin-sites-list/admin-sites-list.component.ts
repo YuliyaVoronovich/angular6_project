@@ -53,6 +53,9 @@ export class AdminSitesListComponent implements OnInit {
           this.loginService.logout();
           this.router.navigate(['/']);
         }
+        if (error.status === 403) {
+          this.router.navigate(['/403']);
+        }
       });
   }
 
