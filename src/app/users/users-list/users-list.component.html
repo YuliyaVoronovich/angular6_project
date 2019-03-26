@@ -29,13 +29,14 @@
   </table>
 </div>
 
-<div class="row no-gutters">
-  <!--Пагинация -->
-  <div class="col-12 text-center">
-    <label for="phone" class="col-5 col-form-label text-left">Телефон</label>
-    <div class="col-7">
-      <input type="text" class="form-control" id="phone" name="phone" (change)="getUsersSearch()"
-             [(ngModel)]="search.phone">
+<div class="container-fluid" style="bottom: 0;position: fixed; width: 100%">
+  <div class="row" style=" background: #ccc; padding: 5px">
+    <div class="form-group row">
+      <label for="phone" class="col-5 col-form-label text-left">Телефон</label>
+      <div class="col-7">
+        <input type="text" class="form-control" id="phone" name="phone" (change)="getUsersSearch()"
+               [(ngModel)]="search.phone">
+      </div>
     </div>
   </div>
 </div>

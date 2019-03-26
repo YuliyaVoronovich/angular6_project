@@ -48,7 +48,7 @@
               <div class="col-7">
                 <mat-form-field class="full-width">
                   <input type="text" placeholder="Населенный пункт" aria-label="Населенный пункт" matInput
-                         formControlName="city" [matAutocomplete]="auto3">
+                         formControlName="city" [matAutocomplete]="auto3" (change)="getStreet(0)">
                   <mat-autocomplete #auto3="matAutocomplete" [displayWith]="valueCity"
                                     (optionSelected)="getStreet($event.option.value);getLocation($event.option.value)"
                                     (closed)="clear()">

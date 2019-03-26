@@ -292,13 +292,19 @@ export class AdminLocationsComponent implements OnInit {
   getStreets(city = 0, district = 0, microdistrict = 0) {
     this.streetsSelect = [];
 
-    this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
-      for (let i = 0; i < options.length; i++) {
-        this.streetsSelect.push(options[i]);
+    if (city = 0) {
+      this.streetsSelect = [];
+    } else {
 
-      }
-      this.autoComplitStreets();
-    });
+      this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
+        for (let i = 0; i < options.length; i++) {
+          this.streetsSelect.push(options[i]);
+
+        }
+
+      });
+    }
+    this.autoComplitStreets();
   }
 
   getLocation(option) {
