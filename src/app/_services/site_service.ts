@@ -8,12 +8,28 @@ import {SiteModel} from '../_models/Site.model';
 @Injectable()
 export class SiteService {
 
-  private uri = '/admin/sites';
+  public uri = '/sites';
+  public admin_uri = '/admin/sites';
+  public path = '';
 
 
   constructor(private http: Http,
               private router: Router,
               private globals: Globals) {
+    this.getPathUrl();
+  }
+
+  getPathUrl() {
+    const location = window.location.pathname;
+    location.split('/').forEach(element => {
+      if (element !== '' && this.path === '') {
+        this.path = element;
+      }
+    });
+    if (this.path === 'admin') {
+      this.uri = this.admin_uri;
+    }
+    // console.log('route: ' + this.uri); // Root path
   }
 
   getSites(search = {}): Observable<SiteModel[]> {
