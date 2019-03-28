@@ -26,12 +26,19 @@ export class HousesListSearchComponent implements OnInit {
   public cities: Array<IOption> = [
     {label: '', value: ''}
   ];
+  public cities_remember: Array<IOption> = [
+    {label: '', value: ''}
+  ];
 
   public districts: Array<IOption> = [
     {label: '', value: ''}
   ];
 
   public streets: Array<IOption> = [
+    {label: '', value: ''}
+  ];
+
+  public streets_remember: Array<IOption> = [
     {label: '', value: ''}
   ];
 
@@ -93,9 +100,9 @@ export class HousesListSearchComponent implements OnInit {
   ngOnInit() {
     this.getRegions();
     this.getDistrictsRb();
-    this.getCities();
+    this.getCitiesInitializate();
     this.getDistricts();
-    this.getStreets();
+    this.getStreetsInitializate();
     this.getDirections();
     this.getLabels();
     this.getCompanies();
@@ -137,14 +144,35 @@ export class HousesListSearchComponent implements OnInit {
     });
   }
 
-  getCities(region: any = 0, district_rb: any = 0) {
-    this.locationService.getCities(region, district_rb).subscribe((options) => {
-      this.cities = [];
+  getCitiesInitializate() {
+    this.cities = [];
+    this.cities_remember = [];
+  }
 
-      for (let i = 0; i < options.length; i++) {
-        this.cities.push({label: options[i].title, value: '' + options[i].id});
-      }
-    });
+  getStreetsInitializate() {
+    this.streets = [];
+    this.streets_remember = [];
+  }
+
+  getCities (region: any = 0, district_rb: any = 0, title = '') {
+
+    /* добавить в массив по фильтру более 2 символов*/
+    if (title.length > 2) {
+      this.locationService.getCities(region, district_rb, title).subscribe((options) => {
+        this.cities = [];
+
+        /* добавить уже выбранные в массив*/
+        for (let i = 0; i < this.cities_remember.length; i++) {
+          this.cities.push({label: this.cities_remember[i].label, value: '' + this.cities_remember[i].value});
+        }
+
+        for (let i = 0; i < options.length; i++) {
+          this.cities.push({label: options[i].title, value: '' + options[i].id});
+        }
+      });
+    } else {
+      this.cities = [];
+    }
   }
 
   getDistricts(city: any = 0) {
@@ -158,14 +186,31 @@ export class HousesListSearchComponent implements OnInit {
   }
 
 
-  getStreets(city: any = 0, district: any = 0, microdistrict: any = 0) {
-    this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
-      this.streets = [];
+  getStreets(city: any = 0, district: any = 0, microdistrict: any = 0, title= '') {
 
-      for (let i = 0; i < options.length; i++) {
-        this.streets.push({label: options[i].title, value: '' + options[i].id});
-      }
-    });
+    console.log(this.streets_remember);
+
+    /* добавить в массив по фильтру более 2 символов*/
+    if (title.length > 2) {
+      this.locationService.getStreets(city, district, microdistrict, title).subscribe((options) => {
+        this.streets = [];
+
+        /* добавить уже выбранные в массив*/
+        for (let i = 0; i < this.streets_remember.length; i++) {
+          this.streets.push({label: this.streets_remember[i].label, value: '' + this.streets_remember[i].value});
+        }
+
+        for (let i = 0; i < options.length; i++) {
+          this.streets.push({label: options[i].title, value: '' + options[i].id});
+        }
+      });
+    } else {
+      this.streets = [];
+    }
+  }
+
+  selectStreets(option: IOption) {
+    this.streets_remember.push({label: `${option.label}`, value: '' + `${option.value}`}); // добавить выбранную улицу в массив, чтобы не потерялся при выборе следующего
   }
 
   getDirections() {
@@ -217,7 +262,7 @@ export class HousesListSearchComponent implements OnInit {
   selectCities(option: IOption) {
     this.districtsRbSelected.push(`${option.value}`);
     this.districtsRbSearch = JSON.stringify(this.districtsRbSelected);
-    this.getCities(0, this.districtsRbSearch);
+  //  this.getCities(0, this.districtsRbSearch);
   }
 
   deselectCities(option: IOption) {
@@ -226,10 +271,13 @@ export class HousesListSearchComponent implements OnInit {
       this.districtsRbSelected.splice(index, 1);
     }
     this.districtsRbSearch = JSON.stringify(this.districtsRbSelected);
-    this.getCities(0, this.districtsRbSearch);
+  //  this.getCities(0, this.districtsRbSearch);
   }
 
   selectDistrict(option: IOption) {
+    this.cities_remember.push({label: `${option.label}`, value: '' + `${option.value}`}); // добавить выбранный город в массив, чтобы не потерялся при выборе следующего
+
+
     this.citiesSelected.push(`${option.value}`);
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
@@ -247,7 +295,7 @@ export class HousesListSearchComponent implements OnInit {
   selectStreet(option: IOption) {
     this.districtsSelected.push(`${option.value}`);
     this.districtsSearch = JSON.stringify(this.districtsSelected);
-    this.getStreets(0, this.districtsSearch);
+   // this.getStreets(0, this.districtsSearch);
   }
 
   deselectStreet(option: IOption) {
@@ -256,7 +304,7 @@ export class HousesListSearchComponent implements OnInit {
       this.districtsSelected.splice(index, 1);
     }
     this.districtsSearch = JSON.stringify(this.districtsSelected);
-    this.getStreets(0, this.districtsSearch);
+  //  this.getStreets(0, this.districtsSearch);
   }
 
   typesTrigger(event) {

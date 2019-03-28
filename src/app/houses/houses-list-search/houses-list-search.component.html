@@ -19,7 +19,10 @@
             <ng-select [options]="cities"
                        [(ngModel)]="search.city.values"
                        [multiple]="true"
-                       placeholder="Нас. пункт">
+                       placeholder="Нас. пункт"
+                       (selected)="selectDistrict($event)"
+                       (filterInputChanged)="getCities(0, this.districtsRbSearch, $event)"
+                       notFoundMsg="Введите не менее 3-х символов">
             </ng-select>
           </div>
         </div>
@@ -103,7 +106,9 @@
                          [(ngModel)]="search.city.values"
                          [multiple]="true"
                          (selected)="selectDistrict($event)"
-                         (deselected)="deselectDistrict($event)">
+                         (deselected)="deselectDistrict($event)"
+                         (filterInputChanged)="getCities(0, this.districtsRbSearch, $event)"
+                         notFoundMsg="Введите не менее 3-х символов">
               </ng-select>
               <div class="except-icon text-center cursor" (click)="search.city.except=!search.city.except"
                    [ngClass]="{'select-label' : search.city.except}">
@@ -138,7 +143,10 @@
               <label class="label text-left">Улица</label>
               <ng-select [options]="streets"
                          [(ngModel)]="search.street.values"
-                         [multiple]="true">
+                         [multiple]="true"
+                         (selected)="selectStreets($event)"
+                         (filterInputChanged)="getStreets(this.citiesSearch, this.districtsSearch, 0, $event)"
+                         notFoundMsg="Введите не менее 3-х символов">
               </ng-select>
               <div class="except-icon text-center cursor" (click)="search.street.except=!search.street.except"
                    [ngClass]="{'select-label' : search.street.except}">

@@ -30,7 +30,9 @@
                        [(ngModel)]="search.cities.values"
                        placeholder="Нас. пункт"
                        (selected)="selectDistrict($event)"
-                       (deselected)="deselectDistrict($event)">
+                       (deselected)="deselectDistrict($event)"
+                       (filterInputChanged)="getCities(0, this.districtsRbSearch, $event)"
+                       notFoundMsg="Введите не менее 3-х символов">
             </ng-select>
           </div>
         </div>
@@ -158,7 +160,9 @@
                        [(ngModel)]="search.cities.values"
                        placeholder="Нас. пункт"
                        (selected)="selectDistrict($event)"
-                       (deselected)="deselectDistrict($event)">
+                       (deselected)="deselectDistrict($event)"
+                       (filterInputChanged)="getCities(0, this.districtsRbSearch, $event)"
+                       notFoundMsg="Введите не менее 3-х символов">
             </ng-select>
           </div>
 

@@ -29,6 +29,9 @@ export class SalesListSearchComponent implements OnInit {
   public cities: Array<IOption> = [
     {label: '', value: ''}
   ];
+  public cities_remember: Array<IOption> = [
+    {label: '', value: ''}
+  ];
 
   public districts: Array<IOption> = [
     {label: '', value: ''}
@@ -41,6 +44,10 @@ export class SalesListSearchComponent implements OnInit {
   public streets: Array<IOption> = [
     {label: '', value: ''}
   ];
+  public streets_remember: Array<IOption> = [
+    {label: '', value: ''}
+  ];
+
   public regionsSelected = [];
   public regionsSearch = '';
   public districtsRbSelected = [];
@@ -57,8 +64,6 @@ export class SalesListSearchComponent implements OnInit {
   public hide_sale = false;
   public hide_repair = false;
   public hide_other = false;
-
-  public showStreet = false;
 
   public walls: Label[] = [];
   public furniture: Label[] = [];
@@ -102,7 +107,8 @@ export class SalesListSearchComponent implements OnInit {
   ngOnInit() {
     this.getRegions();
     this.getDistrictsRb();
-    this.getCities();
+    this.getCitiesInitializate();
+    this.getStreetsInitializate();
     this.getDistricts();
     this.getMicroDistricts();
     this.getStreets();
@@ -150,7 +156,19 @@ export class SalesListSearchComponent implements OnInit {
     });
   }
 
-  getCities(region: any = 0, district_rb: any = 0) {
+  getCitiesInitializate() {
+     this.cities = [];
+     this.cities_remember = [];
+  }
+
+  getStreetsInitializate() {
+    this.streets = [];
+    this.streets_remember = [];
+  }
+
+
+  /*getCities(region: any = 0, district_rb: any = 0) {
+
     this.locationService.getCities(region, district_rb).subscribe((options) => {
       this.cities = [];
 
@@ -158,6 +176,27 @@ export class SalesListSearchComponent implements OnInit {
         this.cities.push({label: options[i].title, value: '' + options[i].id});
       }
     });
+  }*/
+
+  getCities (region: any = 0, district_rb: any = 0, title = '') {
+
+    /* добавить в массив по фильтру более 2 символов*/
+    if (title.length > 2) {
+      this.locationService.getCities(region, district_rb, title).subscribe((options) => {
+        this.cities = [];
+
+        /* добавить уже выбранные в массив*/
+        for (let i = 0; i < this.cities_remember.length; i++) {
+          this.cities.push({label: this.cities_remember[i].label, value: '' + this.cities_remember[i].value});
+        }
+
+        for (let i = 0; i < options.length; i++) {
+          this.cities.push({label: options[i].title, value: '' + options[i].id});
+        }
+      });
+    } else {
+      this.cities = [];
+    }
   }
 
   getDistricts(city: any = 0) {
@@ -181,14 +220,35 @@ export class SalesListSearchComponent implements OnInit {
   }
 
 
-  getStreets(city: any = 0, district = 0, microdistrict: any = 0) {
-    this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
+  getStreets(city: any = 0, district: any = 0, microdistrict: any = 0, title= '') {
+
+    console.log(this.streets_remember);
+
+    /* добавить в массив по фильтру более 2 символов*/
+    if (title.length > 2) {
+      this.locationService.getStreets(city, district, microdistrict, title).subscribe((options) => {
+        this.streets = [];
+
+        /* добавить уже выбранные в массив*/
+        for (let i = 0; i < this.streets_remember.length; i++) {
+          this.streets.push({label: this.streets_remember[i].label, value: '' + this.streets_remember[i].value});
+        }
+
+        for (let i = 0; i < options.length; i++) {
+          this.streets.push({label: options[i].title, value: '' + options[i].id});
+        }
+      });
+    } else {
+      this.streets = [];
+    }
+
+   /* this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
       this.streets = [];
 
       for (let i = 0; i < options.length; i++) {
         this.streets.push({label: options[i].title, value: '' + options[i].id});
       }
-    });
+    });*/
   }
 
   getLabels() {
@@ -226,7 +286,7 @@ export class SalesListSearchComponent implements OnInit {
   selectCities(option: IOption) {
     this.districtsRbSelected.push(`${option.value}`);
     this.districtsRbSearch = JSON.stringify(this.districtsRbSelected);
-    this.getCities(0, this.districtsRbSearch);
+   // this.getCities(0, this.districtsRbSearch);
   }
 
   deselectCities(option: IOption) {
@@ -235,16 +295,19 @@ export class SalesListSearchComponent implements OnInit {
       this.districtsRbSelected.splice(index, 1);
     }
     this.districtsRbSearch = JSON.stringify(this.districtsRbSelected);
-    this.getCities(0, this.districtsRbSearch);
+  //  this.getCities(0, this.districtsRbSearch);
+
   }
 
   selectDistrict(option: IOption) {
+
+    this.cities_remember.push({label: `${option.label}`, value: '' + `${option.value}`}); // добавить выбранный город в массив, чтобы не потерялся при выборе следующего
+
     this.citiesSelected.push(`${option.value}`);
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
-    this.getStreets(this.citiesSearch, 0, 0);
+  //  this.getStreets(this.citiesSearch, 0, 0);
 
-    this.showStreet = true;
   }
 
   deselectDistrict(option: IOption) {
@@ -254,9 +317,8 @@ export class SalesListSearchComponent implements OnInit {
     }
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
-    this.getStreets(this.citiesSearch, 0, 0);
+  //  this.getStreets(this.citiesSearch, 0, 0);
 
-    this.showStreet = false;
   }
 
   selectMicroDistrict(option: IOption) {
@@ -274,10 +336,8 @@ export class SalesListSearchComponent implements OnInit {
     this.getMicroDistricts(0, this.districtsSearch);
   }
 
-  selectStreet(option: IOption) {
-    this.microdistrictsSelected.push(`${option.value}`);
-    this.microdistrictsSearch = JSON.stringify(this.microdistrictsSelected);
-    this.getStreets(0, 0, this.microdistrictsSearch);
+  selectStreets(option: IOption) {
+    this.streets_remember.push({label: `${option.label}`, value: '' + `${option.value}`}); // добавить выбранную улицу в массив, чтобы не потерялся при выборе следующего
   }
 
   deselectStreet(option: IOption) {
@@ -286,7 +346,13 @@ export class SalesListSearchComponent implements OnInit {
       this.microdistrictsSelected.splice(index, 1);
     }
     this.microdistrictsSearch = JSON.stringify(this.microdistrictsSelected);
-    this.getStreets(0, 0 , this.microdistrictsSearch);
+   // this.getStreets(0, 0 , this.microdistrictsSearch);
+  }
+
+  selectStreet(option: IOption) {
+    this.microdistrictsSelected.push(`${option.value}`);
+    this.microdistrictsSearch = JSON.stringify(this.microdistrictsSelected);
+    //  this.getStreets(0, 0, this.microdistrictsSearch);
   }
 
 

@@ -9,19 +9,21 @@
                        [multiple]="true"
                        (selected)="selectDistrict($event)"
                        (deselected)="deselectDistrict($event)"
+                       (filterInputChanged)="getCities(0, 0, $event)"
+                       notFoundMsg="Введите не менее 3-х символов"
                        placeholder="Нас. пункт">
             </ng-select>
           </div>
         </div>
         <div class="col-6 my-col-sm-12">
-          <div class="form-group" [hidden]="showStreet">
-              <input class="form-control" type="text" placeholder="Улица" disabled>
-          </div>
 
-          <div class="form-group" [hidden]="!showStreet">
+          <div class="form-group">
             <ng-select [options]="streets"
                        [(ngModel)]="search.street.values"
                        [multiple]="true"
+                       (selected)="selectStreets($event)"
+                       (filterInputChanged)="getStreets(this.citiesSearch, 0, 0, $event)"
+                       notFoundMsg="Введите не менее 3-х символов"
                        placeholder="Улица">
             </ng-select>
           </div>
@@ -117,7 +119,9 @@
                          [(ngModel)]="search.city.values"
                          [multiple]="true"
                          (selected)="selectDistrict($event)"
-                         (deselected)="deselectDistrict($event)">
+                         (deselected)="deselectDistrict($event)"
+                         (filterInputChanged)="getCities(0, this.districtsRbSearch, $event)"
+                         notFoundMsg="Введите не менее 3-х символов">
               </ng-select>
               <div class="except-icon text-center cursor" (click)="search.city.except=!search.city.except"
                    [ngClass]="{'select-label' : search.city.except}">
@@ -168,17 +172,15 @@
 
 
         <div class="col-12">
-          <div class="form-group" [hidden]="showStreet">
-            <input class="form-control" type="text" placeholder="Улица" disabled>
-          </div>
-
-          <div class="form-group" [hidden]="!showStreet">
+          <div class="form-group">
             <div class="search">
               <label class="label text-left">Улица</label>
               <ng-select [options]="streets"
                          [(ngModel)]="search.street.values"
                          [multiple]="true"
-              >
+                         (selected)="selectStreets($event)"
+                         (filterInputChanged)="getStreets(this.citiesSearch, this.districtsSearch, this.microdistrictsSearch, $event)"
+                         notFoundMsg="Введите не менее 3-х символов">
               </ng-select>
               <div class="except-icon text-center cursor" (click)="search.street.except=!search.street.except"
                    [ngClass]="{'select-label' : search.street.except}">

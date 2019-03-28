@@ -8,7 +8,8 @@
             <ng-select [options]="districts_rb"
                        [(ngModel)]="search.districts_country.values"
                        [multiple]="true"
-                       placeholder="Район РБ">
+                       placeholder="Район РБ"
+                       (selected)="selectCities($event);">
             </ng-select>
           </div>
         </div>
@@ -17,6 +18,8 @@
             <ng-select [options]="cities"
                        [(ngModel)]="search.cities.values"
                        [multiple]="true"
+                       (filterInputChanged)="getCities(0, this.districtsRbSearch, $event)"
+                       notFoundMsg="Введите не менее 3-х символов"
                        placeholder="Населенный пункт">
             </ng-select>
           </div>
@@ -89,7 +92,9 @@
                        [(ngModel)]="search.cities.values"
                        placeholder="Нас. пункт"
                        (selected)="selectDistrict($event)"
-                       (deselected)="deselectDistrict($event)">
+                       (deselected)="deselectDistrict($event)"
+                       (filterInputChanged)="getCities(0, this.districtsRbSearch, $event)"
+                       notFoundMsg="Введите не менее 3-х символов">
             </ng-select>
           </div>
 

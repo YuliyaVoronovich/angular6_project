@@ -53,8 +53,8 @@ export class LocationService {
     // .catch(this.handleError);
   }
 
-  getCities(region = 0, district = 0) {
-    return this.http.get(this.globals.url + this.uri + '/cities', {search: {'region': region, 'district': district}})
+  getCities(region = 0, district = 0, title = '') {
+    return this.http.get(this.globals.url + this.uri + '/cities', {search: {'region': region, 'district': district, 'title': title}})
       .map((response: Response) => response.json().cities);
     // .catch(this.handleError);
   }
@@ -76,12 +76,13 @@ export class LocationService {
     // .catch(this.handleError);
   }
 
-  getStreets(city, district, microdistrict) {
+  getStreets(city = 0, district = 0, microdistrict = 0, title = '') {
     return this.http.get(this.globals.url + this.uri + '/streets', {
       search: {
         'city': city,
         'district': district,
-        'microdistrict': microdistrict
+        'microdistrict': microdistrict,
+        'title': title
       }
     })
       .map((response: Response) => response.json().streets);

@@ -28,6 +28,9 @@ export class ClientsHouseListSearchComponent implements OnInit {
   public cities: Array<IOption> = [
     {label: '', value: ''}
   ];
+  public cities_remember: Array<IOption> = [
+    {label: '', value: ''}
+  ];
 
   public districts: Array<IOption> = [
     {label: '', value: ''}
@@ -46,6 +49,7 @@ export class ClientsHouseListSearchComponent implements OnInit {
 
   public citiesSelected = [];
   public citiesSearch = '';
+  public districtsRbSearch = '';
 
   public hide = false;
 
@@ -55,7 +59,7 @@ export class ClientsHouseListSearchComponent implements OnInit {
   ngOnInit() {
     this.getRegions();
     this.getDistrictsRb();
-    this.getCities();
+    this.getCitiesInitializate();
     this.getDistricts();
     this.getDirections();
     this.getLabels();
@@ -94,14 +98,30 @@ export class ClientsHouseListSearchComponent implements OnInit {
     });
   }
 
-  getCities(region: any = 0, district_rb: any = 0) {
-    this.locationService.getCities(region, district_rb).subscribe((options) => {
-      this.cities = [];
+  getCitiesInitializate() {
+    this.cities = [];
+    this.cities_remember = [];
+  }
 
-      for (let i = 0; i < options.length; i++) {
-        this.cities.push({label: options[i].title, value: '' + options[i].id});
-      }
-    });
+  getCities (region: any = 0, district_rb: any = 0, title = '') {
+
+    /* добавить в массив по фильтру более 2 символов*/
+    if (title.length > 2) {
+      this.locationService.getCities(region, district_rb, title).subscribe((options) => {
+        this.cities = [];
+
+        /* добавить уже выбранные в массив*/
+        for (let i = 0; i < this.cities_remember.length; i++) {
+          this.cities.push({label: this.cities_remember[i].label, value: '' + this.cities_remember[i].value});
+        }
+
+        for (let i = 0; i < options.length; i++) {
+          this.cities.push({label: options[i].title, value: '' + options[i].id});
+        }
+      });
+    } else {
+      this.cities = [];
+    }
   }
 
   getDistricts(city: any = 0) {
@@ -135,10 +155,13 @@ export class ClientsHouseListSearchComponent implements OnInit {
   }
 
   selectCities(option: IOption) {
-    this.getCities(0, `${option.value}`);
+    this.districtsRbSearch = `${option.value}`;
+   // this.getCities(0, `${option.value}`);
   }
 
   selectDistrict(option: IOption) {
+    this.cities_remember.push({label: `${option.label}`, value: '' + `${option.value}`}); // добавить выбранный город в массив, чтобы не потерялся при выборе следующего
+
     this.citiesSelected.push(`${option.value}`);
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
