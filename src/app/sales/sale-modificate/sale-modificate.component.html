@@ -187,11 +187,10 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-5 col-form-label text-left required">Из них раздельных<span>*</span></label>
+              <label class="col-5 col-form-label text-left required">Из них раздельных</label>
               <div class="col-6">
                 <input type="text" class="form-control" [(ngModel)]="sale.room_separate"
-                       (keypress)="keyPressNumber($event);" (change)="validationRoomSeparate()">
-                <small *ngIf="validation_room_separate === false" class="form-text text-danger">{{message_room_separate}}</small>
+                       (keypress)="keyPressNumber($event);">
               </div>
             </div>
             <div class="form-group row">

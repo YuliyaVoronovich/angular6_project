@@ -168,6 +168,10 @@
                 <ng-container *ngIf="house.cont_phone1 && house.cont_phone1!='375'"><b>{{house.cont_phone1}}</b></ng-container>
                 <ng-container *ngIf="house.cont_phone2 && house.cont_phone2!='375'">, <b>{{house.cont_phone2}}</b></ng-container>
               </span>
+                <span *ngIf="!house.access_own_info">
+                  <ng-container *ngIf="house.user.user_information.phone1 && house.user.user_information.phone1!='375'"><b>{{house.user.user_information.phone1}}</b></ng-container>
+                  <ng-container *ngIf="house.user.user_information.phone2 && house.user.user_information.phone2!='375'">, <b>{{house.user.user_information.phone2}}</b></ng-container>
+                </span>
               </ng-container>
               <br>
               <span>{{house.text}}</span>

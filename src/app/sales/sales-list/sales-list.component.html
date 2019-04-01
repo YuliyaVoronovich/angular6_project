@@ -160,13 +160,17 @@
               <span *ngIf="!sale.company.company_information.phone_sale">
                   <ng-container *ngIf="sale.user.user_information.phone1 && sale.user.user_information.phone1!='375'"><b>{{sale.user.user_information.phone1}}</b></ng-container>
                   <ng-container *ngIf="sale.user.user_information.phone2 && sale.user.user_information.phone2!='375'">, <b>{{sale.user.user_information.phone2}}</b></ng-container>
-                </span>
+              </span>
             </ng-container>
               <ng-container *ngIf="user.access !== 4 ">
               <span *ngIf="sale.access_own_info">
                 <ng-container *ngIf="sale.cont_phone1 && sale.cont_phone1!='375'"><b>{{sale.cont_phone1}}</b></ng-container>
                 <ng-container *ngIf="sale.cont_phone2 && sale.cont_phone2!='375'">, <b>{{sale.cont_phone2}}</b></ng-container>
               </span>
+                <span *ngIf="!sale.access_own_info">
+                  <ng-container *ngIf="sale.user.user_information.phone1 && sale.user.user_information.phone1!='375'"><b>{{sale.user.user_information.phone1}}</b></ng-container>
+                  <ng-container *ngIf="sale.user.user_information.phone2 && sale.user.user_information.phone2!='375'">, <b>{{sale.user.user_information.phone2}}</b></ng-container>
+               </span>
               </ng-container>
               <br>
               <span>{{sale.text}}</span>

@@ -576,6 +576,7 @@ export class HouseModificateComponent implements OnInit {
   }
 
   validationArea(): boolean {
+
     if (this.house.area > 0) {
       this.validation_area = true;
       this.message_area = '';

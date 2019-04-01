@@ -112,8 +112,6 @@ export class SaleModificateComponent implements OnInit {
   public message_house: any;         // message text of invalid input data
   public validation_room: any = true; // flag of variable (valid input data or not)
   public message_room: any;         // message text of invalid input data
-  public validation_room_separate: any = true; // flag of variable (valid input data or not)
-  public message_room_separate: any;         // message text of invalid input data
   public validation_area: any = true; // flag of variable (valid input data or not)
   public message_area: any;         // message text of invalid input data
   public validation_area_leave: any = true; // flag of variable (valid input data or not)
@@ -587,20 +585,6 @@ export class SaleModificateComponent implements OnInit {
     }
   }
 
-  validationRoomSeparate(): boolean {
-    if (this.sale.room_separate > 0) {
-      this.validation_room_separate = true;
-      this.message_room_separate = '';
-
-      return true;
-    } else {
-      this.validation_room_separate = false;
-      this.message_room_separate = 'Обязательное поле';
-
-      return false;
-    }
-  }
-
   validationArea(): boolean {
     if (this.sale.area > 0) {
       this.validation_area = true;
@@ -688,7 +672,7 @@ export class SaleModificateComponent implements OnInit {
   validation(): boolean {
 
     if (this.validationRegion() === true && this.validationCity() === true && this.validationHouse() === true && this.validationRoom() === true
-      && this.validationRoomSeparate() === true && this.validationArea() === true && this.validationAreaLeave() === true
+      && this.validationArea() === true && this.validationAreaLeave() === true
       && this.validationAreaKitchen() === true && this.validationStorey() === true && this.validationStoreys() === true
       && this.validationPrice() === true) {
       return true;
