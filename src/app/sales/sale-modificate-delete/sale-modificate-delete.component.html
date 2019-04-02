@@ -42,9 +42,10 @@
                 <ng-select [options]="selectRegions"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.district_country.region.id"
-                           (selected)="city($event)">
-
+                           (selected)="validationRegion()"
+                           (deselected)="validationRegion()">
                 </ng-select>
+                <small *ngIf="validation_region === false" class="form-text text-danger">{{message_region}}</small>
               </div>
             </div>
             <div class="form-group row">
@@ -54,9 +55,12 @@
                 <ng-select [options]="selectCities"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.id"
-                           (selected)="street($event);getLocation($event)">
-
+                           (selected)="street($event);getLocation($event);validationCity()"
+                           (deselected)="validationCity()"
+                           (filterInputChanged)="getCities(sale.location.city.district_country.region.id, 0, $event)"
+                           notFoundMsg="Введите не менее 3-х символов">
                 </ng-select>
+                <small *ngIf="validation_city === false" class="form-text text-danger">{{message_city}}</small>
               </div>
             </div>
             <div class="form-group row">
@@ -77,8 +81,9 @@
               <label class="col-5 col-form-label text-left">Номер
                 дома<span>*</span></label>
               <div class="col-2">
-                <input type="text" class="form-control" [(ngModel)]="sale.location.house" (change)="getInfoLocation()"
+                <input type="text" class="form-control" [(ngModel)]="sale.location.house" (change)="getInfoLocation()" (blur)="validationHouse()"
                        (keypress)="keyPressNumber($event);">
+                <small *ngIf="validation_house === false" class="form-text text-danger">{{message_house}}</small>
               </div>
               <label class="col-2 col-form-label text-left">Корпус</label>
               <div class="col-2">
@@ -138,7 +143,8 @@
               <label class="col-5 col-form-label text-left required">Кол-во комнат<span>*</span></label>
               <div class="col-6">
                 <input type="text" class="form-control" [(ngModel)]="sale.room"
-                       (keypress)="keyPressNumber($event);">
+                       (keypress)="keyPressNumber($event);" (change)="validationRoom()">
+                <small *ngIf="validation_room === false" class="form-text text-danger">{{message_room}}</small>
               </div>
             </div>
             <div class="form-group row">
@@ -152,21 +158,24 @@
               <label class="col-5 col-form-label text-left required">S общая<span>*</span></label>
               <div class="col-6">
                 <input type="text" class="form-control" [(ngModel)]="sale.area"
-                       (keypress)="keyPressPoint($event);">
+                       (keypress)="keyPressPoint($event);" (change)="validationArea()">
+                <small *ngIf="validation_area === false" class="form-text text-danger">{{message_area}}</small>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">S жилая<span>*</span></label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.area_leave"
+                <input type="text" class="form-control" [(ngModel)]="sale.area_leave"  (change)="validationAreaLeave()"
                        (keypress)="keyPressPoint($event);">
+                <small *ngIf="validation_area_leave === false" class="form-text text-danger">{{message_area_leave}}</small>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">S кухни<span>*</span></label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.area_kitchen"
+                <input type="text" class="form-control" [(ngModel)]="sale.area_kitchen" (change)="validationAreaKitchen()"
                        (keypress)="keyPressPoint($event);">
+                <small *ngIf="validation_area_kitchen === false" class="form-text text-danger">{{message_area_kitchen}}</small>
               </div>
             </div>
             <div class="form-group row">
@@ -274,15 +283,17 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Этаж</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.storey"
+                <input type="text" class="form-control" [(ngModel)]="sale.storey" (change)="validationStorey()"
                        (keypress)="keyPressNumber($event);">
+                <small *ngIf="validation_storey === false" class="form-text text-danger">{{message_storey}}</small>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Этажность</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.storeys"
+                <input type="text" class="form-control" [(ngModel)]="sale.storeys" (change)="validationStoreys()"
                        (keypress)="keyPressNumber($event);">
+                <small *ngIf="validation_storeys === false" class="form-text text-danger">{{message_storeys}}</small>
               </div>
             </div>
           </div>
@@ -627,7 +638,8 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">Стоимость<span>*</span></label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.price">
+                <input type="text" class="form-control" [(ngModel)]="sale.price" (change)="validationPrice()">
+                <small *ngIf="validation_price === false" class="form-text text-danger">{{message_price}}</small>
               </div>
             </div>
             <div class="form-group row">

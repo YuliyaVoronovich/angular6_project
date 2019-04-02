@@ -195,7 +195,10 @@ export class SaleModificateComponent implements OnInit {
             }
           });
 
+          this.selectCities.push({label: this.sale.location.city.title, value: '' + this.sale.location.city.id});
+
         } else {
+          this.selectCities = [];
           /*if (this.access.sales_create === false) {
            this.router.navigate(['/403']);
          }*/
@@ -222,7 +225,7 @@ export class SaleModificateComponent implements OnInit {
     this.getAllLabels();
     this.getAllLocations();
     this.getRegions();
-    this.getCities(this.sale.location.city.district_country.region.id);
+
     this.getStreets(this.sale.location.city.id);
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
@@ -343,13 +346,19 @@ export class SaleModificateComponent implements OnInit {
     });
   }
 
-  getCities(region = 0) {
-    this.locationService.getCities(region).subscribe((options) => {
+  getCities(region = 0, district_rb: any = 0, title = '') {
+    /* добавить в массив по фильтру более 3 символов*/
+    if (title.length > 2) {
+      this.locationService.getCities(region, district_rb, title).subscribe((options) => {
+        this.selectCities = [];
+
+        for (let i = 0; i < options.length; i++) {
+          this.selectCities.push({label: options[i].title, value: '' + options[i].id});
+        }
+      });
+    } else {
       this.selectCities = [];
-      for (let i = 0; i < options.length; i++) {
-        this.selectCities.push({label: options[i].title, value: '' + options[i].id});
-      }
-    });
+    }
   }
 
   getStreets(city = 0, district = 0, microdistrict = 0) {
@@ -362,10 +371,6 @@ export class SaleModificateComponent implements OnInit {
         this.selectStreets.push({label: options[i].title, value: '' + options[i].id});
       }
     });
-  }
-
-  city(option: IOption) {
-    this.getCities(+`${option.value}`);
   }
 
   street(option: IOption) {
@@ -529,7 +534,7 @@ export class SaleModificateComponent implements OnInit {
 
   /* Валидация */
   validationRegion(): boolean {
-    console.log(this.sale.location.city.district_country.region);
+
     if (this.sale.location.city.district_country.region.id) {
       this.validation_region = true;
       this.message_region = '';

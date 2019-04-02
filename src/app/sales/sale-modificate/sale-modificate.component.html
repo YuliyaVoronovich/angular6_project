@@ -42,7 +42,7 @@
                 <ng-select [options]="selectRegions"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.district_country.region.id"
-                           (selected)="city($event); validationRegion()"
+                           (selected)="validationRegion()"
                            (deselected)="validationRegion()">
                 </ng-select>
                 <small *ngIf="validation_region === false" class="form-text text-danger">{{message_region}}</small>
@@ -56,7 +56,9 @@
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.id"
                            (selected)="street($event);getLocation($event);validationCity()"
-                           (deselected)="validationCity()">
+                           (deselected)="validationCity()"
+                           (filterInputChanged)="getCities(sale.location.city.district_country.region.id, 0, $event)"
+                           notFoundMsg="Введите не менее 3-х символов">
                 </ng-select>
                 <small *ngIf="validation_city === false" class="form-text text-danger">{{message_city}}</small>
               </div>

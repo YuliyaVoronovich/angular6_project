@@ -99,6 +99,23 @@ export class HouseModificateModerationComponent implements OnInit {
 
   public movieMapMarker = false;
 
+  // валидация
+  public validation_region: any = true; // flag of variable (valid input data or not)
+  public message_region: any;         // message text of invalid input data
+  public validation_district: any = true; // flag of variable (valid input data or not)
+  public message_district: any;         // message text of invalid input data
+  public validation_city: any = true; // flag of variable (valid input data or not)
+  public message_city: any;         // message text of invalid input data
+  public validation_house: any = true; // flag of variable (valid input data or not)
+  public message_house: any;         // message text of invalid input data
+  public validation_area: any = true; // flag of variable (valid input data or not)
+  public message_area: any;         // message text of invalid input data
+  public validation_area_land: any = true; // flag of variable (valid input data or not)
+  public message_area_land: any;         // message text of invalid input data
+  public validation_type: any = true; // flag of variable (valid input data or not)
+  public message_type: any;         // message text of invalid input data
+  public validation_price: any = true; // flag of variable (valid input data or not)
+  public message_price: any;         // message text of invalid input data
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -383,32 +400,35 @@ export class HouseModificateModerationComponent implements OnInit {
 
     this.house.photo = this.upload_photo;
 
-    if (this.house.id !== 0) {
-      this.houseService.returnModeration(this.house).subscribe(
-        data => {
+    if (this.validation() === true) {
 
-          if (data) {
-            this.message('Объект перенесен в общую базу', false);
-            this.router.navigate(['houses/moderation']);
+      if (this.house.id !== 0) {
+        this.houseService.returnModeration(this.house).subscribe(
+          data => {
 
-          } else {
-            this.message('Не удалось перенести объект!', true);
+            if (data) {
+              this.message('Объект перенесен в общую базу', false);
+              this.router.navigate(['houses/moderation']);
 
-            this.house.contract_from = new NgbDateFRParserFormatter().parse('' + this.house.contract_from);
-            this.house.contract_to = new NgbDateFRParserFormatter().parse('' + this.house.contract_to);
+            } else {
+              this.message('Не удалось перенести объект!', true);
+
+              this.house.contract_from = new NgbDateFRParserFormatter().parse('' + this.house.contract_from);
+              this.house.contract_to = new NgbDateFRParserFormatter().parse('' + this.house.contract_to);
+            }
+          },
+          error => {
+            if (error.status === 401) {
+              this.router.navigate(['']);
+            } else {
+              this.message('Ошибка!', true);
+
+              this.house.contract_from = new NgbDateFRParserFormatter().parse('' + this.house.contract_from);
+              this.house.contract_to = new NgbDateFRParserFormatter().parse('' + this.house.contract_to);
+            }
           }
-        },
-        error => {
-          if (error.status === 401) {
-            this.router.navigate(['']);
-          } else {
-            this.message('Ошибка!', true);
-
-            this.house.contract_from = new NgbDateFRParserFormatter().parse('' + this.house.contract_from);
-            this.house.contract_to = new NgbDateFRParserFormatter().parse('' + this.house.contract_to);
-          }
-        }
-      );
+        );
+      }
     }
   }
 
@@ -437,5 +457,141 @@ export class HouseModificateModerationComponent implements OnInit {
     //  console.log(this.upload_photo);
     this.house.photo = this.upload_photo;
   }
+
+  /* Валидация */
+  validationRegion(): boolean {
+
+    if (this.house.location.city.district_country.region.id) {
+      this.validation_region = true;
+      this.message_region = '';
+
+      return true;
+    } else {
+      this.validation_region = false;
+      this.message_region = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationDistrict(): boolean {
+
+    if (this.house.location.city.district_country.id) {
+      this.validation_district = true;
+      this.message_district = '';
+
+      return true;
+    } else {
+      this.validation_district = false;
+      this.message_district = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationCity(): boolean {
+    if (this.house.location.city.id) {
+      this.validation_city = true;
+      this.message_city = '';
+
+      return true;
+    } else {
+      this.validation_city = false;
+      this.message_city = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationHouse(): boolean {
+    if (+this.house.location.house > 0) {
+      this.validation_house = true;
+      this.message_house = '';
+
+      return true;
+    } else {
+      this.validation_house = false;
+      this.message_house = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationArea(): boolean {
+
+    if (this.house.area > 0) {
+      this.validation_area = true;
+      this.message_area = '';
+
+      return true;
+    } else {
+      if (!this.arrayTypes[119]) { // если не выбран участок
+        this.validation_area = false;
+        this.message_area = 'Обязательное поле';
+
+        return false;
+      } else {
+        this.validation_area = true;
+        this.message_area = '';
+
+        return true;
+      }
+    }
+
+  }
+
+  validationAreaLand(): boolean {
+    if (this.house.area_land > 0) {
+      this.validation_area_land = true;
+      this.message_area_land = '';
+
+      return true;
+    } else {
+      this.validation_area_land = false;
+      this.message_area_land = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationType(): boolean {
+    if (this.arrayTypes.length > 0) {
+      this.validation_type = true;
+      this.message_type = '';
+
+      return true;
+    } else {
+      this.validation_type = false;
+      this.message_type = 'Выберите тип объекта';
+
+      return false;
+    }
+  }
+
+  validationPrice(): boolean {
+    if (this.house.price > 0) {
+      this.validation_price = true;
+      this.message_price = '';
+
+      return true;
+    } else {
+      this.validation_price = false;
+      this.message_price = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validation(): boolean {
+
+    if (this.validationRegion() === true && this.validationDistrict() && this.validationCity() === true
+      && this.validationType() === true && this.validationAreaLand() === true && this.validationArea() === true
+      && this.validationPrice() === true) {
+      return true;
+    }
+    return false;
+  }
+
+  /*  Конец валидации */
 
 }

@@ -99,8 +99,29 @@ export class SaleModificateModerationComponent implements OnInit {
   public request = {};
 
   public movieMapMarker = false;
-
   public noResultsTerm = '';
+
+  // валидация
+  public validation_region: any = true; // flag of variable (valid input data or not)
+  public message_region: any;         // message text of invalid input data
+  public validation_city: any = true; // flag of variable (valid input data or not)
+  public message_city: any;         // message text of invalid input data
+  public validation_house: any = true; // flag of variable (valid input data or not)
+  public message_house: any;         // message text of invalid input data
+  public validation_room: any = true; // flag of variable (valid input data or not)
+  public message_room: any;         // message text of invalid input data
+  public validation_area: any = true; // flag of variable (valid input data or not)
+  public message_area: any;         // message text of invalid input data
+  public validation_area_leave: any = true; // flag of variable (valid input data or not)
+  public message_area_leave: any;         // message text of invalid input data
+  public validation_area_kitchen: any = true; // flag of variable (valid input data or not)
+  public message_area_kitchen: any;         // message text of invalid input data
+  public validation_storey: any = true; // flag of variable (valid input data or not)
+  public message_storey: any;         // message text of invalid input data
+  public validation_storeys: any = true; // flag of variable (valid input data or not)
+  public message_storeys: any;         // message text of invalid input data
+  public validation_price: any = true; // flag of variable (valid input data or not)
+  public message_price: any;         // message text of invalid input data
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -168,7 +189,10 @@ export class SaleModificateModerationComponent implements OnInit {
 
           });
 
+          this.selectCities.push({label: this.sale.location.city.title, value: '' + this.sale.location.city.id});
+
         } else {
+          this.selectCities = [];
           /*if (this.access.sales_create === false) {
            this.router.navigate(['/403']);
          }*/
@@ -193,7 +217,6 @@ export class SaleModificateModerationComponent implements OnInit {
     this.getAllLabels();
     this.getAllLocations();
     this.getRegions();
-    this.getCities(this.sale.location.city.district_country.region.id);
     this.getStreets(this.sale.location.city.id);
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
@@ -212,30 +235,33 @@ export class SaleModificateModerationComponent implements OnInit {
 
     this.sale.photo_reclame = this.upload_photo;
 
-    if (this.sale.id !== 0) {
-      this.saleService.returnModeration(this.sale).subscribe(
-        data => {
-          if (data) {
-            this.message('Объект перенесен в общую базу', false);
-            this.router.navigate(['sales/moderation']);
-          } else {
-            this.message('Не удалось перенести объект!', true);
+    if (this.validation() === true) {
 
-            this.sale.contract_from = new NgbDateFRParserFormatter().parse('' + this.sale.contract_from);
-            this.sale.contract_to = new NgbDateFRParserFormatter().parse('' + this.sale.contract_to);
-          }
-        },
-        error => {
-          if (error.status === 401) {
-            this.router.navigate(['']);
-          } else {
-            this.message('Ошибка!', true);
+      if (this.sale.id !== 0) {
+        this.saleService.returnModeration(this.sale).subscribe(
+          data => {
+            if (data) {
+              this.message('Объект перенесен в общую базу', false);
+              this.router.navigate(['sales/moderation']);
+            } else {
+              this.message('Не удалось перенести объект!', true);
 
-            this.sale.contract_from = new NgbDateFRParserFormatter().parse('' + this.sale.contract_from);
-            this.sale.contract_to = new NgbDateFRParserFormatter().parse('' + this.sale.contract_to);
+              this.sale.contract_from = new NgbDateFRParserFormatter().parse('' + this.sale.contract_from);
+              this.sale.contract_to = new NgbDateFRParserFormatter().parse('' + this.sale.contract_to);
+            }
+          },
+          error => {
+            if (error.status === 401) {
+              this.router.navigate(['']);
+            } else {
+              this.message('Ошибка!', true);
+
+              this.sale.contract_from = new NgbDateFRParserFormatter().parse('' + this.sale.contract_from);
+              this.sale.contract_to = new NgbDateFRParserFormatter().parse('' + this.sale.contract_to);
+            }
           }
-        }
-      );
+        );
+      }
     }
   }
 
@@ -273,13 +299,19 @@ export class SaleModificateModerationComponent implements OnInit {
     });
   }
 
-  getCities(region = 0) {
-    this.locationService.getCities(region).subscribe((options) => {
+  getCities(region = 0, district_rb: any = 0, title = '') {
+    /* добавить в массив по фильтру более 3 символов*/
+    if (title.length > 2) {
+      this.locationService.getCities(region, district_rb, title).subscribe((options) => {
+        this.selectCities = [];
+
+        for (let i = 0; i < options.length; i++) {
+          this.selectCities.push({label: options[i].title, value: '' + options[i].id});
+        }
+      });
+    } else {
       this.selectCities = [];
-      for (let i = 0; i < options.length; i++) {
-        this.selectCities.push({label: options[i].title, value: '' + options[i].id});
-      }
-    });
+    }
   }
 
   getStreets(city = 0, district = 0, microdistrict = 0) {
@@ -292,10 +324,6 @@ export class SaleModificateModerationComponent implements OnInit {
         this.selectStreets.push({label: options[i].title, value: '' + options[i].id});
       }
     });
-  }
-
-  city(option: IOption) {
-    this.getCities(+`${option.value}`);
   }
 
   street(option: IOption) {
@@ -433,6 +461,161 @@ export class SaleModificateModerationComponent implements OnInit {
     //  console.log(this.upload_photo);
     this.sale.photo_reclame = this.upload_photo;
   }
+
+  /* Валидация */
+  validationRegion(): boolean {
+    console.log(this.sale.location.city.district_country.region);
+    if (this.sale.location.city.district_country.region.id) {
+      this.validation_region = true;
+      this.message_region = '';
+
+      return true;
+    } else {
+      this.validation_region = false;
+      this.message_region = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationCity(): boolean {
+    if (this.sale.location.city.id) {
+      this.validation_city = true;
+      this.message_city = '';
+
+      return true;
+    } else {
+      this.validation_city = false;
+      this.message_city = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationHouse(): boolean {
+    if (+this.sale.location.house > 0) {
+      this.validation_house = true;
+      this.message_house = '';
+
+      return true;
+    } else {
+      this.validation_house = false;
+      this.message_house = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationRoom(): boolean {
+    if (this.sale.room > 0) {
+      this.validation_room = true;
+      this.message_room = '';
+
+      return true;
+    } else {
+      this.validation_room = false;
+      this.message_room = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationArea(): boolean {
+    if (this.sale.area > 0) {
+      this.validation_area = true;
+      this.message_area = '';
+
+      return true;
+    } else {
+      this.validation_area = false;
+      this.message_area = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationAreaLeave(): boolean {
+    if (this.sale.area_leave > 0) {
+      this.validation_area_leave = true;
+      this.message_area_leave = '';
+
+      return true;
+    } else {
+      this.validation_area_leave = false;
+      this.message_area_leave = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationAreaKitchen(): boolean {
+    if (this.sale.area_kitchen > 0) {
+      this.validation_area_kitchen = true;
+      this.message_area_kitchen = '';
+
+      return true;
+    } else {
+      this.validation_area_kitchen = false;
+      this.message_area_kitchen = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationStorey(): boolean {
+    if (this.sale.storey > 0) {
+      this.validation_storey = true;
+      this.message_storey = '';
+
+      return true;
+    } else {
+      this.validation_storey = false;
+      this.message_storey = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationStoreys(): boolean {
+    if (this.sale.storeys > 0) {
+      this.validation_storeys = true;
+      this.message_storeys = '';
+
+      return true;
+    } else {
+      this.validation_storeys = false;
+      this.message_storeys = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validationPrice(): boolean {
+    if (this.sale.price > 0) {
+      this.validation_price = true;
+      this.message_price = '';
+
+      return true;
+    } else {
+      this.validation_price = false;
+      this.message_price = 'Обязательное поле';
+
+      return false;
+    }
+  }
+
+  validation(): boolean {
+
+    if (this.validationRegion() === true && this.validationCity() === true && this.validationHouse() === true && this.validationRoom() === true
+      && this.validationArea() === true && this.validationAreaLeave() === true
+      && this.validationAreaKitchen() === true && this.validationStorey() === true && this.validationStoreys() === true
+      && this.validationPrice() === true) {
+      return true;
+    }
+    return false;
+  }
+
+  /*  Конец валидации */
 
 
 }

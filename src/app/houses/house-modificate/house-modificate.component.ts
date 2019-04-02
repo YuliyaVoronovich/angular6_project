@@ -472,7 +472,7 @@ export class HouseModificateComponent implements OnInit {
               // создание заявки если была введена неизвестная улица или автоматическая заявка
               // (новый дом на улице или в городе нет улицы - создана новая локация)
               if (this.house.location.street.id === 0 || data.new_location === true) {
-                  this.sendRequest(data.location_id);
+                this.sendRequest(data.location_id);
               }
             } else {
               this.message('Не удалось создать объект!', true);
@@ -583,11 +583,19 @@ export class HouseModificateComponent implements OnInit {
 
       return true;
     } else {
-      this.validation_area = false;
-      this.message_area = 'Обязательное поле';
+      if (!this.arrayTypes[119]) { // если не выбран участок
+        this.validation_area = false;
+        this.message_area = 'Обязательное поле';
 
-      return false;
+        return false;
+      } else {
+        this.validation_area = true;
+        this.message_area = '';
+
+        return true;
+      }
     }
+
   }
 
   validationAreaLand(): boolean {
@@ -635,7 +643,8 @@ export class HouseModificateComponent implements OnInit {
   validation(): boolean {
 
     if (this.validationRegion() === true && this.validationDistrict() && this.validationCity() === true
-      && this.validationAreaLand() === true && this.validationArea() === true && this.validationType() === true && this.validationPrice() === true) {
+      && this.validationType() === true && this.validationAreaLand() === true && this.validationArea() === true
+      && this.validationPrice() === true) {
       return true;
     }
     return false;

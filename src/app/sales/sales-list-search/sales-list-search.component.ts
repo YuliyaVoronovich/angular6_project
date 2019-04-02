@@ -180,7 +180,7 @@ export class SalesListSearchComponent implements OnInit {
 
   getCities (region: any = 0, district_rb: any = 0, title = '') {
 
-    /* добавить в массив по фильтру более 2 символов*/
+    /* добавить в массив по фильтру более 3 символов*/
     if (title.length > 2) {
       this.locationService.getCities(region, district_rb, title).subscribe((options) => {
         this.cities = [];
