@@ -8,6 +8,13 @@ import {Company} from '../../_models/Company.model';
 import {CompanyService} from '../../_services/company.service';
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
+import {LoginService} from '../../_services/login.service';
+import {User} from '../../_models/User.model';
+import {UserInformation} from '../../_models/UserInformation.model';
+import {UserService} from '../../_services/user.service';
+import {SharedService} from '../../_services/shared.service';
+
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-sales-list-search',
@@ -18,6 +25,8 @@ import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
 export class SalesListSearchComponent implements OnInit {
 
   @Output() changed = new EventEmitter();
+
+  public subscription: Subscription;
 
   public regions: Array<IOption> = [
     {label: '', value: ''}
@@ -71,6 +80,11 @@ export class SalesListSearchComponent implements OnInit {
   public sales: Label[] = [];
 
   public companies: Company[] = [];
+  public users: User[] = [];
+
+  public user: User = new User(0, '', '', null, null, null, '', 0,
+    null, null, false, null, null, '', null, null, null);
+  public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
 
   public rooms = [
     {label: 'К', value: '0'},
@@ -85,26 +99,36 @@ export class SalesListSearchComponent implements OnInit {
   public arraySales = [];
   public arrayRepairs = [];
 
-  public created_from;
-  public created_to;
-  public updated_from;
-  public updated_to;
 
   public search = new SearchSaleModel({'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0},
     {'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0}, '', '', null,
     null, null, null, [], '', '', '', '', '', '',
     '', '', '', '', '', '', {'values': false, 'except': 0}, {'values': false, 'except': 0},
-    '', '', '', '', '', '', '', '', [], [], [], false, false,
+    '', '', '', '', '', '', '', '', '', [], [], [], false, false,
     false, false, false, false, false);
+
+  public search_user = {
+    'company': 0
+  };
 
 
   constructor(private locationService: LocationService,
               private labelsService: LabelService,
-              private companyService: CompanyService
+              private companyService: CompanyService,
+              private loginService: LoginService,
+              private userService: UserService,
+              private sharedService: SharedService
   ) {
+    this.subscription = sharedService.changeEmitted$2.subscribe(data => {
+      this.user = data;
+    });
   }
 
   ngOnInit() {
+    this.loginService.detailsUser().subscribe(data => {
+      this.user = data.user;
+      this.getUsers();
+    });
     this.getRegions();
     this.getDistrictsRb();
     this.getCitiesInitializate();
@@ -125,7 +149,7 @@ export class SalesListSearchComponent implements OnInit {
       {'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0}, '', '', null,
       null, null, null, [], '', '', '', '', '', '',
       '', '', '', '', '', '', '', '', '', '',
-      '', '', '', '', '', '', [], [], [], false, false, false,
+      '', '', '', '', '', '', '', [], [], [], false, false, false,
       false, false, false, false);
     this.arrayRooms = [];
     this.arrayWalls = [];
@@ -263,6 +287,19 @@ export class SalesListSearchComponent implements OnInit {
     return this.companyService.getCompanies().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
         this.companies.push(data[i]);
+      }
+    });
+  }
+  getUsers() {
+
+    this.search_user['company'] = this.user.company.id;
+
+    return this.userService.getUsersWithoutAccess(this.search_user).subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].user_information === null) {
+          data[i].user_information = this.user_information;
+        }
+        this.users.push(data[i]);
       }
     });
   }

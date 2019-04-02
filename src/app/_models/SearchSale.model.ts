@@ -32,6 +32,7 @@ export class SearchSaleModel {
     public last_storey: any,
     public furniture: string,
     public company: string,
+    public users: string,
     public year_from: string,
     public year_to: string,
     public year_repair_from: string,

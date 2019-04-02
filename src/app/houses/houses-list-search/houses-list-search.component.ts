@@ -6,6 +6,12 @@ import {IOption} from 'ng-select';
 import {Company} from '../../_models/Company.model';
 import {SearchHouseModel} from '../../_models/SearchHouse.model';
 import {Label} from '../../_models/Label.model';
+import {UserService} from '../../_services/user.service';
+import {LoginService} from '../../_services/login.service';
+import {SharedService} from '../../_services/shared.service';
+import {Subscription} from 'rxjs';
+import {User} from '../../_models/User.model';
+import {UserInformation} from '../../_models/UserInformation.model';
 
 @Component({
   selector: 'app-houses-list-search',
@@ -15,6 +21,8 @@ import {Label} from '../../_models/Label.model';
 export class HousesListSearchComponent implements OnInit {
 
   @Output() changed = new EventEmitter();
+
+  public subscription: Subscription;
 
   public regions: Array<IOption> = [
     {label: '', value: ''}
@@ -74,6 +82,12 @@ export class HousesListSearchComponent implements OnInit {
   public water: Label[] = [];
 
   public companies: Company[] = [];
+  public users: User[] = [];
+
+  public user: User = new User(0, '', '', null, null, null, '', 0,
+    null, null, false, null, null, '', null, null, null);
+  public user_information: UserInformation = new UserInformation(0, '', '', '', '', '', '', null, []);
+
 
   public arrayTypes = [];
   public arrayWalls = [];
@@ -88,16 +102,30 @@ export class HousesListSearchComponent implements OnInit {
     {'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0},
     {'values': [], 'except': 0}, '', null, null, null, null,
     '', '', '', '', '', '', '', '',
-    '', '', [], [], [], [], '', '', [], [],
+    '', '', [], [], [], [], '', '', '', [], [],
     [], [],  false, false, false, false, false, false, false);
+
+  public search_user = {
+    'company': 0
+  };
 
   constructor(private locationService: LocationService,
               private labelsService: LabelService,
-              private companyService: CompanyService
+              private companyService: CompanyService,
+              private loginService: LoginService,
+              private userService: UserService,
+              private sharedService: SharedService
   ) {
+    this.subscription = sharedService.changeEmitted$2.subscribe(data => {
+      this.user = data;
+    });
   }
 
   ngOnInit() {
+    this.loginService.detailsUser().subscribe(data => {
+      this.user = data.user;
+      this.getUsers();
+    });
     this.getRegions();
     this.getDistrictsRb();
     this.getCitiesInitializate();
@@ -117,7 +145,7 @@ export class HousesListSearchComponent implements OnInit {
       {'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0},
       {'values': [], 'except': 0}, '', null, null, null, null,
       '', '', '', '', '', '', '', '',
-      '', '', [], [], [], [], '', '', [], [],
+      '', '', [], [], [], [], '', '', '', [], [],
       [], [],  false, false, false, false, false, false, false);
 
   }
@@ -240,6 +268,20 @@ export class HousesListSearchComponent implements OnInit {
     return this.companyService.getCompanies().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
         this.companies.push(data[i]);
+      }
+    });
+  }
+
+  getUsers() {
+
+    this.search_user['company'] = this.user.company.id;
+
+    return this.userService.getUsersWithoutAccess(this.search_user).subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].user_information === null) {
+          data[i].user_information = this.user_information;
+        }
+        this.users.push(data[i]);
       }
     });
   }

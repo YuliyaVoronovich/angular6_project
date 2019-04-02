@@ -341,13 +341,22 @@
         <div class="col-12">
           <div class="form-group">
             <div class="search ng-select-without-icon">
-              <label class="label text-left">Агентство</label>
-              <select [(ngModel)]="search.company">
-                <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
-              </select>
+              <ng-container *ngIf="user.access === 4 ">
+                <label class="label text-left">Агентство</label>
+                <select [(ngModel)]="search.company">
+                  <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
+                </select>
+              </ng-container>
+              <ng-container *ngIf="user.access !== 4 ">
+                <label class="label text-left">Сотрудник</label>
+                <select [(ngModel)]="search.users">
+                  <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}} {{one.user_information.name}}</option>
+                </select>
+              </ng-container>
             </div>
           </div>
         </div>
+
       </div>
 
     </div>

@@ -29,6 +29,7 @@ export class SearchHouseModel {
     public sewage: any,
     public sales: any,
     public company: string,
+    public users: string,
     public year: string,
     public repairs: any,
     public heating: any,
