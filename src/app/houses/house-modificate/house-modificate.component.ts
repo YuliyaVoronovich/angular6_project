@@ -192,6 +192,10 @@ export class HouseModificateComponent implements OnInit {
 
           });
 
+          this.selectCities.push({label: this.house.location.city.title, value: '' + this.house.location.city.id});
+
+        } else {
+          this.selectCities = [];
         }
       });
 
@@ -216,7 +220,7 @@ export class HouseModificateComponent implements OnInit {
 
     this.getRegions();
     this.getDistrictsRb(this.house.location.city.district_country.region.id);
-    this.getCities(this.house.location.city.district_country.id);
+   // this.getCities(this.house.location.city.district_country.id);
     this.getStreets(this.house.location.city.id);
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
@@ -269,13 +273,19 @@ export class HouseModificateComponent implements OnInit {
     });
   }
 
-  getCities(district = 0) {
-    this.locationService.getCities(0, district).subscribe((options) => {
+  getCities(region = 0, district_rb: any = 0, title = '') {
+    /* добавить в массив по фильтру более 3 символов*/
+    if (title.length > 2) {
+      this.locationService.getCities(region, district_rb, title).subscribe((options) => {
+        this.selectCities = [];
+
+        for (let i = 0; i < options.length; i++) {
+          this.selectCities.push({label: options[i].title, value: '' + options[i].id});
+        }
+      });
+    } else {
       this.selectCities = [];
-      for (let i = 0; i < options.length; i++) {
-        this.selectCities.push({label: options[i].title, value: '' + options[i].id});
-      }
-    });
+    }
   }
 
   getStreets(city = 0, district = 0, microdistrict = 0) {
@@ -293,10 +303,10 @@ export class HouseModificateComponent implements OnInit {
   district_rb(option: IOption) {
     this.getDistrictsRb(+`${option.value}`);
   }
-
+/*
   city(option: IOption) {
     this.getCities(+`${option.value}`);
-  }
+  }*/
 
   street(option: IOption) {
     this.getStreets(+`${option.value}`);

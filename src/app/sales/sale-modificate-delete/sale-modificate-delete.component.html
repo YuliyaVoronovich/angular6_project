@@ -42,10 +42,19 @@
                 <ng-select [options]="selectRegions"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.district_country.region.id"
-                           (selected)="validationRegion()"
+                           (selected)="district_rb($event); validationRegion()"
                            (deselected)="validationRegion()">
                 </ng-select>
                 <small *ngIf="validation_region === false" class="form-text text-danger">{{message_region}}</small>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-5 col-form-label text-left required">Район РБ<span>*</span></label>
+              <div class="col-7">
+                <ng-select [options]="selectDistrictsRb"
+                           [allowClear]="true"
+                           [(ngModel)]="''+ sale.location.city.district_country.id">
+                </ng-select>
               </div>
             </div>
             <div class="form-group row">
@@ -802,13 +811,13 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Телефон1</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone1">
+                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone1" (keypress)="keyPressNumber($event);">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Телефон2</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone2">
+                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone2" (keypress)="keyPressNumber($event);">
               </div>
             </div>
             <div class="form-group row">

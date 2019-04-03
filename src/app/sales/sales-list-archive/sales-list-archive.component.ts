@@ -161,7 +161,6 @@ export class SalesListArchiveComponent implements OnInit, OnDestroy {
         data[i].location.street = this.locationService.setStreet(data[i].location.street);
         data[i].location.metro = this.locationService.setMetro(data[i].location.metro);
 
-      //  data[i].text = data[i].text.replace(new RegExp('&quot;', 'gm'), '"');
         // цена за метр
         if (data[i].area !== null && data[i].area !== 0) {
           data[i].price_sqr = Math.floor(+data[i].price / +data[i].area);

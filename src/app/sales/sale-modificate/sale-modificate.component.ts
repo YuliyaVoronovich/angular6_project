@@ -42,6 +42,10 @@ export class SaleModificateComponent implements OnInit {
     {label: '', value: ''}
   ];
 
+  public selectDistrictsRb: Array<IOption> = [
+    {label: '', value: ''}
+  ];
+
   public selectCities: Array<IOption> = [
     {label: '', value: ''}
   ];
@@ -165,10 +169,6 @@ export class SaleModificateComponent implements OnInit {
     }
   }
 
-  setNgbDate() {
-
-  }
-
   ngOnInit() {
     this.route.params.subscribe(
       params => {
@@ -225,7 +225,7 @@ export class SaleModificateComponent implements OnInit {
     this.getAllLabels();
     this.getAllLocations();
     this.getRegions();
-
+    this.getDistrictsRb(this.sale.location.city.district_country.region.id);
     this.getStreets(this.sale.location.city.id);
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
@@ -346,6 +346,15 @@ export class SaleModificateComponent implements OnInit {
     });
   }
 
+  getDistrictsRb(region = 0) {
+    this.locationService.getDistrictsRb(region).subscribe((options) => {
+      this.selectDistrictsRb = [];
+      for (let i = 0; i < options.length; i++) {
+        this.selectDistrictsRb.push({label: options[i].title, value: '' + options[i].id});
+      }
+    });
+  }
+
   getCities(region = 0, district_rb: any = 0, title = '') {
     /* добавить в массив по фильтру более 3 символов*/
     if (title.length > 2) {
@@ -371,6 +380,10 @@ export class SaleModificateComponent implements OnInit {
         this.selectStreets.push({label: options[i].title, value: '' + options[i].id});
       }
     });
+  }
+
+  district_rb(option: IOption) {
+    this.getDistrictsRb(+`${option.value}`);
   }
 
   street(option: IOption) {

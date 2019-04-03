@@ -68,7 +68,9 @@
                              [allowClear]="true"
                              placeholder="Нас. пункт"
                              (selected)="street($event);getLocation($event);validationCity()"
-                             (deselected)="validationCity()">>
+                             (deselected)="validationCity()"
+                             (filterInputChanged)="getCities(house.location.city.district_country.region.id, this.house.location.city.district_country.id, $event)"
+                             notFoundMsg="Введите не менее 3-х символов">
                   </ng-select>
                   <small *ngIf="validation_city === false" class="form-text text-danger">{{message_city}}</small>
                 </div>
@@ -702,14 +704,14 @@
 
                 <div class="col-12">
                   <div class="form-group label">
-                    <input class="form-control" [(ngModel)]="house.cont_phone1" placeholder=" ">
+                    <input class="form-control" [(ngModel)]="house.cont_phone1" placeholder=" " (keypress)="keyPressNumber($event);">
                     <span>Телефон собственника 1</span>
                   </div>
                 </div>
 
                 <div class="col-12">
                   <div class="form-group label">
-                    <input class="form-control" [(ngModel)]="house.cont_phone2" placeholder=" ">
+                    <input class="form-control" [(ngModel)]="house.cont_phone2" placeholder=" " (keypress)="keyPressNumber($event);">
                     <span>Телефон собственника 2</span>
                   </div>
                 </div>

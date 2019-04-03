@@ -44,25 +44,21 @@ export class LocationService {
   getRegions() {
     return this.http.get(this.globals.url + this.uri + '/regions')
       .map((response: Response) => response.json().regions);
-    // .catch(this.handleError);
   }
 
   getDistrictsRb(region = 0) {
     return this.http.get(this.globals.url + this.uri + '/districts_rb', {search: {'region': region}})
       .map((response: Response) => response.json().districts_rb);
-    // .catch(this.handleError);
   }
 
   getCities(region = 0, district = 0, title = '') {
     return this.http.get(this.globals.url + this.uri + '/cities', {search: {'region': region, 'district': district, 'title': title}})
       .map((response: Response) => response.json().cities);
-    // .catch(this.handleError);
   }
 
   getDistricts(city = 0) {
     return this.http.get(this.globals.url + this.uri + '/districts', {search: {'city': city}})
       .map((response: Response) => response.json().districts);
-    // .catch(this.handleError);
   }
 
   getMicroDistricts(city = 0, district = 0) {
@@ -73,7 +69,6 @@ export class LocationService {
       }
     })
       .map((response: Response) => response.json().microdistricts);
-    // .catch(this.handleError);
   }
 
   getStreets(city = 0, district = 0, microdistrict = 0, title = '') {
@@ -86,13 +81,11 @@ export class LocationService {
       }
     })
       .map((response: Response) => response.json().streets);
-    // .catch(this.handleError);
   }
 
   getDirections() {
     return this.http.get(this.globals.url + this.uri + '/directions')
       .map((response: Response) => response.json().directions);
-    // .catch(this.handleError);
   }
 
   rotateCoordinates(coordinates) {
