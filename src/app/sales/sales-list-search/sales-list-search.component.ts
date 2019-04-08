@@ -111,6 +111,7 @@ export class SalesListSearchComponent implements OnInit {
     'company': 0
   };
 
+  public showStreet = false;
 
   constructor(private locationService: LocationService,
               private labelsService: LabelService,
@@ -345,6 +346,9 @@ export class SalesListSearchComponent implements OnInit {
     this.getDistricts(this.citiesSearch);
   //  this.getStreets(this.citiesSearch, 0, 0);
 
+    this.showStreet = true;
+
+
   }
 
   deselectDistrict(option: IOption) {
@@ -355,6 +359,8 @@ export class SalesListSearchComponent implements OnInit {
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
   //  this.getStreets(this.citiesSearch, 0, 0);
+
+    this.showStreet = false;
 
   }
 

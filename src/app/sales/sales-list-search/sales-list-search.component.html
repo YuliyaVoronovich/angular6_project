@@ -16,8 +16,11 @@
           </div>
         </div>
         <div class="col-6 my-col-sm-12">
+          <div class="form-group" [hidden]="showStreet">
+            <input class="form-control" type="text" placeholder="Улица" disabled>
+          </div>
 
-          <div class="form-group">
+          <div class="form-group" [hidden]="!showStreet">
             <ng-select [options]="streets"
                        [(ngModel)]="search.street.values"
                        [multiple]="true"
@@ -172,7 +175,11 @@
 
 
         <div class="col-12">
-          <div class="form-group">
+          <div class="form-group" [hidden]="showStreet">
+            <input class="form-control" type="text" placeholder="Улица" disabled>
+          </div>
+
+          <div class="form-group" [hidden]="!showStreet">
             <div class="search">
               <label class="label text-left">Улица</label>
               <ng-select [options]="streets"

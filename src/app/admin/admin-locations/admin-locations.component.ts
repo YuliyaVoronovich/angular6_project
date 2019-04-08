@@ -292,7 +292,7 @@ export class AdminLocationsComponent implements OnInit {
   getStreets(city = 0, district = 0, microdistrict = 0) {
     this.streetsSelect = [];
 
-    if (city = 0) {
+    if (city === 0) {
       this.streetsSelect = [];
     } else {
 
