@@ -36,45 +36,67 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
             <h3>Месторасположение</h3>
+
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">Область<span>*</span></label>
               <div class="col-7">
                 <ng-select [options]="selectRegions"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.district_country.region.id"
-                           (selected)="district_rb($event); validationRegion()"
-                           (deselected)="validationRegion()">
+                           (selected)="district_rb($event); setShowDistrictCountry(); validationRegion()"
+                           (deselected)="validationRegion(); unsetShowDistrictCountry()">
                 </ng-select>
                 <small *ngIf="validation_region === false" class="form-text text-danger">{{message_region}}</small>
               </div>
             </div>
+
+
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">Район РБ<span>*</span></label>
-              <div class="col-7">
+
+              <div class="col-7" [hidden]="show_district_country">
+                <input class="form-control" type="text" disabled>
+              </div>
+
+              <div class="col-7" [hidden]="!show_district_country">
                 <ng-select [options]="selectDistrictsRb"
                            [allowClear]="true"
-                           [(ngModel)]="''+ sale.location.city.district_country.id">
+                           [(ngModel)]="''+ sale.location.city.district_country.id"
+                           (selected)="setShowCity()"
+                           (deselected)="unsetShowCity(); unsetShowStreet()">
                 </ng-select>
               </div>
             </div>
+
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">Населенный
                 пункт<span>*</span></label>
-              <div class="col-7">
+
+              <div class="col-7" [hidden]="show_city">
+                <input class="form-control" type="text" disabled>
+              </div>
+
+              <div class="col-7" [hidden]="!show_city">
                 <ng-select [options]="selectCities"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.id"
-                           (selected)="street($event);getLocation($event);validationCity()"
-                           (deselected)="validationCity()"
+                           (selected)="street($event);getLocation($event);setShowStreet();validationCity()"
+                           (deselected)="unsetShowStreet();validationCity()"
                            (filterInputChanged)="getCities(sale.location.city.district_country.region.id, this.sale.location.city.district_country.id, $event)"
                            notFoundMsg="Введите не менее 3-х символов">
                 </ng-select>
                 <small *ngIf="validation_city === false" class="form-text text-danger">{{message_city}}</small>
               </div>
             </div>
+
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Улица</label>
-              <div class="col-7">
+
+              <div class="col-7" [hidden]="show_street">
+                <input class="form-control" type="text" disabled>
+              </div>
+
+              <div class="col-7" [hidden]="!show_street">
                 <ng-select [options]="selectStreets"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.street.id"
@@ -82,7 +104,6 @@
                            (noOptionsFound)="onNoOptionsFound($event)"
                            (filterInputChanged)="onFilterInputChanged($event)"
                            notFoundMsg="Введенная улица не найдена">
-
                 </ng-select>
                 <!-- Окно заявки на добавление улицы-->
                 <div class="{{displayRequest ? 'request' : 'none' }}">
@@ -131,13 +152,15 @@
               <label class="col-5 col-form-label text-left required">Номер
                 дома<span>*</span></label>
               <div class="col-2">
-                <input type="text" class="form-control" [(ngModel)]="sale.location.house" (change)="getInfoLocation()" (blur)="validationHouse()"
+                <input type="text" class="form-control" [(ngModel)]="sale.location.house" (change)="getInfoLocation()"
+                       (blur)="validationHouse()"
                        (keypress)="keyPressNumber($event);">
                 <small *ngIf="validation_house === false" class="form-text text-danger">{{message_house}}</small>
               </div>
               <label class="col-2 col-form-label text-left">Корпус</label>
               <div class="col-2">
-                <input type="text" class="form-control" [(ngModel)]="sale.location.housing" (change)="getInfoLocation()">
+                <input type="text" class="form-control" [(ngModel)]="sale.location.housing"
+                       (change)="getInfoLocation()">
               </div>
             </div>
             <div class="form-group row">
@@ -173,7 +196,7 @@
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
             <app-sale-modificate-map [sale]="sale" [movieMapMarker]="movieMapMarker"></app-sale-modificate-map>
-          <!--<div id="map" class="map"></div>-->
+            <!--<div id="map" class="map"></div>-->
           </div>
         </div>
       </div>
@@ -217,7 +240,8 @@
               <div class="col-6">
                 <input type="text" class="form-control" [(ngModel)]="sale.area_leave"
                        (keypress)="keyPressPoint($event);" (change)="validationAreaLeave()">
-                <small *ngIf="validation_area_leave === false" class="form-text text-danger">{{message_area_leave}}</small>
+                <small *ngIf="validation_area_leave === false" class="form-text text-danger">{{message_area_leave}}
+                </small>
               </div>
             </div>
             <div class="form-group row">
@@ -225,7 +249,9 @@
               <div class="col-6">
                 <input type="text" class="form-control" [(ngModel)]="sale.area_kitchen"
                        (keypress)="keyPressPoint($event);" (change)="validationAreaKitchen()">
-                <small *ngIf="validation_area_kitchen === false" class="form-text text-danger">{{message_area_kitchen}}</small>
+                <small *ngIf="validation_area_kitchen === false" class="form-text text-danger">
+                  {{message_area_kitchen}}
+                </small>
               </div>
             </div>
             <div class="form-group row">
@@ -852,13 +878,15 @@
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Телефон1</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone1" (keypress)="keyPressNumber($event);">
+                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone1"
+                       (keypress)="keyPressNumber($event);">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-5 col-form-label text-left">Телефон2</label>
               <div class="col-6">
-                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone2" (keypress)="keyPressNumber($event);">
+                <input type="text" class="form-control" [(ngModel)]="sale.cont_phone2"
+                       (keypress)="keyPressNumber($event);">
               </div>
             </div>
             <div class="form-group row">

@@ -36,45 +36,66 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
             <h3>Месторасположение</h3>
+
             <div class="form-group row">
-              <label class="col-5 col-form-label text-left">Область<span>*</span></label>
+              <label class="col-5 col-form-label text-left required">Область<span>*</span></label>
               <div class="col-7">
                 <ng-select [options]="selectRegions"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.district_country.region.id"
-                           (selected)="district_rb($event); validationRegion()"
-                           (deselected)="validationRegion()">
+                           (selected)="district_rb($event); setShowDistrictCountry(); validationRegion()"
+                           (deselected)="validationRegion(); unsetShowDistrictCountry()">
                 </ng-select>
                 <small *ngIf="validation_region === false" class="form-text text-danger">{{message_region}}</small>
               </div>
             </div>
+
             <div class="form-group row">
               <label class="col-5 col-form-label text-left required">Район РБ<span>*</span></label>
-              <div class="col-7">
+
+              <div class="col-7" [hidden]="show_district_country">
+                <input class="form-control" type="text" disabled>
+              </div>
+
+              <div class="col-7" [hidden]="!show_district_country">
                 <ng-select [options]="selectDistrictsRb"
                            [allowClear]="true"
-                           [(ngModel)]="''+ sale.location.city.district_country.id">
+                           [(ngModel)]="''+ sale.location.city.district_country.id"
+                           (selected)="setShowCity()"
+                           (deselected)="unsetShowCity(); unsetShowStreet()">
                 </ng-select>
               </div>
             </div>
+
             <div class="form-group row">
-              <label class="col-5 col-form-label text-left">Населенный
+              <label class="col-5 col-form-label text-left required">Населенный
                 пункт<span>*</span></label>
-              <div class="col-7">
+
+              <div class="col-7" [hidden]="show_city">
+                <input class="form-control" type="text" disabled>
+              </div>
+
+              <div class="col-7" [hidden]="!show_city">
                 <ng-select [options]="selectCities"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.id"
-                           (selected)="street($event);getLocation($event);validationCity()"
-                           (deselected)="validationCity()"
-                           (filterInputChanged)="getCities(sale.location.city.district_country.region.id, 0, $event)"
+                           (selected)="street($event);getLocation($event);setShowStreet();validationCity()"
+                           (deselected)="unsetShowStreet();validationCity()"
+                           (filterInputChanged)="getCities(sale.location.city.district_country.region.id, this.sale.location.city.district_country.id, $event)"
                            notFoundMsg="Введите не менее 3-х символов">
                 </ng-select>
                 <small *ngIf="validation_city === false" class="form-text text-danger">{{message_city}}</small>
               </div>
             </div>
+
             <div class="form-group row">
-              <label class="col-5 col-form-label text-left">Улица<span>*</span></label>
-              <div class="col-7">
+              <label class="col-5 col-form-label text-left">Улица</label>
+
+              <div class="col-7" [hidden]="show_street">
+                <input class="form-control" type="text" disabled>
+              </div>
+
+              <div class="col-7" [hidden]="!show_street">
                 <ng-select [options]="selectStreets"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.street.id"
@@ -82,7 +103,6 @@
                            (noOptionsFound)="onNoOptionsFound($event)"
                            (filterInputChanged)="onFilterInputChanged($event)"
                            notFoundMsg="Введенная улица не найдена">
-
                 </ng-select>
               </div>
             </div>

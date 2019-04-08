@@ -40,35 +40,43 @@
                   <ng-select [options]="selectRegions"
                              [(ngModel)]="''+ house.location.city.district_country.region.id"
                              [allowClear]="true"
-                             placeholder="Область"
-                             (selected)="district_rb($event); validationRegion()"
-                             (deselected)="validationRegion()">
+                             placeholder="Область*"
+                             (selected)="district_rb($event); setShowDistrictCountry(); validationRegion()"
+                             (deselected)="unsetShowDistrictCountry(); unsetShowCity(); unsetShowStreet();validationRegion()">
                   </ng-select>
                   <small *ngIf="validation_region === false" class="form-text text-danger">{{message_region}}</small>
                 </div>
               </div>
 
               <div class="col-12">
-                <div class="form-group">
+                <div class="form-group" [hidden]="show_district_country">
+                  <input class="form-control" type="text" placeholder="Район*" disabled>
+                </div>
+
+                <div class="form-group" [hidden]="!show_district_country">
                   <ng-select [options]="selectDistrictsRb"
                              [(ngModel)]="''+ house.location.city.district_country.id"
                              [allowClear]="true"
-                             placeholder="Район"
-                             (selected)="city($event); validationDistrict()"
-                             (deselected)="validationRegion()">
+                             placeholder="Район*"
+                             (selected)="setShowCity(); validationDistrict()"
+                             (deselected)="unsetShowCity(); unsetShowStreet(); validationRegion()">
                   </ng-select>
                   <small *ngIf="validation_district === false" class="form-text text-danger">{{message_district}}</small>
                 </div>
               </div>
 
               <div class="col-12">
-                <div class="form-group">
+                <div class="form-group" [hidden]="show_city">
+                  <input class="form-control" type="text" placeholder="Нас. пункт*" disabled>
+                </div>
+
+                <div class="form-group" [hidden]="!show_city">
                   <ng-select [options]="selectCities"
                              [(ngModel)]="''+ house.location.city.id"
                              [allowClear]="true"
-                             placeholder="Нас. пункт"
-                             (selected)="street($event);getLocation($event);validationCity()"
-                             (deselected)="validationCity()"
+                             placeholder="Нас. пункт*"
+                             (selected)="street($event);getLocation($event);setShowStreet();validationCity()"
+                             (deselected)="unsetShowStreet(); validationCity()"
                              (filterInputChanged)="getCities(house.location.city.district_country.region.id, this.house.location.city.district_country.id, $event)"
                              notFoundMsg="Введите не менее 3-х символов">
                   </ng-select>
@@ -77,15 +85,18 @@
               </div>
 
               <div class="col-12">
-                <div class="form-group">
+                <div class="form-group" [hidden]="show_street">
+                  <input class="form-control" type="text" placeholder="Улица" disabled>
+                </div>
+
+                <div class="form-group" [hidden]="!show_street">
                   <ng-select [options]="selectStreets"
                              [(ngModel)]="''+ house.location.street.id"
                              [allowClear]="true"
                              placeholder="Улица"
                              (selected)="getInfoLocation()"
                              (noOptionsFound)="onNoOptionsFound($event)"
-                             (filterInputChanged)="onFilterInputChanged($event)"
-                             notFoundMsg="Введенная улица не найдена">
+                             (filterInputChanged)="onFilterInputChanged($event)">
                   </ng-select>
                 </div>
               </div>

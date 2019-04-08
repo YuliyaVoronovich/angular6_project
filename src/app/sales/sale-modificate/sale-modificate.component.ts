@@ -107,6 +107,10 @@ export class SaleModificateComponent implements OnInit {
 
   public movieMapMarker = false;
 
+  public show_district_country = false;
+  public show_city = false;
+  public show_street = false;
+
   // валидация
   public validation_region: any = true; // flag of variable (valid input data or not)
   public message_region: any;         // message text of invalid input data
@@ -401,6 +405,30 @@ export class SaleModificateComponent implements OnInit {
         this.sale.location.city.district_country.region.id = region;
       }
     }
+  }
+
+  setShowDistrictCountry () {
+    this.show_district_country = true;
+  }
+
+  unsetShowDistrictCountry () {
+    this.show_district_country = false;
+  }
+
+  setShowCity () {
+    this.show_city = true;
+  }
+
+  unsetShowCity () {
+    this.show_city = false;
+  }
+
+  setShowStreet () {
+    this.show_street = true;
+  }
+
+  unsetShowStreet () {
+    this.show_street = false;
   }
 
   getInfoLocation() {

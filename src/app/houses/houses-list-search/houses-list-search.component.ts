@@ -109,6 +109,8 @@ export class HousesListSearchComponent implements OnInit {
     'company': 0
   };
 
+  public show_street = false;
+
   constructor(private locationService: LocationService,
               private labelsService: LabelService,
               private companyService: CompanyService,
@@ -249,6 +251,14 @@ export class HousesListSearchComponent implements OnInit {
         this.directions.push({label: options[i].title, value: '' + options[i].id});
       }
     });
+  }
+
+  setShowStreet () {
+    this.show_street = true;
+  }
+
+  unsetShowStreet () {
+    this.show_street = false;
   }
 
   getLabels() {

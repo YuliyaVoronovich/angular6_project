@@ -110,8 +110,7 @@ export class SalesListSearchComponent implements OnInit {
   public search_user = {
     'company': 0
   };
-
-  public showStreet = false;
+  public show_street = false;
 
   constructor(private locationService: LocationService,
               private labelsService: LabelService,
@@ -222,6 +221,7 @@ export class SalesListSearchComponent implements OnInit {
     } else {
       this.cities = [];
     }
+
   }
 
   getDistricts(city: any = 0) {
@@ -274,6 +274,14 @@ export class SalesListSearchComponent implements OnInit {
         this.streets.push({label: options[i].title, value: '' + options[i].id});
       }
     });*/
+  }
+
+  setShowStreet () {
+    this.show_street = true;
+  }
+
+  unsetShowStreet () {
+    this.show_street = false;
   }
 
   getLabels() {
@@ -339,15 +347,13 @@ export class SalesListSearchComponent implements OnInit {
 
   selectDistrict(option: IOption) {
 
-    this.cities_remember.push({label: `${option.label}`, value: '' + `${option.value}`}); // добавить выбранный город в массив, чтобы не потерялся при выборе следующего
+    // добавить выбранный город в массив, чтобы не потерялся при выборе следующего
+    this.cities_remember.push({label: `${option.label}`, value: '' + `${option.value}`});
 
     this.citiesSelected.push(`${option.value}`);
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
   //  this.getStreets(this.citiesSearch, 0, 0);
-
-    this.showStreet = true;
-
 
   }
 
@@ -359,8 +365,6 @@ export class SalesListSearchComponent implements OnInit {
     this.citiesSearch = JSON.stringify(this.citiesSelected);
     this.getDistricts(this.citiesSearch);
   //  this.getStreets(this.citiesSearch, 0, 0);
-
-    this.showStreet = false;
 
   }
 
@@ -380,7 +384,8 @@ export class SalesListSearchComponent implements OnInit {
   }
 
   selectStreets(option: IOption) {
-    this.streets_remember.push({label: `${option.label}`, value: '' + `${option.value}`}); // добавить выбранную улицу в массив, чтобы не потерялся при выборе следующего
+    // добавить выбранную улицу в массив, чтобы не потерялся при выборе следующего
+    this.streets_remember.push({label: `${option.label}`, value: '' + `${option.value}`});
   }
 
   deselectStreet(option: IOption) {
