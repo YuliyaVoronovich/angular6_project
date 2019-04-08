@@ -9,18 +9,13 @@
                        [(ngModel)]="search.district_rb.values"
                        [multiple]="true"
                        placeholder="Район РБ"
-                       (selected)="selectCities($event); setShowCity()"
-                       (deselected)="deselectCities($event); unsetShowCity()">
+                       (selected)="selectCities($event)"
+                       (deselected)="deselectCities($event)">
             </ng-select>
           </div>
         </div>
         <div class="col-6 my-col-sm-12">
-
-          <div class="form-group" [hidden]="show_city">
-            <input class="form-control" type="text" placeholder="Нас. пункт" disabled>
-          </div>
-
-          <div class="form-group" [hidden]="!show_city">
+          <div class="form-group">
             <ng-select [options]="cities"
                        [(ngModel)]="search.city.values"
                        [multiple]="true"
