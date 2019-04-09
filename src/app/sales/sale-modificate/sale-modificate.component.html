@@ -80,7 +80,7 @@
                 <ng-select [options]="selectCities"
                            [allowClear]="true"
                            [(ngModel)]="''+ sale.location.city.id"
-                           (selected)="street($event);getLocation($event);setShowStreet();validationCity()"
+                           (selected)="street($event);setShowStreet();validationCity()"
                            (deselected)="unsetShowStreet();validationCity()"
                            (filterInputChanged)="getCities(sale.location.city.district_country.region.id, this.sale.location.city.district_country.id, $event)"
                            notFoundMsg="Введите не менее 3-х символов">

@@ -107,9 +107,9 @@ export class SaleModificateComponent implements OnInit {
 
   public movieMapMarker = false;
 
-  public show_district_country = false;
-  public show_city = false;
-  public show_street = false;
+  public show_district_country = true;
+  public show_city = true;
+  public show_street = true;
 
   // валидация
   public validation_region: any = true; // flag of variable (valid input data or not)
@@ -394,7 +394,7 @@ export class SaleModificateComponent implements OnInit {
     this.getStreets(+`${option.value}`);
   }
 
-  getLocation(option: IOption) {
+/*  getLocation(option: IOption) {
 
     const district = this.cities.find(x => x.id === +`${option.value}`).district_id;
     if (district) {
@@ -405,7 +405,7 @@ export class SaleModificateComponent implements OnInit {
         this.sale.location.city.district_country.region.id = region;
       }
     }
-  }
+  }*/
 
   setShowDistrictCountry () {
     this.show_district_country = true;

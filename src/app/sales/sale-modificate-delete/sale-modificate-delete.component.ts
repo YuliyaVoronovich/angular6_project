@@ -105,9 +105,9 @@ export class SaleModificateDeleteComponent implements OnInit {
   public movieMapMarker = false;
   public noResultsTerm = '';
 
-  public show_district_country = false;
-  public show_city = false;
-  public show_street = false;
+  public show_district_country = true;
+  public show_city = true;
+  public show_street = true;
 
   // валидация
   public validation_region: any = true; // flag of variable (valid input data or not)
