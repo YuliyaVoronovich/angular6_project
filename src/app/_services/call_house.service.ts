@@ -38,4 +38,9 @@ export class CallHouseService {
       .map((response: Response) => response.json()
       );
   }
+  update(call: CallHouse) {
+    return this.http.put(this.globals.url + this.uri + '/' + call.id, JSON.stringify(call))
+      .map((response: Response) => response.json()
+      );
+  }
 }

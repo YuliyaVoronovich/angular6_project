@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {LocationService} from '../../_services/location.service';
 import {SharedService} from '../../_services/shared.service';
 import {LoginService} from '../../_services/login.service';
@@ -28,7 +28,7 @@ export class CallsListComponent implements OnInit, OnDestroy {
   public timer: any;
   public countClients; // если не придет информация с API
   public limit; // если не придет информация с API
-  public count_delete = 0;
+  public editRowId: any;
 
   public subscription: Subscription;
   public search = {
@@ -54,9 +54,11 @@ export class CallsListComponent implements OnInit, OnDestroy {
   public hideme = [];
   public activeTypes = null;
 
+  @ViewChild('myInput') inputEl: ElementRef;
+
   constructor(public dialog: MatDialog,
               private callService: CallService,
-              private route: Router,
+              private router: Router,
               private locationService: LocationService,
               private loginService: LoginService,
               private userService: UserService,
@@ -131,10 +133,10 @@ export class CallsListComponent implements OnInit, OnDestroy {
     }, error => {
       if (error.status === 401) {
         this.loginService.logout();
-        this.route.navigate(['/']);
+        this.router.navigate(['/']);
       }
       if (error.status === 403) {
-        this.route.navigate(['403']);
+        this.router.navigate(['403']);
       }
     });
   }
@@ -170,4 +172,37 @@ export class CallsListComponent implements OnInit, OnDestroy {
     this.getCalls();
   }
 
+  toggle(id) {
+    this.editRowId = id;
+    setTimeout(() => this.inputEl.nativeElement.focus(), 0);
+  }
+
+  change(call: CallSale) {
+    this.save(call);
+    this.editRowId = 0;
+  }
+
+  save(call: CallSale) {
+    console.log(call);
+
+    if (call.id !== 0) {
+      this.callService.update(call).subscribe(
+        data => {
+          if (data) {
+            this.message('Звонок обновлен', false);
+            this.router.navigate(['calls']);
+          } else {
+            this.message('Ошибка!', true);
+          }
+        },
+        error => {
+          if (error.status === 401) {
+            this.router.navigate(['']);
+          } else {
+            this.message('Ошибка!', true);
+          }
+        }
+      );
+    }
+  }
 }

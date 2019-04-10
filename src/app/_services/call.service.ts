@@ -39,4 +39,10 @@ export class CallService {
       );
   }
 
+  update(call: CallSale) {
+    return this.http.put(this.globals.url + this.uri + '/' + call.id, JSON.stringify(call))
+      .map((response: Response) => response.json()
+      );
+  }
+
 }

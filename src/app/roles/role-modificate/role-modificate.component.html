@@ -19,7 +19,15 @@
             <span class="category" [ngClass]="{'category_main' : permission.main}">{{permission.title}}</span>
           </div>
 
-          <div class="col-8">
+          <div class="col-md-5 col-8">
+            <ng-container *ngIf="provePermission(permission.id)">
+              <select class="form-control" (change)="onChange($event.target.value, permission.permissions)">
+                <option [value]="0"></option>
+                <option *ngFor="let item of permission.permissions" [value]="item.id" [selected]="role.array_permissions[item.id].check">{{item.title}}</option>
+              </select>
+            </ng-container>
+
+            <ng-container *ngIf="!provePermission(permission.id)">
             <div class="form-check {{role.array_permissions[item.id].label ? 'form-check-inline' : 'form-check' }}"
                  *ngFor="let item of permission.permissions">
 
@@ -30,6 +38,7 @@
                 {{ item.title}}
               </label>
             </div>
+            </ng-container>
           </div>
 
         </div>

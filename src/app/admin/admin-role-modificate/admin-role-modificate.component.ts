@@ -17,6 +17,8 @@ export class AdminRoleModificateComponent implements OnInit {
   public permissions: Permission[] = [];
   public timer: any;
 
+  public array_permission_selects = [31, 32, 33, 34];
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private loginService: LoginService,
@@ -53,6 +55,22 @@ export class AdminRoleModificateComponent implements OnInit {
 
         }
       });
+  }
+
+  provePermission (permission) {
+    return this.array_permission_selects.includes(permission);
+  }
+
+  onChange(value, permissions) {
+
+    if (value !== '0') {
+      this.role.array_permissions[value].check = true;
+    } else {
+      // снять все check у данной привиллегии
+      for (let i = 0; i < permissions.length; i++) {
+        this.role.array_permissions[permissions[i].id].check = false;
+      }
+    }
   }
 
   setAccessMain(role_now, item) {
