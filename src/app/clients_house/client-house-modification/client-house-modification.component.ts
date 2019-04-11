@@ -77,7 +77,7 @@ export class ClientHouseModificationComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false);
+    false, false, false, false);
 
   public price_sqr_from = '';
   public price_sqr_to = '';

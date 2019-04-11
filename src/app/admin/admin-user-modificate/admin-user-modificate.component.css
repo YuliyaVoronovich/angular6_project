@@ -1,8 +1,7 @@
+@import "../../../assets/css/main.css";
+
 .container {
   margin-top: 40px;
-}
-.invisible {
-  display: none;
 }
 .icon-top {
   vertical-align: top;
@@ -22,10 +21,4 @@
 }
 .permission:hover {
   color: #0074ca;
-}
-.myButton {
-  position: fixed;
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 0;
 }

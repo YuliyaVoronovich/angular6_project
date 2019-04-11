@@ -85,7 +85,7 @@ export class SaleModificateDeleteComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false);
+    false, false, false, false);
 
   public images: Photo [] = [];
   public upload_photo = [];

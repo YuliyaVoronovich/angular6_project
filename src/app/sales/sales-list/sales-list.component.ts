@@ -44,7 +44,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false);
+    false, false, false, false);
 
   public hideme = [];
   public hideme2 = [];

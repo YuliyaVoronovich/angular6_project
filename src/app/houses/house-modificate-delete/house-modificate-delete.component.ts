@@ -84,7 +84,7 @@ export class HouseModificateDeleteComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false);
+    false, false, false, false);
 
   public contract_from;
   public contract_to;

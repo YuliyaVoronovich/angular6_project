@@ -85,7 +85,7 @@ export class SaleModificateModerationComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false);
+    false, false, false, false);
 
   public images: Photo [] = [];
   public upload_photo = [];

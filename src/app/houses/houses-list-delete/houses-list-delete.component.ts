@@ -52,12 +52,11 @@ export class HousesListDeleteComponent implements OnInit, OnDestroy {
     '', '', [], [], [], [], '', '' , '', [], [],
     [], [], false, false, false, false, false, false, false);
 
-
   public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false);
+    false, false, false, false);
 
   public sort = {
     'field': 'created_at',

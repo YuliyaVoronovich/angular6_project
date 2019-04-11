@@ -377,6 +377,8 @@ export class AdminLocationsComponent implements OnInit {
           this.location.type_house = this.labelsService.setTypeHouse(null);
           this.location.year = 0;
           this.location.year_repair = 0;
+        } else {
+          this.message('Адрес найден', false);
         }
 
       });

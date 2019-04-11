@@ -33,7 +33,7 @@ export class SalesListDeleteComponent implements OnInit, OnDestroy {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false);
+    false, false, false, false);
 
   public hideme = [];
 

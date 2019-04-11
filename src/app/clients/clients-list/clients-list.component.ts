@@ -46,12 +46,11 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
     '', '', null, null, null, [], null, false, [], null);
 
-
   public access: AccessModel = new AccessModel(false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false);
+    false, false, false, false);
 
   public sort = {
     'field': 'updated_at',

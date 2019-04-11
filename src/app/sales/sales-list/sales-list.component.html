@@ -119,8 +119,8 @@
           <span *ngIf="user.access===4" [ngClass]="{'bold': sale.user.partner, 'cursor': sale.user.partner}"> {{sale.company.title}}</span>
           <span *ngIf="user.access!==4" [ngClass]="{'bold': sale.user.partner, 'cursor': sale.user.partner}"> {{sale.user.user_information.surname}} {{sale.user.user_information.name}}</span>
         </td>
-        <td *ngIf="access.sales_created">
-          {{sale.created_at | date: 'dd.MM.yyyy'}}
+        <td>
+          <span *ngIf="access.sales_created">{{sale.created_at | date: 'dd.MM.yyyy'}}</span>
         </td>
         <td>
           {{sale.updated_at | date: 'dd.MM.yyyy'}}
