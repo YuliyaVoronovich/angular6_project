@@ -11,6 +11,8 @@ export class SharedService {
   private emitChangeSource2 = new Subject<any>();
   // 3 Observable string sources
   private emitChangeSource3 = new Subject<any>();
+  // 4 Observable string sources
+  private emitChangeSource4 = new Subject<any>();
 
   // 1 Observable string streams
   changeEmitted$1 = this.emitChangeSource1.asObservable();
@@ -18,6 +20,8 @@ export class SharedService {
   changeEmitted$2 = this.emitChangeSource2.asObservable();
   // 3 Observable string streams
   changeEmitted$3 = this.emitChangeSource3.asObservable();
+  // 4 Observable string streams
+  changeEmitted$4 = this.emitChangeSource4.asObservable();
 
   // 1Service message commands
   emitChange(change: any) {
