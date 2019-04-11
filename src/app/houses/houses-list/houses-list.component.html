@@ -127,10 +127,10 @@
           <span *ngIf="user.access===4" [ngClass]="{'bold': house.user.partner, 'cursor': house.user.partner}"> {{house.company.title}}</span>
           <span *ngIf="user.access!==4" [ngClass]="{'bold': house.user.partner, 'cursor': house.user.partner}"> {{house.user.user_information.surname}} {{house.user.user_information.name}}</span>
         </td>
-        <td>
+        <td *ngIf="access.houses_created">
           {{house.created_at | date: 'dd.MM.yyyy'}}
         </td>
-        <td *ngIf="access.houses_created">
+        <td>
           {{house.updated_at | date: 'dd.MM.yyyy'}}
         </td>
         <td>

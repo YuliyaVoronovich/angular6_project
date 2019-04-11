@@ -107,9 +107,9 @@ export class SaleModificateComponent implements OnInit {
 
   public movieMapMarker = false;
 
-  public show_district_country = true;
-  public show_city = true;
-  public show_street = true;
+  public show_district_country = false;
+  public show_city = false;
+  public show_street = false;
 
   // валидация
   public validation_region: any = true; // flag of variable (valid input data or not)
@@ -200,6 +200,10 @@ export class SaleModificateComponent implements OnInit {
           });
 
           this.selectCities.push({label: this.sale.location.city.title, value: '' + this.sale.location.city.id});
+
+          this.show_district_country = true;
+          this.show_city = true;
+          this.show_street = true;
 
         } else {
           this.selectCities = [];

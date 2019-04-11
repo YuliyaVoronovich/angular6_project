@@ -13,7 +13,7 @@
       <th>Примечание</th>
       <th *ngIf="user.access===4">Агентство</th>
       <th *ngIf="user.access!==4">Сотрудник</th>
-      <th>
+      <th *ngIf="access.clients_created">
         <div class="nobr cursor" style="width: 100%"
              [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
              (click)="changeSort('created_at', 'DESC')">
@@ -89,7 +89,7 @@
         <td>{{client.description }}</td>
         <td *ngIf="user.access===4">{{client.company.title}}</td>
         <td *ngIf="user.access!==4">{{client.user.user_information.surname}} {{client.user.user_information.name}}</td>
-        <td>
+        <td *ngIf="access.clients_created">
           {{client.created_at | date: 'dd.MM.yyyy'}}
         </td>
         <td>
