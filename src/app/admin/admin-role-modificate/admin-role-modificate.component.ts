@@ -63,13 +63,12 @@ export class AdminRoleModificateComponent implements OnInit {
 
   onChange(value, permissions) {
 
+    // снять все check у данной привиллегии
+    for (let i = 0; i < permissions.length; i++) {
+      this.role.array_permissions[permissions[i].id].check = false;
+    }
     if (value !== '0') {
       this.role.array_permissions[value].check = true;
-    } else {
-      // снять все check у данной привиллегии
-      for (let i = 0; i < permissions.length; i++) {
-        this.role.array_permissions[permissions[i].id].check = false;
-      }
     }
   }
 
