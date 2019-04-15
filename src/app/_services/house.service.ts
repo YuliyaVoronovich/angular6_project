@@ -67,7 +67,7 @@ export class HouseService {
       .map((response: Response) => response.json());
   }
 
-  delete(house: House | number){
+  delete(house: House | number) {
     const id = typeof house === 'number' ? house : house.id;
     return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(house))
       .map((response: Response) => response.json());
