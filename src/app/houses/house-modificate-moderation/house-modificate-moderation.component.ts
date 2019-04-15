@@ -451,6 +451,7 @@ export class HouseModificateModerationComponent implements OnInit {
             if (data) {
               this.message('Объект перенесен в общую базу', false);
               this.router.navigate(['houses/moderation']);
+              this.sharedService.emitChange4(); // обновление модерации в меню
 
             } else {
               this.message('Не удалось перенести объект!', true);

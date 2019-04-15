@@ -221,8 +221,15 @@ export class HousesListComponent implements OnInit, OnDestroy {
   delete(house: House): void {
     this.houseService.delete(house).subscribe(
       data => {
-        if (data.status === 200) {
-          this.message('Объект удален', false);
+        if (data) {
+
+          if (data.house.delete_moderation)  {
+            this.message('Объект отправлен в удаленные', false);
+            this.sharedService.emitChange4(); // обновление модерации в меню
+          } else {
+            this.message('Объект успешно удален', false);
+          }
+
           this.hideme3 = []; // скрыть окно действий
           this.count_delete++;
           if (this.count_delete > 5) {// перезагрузить объекты, если удалено больше 5 подряд

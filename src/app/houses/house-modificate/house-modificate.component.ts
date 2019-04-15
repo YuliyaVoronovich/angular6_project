@@ -478,7 +478,14 @@ export class HouseModificateComponent implements OnInit {
           data => {
 
             if (data) {
-              this.message('Объект успешно обновлен', false);
+
+              if (data.house.moderation)  {
+                this.message('Объект отправлен на модерацию', false);
+                this.sharedService.emitChange4(); // обновление модерации в меню
+              } else {
+                this.message('Объект успешно обновлен', false);
+              }
+
               this.router.navigate(['houses']);
               // создание заявки если была введена неизвестная улица или автоматическая заявка
               // (новый дом на улице или в городе нет улицы - создана новая локация)
@@ -507,7 +514,14 @@ export class HouseModificateComponent implements OnInit {
         this.houseService.create(this.house).subscribe(
           data => {
             if (data) {
-              this.message('Объект успешно создан', false);
+
+              if (data.house.moderation)  {
+                this.message('Объект отправлен на модерацию', false);
+                this.sharedService.emitChange4(); // обновление модерации в меню
+              } else {
+                this.message('Объект успешно создан', false);
+              }
+
               this.router.navigate(['houses']);
 
               this.idSaleRequest = data.house.id; // id созданного house

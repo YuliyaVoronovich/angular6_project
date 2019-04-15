@@ -32,6 +32,14 @@ export class SharedService {
     this.emitChangeSource2.next(change);
   }
 
+  emitChange3() {
+    this.emitChangeSource3.next();
+  }
+
+  emitChange4() {
+    this.emitChangeSource4.next();
+  }
+
   constructor() {
   }
 }

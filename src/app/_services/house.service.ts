@@ -67,9 +67,10 @@ export class HouseService {
       .map((response: Response) => response.json());
   }
 
-  delete(house: House | number): Observable<Response> {
+  delete(house: House | number){
     const id = typeof house === 'number' ? house : house.id;
-    return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(house));
+    return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(house))
+      .map((response: Response) => response.json());
   }
 
   saveReclame(house: House | number): Observable<Response> {

@@ -27,10 +27,18 @@
                 <a class="nav-link" routerLink="/sales/archive">Архив</a>
               </li>
               <li *ngIf="access.sales_moderation" class="nav-item">
-                <a class="nav-link" routerLink="/sales/delete">Удаленные</a>
+                <a class="nav-link" routerLink="/sales/delete">Удаленные
+                  <span *ngIf="count_delete_sale" class="icon-moderation">
+                    +{{count_delete_sale}}
+                  </span>
+                </a>
               </li>
               <li *ngIf="access.sales_moderation" class="nav-item">
-                <a class="nav-link" routerLink="/sales/moderation">Модерация</a>
+                <a class="nav-link" routerLink="/sales/moderation">Модерация
+                  <span *ngIf="count_moderation_sale" class="icon-moderation">
+                    +{{count_moderation_sale}}
+                  </span>
+                </a>
               </li>
               <!--<li class="nav-item">
                 <a class="nav-link" routerLink="#">Карта</a>
@@ -61,10 +69,18 @@
                 <a class="nav-link" routerLink="/houses/archive">Архив</a>
               </li>
               <li *ngIf="access.houses_moderation" class="nav-item">
-                <a class="nav-link" routerLink="/houses/delete">Удаленные</a>
+                <a class="nav-link" routerLink="/houses/delete">Удаленные
+                  <span *ngIf="count_delete_house" class="icon-moderation">
+                    +{{count_delete_house}}
+                  </span>
+                </a>
               </li>
               <li *ngIf="access.houses_moderation" class="nav-item">
-                <a class="nav-link" routerLink="/houses/moderation">Модерация</a>
+                <a class="nav-link" routerLink="/houses/moderation">Модерация
+                  <span *ngIf="count_moderation_house" class="icon-moderation">
+                    +{{count_moderation_house}}
+                  </span>
+                </a>
               </li>
             </ng-container>
             <!-- Конец меню для HOUSES-->

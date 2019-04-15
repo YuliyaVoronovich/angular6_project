@@ -258,6 +258,7 @@ export class SaleModificateDeleteComponent implements OnInit {
             if (data) {
               this.message('Объект перенесен в общую базу', false);
               this.router.navigate(['sales/delete']);
+              this.sharedService.emitChange4(); // обновление удаленные в меню
             } else {
               this.message('Не удалось перенести объект!', true);
 

@@ -73,9 +73,10 @@ export class SaleService {
       );
   }
 
-  delete(sale: Sale | number): Observable<Response> {
+  delete(sale: Sale | number) {
     const id = typeof sale === 'number' ? sale : sale.id;
-    return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(sale));
+    return this.http.post(this.globals.url + this.uri + '/' + id, JSON.stringify(sale))
+      .map((response: Response) => response.json());
   }
 
   saveReclame(sale: Sale | number): Observable<Response> {

@@ -258,7 +258,14 @@ export class SaleModificateComponent implements OnInit {
         this.saleService.update(this.sale).subscribe(
           data => {
             if (data) {
-              this.message('Объект успешно обновлен', false);
+
+              if (data.sale.moderation)  {
+                this.message('Объект отправлен на модерацию', false);
+                this.sharedService.emitChange4(); // обновление модерации в меню
+              } else {
+                this.message('Объект успешно обновлен', false);
+              }
+
               this.router.navigate(['sales']);
               // создание заявки если была введена неизвестная улица или автоматическая заявка
               // (новый дом на улице или в городе нет улицы - создана новая локация)
@@ -288,7 +295,14 @@ export class SaleModificateComponent implements OnInit {
         this.saleService.create(this.sale).subscribe(
           data => {
             if (data) {
-              this.message('Объект успешно создан', false);
+
+              if (data.sale.moderation)  {
+                this.message('Объект отправлен на модерацию', false);
+                this.sharedService.emitChange4(); // обновление модерации в меню
+              } else {
+                this.message('Объект успешно создан', false);
+              }
+
               this.router.navigate(['sales']);
 
               this.idSaleRequest = data.sale.id; // id созданного sale

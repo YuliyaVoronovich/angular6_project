@@ -454,6 +454,7 @@ export class HouseModificateDeleteComponent implements OnInit {
           if (data) {
             this.message('Объект успешно удален в архив', false);
             this.router.navigate(['houses/delete']);
+            this.sharedService.emitChange4(); // обновление удаленные в меню
 
           } else {
             this.message('Не удалось удалить объект!', true);
