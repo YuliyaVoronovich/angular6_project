@@ -21,6 +21,7 @@ export class AdminRequestLocationComponent implements OnInit, OnChanges {
   public requests: Request [] = [];
 
   public regions = [];
+  public districts_country = [];
   public districts = [];
   public cities = [];
   public streets = [];
@@ -40,8 +41,9 @@ export class AdminRequestLocationComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     this.regions = this.location[0];
-    this.cities = this.location[1];
-    this.streets = this.location[2];
+    this.districts_country = this.location[1];
+    this.cities = this.location[2];
+    this.streets = this.location[3];
 
     this.getRequests();
   }
@@ -70,6 +72,9 @@ export class AdminRequestLocationComponent implements OnInit, OnChanges {
   findRegion(id) {
     return this.regions.find(x => x.id === +id).title;
   }
+  findDistrictCountry(id) {
+    return this.districts_country.find(x => x.id === +id).title;
+  }
 
   findCity(id) {
     return this.cities.find(x => x.id === +id).title;
@@ -89,6 +94,9 @@ export class AdminRequestLocationComponent implements OnInit, OnChanges {
       for (let i = 0; i < data.length; i++) {
         if (data[i].info.region) {
           data[i].info.region = this.findRegion(data[i].info.region);
+        }
+        if (data[i].info.district_country) {
+          data[i].info.district_country = this.findDistrictCountry(data[i].info.district_country);
         }
         if (data[i].info.city) {
           data[i].info.city = this.findCity(data[i].info.city);

@@ -44,7 +44,7 @@ export class AdminLocationsComponent implements OnInit {
 
   public regionsSelect: any[] = [];
   public filteredRegions: Observable<string[]>;
-  public districts_rbSelect: any[] = [];
+  public districtsCountrySelect: any[] = [];
   public filteredDistricts: Observable<string[]>;
   public citiesSelect: any[] = [];
   public filteredCities: Observable<string[]>;
@@ -82,7 +82,7 @@ export class AdminLocationsComponent implements OnInit {
   public types: Label[] = [];
 
   public regions = [];
-  public districts_rb = [];
+  public districts_country = [];
   public cities = [];
   public streets = [];
   public districts = [];
@@ -193,7 +193,7 @@ export class AdminLocationsComponent implements OnInit {
     this.filteredDistricts = this.locationForm.controls['district_country'].valueChanges
       .pipe(
         startWith(''),
-        map(value => this._filter(this.districts_rbSelect, value))
+        map(value => this._filter(this.districtsCountrySelect, value))
       );
   }
 
@@ -223,7 +223,7 @@ export class AdminLocationsComponent implements OnInit {
   };
 
   public valueDistrict = (key) => {
-    const selection = this.districts_rbSelect.find(e => e.id === key.id);
+    const selection = this.districtsCountrySelect.find(e => e.id === key.id);
     if (selection) {
       return selection.title;
     }
@@ -246,7 +246,7 @@ export class AdminLocationsComponent implements OnInit {
   getAllLocations() {
     this.locationService.getAllLocations().subscribe((data) => {
       this.regions = data.regions;
-      this.districts_rb = data.districts_rb;
+      this.districts_country = data.districts_rb;
       this.cities = data.cities;
       this.districts = data.districts;
       this.streets = data.streets;
@@ -267,11 +267,11 @@ export class AdminLocationsComponent implements OnInit {
   }
 
   getDistrictsRb(region = 0) {
-    this.districts_rbSelect = [];
+    this.districtsCountrySelect = [];
 
     this.locationService.getDistrictsRb(region).subscribe((options) => {
       for (let i = 0; i < options.length; i++) {
-        this.districts_rbSelect.push(options[i]);
+        this.districtsCountrySelect.push(options[i]);
 
       }
       this.autoComplitDistrict();
@@ -319,7 +319,7 @@ export class AdminLocationsComponent implements OnInit {
         this.locationForm.controls['district_country'].patchValue({id: district});
         // this.location.district_country.id = district;
 
-        const region = this.districts_rb.find(x => x.id === district).region_id;
+        const region = this.districts_country.find(x => x.id === district).region_id;
         if (region) {
           this.locationForm.controls['region'].patchValue({id: region});
           //  this.location.region.id = region;
@@ -474,6 +474,7 @@ export class AdminLocationsComponent implements OnInit {
     this.request = event;
     this.location.id = event.info.location;
     this.locationForm.controls['region'].patchValue({id: +event.info.region});
+    this.locationForm.controls['district_country'].patchValue({id: +event.info.district_country});
     this.locationForm.controls['city'].patchValue({id: +event.info.city});
     this.getStreets(event.info.city);
     /*setTimeout(() => {
