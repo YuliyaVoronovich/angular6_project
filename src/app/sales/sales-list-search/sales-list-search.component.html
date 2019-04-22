@@ -7,8 +7,8 @@
             <ng-select [options]="cities"
                        [(ngModel)]="search.city.values"
                        [multiple]="true"
-                       (selected)="setShowStreet()"
-                       (deselected)="unsetShowStreet()"
+                       (selected)="selectDistrict($event);setShowStreet()"
+                       (deselected)="deselectDistrict($event);unsetShowStreet()"
                        (filterInputChanged)="getCities(0, 0, $event)"
                        notFoundMsg="Введите не менее 3-х символов"
                        placeholder="Нас. пункт">
