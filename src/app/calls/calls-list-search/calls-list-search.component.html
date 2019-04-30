@@ -1,0 +1,119 @@
+<div class="container bg-light" style="max-width: 100%;">
+
+  <div class="row search-top">
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-lg-2 my-col-md-none padding">
+          <div class="form-group">
+            <ng-select [options]="regions"
+                       [(ngModel)]="''+search.regions"
+                       [allowClear]="true"
+                       placeholder="Область"
+                       (selected)="selectDistrictsRb($event);">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-2 my-col-md-none padding">
+          <div class="form-group">
+            <ng-select [options]="districts_rb"
+                       [(ngModel)]="''+search.districts_country"
+                       [allowClear]="true"
+                       placeholder="Район РБ"
+                       (selected)="selectCities($event);">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-3 my-col-md-3 my-col-sm-12 padding">
+          <div class="form-group">
+            <ng-select [options]="cities"
+                       [multiple]="true"
+                       [(ngModel)]="search.cities.values"
+                       placeholder="Нас. пункт"
+                       (selected)="selectDistrict($event)"
+                       (deselected)="deselectDistrict($event)"
+                       (filterInputChanged)="getCities(0, this.districtsRbSearch, $event)"
+                       notFoundMsg="Введите не менее 3-х символов">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-3 my-col-md-3 my-col-sm-12 padding">
+          <div class="form-group">
+            <ng-select [options]="streets"
+                       [multiple]="true"
+                       [(ngModel)]="search.streets.values"
+                       placeholder="Улица">
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-lg-2 my-col-md-3 my-col-sm-4 my-col-sm-none padding text-right">
+          <div class="form-group">
+            <div class="search">
+              <select [(ngModel)]="search.users">
+                <option value="" [disabled]="true">Сотрудник</option>
+                <option value="0"></option>
+                <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}}
+                  {{one.user_information.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-12 text-center">
+      <div class="row">
+
+        <div class="col-lg-2 my-col-md-3 my-col-sm-5 col-6 padding">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Комнат</label>
+              <input type="text" placeholder="" [(ngModel)]="search.room">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-2 my-col-md-3 my-col-sm-5 col-6 padding">
+          <div class="form-group">
+            <div class="search">
+              <label class="label text-left">Стоимость</label>
+              <input type="text" placeholder="" [(ngModel)]="search.price">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 my-col-md-none padding">
+          <div class="form-group">
+            <div class="search search-mini">
+              <label class="label text-left">Дата пост.</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.created_from"
+                     ngbDatepicker (click)="created_from1.toggle()" #created_from1="ngbDatepicker">
+              <input type="text" placeholder="до" [(ngModel)]="search.created_to"
+                     ngbDatepicker (click)="created_to1.toggle()" #created_to1="ngbDatepicker">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 my-col-md-none padding">
+          <div class="form-group">
+            <div class="search search-mini">
+              <label class="label text-left">Дата обн.</label>
+              <input type="text" placeholder="от" [(ngModel)]="search.updated_from"
+                     ngbDatepicker (click)="updated_from1.toggle()" #updated_from1="ngbDatepicker">
+              <input type="text" placeholder="до" [(ngModel)]="search.updated_to"
+                     ngbDatepicker (click)="updated_to1.toggle()" #updated_to1="ngbDatepicker">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 my-col-md-3 my-col-sm-12 col-12 padding text-right">
+          <button style="margin-left: 10px" class="btn btn-md btn-primary" (click)="searchCalls()">Поиск</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
