@@ -15,6 +15,7 @@ import {AccessModel} from '../../_models/Access.model';
 import {CallSale} from '../../_models/CallSale.model';
 import {SaleService} from '../../_services/sale.service';
 import {LabelService} from '../../_services/label.service';
+import {SearchCallModel} from '../../_models/SearchCall.model';
 
 @Component({
   selector: 'app-calls-list',
@@ -31,9 +32,13 @@ export class CallsListComponent implements OnInit, OnDestroy {
   public editRowId: any;
 
   public subscription: Subscription;
-  public search = {
+  /*public search_user = {
     'company': ''
   };
+*/
+  public search = new SearchCallModel('', '', {'values': []},
+    {'values': []}, '', '', null, null, null,
+    null, '', 0);
 
   public user: User = new User(0, '', '', null, null, null, '', 0,
     null, null, false, null, null, '', null, null, null);
@@ -79,7 +84,6 @@ export class CallsListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
-      this.search['company'] = data.user.company.id;
       this.access = data.array_access;
       this.getCalls();
     });
@@ -99,6 +103,8 @@ export class CallsListComponent implements OnInit, OnDestroy {
   }
 
   getCalls() {
+
+    this.search['company'] = this.user.company.id;
     this.search['sort'] = JSON.stringify(this.sort);
 
     return this.callService.getCalls(this.search).subscribe(data => {
@@ -168,7 +174,6 @@ export class CallsListComponent implements OnInit, OnDestroy {
       }
 
     }
-    console.log(this.search);
     this.getCalls();
   }
 

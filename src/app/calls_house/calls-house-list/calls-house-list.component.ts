@@ -16,6 +16,7 @@ import {LabelService} from '../../_services/label.service';
 import {CallHouse} from '../../_models/CallHouse.model';
 import {CallHouseService} from '../../_services/call_house.service';
 import {HouseService} from '../../_services/house.service';
+import {SearchCallHouseModel} from '../../_models/SearchCallHouse.model';
 
 @Component({
   selector: 'app-calls-house-list',
@@ -32,9 +33,10 @@ export class CallsHouseListComponent implements OnInit, OnDestroy  {
   public editRowId: any;
 
   public subscription: Subscription;
-  public search = {
-    'company': ''
-  };
+
+  public search = new SearchCallHouseModel('', '', {'values': []},
+    {'values': []}, '', '', null, null, null,
+    null, '', 0);
 
   public user: User = new User(0, '', '', null, null, null, '', 0,
     null, null, false, null, null, '', null, null, null);
@@ -80,7 +82,6 @@ export class CallsHouseListComponent implements OnInit, OnDestroy  {
   ngOnInit() {
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
-      this.search['company'] = data.user.company.id;
       this.access = data.array_access;
       this.getCalls();
     });
@@ -100,6 +101,8 @@ export class CallsHouseListComponent implements OnInit, OnDestroy  {
   }
 
   getCalls() {
+
+    this.search['company'] = this.user.company.id;
     this.search['sort'] = JSON.stringify(this.sort);
 
     return this.callHouseService.getCalls(this.search).subscribe(data => {
@@ -182,7 +185,6 @@ export class CallsHouseListComponent implements OnInit, OnDestroy  {
   }
 
   save(call: CallHouse) {
-    console.log(call);
 
     if (call.id !== 0) {
       this.callHouseService.update(call).subscribe(

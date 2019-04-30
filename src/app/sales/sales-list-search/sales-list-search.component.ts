@@ -247,8 +247,6 @@ export class SalesListSearchComponent implements OnInit {
 
   getStreets(city: any = 0, district: any = 0, microdistrict: any = 0, title= '') {
 
-    console.log(this.streets_remember);
-
     /* добавить в массив по фильтру более 2 символов*/
     if (title.length > 2) {
       this.locationService.getStreets(city, district, microdistrict, title).subscribe((options) => {
@@ -266,14 +264,6 @@ export class SalesListSearchComponent implements OnInit {
     } else {
       this.streets = [];
     }
-
-   /* this.locationService.getStreets(city, district, microdistrict).subscribe((options) => {
-      this.streets = [];
-
-      for (let i = 0; i < options.length; i++) {
-        this.streets.push({label: options[i].title, value: '' + options[i].id});
-      }
-    });*/
   }
 
   setShowStreet () {

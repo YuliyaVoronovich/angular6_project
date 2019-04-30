@@ -92,6 +92,8 @@ import { AdminSitesListComponent } from './admin/admin-sites-list/admin-sites-li
 import { PartnerListComponent } from './users/partner-list/partner-list.component';
 import { CallsOtherListComponent } from './calls_other/calls-other-list/calls-other-list.component';
 import { AdminSourcesListComponent } from './admin/admin-sources-list/admin-sources-list.component';
+import { CallsListSearchComponent } from './calls/calls-list-search/calls-list-search.component';
+import { CallsHouseListSearchComponent } from './calls_house/calls-house-list-search/calls-house-list-search.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -335,8 +337,10 @@ const routes: Routes = [
     CalculatorComponent,
     CallsOtherListComponent,
     AdminSourcesListComponent,
-    SanitizeHtmlPipe,
-    FilterPipe
+    CallsListSearchComponent,
+    CallsHouseListSearchComponent,
+    FilterPipe,
+    SanitizeHtmlPipe
   ],
   imports: [
     MaterialModule,
