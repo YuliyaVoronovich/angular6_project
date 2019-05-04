@@ -1,0 +1,149 @@
+<div class="container">
+  <div class="newRow">
+    <div class="row">
+      <div class="col-12">
+        <div class="row no-gutters">
+          <div style="width: 160px">
+            <a href="" style="outline:none;">
+              <img style="margin: 4px 10px;" class="img img-fluid" src="assets/images/belan-logo_mini2.png"/>
+            </a>
+          </div>
+
+          <div class="display">
+            <span class="title">{{sale.room}} - комнатная квартира,
+              {{sale.location.city.title}},
+              <ng-container *ngIf="sale.location.street.title.length >0 ">{{sale.location.street.title}}</ng-container>
+              <ng-container
+                *ngIf="sale.location.house !== '0' && sale.location.house !== ''">,{{sale.location.house}}</ng-container>
+              <ng-container *ngIf="sale.location.housing !== '0' && sale.location.housing !== ''"> / {{sale.location.housing}}</ng-container>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+        <ngx-gallery *ngIf="galleryImages.length > 0" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="row price">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-12">
+                {{sale.price}} $
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {{price_byn}} р
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {{price_euro}} €
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="row">
+              <ng-container *ngIf="sale.company.company_information.phone_sale">
+                <div class="col-12">
+                  <ng-container
+                    *ngIf="sale.company.company_information.phone_sale_general_1 && sale.company.company_information.phone_sale_general_1!='375'">
+                    {{sale.company.company_information.phone_sale_general_1}}</ng-container>
+                </div>
+                <div class="col-12">
+                  <ng-container
+                    *ngIf="sale.company.company_information.phone_sale_general_2 && sale.company.company_information.phone_sale_general_2!='375'">
+                    {{sale.company.company_information.phone_sale_general_2}}</ng-container>
+                </div>
+                <div class="col-12">
+                  <ng-container
+                    *ngIf="sale.company.company_information.phone_sale_general_3 && sale.company.company_information.phone_sale_general_3!='375'">
+                    {{sale.company.company_information.phone_sale_general_3}}</ng-container>
+                </div>
+                <div class="col-12">
+                  <ng-container
+                    *ngIf="sale.company.company_information.phone_sale_general_4 && sale.company.company_information.phone_sale_general_4!='375'">
+                    {{sale.company.company_information.phone_sale_general_4}}</ng-container>
+                </div>
+              </ng-container>
+              <span *ngIf="!sale.company.company_information.phone_sale">
+                 <div class="col-12">
+                  <ng-container
+                    *ngIf="sale.user.user_information.phone1 && sale.user.user_information.phone1!='375'">{{sale.user.user_information.phone1}}</ng-container>
+                 </div>
+                 <div class="col-12">
+                  <ng-container *ngIf="sale.user.user_information.phone2 && sale.user.user_information.phone2!='375'">{{sale.user.user_information.phone2}}</ng-container>
+                 </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12" *ngIf="sale.id>0">
+            <app-sale-modificate-map [sale]="sale"></app-sale-modificate-map>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+        {{sale.text}}
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="row general-info">
+          <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12">
+            <div class="row">
+              <div class="col-6">
+                Общая
+              </div>
+              <div class="col-6">
+                {{sale.area}} м<sup>2</sup>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Жилая
+              </div>
+              <div class="col-6">
+                {{sale.area_leave}} м<sup>2</sup>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Кухни
+              </div>
+              <div class="col-6">
+                {{sale.area_kitchen}} м<sup>2</sup>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Этаж
+              </div>
+              <div class="col-6">
+                {{sale.storey}}/{{sale.storeys}}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12">
+            <ul>
+              <li>Вторичка</li>
+              <li>Панельный</li>
+              <li>Балкон</li>
+              <li>Парковка</li>
+              <ng-container *ngIf="sale.roof">
+                <li>Потолки {{sale.roof}} метра</li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

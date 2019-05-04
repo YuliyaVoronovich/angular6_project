@@ -39,7 +39,7 @@ export class CalculatorComponent implements OnInit {
   }
 
   calculate() {
-    console.log(this.price_usd);
+
     this.price_byn = +this.curs_usd * +this.price_usd;
 
     this.amount_base_value = Math.floor(+this.price_byn / +this.globals.base_value);

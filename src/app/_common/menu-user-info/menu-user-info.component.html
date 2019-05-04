@@ -7,8 +7,9 @@
 
   <div class="menu-user" [ngClass]="{'show' : hide_info, 'hide' : !hide_info}">
     <a class="dropdown-item">Настройки</a>
-    <a class="dropdown-item" (click)="hide = !hide"
-    ><span class="access">Уровень: {{ user.access}}</span></a>
+    <a class="dropdown-item" (click)="hide = !hide">
+      <span class="access">Уровень: {{ user.access}}</span>
+    </a>
     <div class="chooseAccess" [ngClass]="{'show' : hide, 'hide' : !hide}">
       <div class="level" (click)="setAccess(1)">личный</div>
       <div class="level" (click)="setAccess(2)">группа</div>

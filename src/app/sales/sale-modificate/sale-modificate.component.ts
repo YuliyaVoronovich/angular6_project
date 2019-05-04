@@ -137,7 +137,6 @@ export class SaleModificateComponent implements OnInit {
               private route: ActivatedRoute,
               private loginService: LoginService,
               private saleService: SaleService,
-              private labelsService: LabelService,
               private locationService: LocationService,
               private labelService: LabelService,
               private userService: UserService,
@@ -335,7 +334,7 @@ export class SaleModificateComponent implements OnInit {
   }
 
   getAllLabels() {
-    this.labelsService.getAllLabelsSales().subscribe(data => {
+    this.labelService.getAllLabelsSales().subscribe(data => {
       this.wc = data.wc;
       this.walls = data.walls;
       this.balconies = data.balconies;
@@ -466,8 +465,8 @@ export class SaleModificateComponent implements OnInit {
           this.sale.location.district = this.locationService.setDistrict(data.district);
           this.sale.location.microdistrict = this.locationService.setMicroDistrict(data.microdistrict);
           this.sale.location.metro = this.locationService.setMetro(data.metro);
-          this.sale.location.wall = this.labelsService.setWall(data.wall);
-          this.sale.location.type_house = this.labelsService.setWall(data.type_house);
+          this.sale.location.wall = this.labelService.setWall(data.wall);
+          this.sale.location.type_house = this.labelService.setWall(data.type_house);
           this.sale.location.year = data.year;
           this.sale.location.year_repair = data.year_repair;
           this.sale.location.coordinates = data.coordinates;
@@ -478,8 +477,8 @@ export class SaleModificateComponent implements OnInit {
           this.sale.location.district = this.locationService.setDistrict(null);
           this.sale.location.microdistrict = this.locationService.setMicroDistrict(null);
           this.sale.location.metro = this.locationService.setMetro(null);
-          this.sale.location.wall = this.labelsService.setWall(null);
-          this.sale.location.type_house = this.labelsService.setTypeHouse(null);
+          this.sale.location.wall = this.labelService.setWall(null);
+          this.sale.location.type_house = this.labelService.setTypeHouse(null);
           this.sale.location.year = 0;
           this.sale.location.year_repair = 0;
         }
@@ -488,8 +487,8 @@ export class SaleModificateComponent implements OnInit {
     } else {
       this.sale.location.district = this.locationService.setDistrict(null);
       this.sale.location.microdistrict = this.locationService.setMicroDistrict(null);
-      this.sale.location.wall = this.labelsService.setWall(null);
-      this.sale.location.type_house = this.labelsService.setTypeHouse(null);
+      this.sale.location.wall = this.labelService.setWall(null);
+      this.sale.location.type_house = this.labelService.setTypeHouse(null);
       this.sale.location.year = 0;
       this.sale.location.year_repair = 0;
     }

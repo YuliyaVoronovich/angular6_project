@@ -94,6 +94,7 @@ import { CallsOtherListComponent } from './calls_other/calls-other-list/calls-ot
 import { AdminSourcesListComponent } from './admin/admin-sources-list/admin-sources-list.component';
 import { CallsListSearchComponent } from './calls/calls-list-search/calls-list-search.component';
 import { CallsHouseListSearchComponent } from './calls_house/calls-house-list-search/calls-house-list-search.component';
+import { SaleShowComponent } from './sales/sale-show/sale-show.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -245,6 +246,7 @@ const routes: Routes = [
   {path: 'admin/sites', component: AdminComponent, children: adminSitesRoutes},
   {path: 'admin/sources', component: AdminComponent, children: adminSourcesRoutes},
   {path: 'sales', component: GeneralTemplateComponent, children: salesRoutes},
+  {path: 'sales/sale/show/:id', component: SaleShowComponent},
   {path: 'clients', component: GeneralTemplateComponent, children: clientsRoutes},
   {path: 'houses', component: GeneralTemplateComponent, children: housesRoutes},
   {path: 'clients_house', component: GeneralTemplateComponent, children: clientsHouseRoutes},
@@ -339,6 +341,7 @@ const routes: Routes = [
     AdminSourcesListComponent,
     CallsListSearchComponent,
     CallsHouseListSearchComponent,
+    SaleShowComponent,
     FilterPipe,
     SanitizeHtmlPipe
   ],
