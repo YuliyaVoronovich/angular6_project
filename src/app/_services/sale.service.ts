@@ -61,6 +61,11 @@ export class SaleService {
       .map((response: Response) => response.json());
   }
 
+  showSale(id) {
+    return this.http.get(this.globals.url + this.uri + '/sale/show/' + id)
+      .map((response: Response) => response.json());
+  }
+
   create(sale: Sale) {
     return this.http.post(this.globals.url + this.uri, JSON.stringify(sale))
       .map((response: Response) => response.json()

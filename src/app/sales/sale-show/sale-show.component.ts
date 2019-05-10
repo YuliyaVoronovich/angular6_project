@@ -40,6 +40,12 @@ export class SaleShowComponent implements OnInit {
   public price_byn: number;
   public price_euro: number;
 
+  public new_or_old: string;
+  public type: string;
+  public balcony: string;
+  public parking: string;
+  public roof: string;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private saleService: SaleService,
@@ -71,8 +77,62 @@ export class SaleShowComponent implements OnInit {
       params => {
 
         if (params['id']) {
-          this.saleService.getSale(params['id']).subscribe(data => {
+          this.route.data.subscribe(({data}) => {
+            console.log(data.sale);
             this.sale = data.sale;
+
+            this.sale.company = this.companyService.setCompany(this.sale.company);
+            this.sale.company.company_information = this.companyService.setCompanyInformation(this.sale.company.company_information);
+
+            // телефоны с логотипами
+            if (this.sale.company.company_information.phone_sale_general_1) {
+              this.sale.company.company_information.phone_sale_general_1 = this.globals.transformPhone(this.sale.company.company_information.phone_sale_general_1);
+            }
+
+            if (this.sale.company.company_information.phone_sale_general_2) {
+              this.sale.company.company_information.phone_sale_general_2 = this.globals.transformPhone(this.sale.company.company_information.phone_sale_general_2);
+            }
+            if (this.sale.company.company_information.phone_sale_general_3) {
+              this.sale.company.company_information.phone_sale_general_3 = this.globals.transformPhone(this.sale.company.company_information.phone_sale_general_3);
+            }
+            if (this.sale.company.company_information.phone_sale_general_4) {
+              this.sale.company.company_information.phone_sale_general_4 = this.globals.transformPhone(this.sale.company.company_information.phone_sale_general_4);
+            }
+
+            if (this.sale.user.user_information.phone1) {
+              this.sale.user.user_information.phone1 = this.globals.transformPhone(this.sale.user.user_information.phone1);
+            }
+            if (this.sale.user.user_information.phone2) {
+              this.sale.user.user_information.phone2 = this.globals.transformPhone(this.sale.user.user_information.phone2);
+            }
+
+            this.sale.location = this.locationService.setLocation(this.sale.location);
+            this.sale.location.city = this.locationService.setCity(this.sale.location.city);
+            this.sale.location.city.district_country = this.locationService.setDistrictCountry(this.sale.location.city.district_country);
+            this.sale.location.city.district_country.region = this.locationService.setRegion(this.sale.location.city.district_country.region);
+            this.sale.location.district = this.locationService.setDistrict(this.sale.location.district);
+            this.sale.location.microdistrict = this.locationService.setMicroDistrict(this.sale.location.microdistrict);
+            this.sale.location.street = this.locationService.setStreet(this.sale.location.street);
+            this.sale.location.wall = this.labelService.setWall(this.sale.location.wall);
+            this.sale.location.type_house = this.labelService.setTypeHouse(this.sale.location.type_house);
+
+            this.sale.sale_addition_information = this.saleService.setSaleAdditionInformation(this.sale.sale_addition_information);
+
+            this.sale.user = this.userService.setUser(this.sale.user);
+            this.sale.user.user_information = this.userService.setUserInformation(this.sale.user.user_information);
+            this.sale.user.manager_information = this.userService.setUserInformation(this.sale.user.user_information);
+
+            // список характеристик
+            if (this.sale.location.type_house.id) {
+              this.type = data.location.type_house.title + 'дом' + (this.sale.location.year) ? this.sale.location.year + 'года' : '';
+            }
+
+            if (this.sale.balcony && this.sale.balcony !== 51) {
+              this.balcony = 'С балконом (лоджией)';
+            }
+            if (this.sale.roof) {
+              this.roof = 'Потолки ' + this.sale.roof + ' метра';
+            }
 
             for (let i = 0; i < this.sale.photo_reclame.length; i++) {
               this.galleryImages.push({
@@ -81,31 +141,10 @@ export class SaleShowComponent implements OnInit {
                 big: this.sale.photo_reclame[i].path
               });
             }
-
             this.getCurs(this.sale.price);
 
-          });
+        });
         }
-
-        this.sale.sale_addition_information = this.saleService.setSaleAdditionInformation(this.sale.sale_addition_information);
-
-        this.sale.user = this.userService.setUser(this.sale.user);
-        this.sale.user.user_information = this.userService.setUserInformation(this.sale.user.user_information);
-        this.sale.user.manager_information = this.userService.setUserInformation(this.sale.user.user_information);
-
-        this.sale.company = this.companyService.setCompany(this.sale.company);
-        this.sale.company.company_information = this.companyService.setCompanyInformation(this.sale.company.company_information);
-
-        this.sale.location = this.locationService.setLocation(this.sale.location);
-        this.sale.location.city = this.locationService.setCity(this.sale.location.city);
-        this.sale.location.city.district_country = this.locationService.setDistrictCountry(this.sale.location.city.district_country);
-        this.sale.location.city.district_country.region = this.locationService.setRegion(this.sale.location.city.district_country.region);
-        this.sale.location.district = this.locationService.setDistrict(this.sale.location.district);
-        this.sale.location.microdistrict = this.locationService.setMicroDistrict(this.sale.location.microdistrict);
-        this.sale.location.street = this.locationService.setStreet(this.sale.location.street);
-        this.sale.location.metro = this.locationService.setMetro(this.sale.location.metro);
-        this.sale.location.wall = this.labelService.setWall(this.sale.location.wall);
-        this.sale.location.type_house = this.labelService.setTypeHouse(this.sale.location.type_house);
       });
   }
 
@@ -116,8 +155,8 @@ export class SaleShowComponent implements OnInit {
           this.curs_usd = res.curs_usd;
           this.curs_euro = res.curs_euro;
 
-          this.price_byn =  Math.floor(price * this.curs_usd);
-          this.price_euro =  Math.floor(price * this.curs_usd / this.curs_euro);
+          this.price_byn = Math.floor(price * this.curs_usd);
+          this.price_euro = Math.floor(price * this.curs_usd / this.curs_euro);
         }
       );
   }

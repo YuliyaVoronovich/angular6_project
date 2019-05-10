@@ -123,11 +123,13 @@ import {CallHouseResolve} from './_services/call_house_resolve.service';
 import {SiteService} from './_services/site_service';
 import {CallOtherService} from './_services/call_other.service';
 import {SourceService} from './_services/source.service';
+import {SaleResolveShow} from './_services/sale_resolve_show.service';
 
 import {MaterialModule} from './material.module';
 import {NgxGalleryModule} from 'ngx-gallery';
 
 import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
+
 
 
 
@@ -246,7 +248,7 @@ const routes: Routes = [
   {path: 'admin/sites', component: AdminComponent, children: adminSitesRoutes},
   {path: 'admin/sources', component: AdminComponent, children: adminSourcesRoutes},
   {path: 'sales', component: GeneralTemplateComponent, children: salesRoutes},
-  {path: 'sales/sale/show/:id', component: SaleShowComponent},
+  {path: 'sales/sale/show/:id', component: SaleShowComponent, resolve: {data: SaleResolveShow}},
   {path: 'clients', component: GeneralTemplateComponent, children: clientsRoutes},
   {path: 'houses', component: GeneralTemplateComponent, children: housesRoutes},
   {path: 'clients_house', component: GeneralTemplateComponent, children: clientsHouseRoutes},
@@ -370,6 +372,7 @@ const routes: Routes = [
     ModuleService,
     SaleService,
     SaleResolve,
+    SaleResolveShow,
     UserService,
     UserResolve,
     LabelService,

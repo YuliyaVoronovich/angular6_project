@@ -1,6 +1,6 @@
 <div class="container">
   <div class="newRow">
-    <div class="row">
+    <div class="row top">
       <div class="col-12">
         <div class="row no-gutters">
           <div style="width: 160px">
@@ -10,7 +10,7 @@
           </div>
 
           <div class="display">
-            <span class="title">{{sale.room}} - комнатная квартира,
+           <span class="title">{{sale.room}} - комнатная квартира,
               {{sale.location.city.title}},
               <ng-container *ngIf="sale.location.street.title.length >0 ">{{sale.location.street.title}}</ng-container>
               <ng-container
@@ -50,33 +50,24 @@
             <div class="row">
               <ng-container *ngIf="sale.company.company_information.phone_sale">
                 <div class="col-12">
-                  <ng-container
-                    *ngIf="sale.company.company_information.phone_sale_general_1 && sale.company.company_information.phone_sale_general_1!='375'">
-                    {{sale.company.company_information.phone_sale_general_1}}</ng-container>
+                  <span [innerHTML]="sale.company.company_information.phone_sale_general_1===null ? '' : sale.company.company_information.phone_sale_general_1 | sanitizeHtml"></span>
                 </div>
                 <div class="col-12">
-                  <ng-container
-                    *ngIf="sale.company.company_information.phone_sale_general_2 && sale.company.company_information.phone_sale_general_2!='375'">
-                    {{sale.company.company_information.phone_sale_general_2}}</ng-container>
+                  <span [innerHTML]="sale.company.company_information.phone_sale_general_2===null ? '' : sale.company.company_information.phone_sale_general_2 | sanitizeHtml"></span>
                 </div>
                 <div class="col-12">
-                  <ng-container
-                    *ngIf="sale.company.company_information.phone_sale_general_3 && sale.company.company_information.phone_sale_general_3!='375'">
-                    {{sale.company.company_information.phone_sale_general_3}}</ng-container>
+                  <span [innerHTML]="sale.company.company_information.phone_sale_general_3===null ? '' : sale.company.company_information.phone_sale_general_3 | sanitizeHtml"></span>
                 </div>
                 <div class="col-12">
-                  <ng-container
-                    *ngIf="sale.company.company_information.phone_sale_general_4 && sale.company.company_information.phone_sale_general_4!='375'">
-                    {{sale.company.company_information.phone_sale_general_4}}</ng-container>
+                  <span [innerHTML]="sale.company.company_information.phone_sale_general_4===null ? '' : sale.company.company_information.phone_sale_general_4 | sanitizeHtml"></span>
                 </div>
               </ng-container>
               <span *ngIf="!sale.company.company_information.phone_sale">
                  <div class="col-12">
-                  <ng-container
-                    *ngIf="sale.user.user_information.phone1 && sale.user.user_information.phone1!='375'">{{sale.user.user_information.phone1}}</ng-container>
+                   <span [innerHTML]="sale.user.user_information.phone1===null ? '' : sale.user.user_information.phone1 | sanitizeHtml"></span>
                  </div>
                  <div class="col-12">
-                  <ng-container *ngIf="sale.user.user_information.phone2 && sale.user.user_information.phone2!='375'">{{sale.user.user_information.phone2}}</ng-container>
+                  <span [innerHTML]="sale.user.user_information.phone2===null ? '' : sale.user.user_information.phone2 | sanitizeHtml"></span>
                  </div>
               </span>
             </div>
@@ -90,7 +81,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row top">
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         {{sale.text}}
       </div>
@@ -133,12 +124,20 @@
 
           <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12">
             <ul>
-              <li>Вторичка</li>
-              <li>Панельный</li>
-              <li>Балкон</li>
-              <li>Парковка</li>
-              <ng-container *ngIf="sale.roof">
-                <li>Потолки {{sale.roof}} метра</li>
+              <ng-container *ngIf="new_or_old">
+                <li>{{new_or_old}}</li>
+              </ng-container>
+              <ng-container *ngIf="type">
+                <li>{{type}}</li>
+              </ng-container>
+              <ng-container *ngIf="balcony">
+                <li>{{balcony}}</li>
+              </ng-container>
+              <ng-container *ngIf="parking">
+                <li>{{parking}}</li>
+              </ng-container>
+              <ng-container *ngIf="roof">
+                <li>{{roof}}</li>
               </ng-container>
             </ul>
           </div>
