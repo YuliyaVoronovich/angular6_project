@@ -124,7 +124,7 @@ export class SaleShowComponent implements OnInit {
 
             // список характеристик
             if (this.sale.location.wall.id) {
-              this.type = data.location.wall.title + 'дом' + (this.sale.location.year) ? this.sale.location.year + 'года' : '';
+              this.type = this.sale.location.wall.title + 'дом' + (this.sale.location.year) ? this.sale.location.year + 'года' : '';
             }
 
             if (this.sale.balcony && this.sale.balcony !== 51) {
