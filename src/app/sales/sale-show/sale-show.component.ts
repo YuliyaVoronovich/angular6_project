@@ -123,15 +123,29 @@ export class SaleShowComponent implements OnInit {
             this.sale.user.manager_information = this.userService.setUserInformation(this.sale.user.user_information);
 
             // список характеристик
-            if (this.sale.location.wall.id) {
-              this.type = this.sale.location.wall.title + 'дом' + (this.sale.location.year) ? this.sale.location.year + 'года' : '';
+            if (this.sale.location.wall.id > 0) {
+              this.type = this.ucFirst(this.sale.location.wall.title) + ' дом ' + ((this.sale.location.year) ? this.sale.location.year + ' года' : '');
+            }
+            console.log(this.type);
+
+            if (this.sale.new_building) {
+              this.new_or_old = 'Новостройка';
+            } else {
+              this.new_or_old = 'Вторичка';
             }
 
             if (this.sale.balcony && this.sale.balcony !== 51) {
               this.balcony = 'С балконом (лоджией)';
+            } else {
+              this.balcony = 'Без балкона (лоджии)';
             }
             if (this.sale.roof) {
               this.roof = 'Потолки ' + this.sale.roof + ' метра';
+            }
+            if (this.sale.sale_addition_information.parking) {
+              this.parking = 'С выделенным парковочным местом на улице';
+            } else {
+              this.parking = 'Без выделенного парковочного места';
             }
 
             for (let i = 0; i < this.sale.photo_reclame.length; i++) {
@@ -146,6 +160,13 @@ export class SaleShowComponent implements OnInit {
         });
         }
       });
+  }
+
+  ucFirst(str): string {
+    // только пустая строка в логическом контексте даст false
+    if (!str) return str;
+
+    return str[0].toUpperCase() + str.slice(1);
   }
 
   getCurs(price): any {
