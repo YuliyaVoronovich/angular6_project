@@ -123,8 +123,8 @@ export class SaleShowComponent implements OnInit {
             this.sale.user.manager_information = this.userService.setUserInformation(this.sale.user.user_information);
 
             // список характеристик
-            if (this.sale.location.type_house.id) {
-              this.type = data.location.type_house.title + 'дом' + (this.sale.location.year) ? this.sale.location.year + 'года' : '';
+            if (this.sale.location.wall.id) {
+              this.type = data.location.wall.title + 'дом' + (this.sale.location.year) ? this.sale.location.year + 'года' : '';
             }
 
             if (this.sale.balcony && this.sale.balcony !== 51) {
