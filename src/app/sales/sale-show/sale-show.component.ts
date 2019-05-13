@@ -66,8 +66,8 @@ export class SaleShowComponent implements OnInit {
         imagePercent: 100,
         thumbnailsPercent: 20,
         thumbnailsColumns: 6,
-        thumbnailsMargin: 0,
-        thumbnailMargin: 0
+        thumbnailsMargin: 2,
+        thumbnailMargin: 2
       },
       {'breakpoint': 500, 'width': '300px', 'height': '300px', 'thumbnailsColumns': 3},
       {'breakpoint': 300, 'width': '100%', 'height': '200px', 'thumbnailsColumns': 2}
@@ -78,7 +78,7 @@ export class SaleShowComponent implements OnInit {
 
         if (params['id']) {
           this.route.data.subscribe(({data}) => {
-            console.log(data.sale);
+
             this.sale = data.sale;
 
             this.sale.company = this.companyService.setCompany(this.sale.company);
@@ -126,7 +126,6 @@ export class SaleShowComponent implements OnInit {
             if (this.sale.location.wall.id > 0) {
               this.type = this.ucFirst(this.sale.location.wall.title) + ' дом ' + ((this.sale.location.year) ? this.sale.location.year + ' года' : '');
             }
-            console.log(this.type);
 
             if (this.sale.new_building) {
               this.new_or_old = 'Новостройка';
@@ -142,8 +141,8 @@ export class SaleShowComponent implements OnInit {
             if (this.sale.roof) {
               this.roof = 'Потолки ' + this.sale.roof + ' метра';
             }
-            if (this.sale.sale_addition_information.parking) {
-              this.parking = 'С выделенным парковочным местом на улице';
+            if (this.sale.sale_addition_information.parking || this.sale.sale_addition_information.garage) {
+              this.parking = 'С выделенным парковочным местом';
             } else {
               this.parking = 'Без выделенного парковочного места';
             }
