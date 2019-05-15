@@ -41,6 +41,7 @@ export class SaleShowComponent implements OnInit {
   public price_euro: number;
 
   public new_or_old: string;
+  public term_sale: string;
   public type: string;
   public balcony: string;
   public parking: string;
@@ -127,10 +128,16 @@ export class SaleShowComponent implements OnInit {
               this.type = this.ucFirst(this.sale.location.wall.title) + ' дом ' + ((this.sale.location.year) ? this.sale.location.year + ' года' : '');
             }
 
-            if (this.sale.new_building) {
-              this.new_or_old = 'Новостройка';
-            } else {
-              this.new_or_old = 'Вторичка';
+            /* if (this.sale) {
+               this.new_or_old = 'Новостройка';
+             } else {
+               this.new_or_old = 'Вторичка';
+             }*/
+            if (this.sale.sale === 34) {
+              this.term_sale = 'Чистая продажа';
+            }
+            if (this.sale.sale === 35 || this.sale.sale === 36 || this.sale.sale === 37) {
+              this.term_sale = 'Встречка';
             }
 
             if (this.sale.balcony && this.sale.balcony !== 51) {
@@ -156,7 +163,7 @@ export class SaleShowComponent implements OnInit {
             }
             this.getCurs(this.sale.price);
 
-        });
+          });
         }
       });
   }
