@@ -349,7 +349,7 @@ export class AdminLocationsComponent implements OnInit {
 
   getInfoLocation() {
 
-    if (this.locationForm.controls['street'].value && this.locationForm.controls['house'].value) {
+    if (this.locationForm.controls['street'].value) {
 
       this.search['city'] = (this.locationForm.controls['city'].value.id) ? this.locationForm.controls['city'].value.id : this.locationForm.controls['city'].value;
       this.search['street'] = (this.locationForm.controls['street'].value.id) ? this.locationForm.controls['street'].value.id : this.locationForm.controls['street'].value;

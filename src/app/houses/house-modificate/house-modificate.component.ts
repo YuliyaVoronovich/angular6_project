@@ -361,7 +361,7 @@ export class HouseModificateComponent implements OnInit {
 
     this.movieMapMarker = false;
 
-    if (this.house.location.street.id && this.house.location.house) {
+    if (this.house.location.street.id && this.house.location.house !== '') {
 
       this.search['street'] = this.house.location.street.id;
       this.search['house'] = (this.house.location.house) ? this.house.location.house : 0;
