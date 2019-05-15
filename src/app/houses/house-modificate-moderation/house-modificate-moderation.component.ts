@@ -31,7 +31,7 @@ import {AccessModel} from '../../_models/Access.model';
 })
 export class HouseModificateModerationComponent implements OnInit {
 
-  public number_dogovor = [1, 2, 3, 4, 5, 20];
+  public number_dogovor = [1, 2, 3, 4, 5, 20, 25];
 
   public selectRegions: Array<IOption> = [
     {label: '', value: ''}
