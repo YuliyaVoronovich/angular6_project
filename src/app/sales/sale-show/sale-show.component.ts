@@ -82,8 +82,13 @@ export class SaleShowComponent implements OnInit {
 
             this.sale = data.sale;
 
+            this.sale.sale_addition_information = this.saleService.setSaleAdditionInformation(this.sale.sale_addition_information);
+
             this.sale.company = this.companyService.setCompany(this.sale.company);
             this.sale.company.company_information = this.companyService.setCompanyInformation(this.sale.company.company_information);
+            this.sale.user = this.userService.setUser(this.sale.user);
+            this.sale.user.user_information = this.userService.setUserInformation(this.sale.user.user_information);
+            this.sale.user.manager_information = this.userService.setUserInformation(this.sale.user.user_information);
 
             // телефоны с логотипами
             if (this.sale.company.company_information.phone_sale_general_1) {
@@ -116,12 +121,6 @@ export class SaleShowComponent implements OnInit {
             this.sale.location.street = this.locationService.setStreet(this.sale.location.street);
             this.sale.location.wall = this.labelService.setWall(this.sale.location.wall);
             this.sale.location.type_house = this.labelService.setTypeHouse(this.sale.location.type_house);
-
-            this.sale.sale_addition_information = this.saleService.setSaleAdditionInformation(this.sale.sale_addition_information);
-
-            this.sale.user = this.userService.setUser(this.sale.user);
-            this.sale.user.user_information = this.userService.setUserInformation(this.sale.user.user_information);
-            this.sale.user.manager_information = this.userService.setUserInformation(this.sale.user.user_information);
 
             // список характеристик
             if (this.sale.location.wall.id > 0) {
