@@ -1,5 +1,8 @@
 <div class="container">
-  <div class="newRow">
+  <div class="newRow" [hidden]="!sale.delete_at || archive" style="min-height: 400px">
+    <h2 style="text-align: center;line-height: 400px;">Объявление не актуально</h2>
+  </div>
+  <div class="newRow" [hidden]="sale.delete_at">
     <div class="row top">
       <div class="col-12">
         <div class="row no-gutters">
@@ -23,7 +26,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12" style="min-height: 400px">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12" style="min-height: 300px">
         <ngx-gallery *ngIf="galleryImages.length > 0" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
       </div>
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">

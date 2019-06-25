@@ -19,6 +19,8 @@ import {Globals} from '../../_common/globals';
 })
 export class SaleShowComponent implements OnInit {
 
+  public archive = false;
+
   public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
     '', false, false, false, '', '', null, null, false, '', null,
     '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
@@ -70,14 +72,15 @@ export class SaleShowComponent implements OnInit {
         thumbnailsMargin: 2,
         thumbnailMargin: 2
       },
-      {'breakpoint': 500, 'width': '300px', 'height': '300px', 'thumbnailsColumns': 3},
-      {'breakpoint': 300, 'width': '100%', 'height': '200px', 'thumbnailsColumns': 2}
+      {'breakpoint': 500, 'width': '100%', 'height': '100%', 'thumbnailsColumns': 3},
+      {'breakpoint': 300, 'width': '100%', 'height': '100%', 'thumbnailsColumns': 2}
     ];
 
     this.route.params.subscribe(
       params => {
 
         if (params['id']) {
+
           this.route.data.subscribe(({data}) => {
 
             this.sale = data.sale;
@@ -163,6 +166,8 @@ export class SaleShowComponent implements OnInit {
             this.getCurs(this.sale.price);
 
           });
+        } else {
+          this.archive = true;
         }
       });
   }
