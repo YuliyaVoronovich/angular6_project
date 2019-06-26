@@ -131,8 +131,6 @@ import {NgxGalleryModule} from 'ngx-gallery';
 import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
 
 
-
-
 const adminCompaniesRoutes: Routes = [
   {path: '', component: AdminCompaniesListComponent},
   {path: 'company', component: AdminCompanyModificateComponent},

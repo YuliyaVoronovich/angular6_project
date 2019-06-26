@@ -1,0 +1,7 @@
+.newRow {
+  background: #fdfdff;
+  padding: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  margin: 10px 0;
+  font-weight: 400;
+}
