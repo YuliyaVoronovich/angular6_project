@@ -1,0 +1,163 @@
+<div class="table-responsive" style="margin-bottom: 20px">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th></th>
+      <th><span class="nobr">Нас. пункт</span></th>
+      <th>Район</th>
+      <th>Мкрн</th>
+      <th>Адрес</th>
+      <th>Комнат</th>
+      <th>Площадь</th>
+      <th>Этаж</th>
+      <th>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='price' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('price', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Цена,$
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='ASC')"
+             (click)="changeSort('price', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Цена,$
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='price' || (sort.field==='price' && sort.value==='DESC')"
+             (click)="changeSort('price', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Цена,$
+        </div>
+      </th>
+      <th>$m2</th>
+
+      <th *ngIf="access.sales_created">
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='created_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='ASC')"
+             (click)="changeSort('created_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата доб.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='created_at' || (sort.field==='created_at' && sort.value==='DESC')"
+             (click)="changeSort('created_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата доб.
+        </div>
+      </th>
+      <th>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field ==='updated_at' && (sort.value==='ASC' || sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='ASC')"
+             (click)="changeSort('updated_at', 'ASC')">
+          <i class="fas fa-sort-down icon-color"></i>Дата обн.
+        </div>
+        <div class="nobr cursor" style="width: 100%"
+             [hidden]="sort.field!=='updated_at' || (sort.field==='updated_at' && sort.value==='DESC')"
+             (click)="changeSort('updated_at', 'DESC')">
+          <i class="fas fa-sort-up icon-color"></i>Дата обн.
+        </div>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container
+      *ngFor="let sale of sales | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countSales }; let i = index">
+      <tr>
+        <td class="text-center">
+          <a *ngIf="sale.access_edit" routerLink="sale/{{sale.id}}" target="_self">
+            <i class="fas fa-pencil-alt icon-color"></i>
+          </a>
+        </td>
+        <td>{{sale.location.city.title}}</td>
+        <td>{{sale.location.district.title}}</td>
+        <td>{{sale.location.microdistrict.title}}</td>
+        <td>
+          <ng-container *ngIf="sale.location.street.title.length >0 ">
+            {{sale.location.street.title}}
+          </ng-container>
+          <ng-container *ngIf="sale.location.house !== '0' && sale.location.house !== ''">
+            ,{{sale.location.house}}
+          </ng-container>
+          <ng-container *ngIf="sale.location.housing !== '0' && sale.location.housing !== ''">
+            / {{sale.location.housing}}
+          </ng-container>
+        </td>
+        <td>{{sale.room}}/{{sale.room_separate}}</td>
+        <td>{{sale.area}}/{{sale.area_leave}}/{{sale.area_kitchen}}</td>
+        <td>{{sale.storey}}/{{sale.storeys}}</td>
+        <td>{{sale.price}}</td>
+        <td>{{sale.price_sqr}}</td>
+        <td *ngIf="access.sales_created">{{sale.created_at | date: 'dd.MM.yyyy'}}</td>
+        <td>
+          {{sale.updated_at | date: 'dd.MM.yyyy'}}
+        </td>
+      </tr>
+    <!--  <tr [hidden]="!hideme[i]">
+        <td colspan="16">
+          <div class="row no-gutters text-left">
+            <div class="col-lg-6 col-md-12">
+              <app-sale-list-photo [photo]="sale.photo_reclame"></app-sale-list-photo>
+              &lt;!&ndash;<ng-container
+                *ngFor="let photo_reclame of sale.photo_reclame">
+                <div>
+                  <img src="{{photo_reclame.path}}">
+                </div>
+              </ng-container>&ndash;&gt;
+            </div>
+            <div class="col-lg-5 col-md-12" style="margin: 10px 0 0 10px">
+              <ng-container *ngIf="user.access === 4 ">
+                <span *ngIf="sale.company.company_information.phone_sale">
+                  <ng-container *ngIf="sale.company.company_information.phone_sale_general_1 && sale.company.company_information.phone_sale_general_1!='375'"><b>{{sale.company.company_information.phone_sale_general_1}}</b></ng-container>
+                  <ng-container *ngIf="sale.company.company_information.phone_sale_general_2 && sale.company.company_information.phone_sale_general_2!='375'">, <b>{{sale.company.company_information.phone_sale_general_2}}</b></ng-container>
+                  <ng-container *ngIf="sale.company.company_information.phone_sale_general_3 && sale.company.company_information.phone_sale_general_3!='375'">, <b>{{sale.company.company_information.phone_sale_general_3}}</b></ng-container>
+                  <ng-container *ngIf="sale.company.company_information.phone_sale_general_4 && sale.company.company_information.phone_sale_general_4!='375'">, <b>{{sale.company.company_information.phone_sale_general_4}}</b></ng-container>
+                </span>
+                <span *ngIf="!sale.company.company_information.phone_sale">
+                  <ng-container *ngIf="sale.user.user_information.phone1 && sale.user.user_information.phone1!='375'"><b>{{sale.user.user_information.phone1}}</b></ng-container>
+                  <ng-container *ngIf="sale.user.user_information.phone2 && sale.user.user_information.phone2!='375'">, <b>{{sale.user.user_information.phone2}}</b></ng-container>
+              </span>
+              </ng-container>
+              <ng-container *ngIf="user.access !== 4 ">
+              <span *ngIf="sale.access_own_info">
+                <ng-container *ngIf="sale.cont_phone1 && sale.cont_phone1!='375'"><b>{{sale.cont_phone1}}</b></ng-container>
+                <ng-container *ngIf="sale.cont_phone2 && sale.cont_phone2!='375'">, <b>{{sale.cont_phone2}}</b></ng-container>
+              </span>
+                <span *ngIf="!sale.access_own_info">
+                  <ng-container *ngIf="sale.user.user_information.phone1 && sale.user.user_information.phone1!='375'"><b>{{sale.user.user_information.phone1}}</b></ng-container>
+                  <ng-container *ngIf="sale.user.user_information.phone2 && sale.user.user_information.phone2!='375'">, <b>{{sale.user.user_information.phone2}}</b></ng-container>
+               </span>
+              </ng-container>
+              <br>
+              <span>{{sale.text}}</span>
+              <br>
+              <a *ngIf="sale.access_edit" class="btn btn-sm btn-primary"
+                 routerLink="/sales/sale/{{sale.id}}">Подробнее</a>
+              &lt;!&ndash;  <a class="btn">
+                  <mat-icon class="size-16 icon-color">place Смотреть на карте</mat-icon>
+                </a>&ndash;&gt;
+            </div>
+          </div>
+        </td>
+      </tr>-->
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="row no-gutters">
+  <!--Пагинация -->
+  <div class="col-12 text-center">
+    <pagination-controls (pageChange)="getSalesByPage($event)" maxSize="7" previousLabel="" nextLabel=""
+                         directionLinks="true" autohide="true"></pagination-controls>
+  </div>
+  <!-- <div class="col-3 text-right">
+     Всего объектов в МЛС: {{countSales}}
+   </div>-->
+</div>

@@ -129,6 +129,7 @@ import {MaterialModule} from './material.module';
 import {NgxGalleryModule} from 'ngx-gallery';
 
 import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
+import { SalesListHhosComponent } from './sales/sales-list-hhos/sales-list-hhos.component';
 
 
 const adminCompaniesRoutes: Routes = [
@@ -171,7 +172,8 @@ const salesRoutes: Routes = [
   {path: 'moderation', component: SalesListModerationComponent, canActivate: [LoginGuard]},
   {path: 'moderation/sale/:id', component: SaleModificateModerationComponent, resolve: {data: SaleResolve}},
   {path: 'delete', component: SalesListDeleteComponent, canActivate: [LoginGuard]},
-  {path: 'delete/sale/:id', component: SaleModificateDeleteComponent, resolve: {data: SaleResolve}}
+  {path: 'delete/sale/:id', component: SaleModificateDeleteComponent, resolve: {data: SaleResolve}},
+  {path: 'hhos', component: SalesListHhosComponent, canActivate: [LoginGuard]},
 ];
 const clientsRoutes: Routes = [
   {path: '', component: ClientsListComponent},
@@ -342,6 +344,7 @@ const routes: Routes = [
     CallsListSearchComponent,
     CallsHouseListSearchComponent,
     SaleShowComponent,
+    SalesListHhosComponent,
     FilterPipe,
     SanitizeHtmlPipe
   ],

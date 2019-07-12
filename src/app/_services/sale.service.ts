@@ -17,6 +17,7 @@ export class SaleService {
   private uri_archive = '/sales/archive';
   private uri_moderation = '/sales/moderation';
   private uri_delete = '/sales/delete';
+  private uri_hhos = '/sales/hhos';
 
 
   constructor(private http: Http,
@@ -156,5 +157,18 @@ export class SaleService {
     return this.http.post(this.globals.url + this.uri_delete + '/' + id, JSON.stringify(sale));
   }
   /*Удаленные*/
+
+  /*HHOS*/
+  getSalesHhos(search = {}): Observable<Sale[]> {
+    return this.http.get(this.globals.url + this.uri_hhos, {search: search})
+      .map((response: Response) => response.json().sales);
+  }
+
+  countSalesHhos(search = {}): Observable<Count> {
+    return this.http.get(this.globals.url + this.uri_hhos + '/count', {search: search})
+      .map((response: Response) => response.json()
+      );
+  }
+  /*HHOS*/
 
 }
