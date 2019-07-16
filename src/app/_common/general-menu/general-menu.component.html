@@ -13,6 +13,14 @@
   </div>-->
   <div class="display">
     <div class="row no-gutters">
+      <div class="my-col-sm-3 d-none">
+        <span class="cursor" (click)="hide_info=!hide_info"><i class="fas fa-align-justify"></i></span>
+        <div class="menu" [ngClass]="{'show' : hide_info, 'hide' : !hide_info}">
+          <a class="dropdown-item">1</a>
+          <a class="dropdown-item">2</a>
+          <a class="dropdown-item">3</a>
+        </div>
+      </div>
       <div class="col-lg-9 col-md-8 d-none d-md-block">
         <!--Меняющийся навбар -->
         <nav class="navbar navbar-expand-lg">
@@ -39,6 +47,9 @@
                     +{{count_moderation_sale}}
                   </span>
                 </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/sales/hhos">Хозяйские</a>
               </li>
               <!--<li class="nav-item">
                 <a class="nav-link" routerLink="#">Карта</a>
@@ -120,7 +131,7 @@
       </div>
 
       <!-- Информация о пользователе -->
-      <div class="col-lg-3 col-md-4 col-sm-12 col-12 user">
+      <div class="col-lg-3 col-md-4 col-9 user">
         <app-menu-user-info></app-menu-user-info>
       </div>
     </div>

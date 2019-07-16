@@ -33,10 +33,42 @@
   color: #fbd85a;
   font-size: 1em;
 }
+.menu {
+  z-index: 2100;
+  display: none;
+  text-align: left;
+  font-size: 14px;
+  color: #000;
+  position: absolute;
+  left: auto;
+  width: 50%;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px;
+}
+.menu .dropdown-item:hover {
+  background: #f1eae9;
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+.cursor {
+  cursor: pointer;
+}
 @media (max-width: 880px) {
   .navbar-nav .nav-item a {
     font-size: 14px;
   }
-
+}
+@media (max-width : 768px) {
+  .my-col-sm-3 {
+    display: block!important;
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 0.7rem 5px 0;
+  }
 }
 
