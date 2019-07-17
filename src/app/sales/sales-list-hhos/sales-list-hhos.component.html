@@ -1,8 +1,9 @@
+<app-sales-list-search [hhos]="[true]" (changed)="getSalesSearch($event)"></app-sales-list-search>
+
 <div class="table-responsive" style="margin-bottom: 20px">
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th></th>
       <th><span class="nobr">Нас. пункт</span></th>
       <th>Район</th>
       <th>Мкрн</th>
@@ -69,11 +70,6 @@
     <ng-container
       *ngFor="let sale of sales | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countSales }; let i = index">
       <tr>
-        <td class="text-center">
-          <a *ngIf="sale.access_edit" routerLink="sale/{{sale.id}}" target="_self">
-            <i class="fas fa-pencil-alt icon-color"></i>
-          </a>
-        </td>
         <td>{{sale.location.city.title}}</td>
         <td>{{sale.location.district.title}}</td>
         <td>{{sale.location.microdistrict.title}}</td>

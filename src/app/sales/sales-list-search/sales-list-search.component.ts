@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IOption} from 'ng-select';
 import {LocationService} from '../../_services/location.service';
 import {LabelService} from '../../_services/label.service';
@@ -24,6 +24,7 @@ import {Subscription} from 'rxjs';
 })
 export class SalesListSearchComponent implements OnInit {
 
+  @Input() hhos: boolean;
   @Output() changed = new EventEmitter();
 
   public subscription: Subscription;
@@ -141,6 +142,10 @@ export class SalesListSearchComponent implements OnInit {
   }
 
   searchSales() {
+    if (this.hhos) {
+      this.search.users = '0';
+      this.search.company = '0';
+    }
     this.changed.emit(this.search);
   }
 

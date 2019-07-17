@@ -9,6 +9,7 @@ import {Company} from '../../_models/Company.model';
 import {AccessModel} from '../../_models/Access.model';
 import {CompanyService} from '../../_services/company.service';
 import {UserService} from '../../_services/user.service';
+import {SearchSaleModel} from '../../_models/SearchSale.model';
 
 @Component({
   selector: 'app-sales-list-hhos',
@@ -34,10 +35,17 @@ export class SalesListHhosComponent implements OnInit {
   public countSales; // если не придет информация с API
   public limit; // если не придет информация с API
 
-  public search = {
+  public search = new SearchSaleModel({'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0},
+    {'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0}, '', '', null,
+    null, null, null, '', '', '', '', '', '', '',
+    '', '', '', '', '', '', '', '', '', '0',
+    '0', '', '', '', '', '', '', [], [], [], false, false, false,
+    false, false, false, false);
+
+  /*public search = {
     'users' : 0,
     'company' : 0
-  };
+  };*/
 
   public sort = {
     'field': 'updated_at',
@@ -62,6 +70,7 @@ export class SalesListHhosComponent implements OnInit {
   getSales() {
 
     this.search['sort'] = JSON.stringify(this.sort);
+    console.log(this.search);
 
     return this.saleService.getSalesHhos(this.search).subscribe(data => {
       this.sales = [];
@@ -103,6 +112,20 @@ export class SalesListHhosComponent implements OnInit {
         this.route.navigate(['403']);
       }
     });
+  }
+
+  getSalesSearch(event) {
+    this.sales = [];
+
+    for (const [key, value] of Object.entries(event)) {
+      if (typeof(value) === 'object') {
+        this.search[key] = JSON.stringify(event[key]);
+      } else {
+        this.search[key] = event[key];
+      }
+
+    }
+    this.getSales();
   }
 
   changeSort(field, value) {

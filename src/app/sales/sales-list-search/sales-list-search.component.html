@@ -346,24 +346,31 @@
         </div>
 
         <div class="col-12">
-          <div class="form-group">
+          <div class="form-group" [hidden]="hhos">
             <div class="search ng-select-without-icon">
               <ng-container *ngIf="user.access === 4 ">
                 <label class="label text-left">Агентство</label>
                 <select [(ngModel)]="search.company">
-                  <option value="0"></option>
-                  <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
+                    <option value="0"></option>
+                    <option *ngFor="let one of companies" [value]="one.id">{{one.title}}</option>
                 </select>
               </ng-container>
+
               <ng-container *ngIf="user.access !== 4 ">
                 <label class="label text-left">Сотрудник</label>
                 <select [(ngModel)]="search.users">
-                  <option value="0"></option>
-                  <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}} {{one.user_information.name}}</option>
+                    <option value="0"></option>
+                    <option *ngFor="let one of users" [value]="one.id">{{one.user_information.surname}}
+                      {{one.user_information.name}}
+                    </option>
                 </select>
               </ng-container>
             </div>
           </div>
+          <!-- Если HHOS выставить сотрудника и компанию 0 значения-->
+          <ng-container *ngIf="hhos">
+          </ng-container>
+
         </div>
 
       </div>
