@@ -4,6 +4,7 @@
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
+      <th></th>
       <th><span class="nobr">Нас. пункт</span></th>
       <th>Район</th>
       <th>Мкрн</th>
@@ -70,6 +71,12 @@
     <ng-container
       *ngFor="let sale of sales | paginate: { itemsPerPage: limit, currentPage: page, totalItems: countSales }; let i = index">
       <tr>
+        <td class="text-center">
+          <span (click)="hideme[i] = !hideme[i]">
+            <mat-icon class="icon-color size-18 icon-cursor" [hidden]="hideme[i]">keyboard_arrow_down</mat-icon>
+            <mat-icon class="icon-color size-18 icon-cursor" [hidden]="!hideme[i]">keyboard_arrow_up</mat-icon>
+          </span>
+        </td>
         <td>{{sale.location.city.title}}</td>
         <td>{{sale.location.district.title}}</td>
         <td>{{sale.location.microdistrict.title}}</td>
@@ -94,53 +101,24 @@
           {{sale.updated_at | date: 'dd.MM.yyyy'}}
         </td>
       </tr>
-    <!--  <tr [hidden]="!hideme[i]">
+      <tr [hidden]="!hideme[i]">
         <td colspan="16">
           <div class="row no-gutters text-left">
             <div class="col-lg-6 col-md-12">
-              <app-sale-list-photo [photo]="sale.photo_reclame"></app-sale-list-photo>
-              &lt;!&ndash;<ng-container
-                *ngFor="let photo_reclame of sale.photo_reclame">
-                <div>
-                  <img src="{{photo_reclame.path}}">
-                </div>
-              </ng-container>&ndash;&gt;
+              <!--<app-sale-list-photo [photo]="sale.photo_reclame"></app-sale-list-photo>-->
             </div>
+
             <div class="col-lg-5 col-md-12" style="margin: 10px 0 0 10px">
-              <ng-container *ngIf="user.access === 4 ">
-                <span *ngIf="sale.company.company_information.phone_sale">
-                  <ng-container *ngIf="sale.company.company_information.phone_sale_general_1 && sale.company.company_information.phone_sale_general_1!='375'"><b>{{sale.company.company_information.phone_sale_general_1}}</b></ng-container>
-                  <ng-container *ngIf="sale.company.company_information.phone_sale_general_2 && sale.company.company_information.phone_sale_general_2!='375'">, <b>{{sale.company.company_information.phone_sale_general_2}}</b></ng-container>
-                  <ng-container *ngIf="sale.company.company_information.phone_sale_general_3 && sale.company.company_information.phone_sale_general_3!='375'">, <b>{{sale.company.company_information.phone_sale_general_3}}</b></ng-container>
-                  <ng-container *ngIf="sale.company.company_information.phone_sale_general_4 && sale.company.company_information.phone_sale_general_4!='375'">, <b>{{sale.company.company_information.phone_sale_general_4}}</b></ng-container>
-                </span>
-                <span *ngIf="!sale.company.company_information.phone_sale">
-                  <ng-container *ngIf="sale.user.user_information.phone1 && sale.user.user_information.phone1!='375'"><b>{{sale.user.user_information.phone1}}</b></ng-container>
-                  <ng-container *ngIf="sale.user.user_information.phone2 && sale.user.user_information.phone2!='375'">, <b>{{sale.user.user_information.phone2}}</b></ng-container>
+              <span>
+                <ng-container *ngIf="sale.cont_phone1!='0' && sale.cont_phone1!='375'"><b>{{sale.cont_phone1}}</b></ng-container>
+                <ng-container *ngIf="sale.cont_phone2!='0' && sale.cont_phone2!='375'">, <b>{{sale.cont_phone2}}</b></ng-container>
               </span>
-              </ng-container>
-              <ng-container *ngIf="user.access !== 4 ">
-              <span *ngIf="sale.access_own_info">
-                <ng-container *ngIf="sale.cont_phone1 && sale.cont_phone1!='375'"><b>{{sale.cont_phone1}}</b></ng-container>
-                <ng-container *ngIf="sale.cont_phone2 && sale.cont_phone2!='375'">, <b>{{sale.cont_phone2}}</b></ng-container>
-              </span>
-                <span *ngIf="!sale.access_own_info">
-                  <ng-container *ngIf="sale.user.user_information.phone1 && sale.user.user_information.phone1!='375'"><b>{{sale.user.user_information.phone1}}</b></ng-container>
-                  <ng-container *ngIf="sale.user.user_information.phone2 && sale.user.user_information.phone2!='375'">, <b>{{sale.user.user_information.phone2}}</b></ng-container>
-               </span>
-              </ng-container>
               <br>
               <span>{{sale.text}}</span>
-              <br>
-              <a *ngIf="sale.access_edit" class="btn btn-sm btn-primary"
-                 routerLink="/sales/sale/{{sale.id}}">Подробнее</a>
-              &lt;!&ndash;  <a class="btn">
-                  <mat-icon class="size-16 icon-color">place Смотреть на карте</mat-icon>
-                </a>&ndash;&gt;
             </div>
           </div>
         </td>
-      </tr>-->
+      </tr>
     </ng-container>
     </tbody>
   </table>

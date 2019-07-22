@@ -30,6 +30,8 @@ export class SalesListHhosComponent implements OnInit {
     false, false, false, false, false, false, false, false,
     false, false, false, false);
 
+  public hideme = [];
+
   public page = 0;
   public timer: any;
   public countSales; // если не придет информация с API
@@ -70,7 +72,6 @@ export class SalesListHhosComponent implements OnInit {
   getSales() {
 
     this.search['sort'] = JSON.stringify(this.sort);
-    console.log(this.search);
 
     return this.saleService.getSalesHhos(this.search).subscribe(data => {
       this.sales = [];
