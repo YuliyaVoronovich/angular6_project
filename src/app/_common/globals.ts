@@ -5,7 +5,10 @@ import {Router} from '@angular/router';
 @Injectable()
 export class Globals {
   public url = 'https://alfa.api.belan.by/api';
-  //  public url = 'http://127.0.0.1:8000/api';
+//  public url = 'http://127.0.0.1:8000/api';
+
+   public base_url = 'https://alfa.api.belan.by/';
+ // public base_url = 'http://127.0.0.1:8000';
 
   public base_value = 25.5;
 
@@ -42,6 +45,7 @@ export class Globals {
 
   transformPhone(phone) {
     let pos = 0;
+
     phone = phone.replace(/[^0-9]/gim, ''); // оставить только цифры
 
     pos = phone.indexOf('37517');

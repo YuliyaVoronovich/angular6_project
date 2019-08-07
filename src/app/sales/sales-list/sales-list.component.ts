@@ -1,4 +1,7 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Globals} from '../../_common/globals';
+
 import {Sale} from '../../_models/Sale.model';
 import {User} from '../../_models/User.model';
 import {Company} from '../../_models/Company.model';
@@ -56,9 +59,14 @@ export class SalesListComponent implements OnInit, OnDestroy {
   public countSales; // если не придет информация с API
   public limit; // если не придет информация с API
 
+  public viber_text = [];
+
   public count_delete = 0;
   public subscription: Subscription;
-  public search = new SearchSaleModel({'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0},
+  public search = new SearchSaleModel({'values': [], 'except': 0}, {'values': [], 'except': 0}, {
+      'values': [],
+      'except': 0
+    },
     {'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0}, '', '', null,
     null, null, null, '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', '', '', '',
@@ -79,7 +87,9 @@ export class SalesListComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private companyService: CompanyService,
               private sharedService: SharedService,
-              private siteService: SiteService) {
+              private siteService: SiteService,
+              private globals: Globals,
+              private _sanitizer: DomSanitizer) {
     /* this.render.listenGlobal('window', 'scroll', (evt) => {
        this.onScroll();
      });*/
@@ -167,7 +177,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
         data[i].user.user_information = this.userService.setUserInformation(data[i].user.user_information);
         data[i].company = this.companyService.setCompany(data[i].company);
         data[i].company.company_information = this.companyService.setCompanyInformation(data[i].company.company_information);
-       // console.log(data[i].company.company_information);
+        // console.log(data[i].company.company_information);
         // адрес объекта
         data[i].location = this.locationService.setLocation(data[i].location);
         data[i].location.city = this.locationService.setCity(data[i].location.city);
@@ -182,6 +192,11 @@ export class SalesListComponent implements OnInit, OnDestroy {
         } else {
           data[i].price_sqr = 0;
         }
+        // формируем ссылку на вайбер
+        this.viber_text[i] = this.getSantizeUrl('viber://forward?text='
+          + encodeURI(data[i].room + '-комнатная квартира ' + data[i].location.city.title + ', ' + ((data[i].location.street.title) ? data[i].location.street.title : '')
+            + ', ' + ((data[i].location.house !== '0') ? data[i].location.house : '') + ((data[i].location.housing !== '0') ? '/' + data[i].location.housing : '')
+            + ' ' + this.globals.base_url + '/sales/sale/show/' + data[i].id));
         //
         this.sales.push(data[i]);
       }
@@ -194,6 +209,10 @@ export class SalesListComponent implements OnInit, OnDestroy {
         this.route.navigate(['403']);
       }
     });
+  }
+
+  public getSantizeUrl(url: string) {
+    return this._sanitizer.bypassSecurityTrustUrl(url);
   }
 
   getSites() {
@@ -221,7 +240,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
     this.saleService.delete(sale).subscribe(
       data => {
         if (data) {
-          if (data.sale.delete_moderation)  {
+          if (data.sale.delete_moderation) {
             this.message('Объект отправлен в удаленные', false);
             this.sharedService.emitChange4(); // обновление модерации в меню
           } else {
