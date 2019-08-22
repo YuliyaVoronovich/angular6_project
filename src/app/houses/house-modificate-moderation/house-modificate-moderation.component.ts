@@ -69,11 +69,11 @@ export class HouseModificateModerationComponent implements OnInit {
   public districts_rb = [];
   public cities = [];
 
-  public house: House = new House(0, null, null, '', '', '', '',  '', null, null, false,
+  public house: House = new House(0, null, null, '', '', '', '', '', null, null, false,
     '', 0, 0, false, false, false, false, 0, '', null, '',
     '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
     false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
-    false, null, null, null,   null, false, false, false, false);
+    false, null, null, null, null, false, false, false, false);
 
   public user: User = new User(0, '', '', null, null, null, '',
     0, 0, 0, false, null, null, null, null, null, null);

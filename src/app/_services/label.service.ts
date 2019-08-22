@@ -60,4 +60,31 @@ export class LabelService {
     return roof_house;
   }
 
+  setHeatingHouse(heating: Label): Label {
+    if (!heating) {
+      return heating = new Label(0, '', '', '', '');
+    }
+    return heating;
+  }
+
+  setWaterHouse(water: Label): Label {
+    if (!water) {
+      return water = new Label(0, '', '', '', '');
+    }
+    return water;
+  }
+
+  setGasHouse(gas: Label): Label {
+    if (!gas) {
+      return gas = new Label(0, '', '', '', '');
+    }
+    return gas;
+  }
+  setElectricityHouse(electricity: Label): Label {
+    if (!electricity) {
+      return electricity = new Label(0, '', '', '', '');
+    }
+    return electricity;
+  }
+
 }

@@ -1,0 +1,37 @@
+.newRow {
+  background: #fdfdff;
+  padding: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  margin: 10px 0;
+  font-weight: 400;
+}
+.top {
+  margin-top: 10px;
+}
+.justify {
+  text-align: justify;
+}
+.display {
+  width: calc(100% - 170px);
+  margin: 10px 0 10px 10px;
+}
+ul{
+  list-style-type: none;
+  padding: 0;
+}
+ul li {
+  line-height: 1.2;
+}
+.title{
+  font-weight: bold;
+  font-size: 20px;
+}
+.price {
+  font-weight: bold;
+  font-size: 20px;
+}
+@media (max-width : 768px) {
+  .display {
+    width: 100%;
+  }
+}

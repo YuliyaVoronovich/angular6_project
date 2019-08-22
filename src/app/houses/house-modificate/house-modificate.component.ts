@@ -202,6 +202,7 @@ export class HouseModificateComponent implements OnInit {
           this.show_city = true;
           this.show_street = true;
 
+
         } else {
           this.selectCities = [];
         }
@@ -236,6 +237,7 @@ export class HouseModificateComponent implements OnInit {
       this.getUsers();
 
     });
+    console.log( this.house);
   }
 
   getAllLocations() {

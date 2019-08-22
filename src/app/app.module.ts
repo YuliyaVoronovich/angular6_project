@@ -95,6 +95,8 @@ import { AdminSourcesListComponent } from './admin/admin-sources-list/admin-sour
 import { CallsListSearchComponent } from './calls/calls-list-search/calls-list-search.component';
 import { CallsHouseListSearchComponent } from './calls_house/calls-house-list-search/calls-house-list-search.component';
 import { SaleShowComponent } from './sales/sale-show/sale-show.component';
+import { SalesListHhosComponent } from './sales/sales-list-hhos/sales-list-hhos.component';
+import { HouseShowComponent } from './houses/house-show/house-show.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -124,12 +126,13 @@ import {SiteService} from './_services/site_service';
 import {CallOtherService} from './_services/call_other.service';
 import {SourceService} from './_services/source.service';
 import {SaleResolveShow} from './_services/sale_resolve_show.service';
+import {HouseResolveShow} from './_services/house_resolve_show';
 
 import {MaterialModule} from './material.module';
 import {NgxGalleryModule} from 'ngx-gallery';
 
 import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
-import { SalesListHhosComponent } from './sales/sales-list-hhos/sales-list-hhos.component';
+
 
 
 const adminCompaniesRoutes: Routes = [
@@ -251,6 +254,7 @@ const routes: Routes = [
   {path: 'sales/sale/show/:id', component: SaleShowComponent, resolve: {data: SaleResolveShow}},
   {path: 'clients', component: GeneralTemplateComponent, children: clientsRoutes},
   {path: 'houses', component: GeneralTemplateComponent, children: housesRoutes},
+  {path: 'houses/house/show/:id', component: HouseShowComponent, resolve: {data: HouseResolveShow}},
   {path: 'clients_house', component: GeneralTemplateComponent, children: clientsHouseRoutes},
   {path: 'calls', component: GeneralTemplateComponent, children: callsRoutes},
   {path: 'calls_house', component: GeneralTemplateComponent, children: callsHouseRoutes},
@@ -345,6 +349,7 @@ const routes: Routes = [
     CallsHouseListSearchComponent,
     SaleShowComponent,
     SalesListHhosComponent,
+    HouseShowComponent,
     FilterPipe,
     SanitizeHtmlPipe
   ],
@@ -389,6 +394,7 @@ const routes: Routes = [
     ClientResolve,
     HouseService,
     HouseResolve,
+    HouseResolveShow,
     ClientHouseService,
     ClientHouseResolve,
     CallService,

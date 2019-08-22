@@ -42,7 +42,6 @@ export class SaleShowComponent implements OnInit {
   public price_byn: number;
   public price_euro: number;
 
-  public new_or_old: string;
   public term_sale: string;
   public type: string;
   public balcony: string;

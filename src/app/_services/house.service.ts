@@ -57,6 +57,11 @@ export class HouseService {
       .map((response: Response) => response.json());
   }
 
+  showHouse(id) {
+    return this.http.get(this.globals.url + this.uri + '/house/show/' + id)
+      .map((response: Response) => response.json());
+  }
+
   create(house: House) {
     return this.http.post(this.globals.url + this.uri, JSON.stringify(house))
       .map((response: Response) => response.json());

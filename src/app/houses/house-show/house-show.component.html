@@ -1,0 +1,157 @@
+<div class="container">
+  <div class="newRow" [hidden]="!house.delete_at || archive" style="min-height: 400px">
+    <h2 style="text-align: center;line-height: 400px;">Объявление не актуально</h2>
+  </div>
+  <div class="newRow" [hidden]="house.delete_at">
+    <div class="row top">
+      <div class="col-12">
+        <div class="row no-gutters">
+          <div style="width: 160px">
+            <a href="" style="outline:none;">
+              <img style="margin: 4px 10px;" class="img img-fluid" src="assets/images/belan-logo_mini2.png"/>
+            </a>
+          </div>
+
+          <div class="display">
+          <span class="title">{{house.type.title}} ,
+              {{house.location.city.title}},
+              <ng-container *ngIf="house.location.street.title.length >0 ">{{house.location.street.title}}</ng-container>
+              <ng-container
+                *ngIf="house.location.house !== '0' && house.location.house !== ''">,{{house.location.house}}</ng-container>
+              <ng-container *ngIf="house.location.housing !== '0' && house.location.housing !== ''"> / {{house.location.housing}}</ng-container>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12" style="min-height: 300px">
+        <ngx-gallery *ngIf="galleryImages.length > 0" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="row price">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-12">
+                {{house.price}} $
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {{price_byn}} р
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {{price_euro}} €
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="row">
+              <ng-container *ngIf="house.company.company_information.phone_house">
+                <div class="col-12">
+                  <span [innerHTML]="house.company.company_information.phone_house_general_1===null ? '' : house.company.company_information.phone_house_general_1 | sanitizeHtml"></span>
+                </div>
+                <div class="col-12">
+                  <span [innerHTML]="house.company.company_information.phone_house_general_2===null ? '' : house.company.company_information.phone_house_general_2 | sanitizeHtml"></span>
+                </div>
+                <div class="col-12">
+                  <span [innerHTML]="house.company.company_information.phone_house_general_3===null ? '' : house.company.company_information.phone_house_general_3 | sanitizeHtml"></span>
+                </div>
+                <div class="col-12">
+                  <span [innerHTML]="house.company.company_information.phone_house_general_4===null ? '' : house.company.company_information.phone_house_general_4 | sanitizeHtml"></span>
+                </div>
+              </ng-container>
+              <span *ngIf="!house.company.company_information.phone_house">
+                 <div class="col-12">
+                   <span [innerHTML]="house.user.user_information.phone1===null ? '' : house.user.user_information.phone1 | sanitizeHtml"></span>
+                 </div>
+                 <div class="col-12">
+                  <span [innerHTML]="house.user.user_information.phone2===null ? '' : house.user.user_information.phone2 | sanitizeHtml"></span>
+                 </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12" *ngIf="house.id>0">
+            <app-sale-modificate-map [sale]="house"></app-sale-modificate-map>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row top justify">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+        {{house.text}}
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="row general-info">
+          <div class="col-xl-5 col-lg-6 col-12">
+            <div class="row">
+              <div class="col-6">
+                S участка
+              </div>
+              <div class="col-6">
+                {{house.area_land}} м<sup>2</sup>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Общая
+              </div>
+              <div class="col-6">
+                {{house.area}} м<sup>2</sup>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Жилая
+              </div>
+              <div class="col-6">
+                {{house.area_leave}} м<sup>2</sup>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Кухни
+              </div>
+              <div class="col-6">
+                {{house.area_kitchen}} м<sup>2</sup>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Этажность
+              </div>
+              <div class="col-6">
+                {{house.storeys}}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-7 col-lg-6 col-12">
+            <ul>
+              <ng-container *ngIf="heating">
+                <li>{{heating}}</li>
+              </ng-container>
+              <ng-container *ngIf="water">
+                <li>{{water}}</li>
+              </ng-container>
+              <ng-container *ngIf="gas">
+                <li>{{gas}}</li>
+              </ng-container>
+              <ng-container *ngIf="electricity">
+                <li>{{electricity}}</li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
