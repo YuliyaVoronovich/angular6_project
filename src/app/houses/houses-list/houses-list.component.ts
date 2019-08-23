@@ -1,4 +1,5 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 import {User} from '../../_models/User.model';
 import {Company} from '../../_models/Company.model';
 import {House} from '../../_models/House.model';
@@ -18,6 +19,8 @@ import {AccessModel} from '../../_models/Access.model';
 import {CalculatorComponent} from '../../_common/calculator/calculator.component';
 import {SiteService} from '../../_services/site_service';
 import {SiteModel} from '../../_models/Site.model';
+import {Globals} from '../../_common/globals';
+
 
 export interface DialogData {
   house: House;
@@ -47,6 +50,9 @@ export class HousesListComponent implements OnInit, OnDestroy {
   public timer: any;
   public countHouses; // если не придет информация с API
   public limit; // если не придет информация с API
+
+  public viber_text = [];
+
   public count_delete = 0;
   public subscription: Subscription;
 
@@ -77,7 +83,9 @@ export class HousesListComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private companyService: CompanyService,
               private sharedService: SharedService,
-              private siteService: SiteService) {
+              private globals: Globals,
+              private siteService: SiteService,
+              private _sanitizer: DomSanitizer) {
 
     this.subscription = sharedService.changeEmitted$2.subscribe(data => {
       this.houses = [];
@@ -183,6 +191,12 @@ export class HousesListComponent implements OnInit, OnDestroy {
         } else {
           data[i].price_sqr = 0;
         }
+
+        // формируем ссылку на вайбер
+        this.viber_text[i] = this.getSantizeUrl('viber://forward?text='
+          + encodeURI(data[i].type.title + ', ' + data[i].location.city.title + ', ' + ((data[i].location.street.title) ? data[i].location.street.title : '')
+            + ', ' + ((data[i].location.house !== '0') ? data[i].location.house : '') + ((data[i].location.housing !== '0') ? '/' + data[i].location.housing : '')
+            + ' ' + this.globals.base_url + '/houses/house/show/' + data[i].id));
         //
         this.houses.push(data[i]);
       }
@@ -195,6 +209,9 @@ export class HousesListComponent implements OnInit, OnDestroy {
         this.route.navigate(['403']);
       }
     });
+  }
+  public getSantizeUrl(url: string) {
+    return this._sanitizer.bypassSecurityTrustUrl(url);
   }
 
   getSites() {

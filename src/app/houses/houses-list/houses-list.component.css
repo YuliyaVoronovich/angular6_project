@@ -82,6 +82,10 @@ table th .nobr {
 .action:hover {
   background: #6fbeee;
 }
+.action_href, .action_href:hover  {
+  color: #000!important;
+  text-decoration: none;
+}
 .icon-color {
   color: #428bca
 }

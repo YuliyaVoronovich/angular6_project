@@ -141,6 +141,9 @@
             <div class="action">ПОДБОР ПОКУПАТЕЛЕЙ</div>
             <div *ngIf="house.access_reclame" class="action" (click)="openDialogReclame(house)">УПРАВЛЕНИЕ РЕКЛАМОЙ</div>
             <div class="action" (click)="openCalculator(house)">КАЛЬКУЛЯТОР</div>
+            <div class="action">
+              <a class="action_href" [href]=viber_text[i]>ОТПРАВИТЬ НА VIBER</a>
+            </div>
           </div>
         </td>
       </tr>

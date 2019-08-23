@@ -131,7 +131,6 @@ export class HouseShowComponent implements OnInit {
             this.house.gas = this.labelService.setGasHouse(this.house.gas);
             this.house.electricity = this.labelService.setElectricityHouse(this.house.electricity);
 
-            console.log(this.house);
 
             // список характеристик
              if (this.house.heating.id > 0) {
