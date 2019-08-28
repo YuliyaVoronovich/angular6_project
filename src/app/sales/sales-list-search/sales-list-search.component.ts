@@ -106,7 +106,7 @@ export class SalesListSearchComponent implements OnInit {
     null, null, null, [], '', '', '', '', '', '',
     '', '', '', '', '', '', {'values': false, 'except': 0}, {'values': false, 'except': 0},
     '', '', '', '', '', '', '', '', '', [], [], [], false, false,
-    false, false, false, false, false);
+    false, false, false, false, false, false);
 
   public search_user = {
     'company': 0
@@ -155,7 +155,7 @@ export class SalesListSearchComponent implements OnInit {
       null, null, null, [], '', '', '', '', '', '',
       '', '', '', '', '', '', '', '', '', '',
       '', '', '', '', '', '', '', [], [], [], false, false, false,
-      false, false, false, false);
+      false, false, false, false, false);
     this.arrayRooms = [];
     this.arrayWalls = [];
     this.arraySales = [];

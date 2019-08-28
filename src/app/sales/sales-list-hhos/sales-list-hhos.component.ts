@@ -42,7 +42,7 @@ export class SalesListHhosComponent implements OnInit {
     null, null, null, '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', '', '', '0',
     '0', '', '', '', '', '', '', [], [], [], false, false, false,
-    false, false, false, false);
+    false, false, false, false, false);
 
   /*public search = {
     'users' : 0,

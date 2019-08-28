@@ -63,15 +63,12 @@ export class SalesListComponent implements OnInit, OnDestroy {
 
   public count_delete = 0;
   public subscription: Subscription;
-  public search = new SearchSaleModel({'values': [], 'except': 0}, {'values': [], 'except': 0}, {
-      'values': [],
-      'except': 0
-    },
+  public search = new SearchSaleModel({'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0 },
     {'values': [], 'except': 0}, {'values': [], 'except': 0}, {'values': [], 'except': 0}, '', '', null,
     null, null, null, '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', [], [], [], false, false, false,
-    false, false, false, false);
+    false, false, false, false, false);
 
   public sort = {
     'field': 'updated_at',

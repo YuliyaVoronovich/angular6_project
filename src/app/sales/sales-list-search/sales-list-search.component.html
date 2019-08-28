@@ -498,6 +498,10 @@
                        [ngClass]="{'select-label' : search.room_separate}">
                   <span>Раздельные комнаты</span>
                 </label>
+                <label class="btn btn-default" (click)="search.no_mls = !search.no_mls"
+                       [ngClass]="{'select-label' : search.no_mls}">
+                  <span>Не MLS</span>
+                </label>
               </div>
             </div>
           </div>

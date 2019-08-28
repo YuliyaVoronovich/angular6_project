@@ -59,7 +59,7 @@ export class SalesListArchiveComponent implements OnInit, OnDestroy {
     null, null, null, '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', [], [], [], false, false, false,
-    false, false, false, false);
+    false, false, false, false, false);
 
   public sort = {
     'field': 'created_at',

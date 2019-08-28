@@ -48,7 +48,8 @@ export class SearchSaleModel {
     public price_low: boolean,
     public partner: boolean,
     public layout: boolean,
-    public room_separate: boolean
+    public room_separate: boolean,
+    public no_mls: boolean
   ) {
   }
 }
