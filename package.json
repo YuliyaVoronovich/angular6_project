@@ -25,6 +25,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.1.1",
     "angular-bootstrap-md": "^6.2.1",
     "angular2-image-upload": "^1.0.0-rc.1",
+    "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.0.0-beta.2",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.4",

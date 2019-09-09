@@ -113,7 +113,7 @@
         <td>{{sale.price}}</td>
         <td>{{sale.price_sqr}}</td>
         <td class="user_information">
-          <span *ngIf="sale.user.partner" class="partner">
+          <span *ngIf="sale.user.partner && user.partner" class="partner">
             Партнерские продажи
           </span>
           <span *ngIf="user.access===4" [ngClass]="{'bold': sale.user.partner, 'cursor': sale.user.partner}"> {{sale.company.title}}</span>

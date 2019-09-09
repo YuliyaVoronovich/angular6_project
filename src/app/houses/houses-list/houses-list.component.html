@@ -121,7 +121,7 @@
         <td>{{house.price}}</td>
         <td>{{house.price_sqr}}</td>
         <td class="user_information">
-          <span *ngIf="house.user.partner" class="partner">
+          <span *ngIf="house.user.partner && user.partner" class="partner">
             Партнерские продажи
           </span>
           <span *ngIf="user.access===4" [ngClass]="{'bold': house.user.partner, 'cursor': house.user.partner}"> {{house.company.title}}</span>
