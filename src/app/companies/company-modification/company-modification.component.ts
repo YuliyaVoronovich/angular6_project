@@ -27,7 +27,7 @@ export class CompanyModificationComponent implements OnInit {
   public id;
 
   public timer: any;
-  public company_information: CompanyInformation = new CompanyInformation(null, null, '', '', '', '', null, null, '',
+  public company_information: CompanyInformation = new CompanyInformation(null, null, '', '', '', '', '', null, null, '',
     '', false, null, null, null, false, null, '', '',
     '', false, '', '', '', '', '', false, '',
     '', '', '', false, false, false, false, false,

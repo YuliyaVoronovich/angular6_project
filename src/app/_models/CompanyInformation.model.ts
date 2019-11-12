@@ -7,6 +7,7 @@ export class CompanyInformation {
 
   public id: number,
   public company_id: Company,
+  public id_user_realt: string,
   public id_domovita: string,
   public login_onliner: string,
   public password_onliner: string,

@@ -25,11 +25,11 @@ export class AdminCompanyModificateComponent implements OnInit {
   public modules: Module[] = [];
   public id;
   public timer: any;
-  public company_information: CompanyInformation = new CompanyInformation(null, null, '', '', '', '', null, null, '',
-    '', false, null, null, null, false, null, '', '',
+  public company_information: CompanyInformation = new CompanyInformation(null, null,  '', '', '', '', '', null, null, '',
+    '', false, false, false, false, false, null, '', '',
     '', false, '', '', '', '', '', false, '',
     '', '', '', false, false, false, false, false,
-    false, false, false, false, false, false, false, false,  '','', '',
+    false, false, false, false, false, false, false, false,  '', '', '',
     '', '', '', '', '');
   public company: Company = new Company(null, '', '', '', '', '', null, null, '',
     '', '', null, null, null, [], null, false, [], null);

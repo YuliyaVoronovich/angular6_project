@@ -55,14 +55,14 @@ export class CompanyService {
 
   setCompanyInformation(company_information: CompanyInformation) {
     if (!company_information) {
-      return company_information = new CompanyInformation(null, null, '', '', '', '', null, null, '',
-        '', false, null, null, null, false, null, '', '',
+      return company_information = new CompanyInformation(null, null, '', '', '', '', '', null, null, '',
+        '', false, false, false, false, false, null, '', '',
         '', false, '', '', '', '', '', false, '',
         '', '', '', false, false, false, false, false,
         false, false, false, false, false, false, false, false,  '', '', '',
         '', '', '', '', '');
     }
-    return company_information;  
+    return company_information;
   }
 
   create(company: Company): Observable<Response> {
