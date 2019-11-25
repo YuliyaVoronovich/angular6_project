@@ -108,12 +108,14 @@
 
           <div class="form-group row">
             <label class="col-xl-3 col-5 col-form-label text-left">Realt.by
-              <span>(логин и пароль от аккаунта на realt.by, на который будет производится автоматическая выгрузка объектов)</span></label>
+              <span>(логин, пароль и id пользователя от аккаунта на realt.by, на который будет производится автоматическая выгрузка объектов)</span></label>
             <div class="col-7">
               <input type="text" class="form-control marginBottom" [(ngModel)]="company.company_information.login_realt"
                      placeholder="Логин realt.by">
               <input type="text" class="form-control" [(ngModel)]="company.company_information.password_realt"
                      placeholder="Пароль realt.by">
+              <input type="text" class="form-control" [(ngModel)]="company.company_information.id_user_realt"
+                     placeholder="ID пользователя для рекламы">
             </div>
           </div>
 
