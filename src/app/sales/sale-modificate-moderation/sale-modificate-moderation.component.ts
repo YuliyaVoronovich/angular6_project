@@ -69,7 +69,7 @@ export class SaleModificateModerationComponent implements OnInit {
   public sources: Label[] = [];
   public metro: Metro[] = [];
 
-  public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
+  public sale: Sale = new Sale(0, null, null, [], '', '', '', 0, 0, false,
     '', false, false, false, '', '', null, null,  false, '', null,
     '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
     0, 0,  0, 0, '', 0, false, '', '', false, 0, 0, null,
@@ -257,6 +257,30 @@ export class SaleModificateModerationComponent implements OnInit {
               this.message('Объект перенесен в общую базу', false);
               this.router.navigate(['sales/moderation']);
               this.sharedService.emitChange4(); // обновление модерации в меню
+
+              // отправить на сайт realt.by
+              if (this.sale.sites.filter(option => option.title.includes("Realt.by")).length > 0 && this.sale.send) {
+                console.log('на реалт');
+                this.saleService.sendRealt(this.sale).subscribe(
+                  data_realt => {});
+              } else {
+                console.log('удалить с реалта');
+                this.saleService.deleteRealt(this.sale).subscribe(
+                  data_realt => {});
+              }
+
+              // отправить на сайт onliner.by
+              if (this.sale.sites.filter(option => option.title.includes("Onliner.by")).length > 0 && this.sale.send) {
+                console.log('на onliner');
+                this.saleService.sendOnliner(this.sale).subscribe(
+                  data_onliner => {});
+              } else {
+                console.log('удалить с onliner');
+                this.saleService.deleteOnliner(this.sale).subscribe(
+                  data_onliner => {});
+              }
+
+
             } else {
               this.message('Не удалось перенести объект!', true);
 

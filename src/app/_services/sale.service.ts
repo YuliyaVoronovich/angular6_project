@@ -26,7 +26,7 @@ export class SaleService {
   }
   setSale(sale: Sale) {
     if (!sale) {
-      return sale = new Sale(0, null, null, '', '', '', 0, 0, false,
+      return sale = new Sale(0, null, null, [], '', '', '', 0, 0, false,
         '', false, false, false, '', '', null, null,  false, '', null,
         '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
         0, 0,  0, 0, '', 0, false, '', '', false, 0, 0, null,
@@ -170,5 +170,26 @@ export class SaleService {
       );
   }
   /*HHOS*/
+
+
+  /*отправка на реалт*/
+  sendRealt(sale: Sale) {
+    return this.http.put(this.globals.url + '/realt_add/' + sale.id, JSON.stringify(sale));
+  }
+
+  /*удаление с реалта*/
+  deleteRealt(sale: Sale) {
+    return this.http.post(this.globals.url + '/realt_delete/' + sale.id, JSON.stringify(sale));
+  }
+
+  /*отправка на onliner*/
+  sendOnliner(sale: Sale) {
+    return this.http.put(this.globals.url + '/onliner_add/' + sale.id, JSON.stringify(sale));
+  }
+
+  /*удаление с onliner*/
+  deleteOnliner(sale: Sale) {
+    return this.http.post(this.globals.url + '/onliner_delete/' + sale.id, JSON.stringify(sale));
+  }
 
 }

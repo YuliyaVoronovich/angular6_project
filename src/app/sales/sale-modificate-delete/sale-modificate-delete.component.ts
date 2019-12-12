@@ -69,7 +69,7 @@ export class SaleModificateDeleteComponent implements OnInit {
   public sources: Label[] = [];
   public metro: Metro[] = [];
 
-  public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
+  public sale: Sale = new Sale(0, null, null, [], '', '', '', 0, 0, false,
     '', false, false, false, '', '', null, null,  false, '', null,
     '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
     0, 0,  0, 0, '', 0, false, '', '', false, 0, 0, null,

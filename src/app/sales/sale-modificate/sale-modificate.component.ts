@@ -71,7 +71,7 @@ export class SaleModificateComponent implements OnInit {
   public sources: Label[] = [];
   public metro: Metro[] = [];
 
-  public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
+  public sale: Sale = new Sale(0, null, null, [],  '', '', '', 0, 0, false,
     '', false, false, false, '', '', null, null, false, '', null,
     '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
     0, 0, 0, 0, '', 0, false, '', '', false, 0, 0, null,
@@ -250,14 +250,14 @@ export class SaleModificateComponent implements OnInit {
     this.sale.location.street.id = (this.sale.location.street.id !== undefined) ? this.sale.location.street.id : 0;
 
     this.sale.photo_reclame = this.upload_photo;
-    console.log(this.sale);
+
     if (this.validation() === true) {
 
       if (this.sale.id !== 0) {
         this.saleService.update(this.sale).subscribe(
           data => {
             if (data) {
-
+             // console.log(this.sale);
               if (data.sale.moderation)  {
                 this.message('Объект отправлен на модерацию', false);
                 this.sharedService.emitChange4(); // обновление модерации в меню
@@ -271,6 +271,31 @@ export class SaleModificateComponent implements OnInit {
               if ((this.sale.location.city.id && this.sale.location.street.id === 0) || data.new_location === true) {
                 this.sendRequest(data.location_id);
               }
+
+              // отправить на сайт realt.by
+             // console.log(this.sale.sites.filter(option => option.title.includes("Realt.by")).length);
+              if (this.sale.sites.filter(option => option.title.includes("Realt.by")).length > 0 && this.sale.send) {
+                console.log('на реалт');
+                this.saleService.sendRealt(this.sale).subscribe(
+                  data_realt => {});
+              } else {
+                console.log('удалить с реалта');
+                this.saleService.deleteRealt(this.sale).subscribe(
+                  data_realt => {});
+              }
+
+              // отправить на сайт onliner.by
+              console.log(this.sale.sites.filter(option => option.title.includes("Onliner.by")).length);
+              if (this.sale.sites.filter(option => option.title.includes("Onliner.by")).length > 0 && this.sale.send) {
+                console.log('на onliner');
+                this.saleService.sendOnliner(this.sale).subscribe(
+                  data_onliner => {});
+              } else {
+                console.log('удалить с onliner');
+                this.saleService.deleteOnliner(this.sale).subscribe(
+                  data_realt => {});
+              }
+
             } else {
               this.message('Не удалось обновить объект!', true);
 

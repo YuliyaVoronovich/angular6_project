@@ -271,6 +271,39 @@ export class SalesListComponent implements OnInit, OnDestroy {
         if (data) {
           this.message('Реклама обновлена', false);
           this.hideme3 = []; // скрыть окно действий
+
+          // удалить рекламу  реалта
+          console.log(sale.arraySites[8]);
+          if (!sale.arraySites[8]) {
+            console.log('удалить с реалта');
+            this.saleService.deleteRealt(sale).subscribe(
+              data_realt => {});
+          }
+
+          // добавить рекламу на реалт
+          console.log(sale.arraySites[8]);
+          if (sale.arraySites[8]  && sale.send) {
+            console.log('на реалт');
+            this.saleService.sendRealt(sale).subscribe(
+              data_realt => {});
+          }
+
+          // удалить рекламу onliner
+          console.log(sale.arraySites[7]);
+          if (!sale.arraySites[7]) {
+            console.log('удалить с onliner');
+            this.saleService.deleteOnliner(sale).subscribe(
+              data_realt => {});
+          }
+
+          // добавить рекламу на onliner
+          console.log(sale.arraySites[7]);
+          if (sale.arraySites[7]  && sale.send) {
+            console.log('на onliner');
+            this.saleService.sendOnliner(sale).subscribe(
+              data_realt => {});
+          }
+
         }
       },
       error => {

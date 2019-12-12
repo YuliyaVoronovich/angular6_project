@@ -63,7 +63,7 @@ export class AdminLocationsComponent implements OnInit {
   public microdistrict: Microdistrict = new Microdistrict(0, null, '', '');
   public direction: Direction = new Direction(0, null, '');
 
-  public sale: Sale = new Sale(0, null, null, '', '', '', 0, 0, false,
+  public sale: Sale = new Sale(0, null, null,  [], '', '', '', 0, 0, false,
     '', false, false, false, '', '', null, null,  false, '', null,
     '', 0, 0, 0, 0, 0, 0, '', 0, 0, 0, false, false, false, 0,
     0, 0,  0, 0, '', 0, false, '', '', false, 0, 0, null,
