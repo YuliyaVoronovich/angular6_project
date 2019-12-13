@@ -21,7 +21,7 @@ export class HouseShowComponent implements OnInit {
 
   public archive = false;
 
-  public house: House = new House(0, null, null, '', '', '', '', '', false,
+  public house: House = new House(0, null, null, [], '', '', '', '', '', false,
     '', false, '', 0, 0, false, null, null, false, 0, null,
     null, '', '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0,
     false, false, false, '', 0, 0, 0, 0, 0, 0, false, '', '',

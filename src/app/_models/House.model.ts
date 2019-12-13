@@ -11,6 +11,7 @@ export class House {
     public id: number,
     public user: User,
     public company: Company,
+    public sites: any,
     public cont_phone1: string,
     public cont_phone2: string,
     public fio: string,

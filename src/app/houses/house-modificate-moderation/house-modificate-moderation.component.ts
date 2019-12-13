@@ -69,7 +69,7 @@ export class HouseModificateModerationComponent implements OnInit {
   public districts_rb = [];
   public cities = [];
 
-  public house: House = new House(0, null, null, '', '', '', '', '', null, null, false,
+  public house: House = new House(0, null, null, [], '', '', '', '', '', null, null, false,
     '', 0, 0, false, false, false, false, 0, '', null, '',
     '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
     false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
@@ -452,6 +452,18 @@ export class HouseModificateModerationComponent implements OnInit {
               this.message('Объект перенесен в общую базу', false);
               this.router.navigate(['houses/moderation']);
               this.sharedService.emitChange4(); // обновление модерации в меню
+
+              // отправить на сайт realt.by
+              if (this.house.sites.filter(option => option.title.includes("Realt.by")).length > 0 && this.house.send) {
+                console.log('на реалт');
+                this.houseService.sendRealt(this.house).subscribe(
+                  data_realt => {});
+              } else {
+                console.log('удалить с реалта');
+                this.houseService.deleteRealt(this.house).subscribe(
+                  data_realt => {});
+              }
+
 
             } else {
               this.message('Не удалось перенести объект!', true);

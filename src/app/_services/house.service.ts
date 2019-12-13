@@ -6,6 +6,7 @@ import {Count} from '../_models/Count.model';
 import {Observable} from 'rxjs/index';
 import {House} from '../_models/House.model';
 import {HouseAdditionInformation} from '../_models/HouseAdditionInformation.model';
+import {Sale} from "../_models/Sale.model";
 
 @Injectable()
 export class HouseService {
@@ -22,7 +23,7 @@ export class HouseService {
   }
   setHouse(house: House) {
     if (!house) {
-      return house = new House(0, null, null, '', '', '', '',  '', null, null, false,
+      return house = new House(0, null, null,  [],'', '', '', '',  '', null, null, false,
         '', 0, 0, false, false, false, false, 0, '', null, '',
         '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
         false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
@@ -145,5 +146,15 @@ export class HouseService {
     return this.http.post(this.globals.url + this.uri_delete + '/' + id, JSON.stringify(house));
   }
   /*Удаленные*/
+
+  /*отправка на реалт*/
+  sendRealt(house: House) {
+    return this.http.put(this.globals.url + '/realt_house_add/' + house.id, JSON.stringify(house));
+  }
+
+  /*удаление с реалта*/
+  deleteRealt(house: House) {
+    return this.http.post(this.globals.url + '/realt_house_delete/' + house.id, JSON.stringify(house));
+  }
 
 }

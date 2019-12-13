@@ -69,7 +69,7 @@ export class HouseModificateComponent implements OnInit {
   public districts_rb = [];
   public cities = [];
 
-  public house: House = new House(0, null, null, '', '', '', '', '', null, null, false,
+  public house: House = new House(0, null, null,  [],'', '', '', '', '', null, null, false,
     '', 0, 0, false, false, false, false, 0, '', null, '',
     '', 0, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, false, false,
     false, '', 0, 0, 0, 0, 0, 0, false, '', '', '', null, false, false,
@@ -494,6 +494,19 @@ export class HouseModificateComponent implements OnInit {
               if (this.house.location.street.id === 0 || data.new_location === true) {
                 this.sendRequest(data.location_id);
               }
+
+              // отправить на сайт realt.by
+              // console.log(this.sale.sites.filter(option => option.title.includes("Realt.by")).length);
+              if (this.house.sites.filter(option => option.title.includes("Realt.by")).length > 0 && this.house.send) {
+                console.log('на реалт');
+                this.houseService.sendRealt(this.house).subscribe(
+                  data_realt => {});
+              } else {
+                console.log('удалить с реалта');
+                this.houseService.deleteRealt(this.house).subscribe(
+                  data_realt => {});
+              }
+
             } else {
               this.message('Не удалось обновить объект!', true);
 

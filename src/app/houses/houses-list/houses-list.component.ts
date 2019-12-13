@@ -275,6 +275,22 @@ export class HousesListComponent implements OnInit, OnDestroy {
         if (data) {
           this.message('Реклама обновлена', false);
           this.hideme3 = []; // скрыть окно действий
+
+          // удалить рекламу  реалта
+          console.log(house.arraySites[8]);
+          if (!house.arraySites[8]) {
+            console.log('удалить с реалта');
+            this.houseService.deleteRealt(house).subscribe(
+              data_realt => {});
+          }
+
+          // добавить рекламу на реалт
+          console.log(house.arraySites[8]);
+          if (house.arraySites[8]  && house.send) {
+            console.log('на реалт');
+            this.houseService.sendRealt(house).subscribe(
+              data_realt => {});
+          }
         }
       },
       error => {
