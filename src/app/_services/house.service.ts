@@ -149,12 +149,12 @@ export class HouseService {
 
   /*отправка на реалт*/
   sendRealt(house: House) {
-    return this.http.put(this.globals.url + '/realt_house_add/' + house.id, JSON.stringify(house));
+    return this.http.get(this.globals.url + '/realt_house_add/' + house.id, JSON.stringify(house));
   }
 
   /*удаление с реалта*/
   deleteRealt(house: House) {
-    return this.http.post(this.globals.url + '/realt_house_delete/' + house.id, JSON.stringify(house));
+    return this.http.get(this.globals.url + '/realt_house_delete/' + house.id, JSON.stringify(house));
   }
 
 }

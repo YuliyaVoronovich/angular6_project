@@ -174,22 +174,22 @@ export class SaleService {
 
   /*отправка на реалт*/
   sendRealt(sale: Sale) {
-    return this.http.put(this.globals.url + '/realt_add/' + sale.id, JSON.stringify(sale));
+    return this.http.get(this.globals.url + '/realt_add/' + sale.id, JSON.stringify(sale));
   }
 
   /*удаление с реалта*/
   deleteRealt(sale: Sale) {
-    return this.http.post(this.globals.url + '/realt_delete/' + sale.id, JSON.stringify(sale));
+    return this.http.get(this.globals.url + '/realt_delete/' + sale.id, JSON.stringify(sale));
   }
 
   /*отправка на onliner*/
   sendOnliner(sale: Sale) {
-    return this.http.put(this.globals.url + '/onliner_add/' + sale.id, JSON.stringify(sale));
+    return this.http.get(this.globals.url + '/onliner_add/' + sale.id, JSON.stringify(sale));
   }
 
   /*удаление с onliner*/
   deleteOnliner(sale: Sale) {
-    return this.http.post(this.globals.url + '/onliner_delete/' + sale.id, JSON.stringify(sale));
+    return this.http.get(this.globals.url + '/onliner_delete/' + sale.id, JSON.stringify(sale));
   }
 
 }

@@ -97,6 +97,8 @@ import { CallsHouseListSearchComponent } from './calls_house/calls-house-list-se
 import { SaleShowComponent } from './sales/sale-show/sale-show.component';
 import { SalesListHhosComponent } from './sales/sales-list-hhos/sales-list-hhos.component';
 import { HouseShowComponent } from './houses/house-show/house-show.component';
+import { CallsStaticticsMonthComponent } from './calls/calls-statictics-month/calls-statictics-month.component';
+import { CallsStatisticsDayComponent } from './calls/calls-statistics-day/calls-statistics-day.component';
 
 import {HeaderService} from './_services/header.service';
 import {LoginService} from './_services/login.service';
@@ -225,7 +227,9 @@ const companyRoutes: Routes = [
 ];
 const callsRoutes: Routes = [
   {path: '', component: CallsListComponent},
-  {path: 'call/:id', component: CallModificateComponent, resolve: {data: CallResolve}}
+  {path: 'call/:id', component: CallModificateComponent, resolve: {data: CallResolve}},
+  {path: 'statistics', component: CallsStaticticsMonthComponent},
+  {path: 'statistics/:id', component: CallsStatisticsDayComponent}
 ];
 const callsHouseRoutes: Routes = [
   {path: '', component: CallsHouseListComponent},
@@ -350,6 +354,8 @@ const routes: Routes = [
     SaleShowComponent,
     SalesListHhosComponent,
     HouseShowComponent,
+    CallsStaticticsMonthComponent,
+    CallsStatisticsDayComponent,
     FilterPipe,
     SanitizeHtmlPipe
   ],
