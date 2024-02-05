@@ -50,7 +50,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false, false);
 
   public sort = {
     'field': 'updated_at',

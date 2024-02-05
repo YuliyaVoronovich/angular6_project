@@ -21,7 +21,7 @@ export class GeneralLeftMenuComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   constructor(  private loginService: LoginService) { }
 

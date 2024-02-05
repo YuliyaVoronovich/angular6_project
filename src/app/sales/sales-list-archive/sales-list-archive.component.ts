@@ -40,7 +40,7 @@ export class SalesListArchiveComponent implements OnInit, OnDestroy {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   public hideme = [];
   public hideme2 = [];

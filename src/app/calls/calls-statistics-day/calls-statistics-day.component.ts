@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Label} from '../../_models/Label.model';
 import {SharedService} from '../../_services/shared.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../../_services/login.service';
@@ -7,6 +6,8 @@ import {LabelService} from '../../_services/label.service';
 import {StatisticsCalls} from '../../_models/StatisticsCalls.model';
 import {CallService} from '../../_services/call.service';
 import {User} from '../../_models/User.model';
+import {Source} from '../../_models/Source.model';
+import {SourceService} from '../../_services/source.service';
 
 @Component({
   selector: 'app-statistics-day',
@@ -16,7 +17,7 @@ import {User} from '../../_models/User.model';
 export class CallsStatisticsDayComponent implements OnInit {
 
   public statistics: StatisticsCalls[] = [];
-  public sources: Label[] = [];
+  public sources: Source[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
     null, null, false, null, null, '', null, null, null);
 
@@ -25,7 +26,7 @@ export class CallsStatisticsDayComponent implements OnInit {
   constructor(private router: Router,
               private loginService: LoginService,
               private sharedService: SharedService,
-              private labelService: LabelService,
+              private sourceService: SourceService,
               private callService: CallService,
               private route: ActivatedRoute) { }
 
@@ -34,28 +35,36 @@ export class CallsStatisticsDayComponent implements OnInit {
         if (params['date']) {
           this.loginService.detailsUser().subscribe(data => {
             this.user = data.user;
-            // this.getMonth();
-            this.getSources();
+
             this.getStatisticsCalls(params['date']);
+          //  this.getSources();
           });
         }
       });
   }
 
-  getSources() {
-    this.labelService.getAllLabelsSales().subscribe(data => {
-      this.sources = data.sources;
-    });
+  /*getSources() {
 
-  }
+    return this.sourceService.getSources().subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.sources.push(data[i]);
+      }
+    });
+  }*/
 
   getStatisticsCalls(date) {
     this.callService.countStatisticsCallsDays(date).subscribe(data => {
-      for (let i = 0; i < data.length; i++) {
-
-        this.statistics.push(data[i]);
+      for (let i = 0; i < data.statistics.length; i++) {
+        this.statistics.push(data.statistics[i]);
+      }
+      for (let i = 0; i < data.sources.length; i++) {
+        this.sources.push(data.sources[i]);
       }
     //  console.log(this.statistics);
+    }, error => {
+      if (error.status === 403) {
+        this.router.navigate(['403']);
+      }
     });
 
   }

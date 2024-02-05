@@ -1,7 +1,7 @@
 import {Sale} from './Sale.model';
 import {User} from './User.model';
-import {Label} from './Label.model';
 import {Company} from './Company.model';
+import {Source} from './Source.model';
 
 export class CallSale {
 
@@ -11,7 +11,7 @@ export class CallSale {
     public user: User,
     public company: Company,
     public phone: string,
-    public source: Label,
+    public source: Source,
     public description: string,
     public uid: string,
     public uid2: string,

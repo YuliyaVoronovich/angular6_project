@@ -58,7 +58,7 @@
             <!-- Конец меню для SALES-->
 
             <!-- Меню для CLIENTS-->
-            <ng-container *ngIf="path==='clients'">
+            <ng-container *ngIf="path==='clients' || path==='calls'">
               <li *ngIf="access.clients_create" class="nav-item">
                 <a class="nav-link" routerLink="/clients/client">Добавить</a>
               </li>
@@ -68,7 +68,7 @@
               <li class="nav-item">
                 <a class="nav-link" routerLink="/calls">Звонки</a>
               </li>
-              <li class="nav-item">
+              <li *ngIf="access.statistics_call" class="nav-item">
                 <a class="nav-link" routerLink="/calls/statistics">Статистика</a>
               </li>
             </ng-container>
@@ -100,7 +100,7 @@
             <!-- Конец меню для HOUSES-->
 
             <!-- Меню для CLIENTS-HOUSE-->
-            <ng-container *ngIf="path==='clients_house'">
+            <ng-container *ngIf="path==='clients_house' || path==='calls_house'">
               <li *ngIf="access.clients_houses_create" class="nav-item">
                 <a class="nav-link" routerLink="/clients_house/client">Добавить</a>
               </li>
@@ -110,7 +110,7 @@
               <li class="nav-item">
                 <a class="nav-link" routerLink="/calls_house">Звонки</a>
               </li>
-              <li class="nav-item">
+              <li *ngIf="access.statistics_call" class="nav-item">
                 <a class="nav-link" routerLink="/calls_house/statistics">Статистика</a>
               </li>
             </ng-container>

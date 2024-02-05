@@ -23,6 +23,8 @@ import {Metro} from '../../_models/Metro.model';
 import {Label} from '../../_models/Label.model';
 import {SharedService} from '../../_services/shared.service';
 import {AccessModel} from '../../_models/Access.model';
+import {Source} from '../../_models/Source.model';
+import {SourceService} from '../../_services/source.service';
 
 @Component({
   selector: 'app-client-modificate',
@@ -77,7 +79,7 @@ export class ClientModificateComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false, false);
 
   public price_sqr_from = '';
   public price_sqr_to = '';
@@ -90,7 +92,7 @@ export class ClientModificateComponent implements OnInit {
   public walls: Label[] = [];
   public types: Label[] = [];
   public repairs: Label[] = [];
-  public sources: Label[] = [];
+  public sources: Source[] = [];
   public metro: Metro[] = [];
   public metro_first: Metro[] = [];
   public metro_second: Metro[] = [];
@@ -131,6 +133,7 @@ export class ClientModificateComponent implements OnInit {
               private locationService: LocationService,
               private userService: UserService,
               private labelsService: LabelService,
+              private sourceService: SourceService,
               private sharedService: SharedService) {
   }
 
@@ -205,6 +208,7 @@ export class ClientModificateComponent implements OnInit {
     this.getMicroDistricts();
     this.getAllLocations();
     this.getAllLabels();
+    this.getSources();
 
     this.getPriceSqr();
     this.loginService.detailsUser().subscribe(data => {
@@ -242,7 +246,16 @@ export class ClientModificateComponent implements OnInit {
       this.walls = data.walls;
       this.types = data.types;
       this.repairs = data.repairs;
-      this.sources = data.sources;
+    //  this.sources = data.sources;
+    });
+  }
+
+  getSources() {
+
+    return this.sourceService.getSources().subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.sources.push(data[i]);
+      }
     });
   }
 

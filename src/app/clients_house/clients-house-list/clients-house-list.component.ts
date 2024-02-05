@@ -49,7 +49,7 @@ export class ClientsHouseListComponent implements OnInit, OnDestroy {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   public sort = {
     'field': 'created_at',

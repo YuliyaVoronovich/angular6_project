@@ -22,6 +22,13 @@ export class SourceService {
       );
   }
 
+  setSource(source: Source): Source {
+    if (!source) {
+      return source = new Source(0, '', 0, '', '');
+    }
+    return source;
+  }
+
   create(source: Source): Observable<Response> {
     return this.http.post(this.globals.url + this.uri, JSON.stringify(source));
   }

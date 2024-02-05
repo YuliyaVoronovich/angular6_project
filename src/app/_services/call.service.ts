@@ -47,12 +47,12 @@ export class CallService {
 
   countStatisticsCallsMonths() {
     return this.http.get(this.globals.url + this.uri + '/statistics_months')
-      .map((response: Response) => response.json().statistics);
+      .map((response: Response) => response.json());
   }
 
   countStatisticsCallsDays(date) {
     return this.http.get(this.globals.url + this.uri + '/statistics_days/' + date)
-      .map((response: Response) => response.json().statistics);
+      .map((response: Response) => response.json());
   }
 
 }

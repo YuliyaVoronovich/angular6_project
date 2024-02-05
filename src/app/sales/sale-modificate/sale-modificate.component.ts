@@ -23,6 +23,8 @@ import {FileHolder} from 'angular2-image-upload';
 import {ImageService} from '../../_services/image.service';
 import {RequestService} from '../../_services/request.service';
 import {AccessModel} from '../../_models/Access.model';
+import {Source} from '../../_models/Source.model';
+import {SourceService} from '../../_services/source.service';
 
 @Component({
   selector: 'app-sale-modificate',
@@ -68,7 +70,7 @@ export class SaleModificateComponent implements OnInit {
   public floors: Label[] = [];
   public furniture: Label[] = [];
   public sales: Label[] = [];
-  public sources: Label[] = [];
+  public sources: Source[] = [];
   public metro: Metro[] = [];
 
   public sale: Sale = new Sale(0, null, null, [],  '', '', '', 0, 0, false,
@@ -87,7 +89,7 @@ export class SaleModificateComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   public images: Photo [] = [];
   public upload_photo = [];
@@ -139,6 +141,7 @@ export class SaleModificateComponent implements OnInit {
               private saleService: SaleService,
               private locationService: LocationService,
               private labelService: LabelService,
+              private sourceService: SourceService,
               private userService: UserService,
               private imageService: ImageService,
               private requestService: RequestService,
@@ -230,6 +233,7 @@ export class SaleModificateComponent implements OnInit {
     this.sale.location.type_house = this.labelService.setTypeHouse(this.sale.location.type_house);
 
     this.getAllLabels();
+    this.getSources();
     this.getAllLocations();
     this.getRegions();
     this.getDistrictsRb(this.sale.location.city.district_country.region.id);
@@ -239,6 +243,8 @@ export class SaleModificateComponent implements OnInit {
       this.access = data.array_access;
       this.getUsers();
     });
+
+    console.log(this.sale);
 
   }
 
@@ -371,7 +377,16 @@ export class SaleModificateComponent implements OnInit {
       this.floors = data.floors;
       this.furniture = data.furniture;
       this.sales = data.sales;
-      this.sources = data.sources;
+     // this.sources = data.sources;
+    });
+  }
+
+  getSources() {
+
+    return this.sourceService.getSources().subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.sources.push(data[i]);
+      }
     });
   }
 

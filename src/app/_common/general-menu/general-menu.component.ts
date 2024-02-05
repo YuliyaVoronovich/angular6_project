@@ -33,7 +33,7 @@ export class GeneralMenuComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false, false);
 
   constructor(private router: Router,
               private route: ActivatedRoute,

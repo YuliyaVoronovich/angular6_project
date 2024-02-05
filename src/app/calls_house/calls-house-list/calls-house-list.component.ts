@@ -17,6 +17,7 @@ import {CallHouse} from '../../_models/CallHouse.model';
 import {CallHouseService} from '../../_services/call_house.service';
 import {HouseService} from '../../_services/house.service';
 import {SearchCallHouseModel} from '../../_models/SearchCallHouse.model';
+import {SourceService} from '../../_services/source.service';
 
 @Component({
   selector: 'app-calls-house-list',
@@ -47,7 +48,7 @@ export class CallsHouseListComponent implements OnInit, OnDestroy  {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   public sort = {
     'field': 'created_at',
@@ -68,6 +69,7 @@ export class CallsHouseListComponent implements OnInit, OnDestroy  {
               private companyService: CompanyService,
               private houseService: HouseService,
               private labelsService: LabelService,
+              private sourceService: SourceService,
               private sharedService: SharedService,
               private globals: Globals) {
 
@@ -123,7 +125,9 @@ export class CallsHouseListComponent implements OnInit, OnDestroy  {
         data[i].house.location.street = this.locationService.setStreet(data[i].house.location.street);
         data[i].house.location.direction = this.locationService.setDirection(data[i].house.location.direction);
         data[i].house.type = this.labelsService.setTypeHouse(data[i].house.type);
-        data[i].source = this.labelsService.setHouseSource(data[i].source);
+
+        // sources
+        data[i].source = this.sourceService.setSource(data[i].source);
 
         if (data[i].description) {
           data[i].description = data[i].description.replace('нестандартные примечания от клиента', '');

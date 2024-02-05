@@ -25,6 +25,8 @@ import OlTileLayer from 'ol/layer/Tile';
 import OlView from 'ol/View';
 
 import {fromLonLat} from 'ol/proj';
+import {Source} from '../../_models/Source.model';
+import {SourceService} from '../../_services/source.service';
 
 
 @Component({
@@ -82,7 +84,7 @@ export class CallHouseModificateComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   public price_sqr_from = '';
   public price_sqr_to = '';
@@ -96,7 +98,7 @@ export class CallHouseModificateComponent implements OnInit {
   public roofs: Label[] = [];
   public heating: Label[] = [];
   public water: Label[] = [];
-  public sources: Label[] = [];
+  public sources: Source[] = [];
 
   public timer: any;
 
@@ -120,6 +122,7 @@ export class CallHouseModificateComponent implements OnInit {
               private callHouseService: CallHouseService,
               private userService: UserService,
               private labelsService: LabelService,
+              private sourceService: SourceService,
               private sharedService: SharedService) {
   }
 
@@ -167,8 +170,9 @@ export class CallHouseModificateComponent implements OnInit {
             this.call.house.location.city.district_country.region = this.locationService.setRegion(this.call.house.location.city.district_country.region);
             this.call.house.location.district = this.locationService.setDistrict(this.call.house.location.district);
             this.call.house.location.direction = this.locationService.setDirection(this.call.house.location.direction);
-              // labels
-            this.call.source = this.labelsService.setHouseSource(this.call.source);
+            // sources
+            this.call.source = this.sourceService.setSource(this.call.source);
+            // labels
             this.call.house.type = this.labelsService.setTypeHouse(this.call.house.type);
 
             // соотнести информацию о звонке с клиентом
@@ -199,6 +203,7 @@ export class CallHouseModificateComponent implements OnInit {
     this.getDirections();
     this.getAllLocations();
     this.getAllLabels();
+    this.getSources();
 
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
@@ -236,7 +241,16 @@ export class CallHouseModificateComponent implements OnInit {
       this.roofs = data.roofs;
       this.heating = data.heating;
       this.water = data.water;
-      this.sources = data.sources;
+     // this.sources = data.sources;
+    });
+  }
+
+  getSources() {
+
+    return this.sourceService.getSources().subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.sources.push(data[i]);
+      }
     });
   }
 

@@ -37,7 +37,8 @@ export class AccessModel {
     public clients_houses_archive: boolean,
     public clients_houses_archive_restore: boolean,
     public listen_call: boolean,
-    public source_call: boolean
+    public source_call: boolean,
+    public statistics_call: boolean
   ) {
   }
 }

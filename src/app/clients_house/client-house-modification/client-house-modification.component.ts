@@ -22,6 +22,8 @@ import {LabelService} from '../../_services/label.service';
 import {Label} from '../../_models/Label.model';
 import {SharedService} from '../../_services/shared.service';
 import {AccessModel} from '../../_models/Access.model';
+import {Source} from '../../_models/Source.model';
+import {SourceService} from '../../_services/source.service';
 
 
 @Component({
@@ -77,7 +79,7 @@ export class ClientHouseModificationComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   public price_sqr_from = '';
   public price_sqr_to = '';
@@ -91,7 +93,7 @@ export class ClientHouseModificationComponent implements OnInit {
   public roofs: Label[] = [];
   public heating: Label[] = [];
   public water: Label[] = [];
-  public sources: Label[] = [];
+  public sources: Source[] = [];
 
   public timer: any;
 
@@ -118,6 +120,7 @@ export class ClientHouseModificationComponent implements OnInit {
               private locationService: LocationService,
               private userService: UserService,
               private labelsService: LabelService,
+              private sourceService: SourceService,
               private sharedService: SharedService) {
   }
 
@@ -191,6 +194,7 @@ export class ClientHouseModificationComponent implements OnInit {
     this.getDirections();
     this.getAllLocations();
     this.getAllLabels();
+    this.getSources();
 
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
@@ -228,7 +232,16 @@ export class ClientHouseModificationComponent implements OnInit {
       this.roofs = data.roofs;
       this.heating = data.heating;
       this.water = data.water;
-      this.sources = data.sources;
+    //  this.sources = data.sources;
+    });
+  }
+
+  getSources() {
+
+    return this.sourceService.getSources().subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.sources.push(data[i]);
+      }
     });
   }
 

@@ -26,6 +26,8 @@ import {AccessModel} from '../../_models/Access.model';
 import {SaleService} from '../../_services/sale.service';
 import {CallSale} from '../../_models/CallSale.model';
 import {CallService} from '../../_services/call.service';
+import {Source} from '../../_models/Source.model';
+import {SourceService} from '../../_services/source.service';
 
 @Component({
   selector: 'app-call-modificate',
@@ -82,7 +84,7 @@ export class CallModificateComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   public price_sqr_from = '';
   public price_sqr_to = '';
@@ -95,7 +97,7 @@ export class CallModificateComponent implements OnInit {
   public walls: Label[] = [];
   public types: Label[] = [];
   public repairs: Label[] = [];
-  public sources: Label[] = [];
+  public sources: Source[] = [];
   public metro: Metro[] = [];
   public metro_first: Metro[] = [];
   public metro_second: Metro[] = [];
@@ -128,6 +130,7 @@ export class CallModificateComponent implements OnInit {
               private locationService: LocationService,
               private userService: UserService,
               private labelsService: LabelService,
+              private sourceService: SourceService,
               private sharedService: SharedService) {
   }
 
@@ -175,8 +178,8 @@ export class CallModificateComponent implements OnInit {
             this.call.sale.location.district = this.locationService.setDistrict(this.call.sale.location.district);
             this.call.sale.location.microdistrict = this.locationService.setMicroDistrict(this.call.sale.location.microdistrict);
 
-            // labels
-            this.call.source = this.labelsService.setSaleSource(this.call.source);
+            // sources
+            this.call.source = this.sourceService.setSource(this.call.source);
 
             // соотнести информацию о звонке с клиентом
             this.client.phone1 = this.call.phone;
@@ -206,6 +209,7 @@ export class CallModificateComponent implements OnInit {
     this.getMicroDistricts();
     this.getAllLocations();
     this.getAllLabels();
+    this.getSources();
 
     this.getPriceSqr();
     this.loginService.detailsUser().subscribe(data => {
@@ -243,7 +247,16 @@ export class CallModificateComponent implements OnInit {
       this.walls = data.walls;
       this.types = data.types;
       this.repairs = data.repairs;
-      this.sources = data.sources;
+    //  this.sources = data.sources;
+    });
+  }
+
+  getSources() {
+
+    return this.sourceService.getSources().subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.sources.push(data[i]);
+      }
     });
   }
 

@@ -14,8 +14,8 @@ import {User} from '../../_models/User.model';
 import {AccessModel} from '../../_models/Access.model';
 import {CallSale} from '../../_models/CallSale.model';
 import {SaleService} from '../../_services/sale.service';
-import {LabelService} from '../../_services/label.service';
 import {SearchCallModel} from '../../_models/SearchCall.model';
+import {SourceService} from '../../_services/source.service';
 
 @Component({
   selector: 'app-calls-list',
@@ -49,7 +49,7 @@ export class CallsListComponent implements OnInit, OnDestroy {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   public sort = {
     'field': 'created_at',
@@ -69,7 +69,7 @@ export class CallsListComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private companyService: CompanyService,
               private saleService: SaleService,
-              private labelsService: LabelService,
+              private sourceService: SourceService,
               private sharedService: SharedService,
               private globals: Globals) {
 
@@ -126,8 +126,8 @@ export class CallsListComponent implements OnInit, OnDestroy {
         data[i].sale.location.microdistrict = this.locationService.setMicroDistrict(data[i].sale.location.microdistrict);
         data[i].sale.location.street = this.locationService.setStreet(data[i].sale.location.street);
 
-        // labels
-        data[i].source = this.labelsService.setSaleSource(data[i].source);
+        // sources
+        data[i].source = this.sourceService.setSource(data[i].source);
 
         if (data[i].description) {
           data[i].description = data[i].description.replace('нестандартные примечания от клиента', '');

@@ -20,6 +20,8 @@ import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {FileHolder} from 'angular2-image-upload';
 import {NgbDateFRParserFormatter} from '../../ngb-date-fr-parser-formatter';
 import {AccessModel} from '../../_models/Access.model';
+import {Source} from '../../_models/Source.model';
+import {SourceService} from '../../_services/source.service';
 
 @Component({
   selector: 'app-house-modificate-moderation',
@@ -54,7 +56,7 @@ export class HouseModificateModerationComponent implements OnInit {
   public repairs: Label[] = [];
   public roofs: Label[] = [];
   public sales: Label[] = [];
-  public sources: Label[] = [];
+  public sources: Source[] = [];
   public sewage: Label[] = [];
   public heating: Label[] = [];
   public water: Label[] = [];
@@ -84,7 +86,7 @@ export class HouseModificateModerationComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   public images: Photo [] = [];
   public upload_photo = [];
@@ -126,6 +128,7 @@ export class HouseModificateModerationComponent implements OnInit {
               private loginService: LoginService,
               private houseService: HouseService,
               private labelsService: LabelService,
+              private sourceService: SourceService,
               private locationService: LocationService,
               private userService: UserService,
               private imageService: ImageService,
@@ -215,6 +218,7 @@ export class HouseModificateModerationComponent implements OnInit {
     this.house.location.direction = this.locationService.setDirection(this.house.location.direction);
 
     this.getAllLabels();
+    this.getSources();
     this.getAllLocations();
 
     this.getRegions();
@@ -245,12 +249,21 @@ export class HouseModificateModerationComponent implements OnInit {
       this.repairs = data.repairs;
       this.roofs = data.roofs;
       this.sales = data.sales;
-      this.sources = data.sources;
+    //  this.sources = data.sources;
       this.sewage = data.sewage;
       this.heating = data.heating;
       this.water = data.water;
       this.gas = data.gas;
       this.electricity = data.electricity;
+    });
+  }
+
+  getSources() {
+
+    return this.sourceService.getSources().subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.sources.push(data[i]);
+      }
     });
   }
 

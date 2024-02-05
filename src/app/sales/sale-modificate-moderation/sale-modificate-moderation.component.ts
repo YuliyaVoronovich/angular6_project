@@ -23,6 +23,8 @@ import {FileHolder} from 'angular2-image-upload';
 import {ImageService} from '../../_services/image.service';
 import {RequestService} from '../../_services/request.service';
 import {AccessModel} from '../../_models/Access.model';
+import {Source} from '../../_models/Source.model';
+import {SourceService} from '../../_services/source.service';
 
 @Component({
   selector: 'app-sale-modificate-moderation',
@@ -66,7 +68,7 @@ export class SaleModificateModerationComponent implements OnInit {
   public floors: Label[] = [];
   public furniture: Label[] = [];
   public sales: Label[] = [];
-  public sources: Label[] = [];
+  public sources: Source[] = [];
   public metro: Metro[] = [];
 
   public sale: Sale = new Sale(0, null, null, [], '', '', '', 0, 0, false,
@@ -85,7 +87,7 @@ export class SaleModificateModerationComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false,false);
 
   public images: Photo [] = [];
   public upload_photo = [];
@@ -136,6 +138,7 @@ export class SaleModificateModerationComponent implements OnInit {
               private loginService: LoginService,
               private saleService: SaleService,
               private labelsService: LabelService,
+              private sourceService: SourceService,
               private locationService: LocationService,
               private userService: UserService,
               private imageService: ImageService,
@@ -227,6 +230,7 @@ export class SaleModificateModerationComponent implements OnInit {
     this.sale.location.metro = this.locationService.setMetro(this.sale.location.metro);
 
     this.getAllLabels();
+    this.getSources();
     this.getAllLocations();
     this.getRegions();
     this.getDistrictsRb(this.sale.location.city.district_country.region.id);
@@ -315,7 +319,16 @@ export class SaleModificateModerationComponent implements OnInit {
       this.floors = data.floors;
       this.furniture = data.furniture;
       this.sales = data.sales;
-      this.sources = data.sources;
+   //   this.sources = data.sources;
+    });
+  }
+
+  getSources() {
+
+    return this.sourceService.getSources().subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.sources.push(data[i]);
+      }
     });
   }
 

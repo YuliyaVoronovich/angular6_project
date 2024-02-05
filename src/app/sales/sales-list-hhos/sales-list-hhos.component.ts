@@ -28,7 +28,7 @@ export class SalesListHhosComponent implements OnInit {
     false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
     false, false, false, false, false, false, false, false,
-    false, false, false, false);
+    false, false, false, false, false);
 
   public hideme = [];
 
