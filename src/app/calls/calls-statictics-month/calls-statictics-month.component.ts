@@ -6,6 +6,7 @@ import {LoginService} from '../../_services/login.service';
 import {LabelService} from '../../_services/label.service';
 import {User} from '../../_models/User.model';
 import {CallService} from '../../_services/call.service';
+import {StatisticsCalls} from '../../_models/StatisticsCalls.model';
 
 @Component({
   selector: 'app-statictics-month',
@@ -15,15 +16,10 @@ import {CallService} from '../../_services/call.service';
 export class CallsStaticticsMonthComponent implements OnInit {
 
   public sources: Label[] = [];
+  public statistics: StatisticsCalls[] = [];
   public user: User = new User(0, '', '', null, null, null, '', 0,
     null, null, false, null, null, '', null, null, null);
 
-  public count;
-  public search = {
-    'month': 1,
-    'source': 1
-  };
-  public dates = [];
 
   constructor(private router: Router,
               private loginService: LoginService,
@@ -35,9 +31,9 @@ export class CallsStaticticsMonthComponent implements OnInit {
 
     this.loginService.detailsUser().subscribe(data => {
       this.user = data.user;
-      this.getMonth();
+      // this.getMonth();
       this.getSources();
-      this.getCountsCalls();
+      this.getStatisticsCalls();
 
     });
   }
@@ -48,23 +44,26 @@ export class CallsStaticticsMonthComponent implements OnInit {
     });
   }
 
-  getCountsCalls() {
-    this.callService.countCalls(this.search).subscribe(data => {
-      this.count = data.count;
+  getStatisticsCalls() {
+    this.callService.countStatisticsCallsMonths().subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.statistics.push(data[i]);
+      }
+     // console.log(this.statistics);
     });
-  }
 
-  getMonth() {
+    /*getMonth() {
 
-  let date = new Date();
-    for (let i = 0; i <= 25; i++) {
-      date.setMonth(date.getMonth() - i);
-      console.log(date);
-      const month = date.getMonth();
-      console.log(month);
-      this.dates.push(month);
-      date = new Date();
-
+    let arr: StatisticsCalls[] = [];
+    for (let d = 0; d < 25; d++) {
+      let date = new Date();
+      let count_month = this.getCountMonth();
+      arr.push({date: new Date(date.setMonth(date.getMonth() - d)), count: '0', persent: '0'});
     }
+    console.log(arr);
+    // let tempDate = arr[10].date;
+    // console.log(new Date(tempDate.getFullYear(), tempDate.getMonth(), 0).getDate());
+  }*/
   }
+
 }

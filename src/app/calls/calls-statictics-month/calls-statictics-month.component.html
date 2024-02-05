@@ -3,12 +3,15 @@
       <thead>
       <tr style="background:#cccccc" >
         <th>Дата</th>
+        <th>Всего</th>
         <th *ngFor="let source of sources">{{source.title}}</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-
+      <tr *ngFor="let statistic of statistics">
+        <td class="cursor" routerLink="/calls/statistics/{{statistic.date}}">{{statistic.date}}</td>
+        <td>{{statistic.all_count}}</td>
+        <td *ngFor="let source of statistic.sources">{{source.count}}<br>{{source.persent}}%</td>
       </tr>
       </tbody>
     </table>

@@ -43,4 +43,14 @@ export class CallHouseService {
       .map((response: Response) => response.json()
       );
   }
+
+  countStatisticsCallsMonths() {
+    return this.http.get(this.globals.url + this.uri + '/statistics_months')
+      .map((response: Response) => response.json().statistics);
+  }
+
+  countStatisticsCallsDays(date) {
+    return this.http.get(this.globals.url + this.uri + '/statistics_days/' + date)
+      .map((response: Response) => response.json().statistics);
+  }
 }

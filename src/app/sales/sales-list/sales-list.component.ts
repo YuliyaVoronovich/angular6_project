@@ -266,6 +266,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
 
   saveReclame(sale: Sale) {
 
+    console.log(sale);
     this.saleService.saveReclame(sale).subscribe(
       data => {
         if (data) {

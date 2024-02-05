@@ -4,11 +4,11 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class Globals {
-  public url = 'https://alfa.api.belan.by/api';
-  //public url = 'http://127.0.0.1:8000/api';
+  // public url = 'https://alfa.api.belan.by/api';
+  public url = 'http://127.0.0.1:8000/api';
 
-   public base_url = 'https://alfa.belan.by';
-  //public base_url = 'http://127.0.0.1:4200';
+  // public base_url = 'https://alfa.belan.by';
+  public base_url = 'http://127.0.0.1:4200';
 
   public base_value = 25.5;
 

@@ -243,6 +243,7 @@ export class SaleModificateComponent implements OnInit {
   }
 
   save() {
+    console.log(this.sale);
 
     this.sale.contract_from = new NgbDateFRParserFormatter().format_to_base(this.sale.contract_from);
     this.sale.contract_to = new NgbDateFRParserFormatter().format_to_base(this.sale.contract_to);

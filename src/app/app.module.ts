@@ -134,6 +134,8 @@ import {MaterialModule} from './material.module';
 import {NgxGalleryModule} from 'ngx-gallery';
 
 import {SanitizeHtmlPipe} from './_pipes/sanitize_html.pipe';
+import { CallsHouseStatisticsMonthComponent } from './calls_house/calls-house-statistics-month/calls-house-statistics-month.component';
+import { CallsHouseStatisticsDayComponent } from './calls_house/calls-house-statistics-day/calls-house-statistics-day.component';
 
 
 
@@ -229,11 +231,13 @@ const callsRoutes: Routes = [
   {path: '', component: CallsListComponent},
   {path: 'call/:id', component: CallModificateComponent, resolve: {data: CallResolve}},
   {path: 'statistics', component: CallsStaticticsMonthComponent},
-  {path: 'statistics/:id', component: CallsStatisticsDayComponent}
+  {path: 'statistics/:date', component: CallsStatisticsDayComponent}
 ];
 const callsHouseRoutes: Routes = [
   {path: '', component: CallsHouseListComponent},
-  {path: 'call/:id', component: CallHouseModificateComponent, resolve: {data: CallHouseResolve}}
+  {path: 'call/:id', component: CallHouseModificateComponent, resolve: {data: CallHouseResolve}},
+  {path: 'statistics', component: CallsHouseStatisticsMonthComponent},
+  {path: 'statistics/:date', component: CallsHouseStatisticsDayComponent}
 ];
 const callsOther: Routes = [
   {path: '', component: CallsOtherListComponent},
@@ -357,6 +361,8 @@ const routes: Routes = [
     CallsStaticticsMonthComponent,
     CallsStatisticsDayComponent,
     FilterPipe,
+    CallsHouseStatisticsMonthComponent,
+    CallsHouseStatisticsDayComponent,
     SanitizeHtmlPipe
   ],
   imports: [

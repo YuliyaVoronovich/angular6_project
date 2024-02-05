@@ -9,10 +9,11 @@
     </thead>
     <tbody>
     <tr *ngFor="let statistic of statistics">
-      <td>{{statistic.date}}</td>
+      <td class="cursor" routerLink="/calls_house/statistics/{{statistic.date}}">{{statistic.date}}</td>
       <td>{{statistic.all_count}}</td>
       <td *ngFor="let source of statistic.sources">{{source.count}}<br>{{source.persent}}%</td>
     </tr>
     </tbody>
   </table>
 </div>
+

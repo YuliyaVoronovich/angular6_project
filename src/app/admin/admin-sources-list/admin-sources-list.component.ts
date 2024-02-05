@@ -13,7 +13,7 @@ import {SourceService} from '../../_services/source.service';
 export class AdminSourcesListComponent implements OnInit {
 
   public sources: Source[] = [];
-  public source: Source = new Source(0, '', 0);
+  public source: Source = new Source(0, '', 0, '', '');
   public editRowId: any;
   public timer: any;
 
